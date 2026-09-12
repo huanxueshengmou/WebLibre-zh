@@ -294,7 +294,20 @@ jobs:
         run: |
           set -euo pipefail
           dart pub global activate melos "${MELOS_VERSION}"
-          melos bootstrap
+
+          # The Chinese build adds flutter_localizations, which pins `intl` to
+          # whatever the Flutter SDK ships. That can be unsatisfiable together
+          # with the app's own constraint, and it cannot be checked without a
+          # Flutter SDK - so treat the framework-level part as optional: if
+          # bootstrap fails, drop just that wiring and keep the tr() translation,
+          # which is the part that actually localises the app.
+          if melos bootstrap; then
+            echo "Bootstrap succeeded with framework-level localisation."
+          else
+            echo "::warning title=Framework localisation dropped::melos bootstrap failed with flutter_localizations; retrying without it. The tr() translation is unaffected."
+            python3 tools/i18n/patch_app.py . --revert-l10n
+            melos bootstrap
+          fi
 
       - name: Fetch external assets
         run: melos run update-assets --no-select

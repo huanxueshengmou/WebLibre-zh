@@ -189,6 +189,132 @@ def test_rejects() -> None:
     check("preferences is not SQL", rej("Reset all preferences"), False)
 
 
+def test_patch_app_roundtrip() -> None:
+    """
+    patch_app.py edits five upstream files by anchoring on their text. If
+    upstream renames something the anchor stops matching, and the failure mode
+    is a silently half-patched build - so the anchors and the revert path are
+    both exercised here against a miniature copy of the real files.
+    """
+    section("patch_app round-trip")
+
+    import contextlib
+    import io
+    import tempfile
+
+    from patch_app import main as patch_main
+
+    FIXTURES = {
+        "pubspec.yaml": (
+            "name: weblibre_project\n"
+            "\n"
+            "melos:\n"
+            "  command:\n"
+            "    bootstrap:\n"
+            "      enforceLockfile: true\n"
+            "    clean:\n"
+            "      hooks:\n"
+        ),
+        "apps/weblibre/pubspec.yaml": (
+            "name: weblibre\n"
+            "\n"
+            "dependencies:\n"
+            "  flutter:\n"
+            "    sdk: flutter\n"
+            "  flutter_auto_size_text: ^5.0.0\n"
+            "  intl: ^0.20.3\n"
+            "  json_annotation: ^4.12.0\n"
+        ),
+        "apps/weblibre/lib/main.dart": (
+            "import 'dart:async';\n"
+            "\n"
+            "void main() async {\n"
+            "  WidgetsFlutterBinding.ensureInitialized();\n"
+            "\n"
+            "  runApp(const ProviderScope(child: MyApp()));\n"
+            "}\n"
+        ),
+        "apps/weblibre/lib/presentation/main_app.dart": (
+            "import 'package:flutter/material.dart';\n"
+            "\n"
+            "class MainApp extends StatelessWidget {\n"
+            "  Widget build(BuildContext context) {\n"
+            "    return MaterialApp.router(\n"
+            "      debugShowCheckedModeBanner: false,\n"
+            "      routerConfig: router.value,\n"
+            "    );\n"
+            "  }\n"
+            "}\n"
+        ),
+        "apps/weblibre/android/app/build.gradle": (
+            "android {\n"
+            "    buildTypes {\n"
+            "        release {\n"
+            "            signingConfig = signingConfigs.release\n"
+            "        }\n"
+            "    }\n"
+            "}\n"
+        ),
+    }
+
+    with tempfile.TemporaryDirectory() as tmp:
+        repo = Path(tmp)
+        for rel, body in FIXTURES.items():
+            p = repo / rel
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(body, encoding="utf-8")
+
+        def run(*argv: str) -> int:
+            saved = sys.argv
+            sys.argv = ["patch_app.py", str(repo), *argv]
+            try:
+                # patch_app is chatty; keep the test output readable.
+                with contextlib.redirect_stdout(io.StringIO()):
+                    return patch_main()
+            finally:
+                sys.argv = saved
+
+        check("patch run exits 0", run(), 0)
+
+        root = (repo / "pubspec.yaml").read_text(encoding="utf-8")
+        app = (repo / "apps/weblibre/pubspec.yaml").read_text(encoding="utf-8")
+        main_dart = (repo / "apps/weblibre/lib/main.dart").read_text(encoding="utf-8")
+        main_app = (repo / "apps/weblibre/lib/presentation/main_app.dart").read_text(encoding="utf-8")
+        gradle = (repo / "apps/weblibre/android/app/build.gradle").read_text(encoding="utf-8")
+
+        check("melos lockfile enforcement relaxed", "enforceLockfile: false" in root, True)
+        check("flutter_localizations added", "flutter_localizations:" in app, True)
+        check("intl widened", "intl: any" in app, True)
+        check("original intl recorded",
+              "original: intl: ^0.20.3" in app, True)
+        check("initI18n called", "initI18n();" in main_dart, True)
+        check("i18n import added to main.dart",
+              "package:weblibre/i18n/i18n.dart" in main_dart, True)
+        check("supportedLocales declared", "supportedLocales:" in main_app, True)
+        check("delegates declared", "localizationsDelegates:" in main_app, True)
+        check("locale resolution callback", "localeResolutionCallback:" in main_app, True)
+        check("signing falls back to debug", "signingConfigs.debug" in gradle, True)
+
+        # Running again must change nothing.
+        before = {rel: (repo / rel).read_text(encoding="utf-8") for rel in FIXTURES}
+        check("second run exits 0", run(), 0)
+        after = {rel: (repo / rel).read_text(encoding="utf-8") for rel in FIXTURES}
+        check("patch is idempotent", before == after, True)
+
+        # Revert must remove the framework wiring and restore intl, while
+        # leaving the tr() translation and its import untouched.
+        check("revert exits 0", run("--revert-l10n"), 0)
+        app2 = (repo / "apps/weblibre/pubspec.yaml").read_text(encoding="utf-8")
+        main_app2 = (repo / "apps/weblibre/lib/presentation/main_app.dart").read_text(encoding="utf-8")
+        check("flutter_localizations removed", "flutter_localizations:" in app2, False)
+        check("intl constraint restored", "  intl: ^0.20.3" in app2, True)
+        check("delegates removed", "localizationsDelegates" in main_app2, False)
+        check("flutter_localizations import removed",
+              "flutter_localizations" in main_app2, False)
+        check("MaterialApp.router still intact",
+              "return MaterialApp.router(" in main_app2, True)
+
+
 def main() -> int:
     test_placeholders()
     test_quality_gate()
@@ -198,6 +324,7 @@ def main() -> int:
     test_context_classification()
     test_bracket_resolution()
     test_rejects()
+    test_patch_app_roundtrip()
 
     print()
     if FAILURES:

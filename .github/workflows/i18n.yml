@@ -271,7 +271,19 @@ jobs:
             echo "Missing weblibre.ndkVersion in gradle.properties" >&2
             exit 1
           fi
+          # `yes` feeds the licence prompt. It MUST be piped with pipefail
+          # temporarily disabled: sdkmanager stops reading once it has its
+          # answer, `yes` then dies of SIGPIPE (141), and pipefail would report
+          # the whole pipeline as failed even though the install succeeded.
+          # Upstream does exactly this; check the exit code of sdkmanager
+          # (PIPESTATUS[1]) rather than of the pipeline.
+          set +e
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;$ANDROID_NDK_VERSION"
+          sdkmanager_status=${PIPESTATUS[1]}
+          set -e
+          if [[ $sdkmanager_status -ne 0 ]]; then
+            exit "$sdkmanager_status"
+          fi
           test -f "$ANDROID_HOME/ndk/$ANDROID_NDK_VERSION/source.properties"
           {
             echo "ANDROID_NDK_VERSION=$ANDROID_NDK_VERSION"

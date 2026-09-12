@@ -327,8 +327,10 @@ def test_punctuation_normalization() -> None:
     check("comma after CJK", norm("容器,标签页"), "容器，标签页")
     check("semicolon after CJK", norm("第一项;第二项"), "第一项；第二项")
     check("sentence-final period", norm('"{0}"被删除.'), '"{0}"被删除。')
+    # The space after the period is removed as well - Chinese does not put one
+    # between sentences.
     check("period before more text",
-          norm("无法确定. 你想继续吗"), "无法确定。 你想继续吗")
+          norm("无法确定. 你想继续吗"), "无法确定。你想继续吗")
     # Must not touch numbers, versions or URLs.
     check("decimal point untouched", norm("版本 3.14 发布"), "版本 3.14 发布")
     check("version untouched", norm("v1.2 已发布"), "v1.2 已发布")
@@ -338,6 +340,26 @@ def test_punctuation_normalization() -> None:
     check("already full width", norm("确定？"), "确定？")
     check("normalising twice is stable", norm(norm("从你的设备?")), "从你的设备？")
     check("english untouched", norm("Cancel?"), "Cancel?")
+
+    # MT leaves spaces hugging full-width marks; 143 of 1854 real entries did.
+    check("space before full-width period",
+          norm("未找到关联控制台 。"), "未找到关联控制台。")
+    check("space before full-width comma",
+          norm("容器 ，标签页"), "容器，标签页")
+    check("spaces inside full-width quotes",
+          norm("“ {0} ” 被备份"), "“{0}”被备份")
+    check("space after full-width opening bracket",
+          norm("（ 见上文 ）"), "（见上文）")
+    check("space after sentence punctuation before CJK",
+          norm("第一句。 第二句"), "第一句。第二句")
+    # Newlines are meaningful in multi-line help text - never eat them.
+    check("newline preserved",
+          norm("第一段 。\n\n第二段 。"), "第一段。\n\n第二段。")
+    check("newline after punctuation preserved",
+          norm("结束 。\n下一行"), "结束。\n下一行")
+    # Must not disturb latin-only spacing.
+    check("latin spacing untouched",
+          norm("Open in WebLibre now"), "Open in WebLibre now")
 
 
 def test_translate_fallback() -> None:

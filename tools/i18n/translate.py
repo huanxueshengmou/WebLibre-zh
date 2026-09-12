@@ -49,16 +49,22 @@ RE_CJK = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]")
 # adjacent, so URLs, version numbers and decimals are left alone.
 _PUNCT_AFTER_CJK = (("?", "？"), ("!", "！"), (";", "；"), (":", "："), (",", "，"))
 _CJK_CLASS = r"[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]"
+# Full-width marks that should hug their neighbour, never have a space next to
+# them. MT models emit "设备 。" and "“ 文本 ”" constantly.
+_CLOSE_MARKS = r"[，。！？；：、）】」』”]"
+_OPEN_MARKS = r"[（【「『“]"
 
 
 def normalize_punctuation(text: str) -> str:
     """
-    Convert half-width punctuation to full-width where Chinese requires it.
+    Convert half-width punctuation to full-width where Chinese requires it, and
+    remove the spaces MT leaves hugging full-width marks.
 
-    Deliberately conservative: only touches `? ! ; : ,` next to a CJK
-    character, and a sentence-final `.` that follows CJK. A decimal point or a
-    version number never has CJK immediately before it, so `3.14` and `v1.2`
-    are safe.
+    Deliberately conservative: the half-width conversion only fires next to a
+    CJK character, and the space removal only touches `[ \\t]` (never a
+    newline, which carries meaning in multi-line help text). A decimal point or
+    a version number never has CJK immediately before it, so `3.14`, `v1.2`
+    and `config.json` are safe.
     """
     out = text
     for half, full in _PUNCT_AFTER_CJK:
@@ -67,6 +73,11 @@ def normalize_punctuation(text: str) -> str:
         out = re.sub(rf"{h}(?={_CJK_CLASS})", full, out)
     # Sentence-final period, including one followed by more text after a space.
     out = re.sub(rf"(?<={_CJK_CLASS})\.(?=\s|$)", "。", out)
+    # Space hugging a full-width mark: '设备 。' -> '设备。', '“ 文本 ”' -> '“文本”'
+    out = re.sub(rf"[ \t]+(?={_CLOSE_MARKS})", "", out)
+    out = re.sub(rf"(?<={_OPEN_MARKS})[ \t]+", "", out)
+    # Space right after sentence punctuation, before more Chinese.
+    out = re.sub(rf"(?<={_CLOSE_MARKS})[ \t]+(?={_CJK_CLASS})", "", out)
     return out
 
 

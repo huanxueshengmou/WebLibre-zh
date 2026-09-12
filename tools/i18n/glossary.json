@@ -326,5 +326,11 @@
   "Private Tab": "隐私标签页",
   "Regular Tab": "普通标签页",
   "Isolated Tab": "隔离标签页",
-  "Container Tab": "容器标签页"
+  "Container Tab": "容器标签页",
+
+  "No linked consoles found.": "未找到关联控制台。",
+  "{0} linked consoles · {1} pages": "{0} 个关联控制台 · {1} 个页面",
+  "{0} ms": "{0} 毫秒",
+  "{0} on": "{0} 已开启",
+  "{0} off": "{0} 已关闭"
 }

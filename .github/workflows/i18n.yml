@@ -1,0 +1,361 @@
+name: Chinese build
+
+# Pulls the latest upstream WebLibre, re-applies the Chinese localisation,
+# commits the result to the `zh` branch and builds installable APKs.
+#
+# The important design decision: the translated Dart sources are NOT stored in
+# this repository. They are regenerated from a pristine upstream checkout on
+# every run, because the codemod is deterministic and idempotent. That means
+# upstream can refactor freely - there are no merge conflicts to resolve, ever -
+# and the only things this repo has to maintain are the tooling, the glossary
+# and the translation cache.
+#
+#   main  = upstream mirror + tools/i18n + i18n cache   (this is what you edit)
+#   zh    = generated: upstream + tr() wrapping + zh table (never edit by hand)
+
+on:
+  schedule:
+    # 03:17 UTC daily - a few minutes past the hour to avoid the busiest slot
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      build_apk:
+        description: Build APKs after translating
+        type: boolean
+        default: true
+      force_retranslate:
+        description: Ignore the cache and retranslate every string
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - "tools/i18n/**"
+      - "i18n/**"
+      - ".github/workflows/i18n.yml"
+
+concurrency:
+  group: chinese-build
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  UPSTREAM_REPO: FaFre/WebLibre
+  UPSTREAM_BRANCH: main
+  OUTPUT_BRANCH: zh
+  FLUTTER_VERSION: "3.47.0"
+  MELOS_VERSION: "7.8.1"
+  GO_VERSION: "1.25.x"
+  NODE_VERSION: "20"
+  # Below this, the run is flagged but still builds: a partly translated app is
+  # more useful than no app.
+  MIN_COVERAGE: "50"
+
+jobs:
+  # ------------------------------------------------------------------
+  # 1. Regenerate the Chinese tree and push it
+  # ------------------------------------------------------------------
+  translate:
+    runs-on: ubuntu-latest
+    outputs:
+      upstream_sha: ${{ steps.upstream.outputs.sha }}
+      changed: ${{ steps.push_zh.outputs.changed }}
+      coverage: ${{ steps.translate.outputs.coverage }}
+    steps:
+      - name: Checkout tooling branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Fetch upstream
+        id: upstream
+        run: |
+          set -euo pipefail
+          git remote add upstream "https://github.com/${UPSTREAM_REPO}.git" 2>/dev/null || true
+          git fetch --no-tags upstream "${UPSTREAM_BRANCH}"
+          sha="$(git rev-parse "upstream/${UPSTREAM_BRANCH}")"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Upstream ${UPSTREAM_REPO}@${UPSTREAM_BRANCH} is ${sha:0:12}"
+
+      - name: Create a pristine upstream worktree
+        run: |
+          set -euo pipefail
+          # A separate worktree keeps the tooling checkout clean, so the cache
+          # can be committed back to main at the end of the run.
+          git worktree add -B "${OUTPUT_BRANCH}" ../zh "upstream/${UPSTREAM_BRANCH}"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install translation engine
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          # Argos Translate: offline neural MT, no API key, no account. This is
+          # the whole dependency list for translating ~1900 strings.
+          python -m pip install argostranslate
+
+      - name: Run toolchain tests
+        run: python tools/i18n/test_i18n.py
+
+      - name: Apply the codemod
+        run: python tools/i18n/codemod.py ../zh
+
+      - name: Wire up app-level locale handling
+        run: python tools/i18n/patch_app.py ../zh
+
+      - name: Translate
+        id: translate
+        env:
+          # Optional. When set, translations come from an LLM instead of Argos.
+          I18N_LLM_API_KEY: ${{ secrets.I18N_LLM_API_KEY }}
+          I18N_LLM_BASE_URL: ${{ vars.I18N_LLM_BASE_URL }}
+          I18N_LLM_MODEL: ${{ vars.I18N_LLM_MODEL }}
+        run: |
+          set -euo pipefail
+          args=(--repo ../zh --min-coverage 0)
+          if [[ "${{ inputs.force_retranslate }}" == "true" ]]; then
+            args+=(--refresh)
+          fi
+          python tools/i18n/translate.py "${args[@]}"
+
+          coverage="$(python -c "import json;print(json.load(open('../zh/i18n/translation-report.json'))['coverage'])")"
+          echo "coverage=$coverage" >> "$GITHUB_OUTPUT"
+
+          if python -c "import sys;sys.exit(0 if float('$coverage') >= float('$MIN_COVERAGE') else 1)"; then
+            echo "Coverage ${coverage}% is healthy."
+          else
+            echo "::warning title=Low translation coverage::Only ${coverage}% of strings are translated. Check the Argos model download and i18n/translation-report.json."
+          fi
+
+      - name: Generate the Dart lookup table
+        run: python tools/i18n/gen_table.py --repo ../zh
+
+      - name: Verify the generated Dart
+        run: |
+          set -euo pipefail
+          # Catches the ways this transform can break compilation. A real
+          # `dart analyze` would be better but needs the whole toolchain, so
+          # this runs early and the build job is the final arbiter.
+          python tools/i18n/verify.py ../zh --baseline . --app-lib apps/weblibre/lib
+
+      - name: Push the generated branch
+        id: push_zh
+        run: |
+          set -euo pipefail
+          cd ../zh
+          git config user.name  "weblibre-zh bot"
+          git config user.email "weblibre-zh@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Nothing changed since the last run."
+          else
+            git commit -m "zh: localise ${UPSTREAM_REPO}@$(echo "${{ steps.upstream.outputs.sha }}" | cut -c1-12)"
+            git push --force origin "HEAD:${OUTPUT_BRANCH}"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Persist the translation cache
+        run: |
+          set -euo pipefail
+          # The cache is what makes a daily run cheap: only genuinely new
+          # strings get machine translated. It belongs on main, not on zh,
+          # because zh is disposable and regenerated from scratch each time.
+          mkdir -p i18n
+          for f in zh.json strings.json translation-report.json transform-report.json; do
+            [[ -f "../zh/i18n/$f" ]] && cp "../zh/i18n/$f" "i18n/$f"
+          done
+          git config user.name  "weblibre-zh bot"
+          git config user.email "weblibre-zh@users.noreply.github.com"
+          git add i18n
+          if git diff --cached --quiet; then
+            echo "Translation cache unchanged."
+          else
+            git commit -m "i18n: update translation cache [skip ci]"
+            git push origin main
+          fi
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## WebLibre 中文版"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| 上游版本 | \`${UPSTREAM_REPO}@${{ steps.upstream.outputs.sha }}\` |"
+            echo "| zh 分支有更新 | ${{ steps.push_zh.outputs.changed }} |"
+            echo "| 翻译覆盖率 | ${{ steps.translate.outputs.coverage }}% |"
+            echo ""
+            if [[ -f i18n/translation-report.json ]]; then
+              echo '```json'
+              python -c "import json;d=json.load(open('i18n/translation-report.json'));print(json.dumps({k:v for k,v in d.items() if k!='failed'},indent=1,ensure_ascii=False))"
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # ------------------------------------------------------------------
+  # 2. Build APKs from the generated branch
+  # ------------------------------------------------------------------
+  build:
+    needs: translate
+    if: ${{ needs.translate.outputs.changed == 'true' || inputs.build_apk }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+
+      - uses: actions/checkout@v4
+        with:
+          ref: zh
+          fetch-depth: 1
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "${{ env.GO_VERSION }}"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "${{ env.NODE_VERSION }}"
+
+      - name: Install Android NDK
+        run: |
+          set -euo pipefail
+          ANDROID_NDK_VERSION="$(
+            sed -n 's/^weblibre\.ndkVersion[[:space:]]*=[[:space:]]*//p' \
+              apps/weblibre/android/gradle.properties
+          )"
+          if [[ -z "$ANDROID_NDK_VERSION" ]]; then
+            echo "Missing weblibre.ndkVersion in gradle.properties" >&2
+            exit 1
+          fi
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;$ANDROID_NDK_VERSION"
+          test -f "$ANDROID_HOME/ndk/$ANDROID_NDK_VERSION/source.properties"
+          {
+            echo "ANDROID_NDK_VERSION=$ANDROID_NDK_VERSION"
+            echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/$ANDROID_NDK_VERSION"
+            echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/$ANDROID_NDK_VERSION"
+            echo "NDK_HOME=$ANDROID_HOME/ndk/$ANDROID_NDK_VERSION"
+          } >> "$GITHUB_ENV"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: "${{ env.FLUTTER_VERSION }}"
+          cache: true
+
+      - name: Prepare signing key
+        env:
+          KEY_JKS: ${{ secrets.KEY_JKS }}
+        run: |
+          set -euo pipefail
+          # Optional. Without these secrets the build falls back to debug
+          # signing (see tools/i18n/patch_app.py), which installs fine - it just
+          # cannot update over a build signed with a different key.
+          if [[ -n "${KEY_JKS:-}" ]]; then
+            echo "$KEY_JKS" | base64 -di > apps/weblibre/key.jks
+            chmod 600 apps/weblibre/key.jks
+            echo "Using the configured release keystore."
+          else
+            echo "KEY_JKS not set - falling back to debug signing."
+          fi
+
+      - name: Cache Go build dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+            ~/go/bin/gomobile
+            ~/go/bin/gobind
+          key: ${{ runner.os }}-go-runtime-${{ hashFiles('native/go_mobile_runtime/pins.env') }}
+          restore-keys: |
+            ${{ runner.os }}-go-runtime-
+
+      - name: Bootstrap the workspace
+        run: |
+          set -euo pipefail
+          dart pub global activate melos "${MELOS_VERSION}"
+          melos bootstrap
+
+      - name: Fetch external assets
+        run: melos run update-assets --no-select
+
+      - name: Build JS components and databases
+        run: melos run build-components --no-select
+
+      - name: Check out native runtime sources
+        run: |
+          set -euo pipefail
+          source native/go_mobile_runtime/pins.env
+
+          git clone https://github.com/SagerNet/sing-box.git "$RUNNER_TEMP/sing-box"
+          git -C "$RUNNER_TEMP/sing-box" checkout "$SING_BOX_TAG"
+          test "$(git -C "$RUNNER_TEMP/sing-box" rev-parse HEAD)" = "$SING_BOX_COMMIT"
+
+          git clone https://github.com/tladesignz/IPtProxy.git "$RUNNER_TEMP/IPtProxy"
+          git -C "$RUNNER_TEMP/IPtProxy" checkout "$IPTPROXY_TAG"
+          test "$(git -C "$RUNNER_TEMP/IPtProxy" rev-parse HEAD)" = "$IPTPROXY_COMMIT"
+          git -C "$RUNNER_TEMP/IPtProxy" submodule update --init dnstt
+
+      - name: Build native gomobile runtime
+        env:
+          SING_BOX_SOURCE: ${{ runner.temp }}/sing-box
+          IPTPROXY_SOURCE: ${{ runner.temp }}/IPtProxy
+        run: melos run build-go-runtime --no-select
+
+      - name: Build APKs
+        env:
+          KEY_PATH: ${{ github.workspace }}/apps/weblibre/key.jks
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: melos run build-browser-alpha --no-select
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: weblibre-zh-apk
+          path: apps/weblibre/build/app/outputs/apk/alpha/release/*.apk
+          if-no-files-found: error
+
+      - name: Publish a rolling release
+        uses: ncipollo/release-action@v1.17.0
+        with:
+          tag: zh-latest
+          name: "WebLibre 中文版 (rolling)"
+          body: |
+            Automatically generated Chinese build.
+
+            * Upstream: `${{ env.UPSTREAM_REPO }}@${{ needs.translate.outputs.upstream_sha }}`
+            * Translation coverage: ${{ needs.translate.outputs.coverage }}%
+            * Language follows the phone; no configuration needed.
+
+            APKs are split per CPU architecture - install the `arm64-v8a` one on
+            any modern phone.
+          artifacts: "apps/weblibre/build/app/outputs/apk/alpha/release/*.apk"
+          allowUpdates: true
+          replacesArtifacts: true
+          prerelease: false
+          makeLatest: false
+
+      - name: Cleanup
+        if: always()
+        run: rm -f apps/weblibre/key.jks

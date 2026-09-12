@@ -34,6 +34,7 @@ import 'package:weblibre/features/web_feed/presentation/widgets/tag_field.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/form_validators.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum _DialogMode { create, edit }
 
@@ -71,8 +72,8 @@ class FeedEditScreen extends HookConsumerWidget {
           return Scaffold(
             key: const ValueKey('data'),
             appBar: AppBar(),
-            body: const Center(
-              child: FailureWidget(title: 'Failed to load feed'),
+            body: Center(
+              child: FailureWidget(title: tr("Failed to load feed")),
             ),
           );
         }
@@ -83,25 +84,25 @@ class FeedEditScreen extends HookConsumerWidget {
         key: const ValueKey('error'),
         appBar: AppBar(),
         body: Center(
-          child: FailureWidget(title: 'Failed to load feed', exception: error),
+          child: FailureWidget(title: tr("Failed to load feed"), exception: error),
         ),
       ),
       loading: () => Scaffold(
         key: const ValueKey('loading'),
         appBar: AppBar(
           title: Text(switch (_mode) {
-            _DialogMode.create => 'New Feed',
-            _DialogMode.edit => 'Edit Feed',
+            _DialogMode.create => tr("New Feed"),
+            _DialogMode.edit => tr("Edit Feed"),
           }),
         ),
-        body: const Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircularProgressIndicator(),
               Padding(
                 padding: EdgeInsets.only(top: 8.0),
-                child: Text('Fetching feed...'),
+                child: Text(tr("Fetching feed...")),
               ),
             ],
           ),
@@ -147,8 +148,8 @@ class _FeedEditContent extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(switch (_mode) {
-          _DialogMode.create => 'New Feed',
-          _DialogMode.edit => 'Edit Feed',
+          _DialogMode.create => tr("New Feed"),
+          _DialogMode.edit => tr("Edit Feed"),
         }),
         actions: [
           IconButton(
@@ -214,8 +215,8 @@ class _FeedEditContent extends HookConsumerWidget {
                         controller: titleTextController,
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text('Description'),
+                        decoration: InputDecoration(
+                          label: Text(tr("Description")),
                           prefixIcon: Icon(Icons.short_text),
                         ),
                         minLines: 1,
@@ -224,8 +225,8 @@ class _FeedEditContent extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 32),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text('Icon URL'),
+                        decoration: InputDecoration(
+                          label: Text(tr("Icon URL")),
                           prefixIcon: Icon(Icons.image),
                         ),
                         keyboardType: TextInputType.url,
@@ -243,8 +244,8 @@ class _FeedEditContent extends HookConsumerWidget {
                         },
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text('Site Link'),
+                        decoration: InputDecoration(
+                          label: Text(tr("Site Link")),
                           prefixIcon: Icon(Icons.link),
                         ),
                         keyboardType: TextInputType.url,
@@ -270,8 +271,8 @@ class _FeedEditContent extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 32),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text('Feed URL'),
+                        decoration: InputDecoration(
+                          label: Text(tr("Feed URL")),
                           prefixIcon: Icon(MdiIcons.rss),
                         ),
                         keyboardType: TextInputType.url,

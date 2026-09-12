@@ -28,6 +28,7 @@ import 'package:weblibre/features/geckoview/features/tabs/utils/setting_groups_s
 import 'package:weblibre/features/settings/presentation/widgets/hardening_group_icon.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class WebEngineHardeningScreen extends HookConsumerWidget {
   const WebEngineHardeningScreen({super.key});
@@ -52,31 +53,31 @@ class WebEngineHardeningScreen extends HookConsumerWidget {
     final query = search.normalizedQuery;
 
     return SettingsCustomScrollScaffold(
-      title: 'Web Engine Hardening',
+      title: tr("Web Engine Hardening"),
       searchController: search.controller,
-      searchHintText: 'Search hardening groups',
+      searchHintText: tr("Search hardening groups"),
       actions: [
         MenuAnchor(
           menuChildren: [
             MenuItemButton(
               leadingIcon: const Icon(Icons.restore),
-              child: const Text('Reset all preferences'),
+              child: Text(tr("Reset all preferences")),
               onPressed: () async {
                 final confirmed = await showDialog<bool>(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Reset all preferences?'),
-                    content: const Text(
-                      'This will reset all user-defined web engine preferences to their defaults.',
+                    title: Text(tr("Reset all preferences?")),
+                    content: Text(
+                      tr("This will reset all user-defined web engine preferences to their defaults."),
                     ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(false),
-                        child: const Text('Cancel'),
+                        child: Text(tr("Cancel")),
                       ),
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text('Reset'),
+                        child: Text(tr("Reset")),
                       ),
                     ],
                   ),
@@ -134,9 +135,9 @@ class WebEngineHardeningScreen extends HookConsumerWidget {
                       title: 'Overview',
                       entries: [
                         SettingsEntryDefinition(
-                          title: 'Complete Hardening',
+                          title: tr("Complete Hardening"),
                           subtitle:
-                              'Apply or reset all grouped hardening preferences',
+                              tr("Apply or reset all grouped hardening preferences"),
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: DecoratedBox(
@@ -147,13 +148,13 @@ class WebEngineHardeningScreen extends HookConsumerWidget {
                               child: SwitchListTile.adaptive(
                                 value: allGroupsActive,
                                 title: Text(
-                                  'Complete Hardening',
+                                  tr("Complete Hardening"),
                                   style: TextStyle(
                                     color: theme.colorScheme.onPrimaryContainer,
                                   ),
                                 ),
                                 subtitle: Text(
-                                  'Toggle all grouped hardening preferences at once.',
+                                  tr("Toggle all grouped hardening preferences at once."),
                                   style: TextStyle(
                                     color: theme.colorScheme.onPrimaryContainer,
                                   ),
@@ -179,7 +180,7 @@ class WebEngineHardeningScreen extends HookConsumerWidget {
                     ),
                   if (filteredGroups.isNotEmpty)
                     SettingsSectionDefinition(
-                      title: 'Hardening Groups',
+                      title: tr("Hardening Groups"),
                       entries: [
                         for (final group in filteredGroups)
                           SettingsEntryDefinition(
@@ -215,7 +216,7 @@ class WebEngineHardeningScreen extends HookConsumerWidget {
                 );
               },
               error: (error, stackTrace) => FailureWidget(
-                title: 'Could not load preference settings',
+                title: tr("Could not load preference settings"),
                 exception: error,
                 onRetry: () => ref.refresh(
                   unifiedPreferenceSettingsRepositoryProvider(

@@ -19,6 +19,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:weblibre/features/account/data/repositories/account_sync_repository.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 // -- Metadata display helpers ------------------------------------------------
 
@@ -69,11 +70,11 @@ Future<String?> showStoreLabelDialog(BuildContext context) {
   return showDialog<String?>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Store Snapshot'),
+      title: Text(tr("Store Snapshot")),
       content: TextField(
         controller: controller,
-        decoration: const InputDecoration(
-          labelText: 'Label (optional)',
+        decoration: InputDecoration(
+          labelText: tr("Label (optional)"),
           hintText: 'e.g. "Before update", "Home setup"',
           border: OutlineInputBorder(),
         ),
@@ -83,7 +84,7 @@ Future<String?> showStoreLabelDialog(BuildContext context) {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () {
@@ -106,7 +107,7 @@ Future<String?> showEditLabelDialog(
   return showDialog<String?>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Edit Label'),
+      title: Text(tr("Edit Label")),
       content: TextField(
         controller: controller,
         decoration: const InputDecoration(
@@ -119,14 +120,14 @@ Future<String?> showEditLabelDialog(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () {
             final label = controller.text.trim();
             Navigator.of(context).pop(label.isEmpty ? '' : label);
           },
-          child: const Text('Save'),
+          child: Text(tr("Save")),
         ),
       ],
     ),
@@ -140,12 +141,12 @@ Future<bool?> showRestoreConfirmation(
   return showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Restore Snapshot'),
+      title: Text(tr("Restore Snapshot")),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('This will overwrite your current local settings.'),
+          Text(tr("This will overwrite your current local settings.")),
           const SizedBox(height: 16),
           if (metadata.label != null && metadata.label!.isNotEmpty)
             MetadataRow(label: 'Label', value: metadata.label!),
@@ -155,7 +156,7 @@ Future<bool?> showRestoreConfirmation(
           ),
           if (metadata.sourceAppVersion != null)
             MetadataRow(
-              label: 'App version',
+              label: tr("App version"),
               value: metadata.sourceAppVersion!,
             ),
           if (metadata.sourceDeviceId != null)
@@ -165,11 +166,11 @@ Future<bool?> showRestoreConfirmation(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Restore'),
+          child: Text(tr("Restore")),
         ),
       ],
     ),
@@ -192,7 +193,7 @@ Future<bool?> showDeleteConfirmation(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           style: FilledButton.styleFrom(

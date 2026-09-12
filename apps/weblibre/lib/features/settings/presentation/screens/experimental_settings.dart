@@ -26,20 +26,21 @@ import 'package:weblibre/features/user/data/models/engine_settings.dart';
 import 'package:weblibre/features/user/domain/presentation/dialogs/quit_browser_dialog.dart';
 import 'package:weblibre/features/user/domain/repositories/engine_settings.dart';
 import 'package:weblibre/utils/exit_app.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> experimentalSettingsSections = [
+List<SettingsSectionDefinition> experimentalSettingsSections = [
   SettingsSectionDefinition(
-    title: 'Runtime & Startup',
+    title: tr("Runtime & Startup"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Isolated Content Process',
-        subtitle: 'Run web content in an isolated process',
+        title: tr("Isolated Content Process"),
+        subtitle: tr("Run web content in an isolated process"),
         keywords: ['restart'],
         child: _IsolatedProcessEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: 'App Zygote Process',
-        subtitle: 'Preload the content service for faster isolated startup',
+        title: tr("App Zygote Process"),
+        subtitle: tr("Preload the content service for faster isolated startup"),
         keywords: ['restart', 'android 10'],
         child: _AppZygoteProcessEnabledTile(),
       ),
@@ -52,9 +53,9 @@ class ExperimentalSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
+    return SettingsDetailScaffold(
       title: 'Experimental',
-      subtitle: 'Runtime isolation and startup behavior.',
+      subtitle: tr("Runtime isolation and startup behavior."),
       icon: MdiIcons.flaskOutline,
       sections: experimentalSettingsSections,
     );
@@ -73,9 +74,9 @@ class _IsolatedProcessEnabledTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Isolated Content Process'),
-      subtitle: const Text(
-        'Run web content in an isolated process. Requires app restart.',
+      title: Text(tr("Isolated Content Process")),
+      subtitle: Text(
+        tr("Run web content in an isolated process. Requires app restart."),
       ),
       secondary: const Icon(MdiIcons.shieldCheck),
       value: isolatedProcessEnabled,
@@ -106,9 +107,9 @@ class _AppZygoteProcessEnabledTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('App Zygote Process'),
-      subtitle: const Text(
-        'Preload the content service for faster isolated process startup. Requires Android 10+ and app restart.',
+      title: Text(tr("App Zygote Process")),
+      subtitle: Text(
+        tr("Preload the content service for faster isolated process startup. Requires Android 10+ and app restart."),
       ),
       secondary: const Icon(MdiIcons.rocketLaunch),
       value: appZygoteProcessEnabled,

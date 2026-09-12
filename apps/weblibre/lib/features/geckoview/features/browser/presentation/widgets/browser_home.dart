@@ -42,6 +42,7 @@ import 'package:weblibre/features/user/domain/repositories/general_settings.dart
 import 'package:weblibre/features/wallpaper/presentation/widgets/wallpaper_backdrop.dart';
 import 'package:weblibre/presentation/widgets/browser_page.dart';
 import 'package:weblibre/presentation/widgets/sliver_center_on_underflow.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// The home surface creates tabs of the user's configured default type; the
 /// child type is meaningless here because there is no tab to be a child of.
@@ -255,7 +256,7 @@ class _HomeHeader extends ConsumerWidget {
             Text(
               container.name?.isNotEmpty == true
                   ? container.name!
-                  : 'Container',
+                  : tr("Container"),
               textAlign: TextAlign.center,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w700,

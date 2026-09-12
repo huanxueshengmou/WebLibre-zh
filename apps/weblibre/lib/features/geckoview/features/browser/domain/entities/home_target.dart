@@ -1,3 +1,4 @@
+import 'package:weblibre/i18n/i18n.dart';
 /*
  * Copyright (c) 2024-2026 Fabian Freund.
  *
@@ -30,14 +31,14 @@ enum HomeTarget {
   customUrl;
 
   String get label => switch (this) {
-    home => 'Home page',
-    resumeLastTab => 'Last opened tab',
-    customUrl => 'Custom address',
+    home => tr("Home page"),
+    resumeLastTab => tr("Last opened tab"),
+    customUrl => tr("Custom address"),
   };
 
   String get description => switch (this) {
-    home => 'Show shortcuts and the sections you have chosen',
-    resumeLastTab => 'Pick up where you left off',
-    customUrl => 'Open a specific page',
+    home => tr("Show shortcuts and the sections you have chosen"),
+    resumeLastTab => tr("Pick up where you left off"),
+    customUrl => tr("Open a specific page"),
   };
 }

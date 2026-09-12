@@ -16,6 +16,7 @@ import 'package:weblibre/features/web_search/presentation/screens/page_preview.d
 import 'package:weblibre/features/web_search/presentation/widgets/search_result_card.dart';
 import 'package:weblibre/features/web_search/presentation/widgets/web_search_infobox_card.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Number of result cards from the bottom at which to prefetch the next
 /// page. With a backend page size of 10, four cards of look-ahead means
@@ -108,7 +109,7 @@ class WebSearchResultsSection extends HookConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: FailureWidget(
-            title: 'Search failed',
+            title: tr("Search failed"),
             exception: state.errorMessage,
           ),
         ),
@@ -116,7 +117,7 @@ class WebSearchResultsSection extends HookConsumerWidget {
     }
 
     if (state.status == WebSearchStatus.submitting && state.results.isEmpty) {
-      return const SliverToBoxAdapter(
+      return SliverToBoxAdapter(
         child: Padding(
           padding: EdgeInsets.all(24),
           child: Column(
@@ -124,7 +125,7 @@ class WebSearchResultsSection extends HookConsumerWidget {
             children: [
               CircularProgressIndicator(),
               SizedBox(height: 16),
-              Text('Searching the web...'),
+              Text(tr("Searching the web...")),
             ],
           ),
         ),
@@ -207,7 +208,7 @@ class WebSearchResultsSection extends HookConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Text(
-            'No results found for "${state.query}".',
+            tr("No results found for \"{0}\".", [state.query]),
             textAlign: TextAlign.center,
           ),
         ),
@@ -257,7 +258,7 @@ class WebSearchStatusChip extends ConsumerWidget {
               Icon(Icons.stars_rounded, color: colorScheme.primary, size: 18),
               const SizedBox(width: 6),
               Text(
-                '$credits credits  |  $stash tokens',
+                tr("{0} credits  |  {1} tokens", [credits, stash]),
                 style: textTheme.labelLarge?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.bold,
@@ -281,14 +282,14 @@ class _NeedsCredits extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            'No search credits or tokens are available for a new web search.',
+          Text(
+            tr("No search credits or tokens are available for a new web search."),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
           FilledButton.icon(
             icon: const Icon(Icons.shopping_cart_outlined),
-            label: const Text('Buy a search pack'),
+            label: Text(tr("Buy a search pack")),
             onPressed: () async {
               await launchUrl(
                 Uri.parse('${SupabaseConfig.accountWebUrl}?view=search-pack'),

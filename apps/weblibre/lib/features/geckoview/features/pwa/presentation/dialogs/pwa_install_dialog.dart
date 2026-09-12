@@ -26,6 +26,7 @@ import 'package:weblibre/features/geckoview/features/tabs/data/entities/isolatio
 import 'package:weblibre/features/geckoview/features/tabs/domain/providers/selected_container.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// The type of home screen shortcut the user chose.
 enum ShortcutInstallType { shortcut, app }
@@ -254,7 +255,7 @@ class _InstallConfigSheet extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Add to Home Screen', style: textTheme.titleMedium),
+                  Text(tr("Add to Home Screen"), style: textTheme.titleMedium),
                   const SizedBox(height: 12),
                   Row(
                     children: [
@@ -278,8 +279,8 @@ class _InstallConfigSheet extends HookConsumerWidget {
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
               child: TextField(
                 controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
+                decoration: InputDecoration(
+                  labelText: tr("Name"),
                   border: OutlineInputBorder(),
                   isDense: true,
                 ),
@@ -315,15 +316,15 @@ class _InstallConfigSheet extends HookConsumerWidget {
             if (showAppOption)
               ListTile(
                 leading: const Icon(Icons.install_mobile),
-                title: const Text('Install as App'),
-                subtitle: const Text('Runs standalone with its own window.'),
+                title: Text(tr("Install as App")),
+                subtitle: Text(tr("Runs standalone with its own window.")),
                 onTap: () => submit(ShortcutInstallType.app),
               ),
             if (showShortcutOption)
               ListTile(
                 leading: const Icon(Icons.shortcut),
-                title: const Text('Add Shortcut'),
-                subtitle: const Text('Opens as a standard tab in the browser.'),
+                title: Text(tr("Add Shortcut")),
+                subtitle: Text(tr("Opens as a standard tab in the browser.")),
                 onTap: () => submit(ShortcutInstallType.shortcut),
               ),
             const SizedBox(height: 8),

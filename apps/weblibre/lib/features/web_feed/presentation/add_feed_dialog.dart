@@ -24,6 +24,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/web_feed/domain/providers/add_dialog_blocking.dart';
 import 'package:weblibre/utils/form_validators.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class AddFeedDialog extends HookConsumerWidget {
   final Uri? initialUri;
@@ -39,7 +40,7 @@ class AddFeedDialog extends HookConsumerWidget {
     );
 
     return AlertDialog(
-      title: const Text('Add Feed'),
+      title: Text(tr("Add Feed")),
       // contentPadding: const EdgeInsets.fromLTRB(24.0, 12.0, 24.0, 16.0),
       content: Form(
         key: formKey,
@@ -77,7 +78,7 @@ class AddFeedDialog extends HookConsumerWidget {
           onPressed: () {
             context.pop();
           },
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         TextButton(
           onPressed: () {

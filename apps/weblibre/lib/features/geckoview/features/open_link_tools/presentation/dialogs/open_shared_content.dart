@@ -51,6 +51,7 @@ import 'package:weblibre/presentation/hooks/cached_future.dart';
 import 'package:weblibre/presentation/hooks/debouncer.dart';
 import 'package:weblibre/utils/form_validators.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class OpenSharedContent extends HookConsumerWidget {
   final Uri sharedUrl;
@@ -312,7 +313,7 @@ class OpenSharedContent extends HookConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('Open link', style: Theme.of(context).textTheme.titleLarge),
+              Text(tr("Open link"), style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 8),
               TextFormField(
                 controller: textController,
@@ -332,7 +333,7 @@ class OpenSharedContent extends HookConsumerWidget {
                       MdiIcons.alertCircle,
                       color: Theme.of(context).colorScheme.error,
                     ),
-                    title: const Text('URL blocked by ClearURLs'),
+                    title: Text(tr("URL blocked by ClearURLs")),
                     dense: true,
                   )
                 else if (cleaner.showTile)
@@ -356,7 +357,7 @@ class OpenSharedContent extends HookConsumerWidget {
                     error: (error, _) => Padding(
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Text(
-                        'Unshorten failed: $error',
+                        tr("Unshorten failed: {0}", [error]),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.error,
                           fontSize: 12,
@@ -385,7 +386,7 @@ class OpenSharedContent extends HookConsumerWidget {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 4),
                           child: Text(
-                            'Remaining calls: $remaining/$limit',
+                            tr("Remaining calls: {0}/{1}", [remaining, limit]),
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         );
@@ -395,12 +396,12 @@ class OpenSharedContent extends HookConsumerWidget {
                   ),
                 _OpenActionTile(
                   title: 'Unshorten',
-                  subtitle: 'Resolve shortened URL',
+                  subtitle: tr("Resolve shortened URL"),
                   icon: MdiIcons.linkVariant,
                   showTrailingDivider: false,
                   trailing: IconButton(
                     icon: const Icon(Icons.info_outline),
-                    tooltip: 'Unshortener info',
+                    tooltip: tr("Unshortener info"),
                     onPressed: () {
                       unawaited(_showUnshortenerInfoDialog(context));
                     },
@@ -426,7 +427,7 @@ class OpenSharedContent extends HookConsumerWidget {
                   title: appLink.data?.appName != null
                       ? 'Open in ${appLink.data!.appName}'
                       : 'Open in App',
-                  subtitle: 'Open in an installed app',
+                  subtitle: tr("Open in an installed app"),
                   icon: Icons.open_in_new,
                   onTap: openInApp,
                 ),
@@ -493,14 +494,14 @@ class OpenSharedContent extends HookConsumerWidget {
                 ),
               ),
               _OpenActionTile(
-                title: 'Open in new tab',
-                subtitle: 'Add to your browser tabs',
+                title: tr("Open in new tab"),
+                subtitle: tr("Add to your browser tabs"),
                 icon: MdiIcons.tab,
                 onTap: () => openTab(resolveTabMode()),
               ),
               _OpenActionTile(
-                title: 'Open in custom tab',
-                subtitle: 'Open in a separate window',
+                title: tr("Open in custom tab"),
+                subtitle: tr("Open in a separate window"),
                 icon: MdiIcons.applicationOutline,
                 onTap: () => openCustomTab(resolveTabMode()),
               ),
@@ -523,7 +524,7 @@ Future<void> _showUnshortenerInfoDialog(BuildContext context) {
   return showDialog<void>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Unshortener Attribution'),
+      title: Text(tr("Unshortener Attribution")),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -535,8 +536,8 @@ Future<void> _showUnshortenerInfoDialog(BuildContext context) {
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: textColor),
                 children: [
-                  const TextSpan(
-                    text: 'This module will unshort links by sending them to ',
+                  TextSpan(
+                    text: tr("This module will unshort links by sending them to "),
                   ),
                   WidgetSpan(
                     alignment: PlaceholderAlignment.baseline,
@@ -547,17 +548,16 @@ Future<void> _showUnshortenerInfoDialog(BuildContext context) {
                       style: linkStyle,
                     ),
                   ),
-                  const TextSpan(
+                  TextSpan(
                     text:
-                        ', which evaluates them on their servers and saves the redirection for future requests. '
-                        'Avoid unshortening links with private or sensitive data.',
+                        tr(", which evaluates them on their servers and saves the redirection for future requests. Avoid unshortening links with private or sensitive data."),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'The free API is rate limited to 10 requests per hour for new checks.',
+            Text(
+              tr("The free API is rate limited to 10 requests per hour for new checks."),
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 12),
@@ -567,7 +567,7 @@ Future<void> _showUnshortenerInfoDialog(BuildContext context) {
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: textColor),
                 children: [
-                  const TextSpan(text: 'Privacy policy: '),
+                  TextSpan(text: tr("Privacy policy: ")),
                   WidgetSpan(
                     alignment: PlaceholderAlignment.baseline,
                     baseline: TextBaseline.alphabetic,
@@ -586,7 +586,7 @@ Future<void> _showUnshortenerInfoDialog(BuildContext context) {
       actions: [
         TextButton(
           onPressed: Navigator.of(context).pop,
-          child: const Text('Close'),
+          child: Text(tr("Close")),
         ),
       ],
     ),

@@ -26,6 +26,7 @@ import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/utils/host_rules.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Section widget toggling whether the current site should always load in
 /// desktop mode. Adds/removes the current host from the persisted rule list and
@@ -55,15 +56,15 @@ class DesktopModeSection extends HookConsumerWidget {
       onChanged: (host != null && parentRule == null)
           ? (enabled) => _toggleRule(context, ref, host, enabled)
           : null,
-      title: const Text('Always use desktop site'),
+      title: Text(tr("Always use desktop site")),
       subtitle: Text(
         host == null
-            ? 'Unavailable on this page'
+            ? tr("Unavailable on this page")
             : parentRule != null
-            ? 'Set by a rule for $parentRule'
+            ? tr("Set by a rule for {0}", [parentRule])
             : isRuled
-            ? 'This site always loads in desktop mode'
-            : 'This site follows the default mode',
+            ? tr("This site always loads in desktop mode")
+            : tr("This site follows the default mode"),
       ),
       secondary: Icon(
         MdiIcons.monitor,

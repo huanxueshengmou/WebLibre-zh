@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:weblibre/core/copy/profile_copy.dart';
 import 'package:weblibre/features/user/domain/entities/restart_cost.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Confirms deleting [profileName], including the restart it needs.
 ///
@@ -51,8 +52,8 @@ Future<bool?> showDeleteProfileDialog(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Its $profileDataDescription are removed. $cannotBeUndone',
+            Text(
+              tr("Its {0} are removed. {1}", [profileDataDescription, cannotBeUndone]),
             ),
             const SizedBox(height: 16),
             _RestartNote(
@@ -67,7 +68,7 @@ Future<bool?> showDeleteProfileDialog(
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -123,40 +124,33 @@ Future<bool?> showReplaceProfileDialog(
           Icons.settings_backup_restore,
           color: theme.colorScheme.error,
         ),
-        title: Text('Replace "$profileName" with this backup?'),
+        title: Text(tr("Replace \"{0}\" with this backup?", [profileName])),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               replacesPlaceholder
-                  ? 'The backup replaces the profile you are setting up. '
-                        'Anything already in it is lost. $cannotBeUndone'
-                  : 'The backup replaces everything in "$profileName" — its '
-                        '$profileDataDescription. Anything added after the '
-                        'backup is lost. $cannotBeUndone',
+                  ? tr("The backup replaces the profile you are setting up. Anything already in it is lost. {0}", [cannotBeUndone])
+                  : tr("The backup replaces everything in \"{0}\" — its {1}. Anything added after the backup is lost. {2}", [profileName, profileDataDescription, cannotBeUndone]),
             ),
             const SizedBox(height: 12),
             // Stated on the way in, because it is the half of the archive people
             // do not picture: replacing a user installs what makes it signed in.
             Text(
-              "$signedInFromBackup It restores the backup file's "
-              '$profileSecretDataDescription. $olderBackupKeepsCredentials',
+              tr("{0} It restores the backup file's {1}. {2}", [signedInFromBackup, profileSecretDataDescription, olderBackupKeepsCredentials]),
               style: theme.textTheme.bodySmall,
             ),
             if (adoptedName != null) ...[
               const SizedBox(height: 12),
               Text(
-                'The profile is renamed to "$adoptedName" and keeps its lock. '
-                '$shortcutsNeedPinningAgain',
+                tr("The profile is renamed to \"{0}\" and keeps its lock. {1}", [adoptedName, shortcutsNeedPinningAgain]),
                 style: theme.textTheme.bodySmall,
               ),
             ] else if (sourceProfileName != null) ...[
               const SizedBox(height: 12),
               Text(
-                'The backup came from "$sourceProfileName". "$profileName" '
-                'keeps its name and lock. '
-                '$shortcutsNeedPinningAgain',
+                tr("The backup came from \"{0}\". \"{1}\" keeps its name and lock. {2}", [sourceProfileName, profileName, shortcutsNeedPinningAgain]),
                 style: theme.textTheme.bodySmall,
               ),
             ],
@@ -171,7 +165,7 @@ Future<bool?> showReplaceProfileDialog(
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
@@ -179,7 +173,7 @@ Future<bool?> showReplaceProfileDialog(
               foregroundColor: theme.colorScheme.onError,
             ),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Replace and restart'),
+            child: Text(tr("Replace and restart")),
           ),
         ],
       );
@@ -210,14 +204,13 @@ Future<bool?> showBackupProfileDialog(
       // the colour stops meaning anything on the screens where it does.
       return AlertDialog(
         icon: const Icon(MdiIcons.safe),
-        title: Text('Back up "$profileName"?'),
+        title: Text(tr("Back up \"{0}\"?", [profileName])),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'The backup is taken with the profile closed, so nothing in it '
-              'changes.',
+            Text(
+              tr("The backup is taken with the profile closed, so nothing in it changes."),
             ),
             const SizedBox(height: 16),
             _RestartNote(
@@ -229,11 +222,11 @@ Future<bool?> showBackupProfileDialog(
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Back up and restart'),
+            child: Text(tr("Back up and restart")),
           ),
         ],
       );

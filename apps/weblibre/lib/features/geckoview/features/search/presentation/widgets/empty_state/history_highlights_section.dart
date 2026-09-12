@@ -23,6 +23,7 @@ import 'package:weblibre/features/geckoview/features/search/domain/providers/emp
 import 'package:weblibre/features/geckoview/features/search/domain/providers/search_modules_view.dart';
 import 'package:weblibre/features/geckoview/features/search/presentation/widgets/search_modules/search_module_section.dart';
 import 'package:weblibre/presentation/widgets/url_list_tile.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class HistoryHighlightsSection extends ConsumerWidget {
   final void Function(Uri uri) onUriSelected;
@@ -42,7 +43,7 @@ class HistoryHighlightsSection extends ConsumerWidget {
     }
 
     return SearchModuleSection(
-      title: 'History Highlights',
+      title: tr("History Highlights"),
       moduleType: SearchModuleType.historyHighlights,
       totalCount: highlights.length,
       contentSliverBuilder:

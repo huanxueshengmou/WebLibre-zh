@@ -36,6 +36,7 @@ import 'package:weblibre/features/proxy/domain/providers/proxy_connection_option
 import 'package:weblibre/features/proxy/domain/repositories/singbox_proxy_profiles.dart';
 import 'package:weblibre/features/proxy/presentation/controllers/ensure_proxy_started.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ContainerListScreen extends HookConsumerWidget {
   const ContainerListScreen({super.key});
@@ -65,7 +66,7 @@ class ContainerListScreen extends HookConsumerWidget {
     Widget buildList(List<ContainerDataWithCount> containers) {
       return CustomScrollView(
         slivers: [
-          const SliverAppBar.large(title: Text('Containers')),
+          SliverAppBar.large(title: Text(tr("Containers"))),
           if (containers.isEmpty)
             SliverFillRemaining(
               hasScrollBody: false,
@@ -73,7 +74,7 @@ class ContainerListScreen extends HookConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(32),
                   child: Text(
-                    'No containers yet.',
+                    tr("No containers yet."),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -124,7 +125,7 @@ class ContainerListScreen extends HookConsumerWidget {
           data: buildList,
           error: (error, stackTrace) => Center(
             child: FailureWidget(
-              title: 'Failed to load containers',
+              title: tr("Failed to load containers"),
               exception: error,
               onRetry: () => ref.invalidate(watchContainersWithCountProvider),
             ),
@@ -155,7 +156,7 @@ class ContainerListScreen extends HookConsumerWidget {
             containerData: jsonEncode(newContainer.toJson()),
           ).push(context);
         },
-        label: const Text('Container'),
+        label: Text(tr("Container")),
         icon: const Icon(Icons.add),
       ),
     );
@@ -252,14 +253,14 @@ class _ContainerCard extends HookConsumerWidget {
                                     '$tabCount ${tabCount == 1 ? 'tab' : 'tabs'}',
                               ),
                               if (container.isPinned)
-                                const _ContainerInfoChip(
+                                _ContainerInfoChip(
                                   icon: MdiIcons.pin,
-                                  label: 'Pinned',
+                                  label: tr("Pinned"),
                                 ),
                               if (container.metadata.contextualIdentity != null)
-                                const _ContainerInfoChip(
+                                _ContainerInfoChip(
                                   icon: Icons.cookie_outlined,
-                                  label: 'Isolated',
+                                  label: tr("Isolated"),
                                 ),
                               if (container.metadata.proxyConnectionId != null)
                                 _ContainerInfoChip(
@@ -273,14 +274,14 @@ class _ContainerCard extends HookConsumerWidget {
                               if (container.metadata.proxyConnectionId ==
                                       null &&
                                   container.metadata.bypassGlobalProxy)
-                                const _ContainerInfoChip(
+                                _ContainerInfoChip(
                                   icon: Icons.public,
-                                  label: 'Direct',
+                                  label: tr("Direct"),
                                 ),
                               if (container.metadata.clearDataOnExit)
-                                const _ContainerInfoChip(
+                                _ContainerInfoChip(
                                   icon: Icons.cleaning_services_outlined,
-                                  label: 'Clear on exit',
+                                  label: tr("Clear on exit"),
                                 ),
                             ],
                           ),
@@ -321,7 +322,7 @@ class _ContainerCard extends HookConsumerWidget {
                     FilledButton.tonalIcon(
                       onPressed: onSelect,
                       icon: Icon(isSelected ? Icons.close : Icons.check),
-                      label: Text(isSelected ? 'Unselect' : 'Select'),
+                      label: Text(isSelected ? tr("Unselect") : 'Select'),
                     ),
                   ],
                 ),

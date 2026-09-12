@@ -34,6 +34,7 @@ import 'package:weblibre/features/sync/domain/repositories/sync.dart';
 import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 class SyncSettingsScreen extends HookConsumerWidget {
   const SyncSettingsScreen({super.key});
@@ -113,13 +114,13 @@ class SyncSettingsScreen extends HookConsumerWidget {
 
     final sections = <SettingsSectionDefinition>[
       SettingsSectionDefinition(
-        title: 'Account',
+        title: tr("Account"),
         entries: [
           SettingsEntryDefinition(
             title: syncInfo?.authenticated == true
                 ? 'Signed in account'
                 : 'Sign in',
-            subtitle: 'Account status, QR pairing, and device name',
+            subtitle: tr("Account status, QR pairing, and device name"),
             keywords: const ['pairing', 'device name'],
             child: Column(
               children: [
@@ -131,16 +132,16 @@ class SyncSettingsScreen extends HookConsumerWidget {
                   ),
                   subtitle: Text(
                     syncInfo?.needsReauth == true
-                        ? 'Authentication expired. Sign in again to continue syncing.'
+                        ? tr("Authentication expired. Sign in again to continue syncing.")
                         : syncInfo?.authenticated == true
                         ? (syncInfo?.displayName ??
                               'Syncing tabs, bookmarks, and history')
-                        : 'Sign in to synchronize tabs, bookmarks, and history',
+                        : tr("Sign in to synchronize tabs, bookmarks, and history"),
                   ),
                   trailing: syncInfo?.authenticated == true
                       ? IconButton(
                           icon: const Icon(Icons.logout),
-                          tooltip: 'Sign Out',
+                          tooltip: tr("Sign Out"),
                           onPressed: isSyncing
                               ? null
                               : () async {
@@ -166,9 +167,9 @@ class SyncSettingsScreen extends HookConsumerWidget {
                   const Divider(height: 1),
                   ListTile(
                     leading: const Icon(Icons.qr_code_scanner),
-                    title: const Text('Scan QR Code to pair'),
-                    subtitle: const Text(
-                      'Scan a QR code from firefox.com/pair on desktop',
+                    title: Text(tr("Scan QR Code to pair")),
+                    subtitle: Text(
+                      tr("Scan a QR code from firefox.com/pair on desktop"),
                     ),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () async {
@@ -199,7 +200,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
                   const Divider(height: 1),
                   ListTile(
                     leading: const Icon(Icons.devices),
-                    title: const Text('Device Name'),
+                    title: Text(tr("Device Name")),
                     subtitle: ref
                         .watch(syncDeviceNameProvider)
                         .when(
@@ -239,7 +240,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
         title: 'Synchronization',
         entries: [
           SettingsEntryDefinition(
-            title: 'Sync Now',
+            title: tr("Sync Now"),
             subtitle: syncText,
             keywords: const ['history', 'bookmarks', 'tabs'],
             child: Column(
@@ -252,7 +253,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
                     ).animate(syncController),
                     child: const Icon(Icons.sync),
                   ),
-                  title: const Text('Sync Now'),
+                  title: Text(tr("Sync Now")),
                   subtitle: Text(syncText),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: isSyncing
@@ -265,7 +266,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
                 ),
                 const Divider(height: 1),
                 SwitchListTile.adaptive(
-                  title: const Text('Sync History'),
+                  title: Text(tr("Sync History")),
                   value: _engineEnabled(syncInfo, SyncEngineValue.history),
                   onChanged: (syncInfo == null || isSyncing)
                       ? null
@@ -277,7 +278,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
                 ),
                 const Divider(height: 1),
                 SwitchListTile.adaptive(
-                  title: const Text('Sync Bookmarks'),
+                  title: Text(tr("Sync Bookmarks")),
                   value: _engineEnabled(syncInfo, SyncEngineValue.bookmarks),
                   onChanged: (syncInfo == null || isSyncing)
                       ? null
@@ -292,7 +293,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
                 ),
                 const Divider(height: 1),
                 SwitchListTile.adaptive(
-                  title: const Text('Sync Open Tabs'),
+                  title: Text(tr("Sync Open Tabs")),
                   value: _engineEnabled(syncInfo, SyncEngineValue.tabs),
                   onChanged: (syncInfo == null || isSyncing)
                       ? null
@@ -308,19 +309,19 @@ class SyncSettingsScreen extends HookConsumerWidget {
         ],
       ),
       SettingsSectionDefinition(
-        title: 'Server Overrides',
+        title: tr("Server Overrides"),
         entries: [
           SettingsEntryDefinition(
-            title: 'Server overrides',
-            subtitle: 'Custom Firefox Account and token server endpoints',
+            title: tr("Server overrides"),
+            subtitle: tr("Custom Firefox Account and token server endpoints"),
             keywords: const ['fxa', 'token server'],
             child: Column(
               children: [
                 ListTile(
-                  title: const Text('FxA Server Override'),
+                  title: Text(tr("FxA Server Override")),
                   subtitle: Text(
                     generalSettings.syncServerOverride.isEmpty
-                        ? 'Default Mozilla server'
+                        ? tr("Default Mozilla server")
                         : generalSettings.syncServerOverride,
                   ),
                   trailing: const Icon(Icons.edit_outlined),
@@ -328,7 +329,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
                       ? null
                       : () => _showTextSettingDialog(
                           context,
-                          title: 'FxA Server Override',
+                          title: tr("FxA Server Override"),
                           initialValue: generalSettings.syncServerOverride,
                           hint: 'https://accounts.firefox.com',
                           onSave: (value) {
@@ -346,10 +347,10 @@ class SyncSettingsScreen extends HookConsumerWidget {
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  title: const Text('Sync Token Server Override'),
+                  title: Text(tr("Sync Token Server Override")),
                   subtitle: Text(
                     generalSettings.syncTokenServerOverride.isEmpty
-                        ? 'Automatic from FxA server'
+                        ? tr("Automatic from FxA server")
                         : generalSettings.syncTokenServerOverride,
                   ),
                   trailing: const Icon(Icons.edit_outlined),
@@ -357,7 +358,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
                       ? null
                       : () => _showTextSettingDialog(
                           context,
-                          title: 'Sync Token Server Override',
+                          title: tr("Sync Token Server Override"),
                           initialValue: generalSettings.syncTokenServerOverride,
                           hint:
                               'https://token.services.mozilla.com/1.0/sync/1.5',
@@ -375,10 +376,10 @@ class SyncSettingsScreen extends HookConsumerWidget {
                         ),
                 ),
                 const Divider(height: 1),
-                const ListTile(
+                ListTile(
                   dense: true,
                   title: Text(
-                    'Restart the app after changing server overrides.',
+                    tr("Restart the app after changing server overrides."),
                     style: TextStyle(fontSize: 12),
                   ),
                 ),
@@ -395,9 +396,9 @@ class SyncSettingsScreen extends HookConsumerWidget {
     );
 
     return SettingsCustomScrollScaffold(
-      title: 'Firefox Sync',
+      title: tr("Firefox Sync"),
       searchController: search.controller,
-      searchHintText: 'Search sync settings',
+      searchHintText: tr("Search sync settings"),
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 20),
@@ -432,18 +433,18 @@ class SyncSettingsScreen extends HookConsumerWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Sign out?'),
-          content: const Text(
-            'Are you sure you want to sign out of Firefox Sync?',
+          title: Text(tr("Sign out?")),
+          content: Text(
+            tr("Are you sure you want to sign out of Firefox Sync?"),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancel'),
+              child: Text(tr("Cancel")),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Sign Out'),
+              child: Text(tr("Sign Out")),
             ),
           ],
         );
@@ -461,17 +462,17 @@ class SyncSettingsScreen extends HookConsumerWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Device Name'),
+          title: Text(tr("Device Name")),
           content: TextField(
             controller: controller,
-            decoration: const InputDecoration(hintText: 'Enter device name'),
+            decoration: InputDecoration(hintText: tr("Enter device name")),
             autofocus: true,
             inputFormatters: [LengthLimitingTextInputFormatter(128)],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: Text(tr("Cancel")),
             ),
             FilledButton(
               onPressed: () async {
@@ -512,7 +513,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text('Save'),
+              child: Text(tr("Save")),
             ),
           ],
         );
@@ -541,7 +542,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: Text(tr("Cancel")),
             ),
             FilledButton(
               onPressed: () async {
@@ -563,7 +564,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text('Save'),
+              child: Text(tr("Save")),
             ),
           ],
         );

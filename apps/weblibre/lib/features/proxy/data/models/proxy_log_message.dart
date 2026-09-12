@@ -20,6 +20,7 @@
 import 'package:fast_equatable/fast_equatable.dart';
 import 'package:flutter_singbox_proxy/flutter_singbox_proxy.dart';
 import 'package:flutter_tor/flutter_tor.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum ProxyLogSource { singBox, tor }
 
@@ -65,9 +66,9 @@ enum ProxyLogSeverity {
   /// Label for the viewer's filter. Plural because it selects a range: picking
   /// [warn] shows warnings *and* everything worse.
   String get filterLabel => switch (this) {
-    ProxyLogSeverity.trace => 'Trace',
+    ProxyLogSeverity.trace => tr("Trace"),
     ProxyLogSeverity.debug => 'Debug',
-    ProxyLogSeverity.info => 'Info',
+    ProxyLogSeverity.info => tr("Info"),
     ProxyLogSeverity.warn => 'Warnings',
     ProxyLogSeverity.error => 'Errors',
   };

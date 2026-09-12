@@ -27,6 +27,7 @@ import 'package:weblibre/features/geckoview/domain/providers/tab_state.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/providers.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class BangCategoryScreen extends HookConsumerWidget {
   final String? category;
@@ -79,7 +80,7 @@ class BangCategoryScreen extends HookConsumerWidget {
             error: (error, stackTrace) => SliverToBoxAdapter(
               child: Center(
                 child: FailureWidget(
-                  title: 'Failed to load Bangs',
+                  title: tr("Failed to load Bangs"),
                   exception: error,
                 ),
               ),

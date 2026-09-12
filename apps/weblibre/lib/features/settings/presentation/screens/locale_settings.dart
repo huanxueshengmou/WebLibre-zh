@@ -30,6 +30,7 @@ import 'package:weblibre/features/settings/presentation/controllers/save_setting
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/features/user/data/models/engine_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/engine_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class LocaleSettingsScreen extends HookConsumerWidget {
   const LocaleSettingsScreen({super.key});
@@ -74,9 +75,9 @@ class LocaleSettingsScreen extends HookConsumerWidget {
     }).toList();
 
     return SettingsCustomScrollScaffold(
-      title: 'Browser Languages',
+      title: tr("Browser Languages"),
       searchController: search.controller,
-      searchHintText: 'Search locales by tag',
+      searchHintText: tr("Search locales by tag"),
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 20),
@@ -84,12 +85,12 @@ class LocaleSettingsScreen extends HookConsumerWidget {
             child: SettingsSectionList(
               sections: [
                 SettingsSectionDefinition(
-                  title: 'Language & Region Settings',
+                  title: tr("Language & Region Settings"),
                   entries: [
                     for (final locale in filteredLocales)
                       SettingsEntryDefinition(
                         title: locale.toLanguageTag(),
-                        subtitle: 'Browser language preference',
+                        subtitle: tr("Browser language preference"),
                         keywords: [locale.languageCode],
                         child: CheckboxListTile.adaptive(
                           value: userLocales.value.contains(locale),
@@ -149,11 +150,11 @@ class LocaleSettingsScreen extends HookConsumerWidget {
                   ],
                 ),
                 SettingsSectionDefinition(
-                  title: 'Custom Locale',
+                  title: tr("Custom Locale"),
                   entries: [
                     SettingsEntryDefinition(
-                      title: 'Add custom locale',
-                      subtitle: 'Enter a locale tag such as en-US',
+                      title: tr("Add custom locale"),
+                      subtitle: tr("Enter a locale tag such as en-US"),
                       keywords: const ['locale tag'],
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
@@ -162,7 +163,7 @@ class LocaleSettingsScreen extends HookConsumerWidget {
                           child: TextFormField(
                             controller: customLocaleController,
                             decoration: InputDecoration(
-                              label: const Text('Custom Locale'),
+                              label: Text(tr("Custom Locale")),
                               hint: const Text('en-US'),
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,

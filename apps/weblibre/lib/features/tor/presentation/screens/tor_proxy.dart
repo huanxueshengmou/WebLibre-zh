@@ -35,27 +35,28 @@ import 'package:weblibre/features/user/domain/repositories/tor_settings.dart';
 import 'package:weblibre/presentation/hooks/on_initialization.dart';
 import 'package:weblibre/presentation/icons/tor_icons.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> torProxySettingsSections = [
+List<SettingsSectionDefinition> torProxySettingsSections = [
   SettingsSectionDefinition(
     title: 'Service',
     keywords: ['power', 'start', 'stop'],
     entries: [
       SettingsEntryDefinition(
         title: torServiceLabel,
-        subtitle: 'Start or stop the $torBrand service',
+        subtitle: tr("Start or stop the {0} service", [torBrand]),
         keywords: ['enable', 'connect'],
         child: _TorServiceTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Start Automatically',
-        subtitle: 'Connect the $torBrand service when WebLibre starts',
+        title: tr("Start Automatically"),
+        subtitle: tr("Connect the {0} service when WebLibre starts", [torBrand]),
         keywords: ['autostart', 'launch', 'startup', 'boot'],
         child: _TorAutostartTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Request New Identity',
-        subtitle: 'Use a fresh circuit for new connections',
+        title: tr("Request New Identity"),
+        subtitle: tr("Use a fresh circuit for new connections"),
         keywords: ['circuit'],
         child: _RequestNewIdentityTile(),
       ),
@@ -66,41 +67,41 @@ const List<SettingsSectionDefinition> torProxySettingsSections = [
     keywords: ['bridges', 'transport', 'obfs4', 'snowflake'],
     entries: [
       SettingsEntryDefinition(
-        title: 'Auto Configure Transport',
+        title: tr("Auto Configure Transport"),
         subtitle:
-            'Pick the right pluggable transport for your network automatically',
+            tr("Pick the right pluggable transport for your network automatically"),
         keywords: ['auto'],
         child: _AutoConfigureTransportTile(),
       ),
       SettingsEntryDefinition(
         title: 'Transport',
         subtitle:
-            'Choose how to reach the $torNetworkLabel when not auto-configured',
+            tr("Choose how to reach the {0} when not auto-configured", [torNetworkLabel]),
         keywords: ['direct', 'obfs4', 'snowflake'],
         child: _TransportSection(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: 'Country Restrictions',
+    title: tr("Country Restrictions"),
     keywords: ['entry', 'exit', 'country'],
     entries: [
       SettingsEntryDefinition(
-        title: 'Entry Country',
-        subtitle: 'Choose the country of the entry guard',
+        title: tr("Entry Country"),
+        subtitle: tr("Choose the country of the entry guard"),
         keywords: ['guard'],
         child: _CountryPickerTile(role: _NodeRole.entry),
       ),
       SettingsEntryDefinition(
-        title: 'Exit Country',
-        subtitle: 'Choose the country of the exit node',
+        title: tr("Exit Country"),
+        subtitle: tr("Choose the country of the exit node"),
         keywords: ['exit'],
         child: _CountryPickerTile(role: _NodeRole.exit),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: 'About',
+    title: tr("About"),
     keywords: ['trademark', 'legal'],
     entries: [
       SettingsEntryDefinition(
@@ -151,10 +152,10 @@ class TorProxyScreen extends HookConsumerWidget {
       }
     });
 
-    return const SettingsDetailScaffold(
+    return SettingsDetailScaffold(
       title: torProxyLabel,
       subtitle:
-          'Onion routing, pluggable transports, bridges and country restrictions.',
+          tr("Onion routing, pluggable transports, bridges and country restrictions."),
       icon: TorIcons.onionAlt,
       sections: torProxySettingsSections,
     );
@@ -197,7 +198,7 @@ class _TorServiceTile extends HookConsumerWidget {
         SwitchListTile.adaptive(
           secondary: const Icon(MdiIcons.power),
           title: const Text(torServiceLabel),
-          subtitle: const Text('Start or stop the $torBrand service'),
+          subtitle: Text(tr("Start or stop the {0} service", [torBrand])),
           value: pendingRequest.value ?? isRunning,
           onChanged: isBusy
               ? null
@@ -236,10 +237,9 @@ class _TorAutostartTile extends ConsumerWidget {
 
     return SwitchListTile.adaptive(
       secondary: const Icon(MdiIcons.rocketLaunchOutline),
-      title: const Text('Start Automatically'),
-      subtitle: const Text(
-        'Connect the $torBrand service when WebLibre starts, so tabs using it '
-        'are ready without a prompt',
+      title: Text(tr("Start Automatically")),
+      subtitle: Text(
+        tr("Connect the {0} service when WebLibre starts, so tabs using it are ready without a prompt", [torBrand]),
       ),
       value: autostart,
       onChanged: (value) async {
@@ -264,8 +264,8 @@ class _RequestNewIdentityTile extends ConsumerWidget {
     return ListTile(
       enabled: enabled,
       leading: const Icon(MdiIcons.refresh),
-      title: const Text('Request New Identity'),
-      subtitle: const Text('Use a fresh circuit for new connections'),
+      title: Text(tr("Request New Identity")),
+      subtitle: Text(tr("Use a fresh circuit for new connections")),
       trailing: const Icon(Icons.chevron_right),
       onTap: () async {
         await ref.read(torProxyServiceProvider.notifier).requestNewIdentity();
@@ -291,9 +291,9 @@ class _AutoConfigureTransportTile extends ConsumerWidget {
       children: [
         SwitchListTile.adaptive(
           secondary: const Icon(MdiIcons.arrowDecisionAuto),
-          title: const Text('Auto Configure Transport'),
-          subtitle: const Text(
-            'From some locations, it is necessary to use a pluggable transport to connect to $torBrand',
+          title: Text(tr("Auto Configure Transport")),
+          subtitle: Text(
+            tr("From some locations, it is necessary to use a pluggable transport to connect to {0}", [torBrand]),
           ),
           value: torSettings.config == TorConnectionConfig.auto,
           onChanged: isBusy
@@ -313,7 +313,7 @@ class _AutoConfigureTransportTile extends ConsumerWidget {
         if (torSettings.config == TorConnectionConfig.auto)
           SwitchListTile.adaptive(
             contentPadding: const EdgeInsets.only(left: 56, right: 24),
-            title: const Text("I'm sure I cannot connect without a bridge"),
+            title: Text(tr("I'm sure I cannot connect without a bridge")),
             value: torSettings.requireBridge,
             onChanged: isBusy
                 ? null
@@ -341,11 +341,11 @@ class _TransportSection extends ConsumerWidget {
     );
 
     if (torSettings.config == TorConnectionConfig.auto) {
-      return const ListTile(
+      return ListTile(
         leading: Icon(Icons.info_outline),
         title: Text('Auto-configured'),
         subtitle: Text(
-          'Disable auto-configure above to pick a transport manually.',
+          tr("Disable auto-configure above to pick a transport manually."),
         ),
       );
     }
@@ -366,24 +366,24 @@ class _TransportSection extends ConsumerWidget {
               RadioListTile<TorConnectionConfig>.adaptive(
                 value: TorConnectionConfig.direct,
                 enabled: !isBusy,
-                title: const Text('Direct Connection'),
-                subtitle: const Text(
-                  'The best way to connect to $torBrand if $torBrand is not blocked',
+                title: Text(tr("Direct Connection")),
+                subtitle: Text(
+                  tr("The best way to connect to {0} if {1} is not blocked", [torBrand, torBrand]),
                 ),
               ),
               RadioListTile<TorConnectionConfig>.adaptive(
                 value: TorConnectionConfig.obfs4,
                 enabled: !isBusy,
                 title: const Text('obfs4'),
-                subtitle: const Text(
-                  'Suitable for light censorship and high bandwidth needs',
+                subtitle: Text(
+                  tr("Suitable for light censorship and high bandwidth needs"),
                 ),
               ),
               RadioListTile<TorConnectionConfig>.adaptive(
                 value: TorConnectionConfig.snowflake,
                 enabled: !isBusy,
                 title: const Text('Snowflake'),
-                subtitle: const Text('Suitable for heavy censorship'),
+                subtitle: Text(tr("Suitable for heavy censorship")),
               ),
             ],
           ),
@@ -392,7 +392,7 @@ class _TransportSection extends ConsumerWidget {
           controlAffinity: ListTileControlAffinity.leading,
           enabled: !isBusy && torSettings.config != TorConnectionConfig.direct,
           value: torSettings.fetchRemoteBridges,
-          title: const Text('Fetch fresh Bridges before connecting'),
+          title: Text(tr("Fetch fresh Bridges before connecting")),
           onChanged: isBusy
               ? null
               : (value) async {

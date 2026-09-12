@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows a confirmation dialog for quitting the browser.
 ///
@@ -28,16 +29,16 @@ Future<bool?> showQuitBrowserDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         icon: const Icon(Icons.warning),
-        title: const Text('Quit Browser'),
-        content: const Text(
-          'This will properly shutdown the browser and clear private tab data',
+        title: Text(tr("Quit Browser")),
+        content: Text(
+          tr("This will properly shutdown the browser and clear private tab data"),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           TextButton(
             onPressed: () {

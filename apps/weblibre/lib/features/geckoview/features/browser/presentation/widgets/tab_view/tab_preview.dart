@@ -44,6 +44,7 @@ import 'package:weblibre/presentation/widgets/single_finger_horizontal_drag.dart
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<bool> _confirmIsolatedTabCloseIfNeeded(
   BuildContext context,
@@ -261,13 +262,13 @@ class GridTabPreview extends HookConsumerWidget {
                               onDeleteAll?.call(displayUrl.host);
                             },
                             leadingIcon: const Icon(Icons.language),
-                            child: const Text('Close from Same Host'),
+                            child: Text(tr("Close from Same Host")),
                           ),
                           if (onCloseSubtree != null)
                             MenuItemButton(
                               onPressed: onCloseSubtree,
                               leadingIcon: const Icon(Icons.account_tree),
-                              child: const Text('Close Tab and Descendants'),
+                              child: Text(tr("Close Tab and Descendants")),
                             ),
                         ],
                         child: SizedBox(
@@ -353,7 +354,7 @@ class GridTabPreview extends HookConsumerWidget {
                                           context,
                                           'Tab unpinned',
                                           action: SnackBarAction(
-                                            label: 'Undo',
+                                            label: tr("Undo"),
                                             onPressed: () async {
                                               await ref
                                                   .read(
@@ -642,13 +643,13 @@ class ListTabPreview extends HookConsumerWidget {
                           onDeleteAll?.call(displayUrl.host);
                         },
                         leadingIcon: const Icon(Icons.language),
-                        child: const Text('Close from Same Host'),
+                        child: Text(tr("Close from Same Host")),
                       ),
                       if (onCloseSubtree != null)
                         MenuItemButton(
                           onPressed: onCloseSubtree,
                           leadingIcon: const Icon(Icons.account_tree),
-                          child: const Text('Close Tab and Descendants'),
+                          child: Text(tr("Close Tab and Descendants")),
                         ),
                     ],
                     child: IconButton(

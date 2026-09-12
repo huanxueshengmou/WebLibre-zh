@@ -35,6 +35,7 @@ import 'package:weblibre/features/proxy/presentation/widgets/profile_editor/prof
 import 'package:weblibre/features/proxy/presentation/widgets/profile_editor/structured_profile_form.dart';
 import 'package:weblibre/presentation/widgets/button_spinner.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SingboxProxyProfileEditorScreen extends ConsumerWidget {
   final String? profileId;
@@ -52,14 +53,14 @@ class SingboxProxyProfileEditorScreen extends ConsumerWidget {
 
     if (draft.isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Edit Profile')),
+        appBar: AppBar(title: Text(tr("Edit Profile"))),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     if (draft.loadError != null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Edit Profile')),
+        appBar: AppBar(title: Text(tr("Edit Profile"))),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -110,7 +111,7 @@ class _Editor extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            label: Text(draft.isEditing ? 'Save Changes' : 'Create Profile'),
+            label: Text(draft.isEditing ? tr("Save Changes") : 'Create Profile'),
           ),
         ),
       ),
@@ -124,14 +125,14 @@ class _Editor extends ConsumerWidget {
               slivers: [
                 SliverAppBar.large(
                   centerTitle: false,
-                  title: Text(draft.isEditing ? 'Edit Profile' : 'New Profile'),
+                  title: Text(draft.isEditing ? tr("Edit Profile") : tr("New Profile")),
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate.fixed([
                       ProfileEditorSection(
-                        title: 'General',
+                        title: tr("General"),
                         child: Padding(
                           padding: const EdgeInsets.all(16),
                           child: _GeneralSection(
@@ -144,7 +145,7 @@ class _Editor extends ConsumerWidget {
                       _ProtocolForm(draftProvider: draftProvider, draft: draft),
                       const SizedBox(height: 24),
                       ProfileEditorSection(
-                        title: 'DNS Override',
+                        title: tr("DNS Override"),
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
                           child: ProfileDnsOverrideSection(
@@ -157,9 +158,7 @@ class _Editor extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: Text(
-                            'Tip: use the add menu on the previous screen to '
-                            'import from a file, paste a share link, or scan '
-                            'a QR code.',
+                            tr("Tip: use the add menu on the previous screen to import from a file, paste a share link, or scan a QR code."),
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(color: scheme.onSurfaceVariant),
                           ),
@@ -222,8 +221,8 @@ class _GeneralSection extends HookConsumerWidget {
         TextField(
           controller: nameController,
           textInputAction: TextInputAction.next,
-          decoration: const InputDecoration(
-            labelText: 'Profile Name',
+          decoration: InputDecoration(
+            labelText: tr("Profile Name"),
             border: OutlineInputBorder(),
           ),
           onChanged: ref.read(draftProvider.notifier).setName,
@@ -235,10 +234,10 @@ class _GeneralSection extends HookConsumerWidget {
           // rewrite the profile under a foreign schema. To change protocol,
           // create a new profile.
           InputDecorator(
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Protocol',
               border: OutlineInputBorder(),
-              helperText: 'Protocol is fixed once a profile is created.',
+              helperText: tr("Protocol is fixed once a profile is created."),
             ),
             child: Text(draft.type.label),
           )
@@ -264,10 +263,9 @@ class _GeneralSection extends HookConsumerWidget {
         SwitchListTile.adaptive(
           contentPadding: EdgeInsets.zero,
           secondary: const Icon(MdiIcons.rocketLaunchOutline),
-          title: const Text('Start Automatically'),
-          subtitle: const Text(
-            'Connect this profile when WebLibre starts, so tabs using it are '
-            'ready without a prompt',
+          title: Text(tr("Start Automatically")),
+          subtitle: Text(
+            tr("Connect this profile when WebLibre starts, so tabs using it are ready without a prompt"),
           ),
           value: draft.autostart,
           onChanged: ref.read(draftProvider.notifier).setAutostart,

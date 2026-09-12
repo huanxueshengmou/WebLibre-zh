@@ -27,6 +27,7 @@ import 'package:weblibre/features/geckoview/features/tabs/domain/repositories/co
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/form_validators.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 final _wildcardHostRegex = RegExp(r'^\*\.([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,63}$');
 
@@ -97,7 +98,7 @@ class ContainerSitesScreen extends HookConsumerWidget {
               context.pop(sites.value);
             },
           ),
-          title: const Text('Site Assignments'),
+          title: Text(tr("Site Assignments")),
         ),
         body: SafeArea(
           child: Column(
@@ -108,9 +109,9 @@ class ContainerSitesScreen extends HookConsumerWidget {
                   key: formKey,
                   child: TextFormField(
                     decoration: InputDecoration(
-                      label: const Text('Add Site'),
-                      hintText: 'example.com or *.example.com',
-                      helperText: 'Use *.example.com to match all subdomains',
+                      label: Text(tr("Add Site")),
+                      hintText: tr("example.com or *.example.com"),
+                      helperText: tr("Use *.example.com to match all subdomains"),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       suffix: TextButton(
                         onPressed: () {

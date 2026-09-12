@@ -49,6 +49,7 @@ import 'package:weblibre/features/geckoview/features/tabs/utils/background_tab_o
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/hooks/menu_controller.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Context menu for a container, mirroring [TabMenu] for tabs.
 ///
@@ -193,7 +194,7 @@ class ContainerMenu extends HookConsumerWidget {
                     }
                   }
                 : null,
-            child: const Text('New Tab'),
+            child: Text(tr("New Tab")),
           ),
         if (enablePin && container != null)
           MenuItemButton(
@@ -216,7 +217,7 @@ class ContainerMenu extends HookConsumerWidget {
                   }
                 : null,
             child: Text(
-              container.isPinned ? 'Unpin Container' : 'Pin Container',
+              container.isPinned ? tr("Unpin Container") : tr("Pin Container"),
             ),
           ),
         if (enableNewTab || enablePin && container != null) const Divider(),
@@ -234,7 +235,7 @@ class ContainerMenu extends HookConsumerWidget {
                         }
                       }
                     : null,
-                child: const Text('All Tabs'),
+                child: Text(tr("All Tabs")),
               ),
               MenuItemButton(
                 leadingIcon: Icon(
@@ -254,7 +255,7 @@ class ContainerMenu extends HookConsumerWidget {
                         }
                       }
                     : null,
-                child: const Text('Private Tabs'),
+                child: Text(tr("Private Tabs")),
               ),
               if (showIsolatedTabUi)
                 MenuItemButton(
@@ -292,7 +293,7 @@ class ContainerMenu extends HookConsumerWidget {
                           );
                         }
                       : null,
-                  child: const Text('Isolated Tabs'),
+                  child: Text(tr("Isolated Tabs")),
                 ),
               if (enableCloseFilteredTabs)
                 MenuItemButton(
@@ -332,10 +333,10 @@ class ContainerMenu extends HookConsumerWidget {
                           }
                         }
                       : null,
-                  child: const Text('Filtered Tabs'),
+                  child: Text(tr("Filtered Tabs")),
                 ),
             ],
-            child: const Text('Close Tabs'),
+            child: Text(tr("Close Tabs")),
           ),
         if (enableBookmarkAll)
           MenuItemButton(
@@ -343,7 +344,7 @@ class ContainerMenu extends HookConsumerWidget {
             onPressed: enabled
                 ? () => _bookmarkAllTabs(context, ref, scopeContainerId)
                 : null,
-            child: const Text('Bookmark all'),
+            child: Text(tr("Bookmark all")),
           ),
         if (hasTrailingSection) const Divider(),
         if (enableAssignedSites && container != null)
@@ -352,7 +353,7 @@ class ContainerMenu extends HookConsumerWidget {
             onPressed: canEdit
                 ? () => _editAssignedSites(context, ref, container)
                 : null,
-            child: const Text('Assigned Sites…'),
+            child: Text(tr("Assigned Sites…")),
           ),
         if (clearDataContextId != null)
           MenuItemButton(
@@ -372,7 +373,7 @@ class ContainerMenu extends HookConsumerWidget {
                     }
                   }
                 : null,
-            child: const Text('Clear Container Data'),
+            child: Text(tr("Clear Container Data")),
           ),
         if (enableEdit && container != null)
           MenuItemButton(
@@ -384,7 +385,7 @@ class ContainerMenu extends HookConsumerWidget {
                     ).push(context);
                   }
                 : null,
-            child: const Text('Edit Container…'),
+            child: Text(tr("Edit Container…")),
           ),
         if (enableDelete && container != null) ...[
           const Divider(),

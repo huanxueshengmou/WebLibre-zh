@@ -32,6 +32,7 @@ import 'package:weblibre/features/geckoview/features/browser/domain/entities/hom
 import 'package:weblibre/features/intent_gatekeeper/domain/entities/intent_source_policy.dart';
 import 'package:weblibre/features/search/domain/entities/abstract/i_search_suggestion_provider.dart';
 import 'package:weblibre/features/wallpaper/domain/entities/home_wallpaper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'general_settings.g.dart';
 
@@ -169,15 +170,15 @@ enum HomeSearchBarPlacement {
   tabBar;
 
   String get label => switch (this) {
-    auto => 'Follow the tab bar',
-    top => 'Top of the home page',
-    tabBar => 'In the tab bar',
+    auto => tr("Follow the tab bar"),
+    top => tr("Top of the home page"),
+    tabBar => tr("In the tab bar"),
   };
 
   String get description => switch (this) {
-    auto => 'Whichever edge the tab bar is on',
-    top => 'A pinned search bar above the home sections',
-    tabBar => "The tab bar's address field, with QR and voice search",
+    auto => tr("Whichever edge the tab bar is on"),
+    top => tr("A pinned search bar above the home sections"),
+    tabBar => tr("The tab bar's address field, with QR and voice search"),
   };
 }
 

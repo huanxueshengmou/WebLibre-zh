@@ -44,6 +44,7 @@ import 'package:weblibre/features/user/domain/presentation/screens/profile_resto
 import 'package:weblibre/features/user/domain/repositories/onboarding.dart';
 import 'package:weblibre/features/user/domain/repositories/profile.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class OnboardingScreen extends HookConsumerWidget {
   final int currentRevision;
@@ -192,7 +193,7 @@ class OnboardingScreen extends HookConsumerWidget {
                               },
                         iconAlignment: IconAlignment.end,
                         icon: const Icon(Icons.chevron_right),
-                        label: const Text('Next'),
+                        label: Text(tr("Next")),
                       ),
                     )
                   else if (onboardingMode == OnboardingMode.restore &&
@@ -204,7 +205,7 @@ class OnboardingScreen extends HookConsumerWidget {
                             : null,
                         iconAlignment: IconAlignment.end,
                         icon: const Icon(Icons.settings_backup_restore),
-                        label: const Text('Restore'),
+                        label: Text(tr("Restore")),
                       ),
                     )
                   else
@@ -234,7 +235,7 @@ class OnboardingScreen extends HookConsumerWidget {
                         },
                         iconAlignment: IconAlignment.end,
                         icon: const Icon(Icons.done),
-                        label: const Text('Done'),
+                        label: Text(tr("Done")),
                       ),
                     ),
                 ],

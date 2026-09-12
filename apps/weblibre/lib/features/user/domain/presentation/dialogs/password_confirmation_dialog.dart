@@ -19,6 +19,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Dialog to confirm password during backup creation.
 /// Returns the entered password string if confirmed, null if cancelled or dismissed.
@@ -29,7 +30,7 @@ Future<String?> showPasswordConfirmationDialog(BuildContext context) {
       final controller = TextEditingController();
 
       return AlertDialog(
-        title: const Text('Password Confirmation'),
+        title: Text(tr("Password Confirmation")),
         content: TextField(
           controller: controller,
           enableSuggestions: false,
@@ -47,7 +48,7 @@ Future<String?> showPasswordConfirmationDialog(BuildContext context) {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           TextButton(
             onPressed: () {

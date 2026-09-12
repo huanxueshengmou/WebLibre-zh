@@ -29,6 +29,7 @@ import 'package:weblibre/features/addons/presentation/widgets/addon_listing_card
 import 'package:weblibre/features/addons/utils/permissions.dart';
 import 'package:weblibre/utils/number_format.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class AddonListingDetailsScreen extends ConsumerWidget {
   final AddonListing listing;
@@ -106,7 +107,7 @@ class AddonListingDetailsScreen extends ConsumerWidget {
                       Chip(
                         avatar: const Icon(Icons.group_outlined, size: 16),
                         label: Text(
-                          '${formatCompactNumber(listing.averageDailyUsers!)} users',
+                          tr("{0} users", [formatCompactNumber(listing.averageDailyUsers!)]),
                         ),
                       ),
                   ],
@@ -121,24 +122,24 @@ class AddonListingDetailsScreen extends ConsumerWidget {
                 ],
                 if ((listing.description ?? '').isNotEmpty) ...[
                   const SizedBox(height: 16),
-                  const _SectionHeader(title: 'About this extension'),
+                  _SectionHeader(title: tr("About this extension")),
                   const SizedBox(height: 8),
                   _ExpandableDescription(html: listing.description!),
                 ],
                 if (_hasFriendlyPermissions(listing)) ...[
                   const SizedBox(height: 24),
-                  const _SectionHeader(title: 'Permissions'),
+                  _SectionHeader(title: tr("Permissions")),
                   const SizedBox(height: 8),
                   _PermissionsSection(listing: listing),
                 ],
                 if (_hasTechnicalPermissions(listing)) ...[
                   const SizedBox(height: 24),
-                  const _SectionHeader(title: 'Technical permissions'),
+                  _SectionHeader(title: tr("Technical permissions")),
                   const SizedBox(height: 8),
                   _TechnicalPermissionsSection(listing: listing),
                 ],
                 const SizedBox(height: 24),
-                const _SectionHeader(title: 'More information'),
+                _SectionHeader(title: tr("More information")),
                 const SizedBox(height: 8),
                 _MoreInformationSection(listing: listing),
               ],
@@ -169,11 +170,11 @@ class _AuthorLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme.bodyMedium;
-    if (url == null) return Text('by $name', style: style);
+    if (url == null) return Text(tr("by {0}", [name]), style: style);
     return InkWell(
       onTap: () => launchUrl(Uri.parse(url!)),
       child: Text(
-        'by $name',
+        tr("by {0}", [name]),
         style: style?.copyWith(
           color: Theme.of(context).colorScheme.primary,
           decoration: TextDecoration.underline,
@@ -226,7 +227,7 @@ class _InstallButton extends ConsumerWidget {
               child: CircularProgressIndicator(strokeWidth: 2),
             )
           : const Icon(Icons.download_outlined),
-      label: const Text('Install'),
+      label: Text(tr("Install")),
     );
   }
 }
@@ -347,7 +348,7 @@ class _ExpandableDescription extends HookConsumerWidget {
         ),
         TextButton(
           onPressed: () => expanded.value = !expanded.value,
-          child: Text(expanded.value ? 'Show less' : 'Read more'),
+          child: Text(expanded.value ? tr("Show less") : tr("Read more")),
         ),
       ],
     );
@@ -369,7 +370,7 @@ class _PermissionsSection extends StatelessWidget {
       (title: 'Required', perms: listing.permissions),
       (title: 'Websites', perms: listing.hostPermissions),
       (title: 'Optional', perms: listing.optionalPermissions),
-      (title: 'Data collection', perms: listing.dataCollectionPermissions),
+      (title: tr("Data collection"), perms: listing.dataCollectionPermissions),
     ];
 
     for (final group in groups) {
@@ -414,7 +415,7 @@ class _TechnicalPermissionsSection extends StatelessWidget {
       (title: 'Required', perms: listing.permissions),
       (title: 'Websites', perms: listing.hostPermissions),
       (title: 'Optional', perms: listing.optionalPermissions),
-      (title: 'Data collection', perms: listing.dataCollectionPermissions),
+      (title: tr("Data collection"), perms: listing.dataCollectionPermissions),
     ];
 
     final monoStyle = TextStyle(
@@ -486,7 +487,7 @@ class _MoreInformationSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final rows = <Widget>[];
 
-    rows.add(_InfoRow(label: 'Version', value: listing.latestVersion));
+    rows.add(_InfoRow(label: tr("Version"), value: listing.latestVersion));
 
     if (listing.fileSize != null) {
       rows.add(_InfoRow(label: 'Size', value: formatBytes(listing.fileSize!)));
@@ -495,7 +496,7 @@ class _MoreInformationSection extends StatelessWidget {
     if (listing.lastUpdated != null) {
       rows.add(
         _InfoRow(
-          label: 'Last updated',
+          label: tr("Last updated"),
           value: formatIsoDate(listing.lastUpdated!),
         ),
       );
@@ -531,7 +532,7 @@ class _MoreInformationSection extends StatelessWidget {
       links.add(
         _LinkTile(
           icon: Icons.help_outline,
-          label: 'Support site',
+          label: tr("Support site"),
           url: listing.supportUrl!,
         ),
       );
@@ -548,7 +549,7 @@ class _MoreInformationSection extends StatelessWidget {
     links.add(
       _LinkTile(
         icon: Icons.public,
-        label: 'View on addons.mozilla.org',
+        label: tr("View on addons.mozilla.org"),
         url: listing.detailUrl,
       ),
     );
@@ -565,7 +566,7 @@ class _MoreInformationSection extends StatelessWidget {
       links.add(
         _LinkTile(
           icon: Icons.privacy_tip_outlined,
-          label: 'Privacy policy',
+          label: tr("Privacy policy"),
           url: 'https://addons.mozilla.org/addon/${listing.slug}/privacy/',
         ),
       );

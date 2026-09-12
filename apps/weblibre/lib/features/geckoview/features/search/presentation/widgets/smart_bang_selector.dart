@@ -34,6 +34,7 @@ import 'package:weblibre/presentation/hooks/on_listenable_change_selector.dart';
 import 'package:weblibre/presentation/widgets/sliding_pill_toggle.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/uri_parser.dart' as uri_parser;
+import 'package:weblibre/i18n/i18n.dart';
 
 /// A unified bang selector widget that displays site-specific and/or global
 /// search bangs with a tabbed interface when in edit mode.
@@ -201,7 +202,7 @@ class _TabbedBangSelector extends HookConsumerWidget {
           padding: const EdgeInsets.only(right: 12.0),
           child: SlidingPillToggle(
             selectedIndex: tabIndex.value,
-            labels: const ['All Providers', 'Search On This Site'],
+            labels: [tr("All Providers"), tr("Search On This Site")],
             onChanged: (index) => tabController.animateTo(index),
           ),
         ),

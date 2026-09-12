@@ -53,6 +53,7 @@ import 'package:weblibre/features/geckoview/features/tabs/domain/repositories/ta
 import 'package:weblibre/features/sync/domain/repositories/sync.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/widgets/reorderable_hold_drag.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Build the hierarchy toggle injected into [ListTabPreview.groupToggle].
 ///
@@ -198,7 +199,7 @@ class _TabListView extends HookConsumerWidget {
       skipLoadingOnReload: true,
       data: (tabs) {
         if (tabs.isEmpty) {
-          return const Center(child: Text('No synced tabs available'));
+          return Center(child: Text(tr("No synced tabs available")));
         }
 
         return Padding(
@@ -230,7 +231,7 @@ class _TabListView extends HookConsumerWidget {
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, _) =>
-          Center(child: Text('Failed to load synced tabs: $error')),
+          Center(child: Text(tr("Failed to load synced tabs: {0}", [error]))),
     );
   }
 

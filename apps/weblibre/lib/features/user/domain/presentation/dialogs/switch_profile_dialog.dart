@@ -19,6 +19,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows a confirmation dialog for switching user profiles.
 ///
@@ -34,19 +35,18 @@ Future<bool?> showSwitchProfileDialog(
 
       return AlertDialog(
         icon: const Icon(Icons.swap_horiz),
-        title: Text('Switch to "$profileName"?'),
+        title: Text(tr("Switch to \"{0}\"?", [profileName])),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('WebLibre closes and reopens as "$profileName".'),
+            Text(tr("WebLibre closes and reopens as \"{0}\".", [profileName])),
             const SizedBox(height: 12),
             // The two consequences worth knowing, as their own lines rather than
             // one bolded paragraph: emphasising everything emphasises nothing,
             // and these are consequences to read, not a warning to alarm.
             Text(
-              '• Private tabs are cleared.\n'
-              '• Web notifications for the profile you leave are paused.',
+              tr("• Private tabs are cleared.\n• Web notifications for the profile you leave are paused."),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -58,13 +58,13 @@ Future<bool?> showSwitchProfileDialog(
             onPressed: () {
               context.pop(false);
             },
-            child: const Text('Not now'),
+            child: Text(tr("Not now")),
           ),
           FilledButton(
             onPressed: () {
               context.pop(true);
             },
-            child: const Text('Switch and restart'),
+            child: Text(tr("Switch and restart")),
           ),
         ],
       );

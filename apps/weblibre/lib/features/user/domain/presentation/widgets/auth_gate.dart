@@ -32,6 +32,7 @@ import 'package:weblibre/features/user/domain/providers/profile_auth.dart';
 import 'package:weblibre/presentation/hooks/on_initialization.dart';
 import 'package:weblibre/utils/exit_app.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class LockScreen extends HookConsumerWidget {
   const LockScreen({super.key});
@@ -104,7 +105,7 @@ class LockScreen extends HookConsumerWidget {
         // start the relaunch trampoline, and exiting on that answer would close
         // the app for good instead of returning the user to the picker.
         final armed = await GeckoProfileService().armProfileRestart(
-          reason: 'the user could not unlock this profile',
+          reason: tr("the user could not unlock this profile"),
         );
         if (!armed) {
           isSwitching.value = false;
@@ -132,12 +133,12 @@ class LockScreen extends HookConsumerWidget {
             children: [
               const Icon(MdiIcons.lock, size: 64),
               const SizedBox(height: 16),
-              const Text('Profile is locked'),
+              Text(tr("Profile is locked")),
               const SizedBox(height: 16),
               FilledButton.icon(
                 style: FilledButton.styleFrom(minimumSize: const Size(160, 40)),
                 icon: const Icon(MdiIcons.fingerprint),
-                label: Text(isAuthenticating.value ? 'Unlocking...' : 'Unlock'),
+                label: Text(isAuthenticating.value ? 'Unlocking...' : tr("Unlock")),
                 onPressed: isAuthenticating.value || isSwitching.value
                     ? null
                     : authenticate,
@@ -153,7 +154,7 @@ class LockScreen extends HookConsumerWidget {
                   label: Text(
                     isSwitching.value
                         ? 'Restarting…'
-                        : 'Choose another profile',
+                        : tr("Choose another profile"),
                   ),
                   onPressed: isAuthenticating.value || isSwitching.value
                       ? null

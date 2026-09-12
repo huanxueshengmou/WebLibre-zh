@@ -25,6 +25,7 @@ import 'package:flutter_mozilla_components/flutter_mozilla_components.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/geckoview/features/bookmarks/presentation/widgets/folder_tree_picker.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Bottom sheet to select a bookmark folder.
 /// Returns the selected folder GUID or null if cancelled.
@@ -78,7 +79,7 @@ class _SelectFolderSheet extends HookConsumerWidget {
               children: [
                 TextButton(
                   onPressed: () => context.pop(),
-                  child: const Text('Cancel'),
+                  child: Text(tr("Cancel")),
                 ),
                 const SizedBox(width: 8),
                 FilledButton(

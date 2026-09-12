@@ -30,6 +30,7 @@ import 'package:weblibre/features/addons/presentation/widgets/addon_ui.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/services/browser_addon.dart';
 import 'package:weblibre/utils/number_format.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class AddonDetailsScreen extends ConsumerWidget {
   final String addonId;
@@ -53,7 +54,7 @@ class AddonDetailsScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(24),
             child: Text(
               addonAsync.error?.toString() ??
-                  'This extension could not be found.',
+                  tr("This extension could not be found."),
               textAlign: TextAlign.center,
             ),
           ),
@@ -111,7 +112,7 @@ class _AddonDetailsBody extends ConsumerWidget {
             onPressed: () =>
                 AddonPermissionsRoute(addonId: addon.id).push<void>(context),
             icon: const Icon(Icons.privacy_tip_outlined),
-            label: const Text('View Permissions'),
+            label: Text(tr("View Permissions")),
           ),
         ],
         const SizedBox(height: 16),
@@ -119,7 +120,7 @@ class _AddonDetailsBody extends ConsumerWidget {
         const SizedBox(height: 8),
         _DetailsCard(addon: addon),
         const SizedBox(height: 16),
-        Text('Description', style: theme.textTheme.titleMedium),
+        Text(tr("Description"), style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         _DescriptionCard(addon: addon),
       ],
@@ -150,7 +151,7 @@ class _InstallButton extends ConsumerWidget {
               showInfoMessage(context, '$displayName installed');
             },
       icon: const Icon(Icons.download),
-      label: const Text('Install Extension'),
+      label: Text(tr("Install Extension")),
     );
   }
 }
@@ -200,7 +201,7 @@ class _AddonHeader extends StatelessWidget {
                             ),
                           ),
                           if (addon.isAllowedInPrivateBrowsing)
-                            const Chip(label: Text('Private Browsing')),
+                            Chip(label: Text(tr("Private Browsing"))),
                           if (addon.ratingAverage != null)
                             Chip(
                               avatar: const Icon(Icons.star, size: 18),
@@ -259,13 +260,13 @@ class _ManagementSection extends ConsumerWidget {
       addon.isAutoUpdateEnabled,
       globalAutoUpdateEnabled,
     )) {
-      (_, _, false) => 'Global automatic updates are disabled.',
+      (_, _, false) => tr("Global automatic updates are disabled."),
       (true, _, true) =>
         'Run a manual update once and restart the app before automatic updates can be enabled.',
       (false, true, true) =>
-        'Allow this extension to receive background updates.',
+        tr("Allow this extension to receive background updates."),
       (false, false, true) =>
-        'Background updates are disabled for this extension.',
+        tr("Background updates are disabled for this extension."),
     };
 
     return Column(
@@ -279,11 +280,11 @@ class _ManagementSection extends ConsumerWidget {
             children: [
               if (addon.isSupported)
                 SwitchListTile.adaptive(
-                  title: const Text('Enabled'),
+                  title: Text(tr("Enabled")),
                   subtitle: Text(
                     addon.canUserToggleEnabled
-                        ? 'Allow this extension to run in WebLibre.'
-                        : 'This extension cannot be safely enabled.',
+                        ? tr("Allow this extension to run in WebLibre.")
+                        : tr("This extension cannot be safely enabled."),
                   ),
                   value: addon.isEnabled,
                   onChanged: addonAsync.isLoading || !addon.canUserToggleEnabled
@@ -293,9 +294,9 @@ class _ManagementSection extends ConsumerWidget {
                             .setEnabled(enabled: enabled),
                 ),
               SwitchListTile.adaptive(
-                title: const Text('Allow in Private Browsing'),
-                subtitle: const Text(
-                  'Let this extension run in private browsing tabs.',
+                title: Text(tr("Allow in Private Browsing")),
+                subtitle: Text(
+                  tr("Let this extension run in private browsing tabs."),
                 ),
                 value: addon.isAllowedInPrivateBrowsing,
                 onChanged: addonAsync.isLoading
@@ -305,7 +306,7 @@ class _ManagementSection extends ConsumerWidget {
                           .setAllowedInPrivateBrowsing(allowed: allowed),
               ),
               SwitchListTile.adaptive(
-                title: const Text('Automatic updates'),
+                title: Text(tr("Automatic updates")),
                 subtitle: Text(autoUpdateSubtitle),
                 value: addon.isAutoUpdateEnabled,
                 onChanged: canChangePerAddonAutoUpdate
@@ -315,9 +316,9 @@ class _ManagementSection extends ConsumerWidget {
                     : null,
               ),
               SwitchListTile.adaptive(
-                title: const Text('Pin to toolbar'),
-                subtitle: const Text(
-                  'Show this extension as an icon in the main tab bar.',
+                title: Text(tr("Pin to toolbar")),
+                subtitle: Text(
+                  tr("Show this extension as an icon in the main tab bar."),
                 ),
                 value: isPinned,
                 onChanged: (pinned) {
@@ -329,11 +330,11 @@ class _ManagementSection extends ConsumerWidget {
               if (addon.hasOptionsPage)
                 ListTile(
                   leading: const Icon(Icons.settings_outlined),
-                  title: const Text('Extension Settings'),
+                  title: Text(tr("Extension Settings")),
                   subtitle: Text(
                     addon.openOptionsPageInTab
-                        ? 'Open the extension options page in a browser tab'
-                        : 'Open the extension options page',
+                        ? tr("Open the extension options page in a browser tab")
+                        : tr("Open the extension options page"),
                   ),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => openAddonSettingsFlow(context, ref, addon),
@@ -341,16 +342,16 @@ class _ManagementSection extends ConsumerWidget {
               if (addon.id == 'uBlock0@raymondhill.net')
                 ListTile(
                   leading: const Icon(Icons.filter_list),
-                  title: const Text('Filter Lists & Hardenings'),
-                  subtitle: const Text(
-                    'Manage filter lists and apply WebLibre hardenings',
+                  title: Text(tr("Filter Lists & Hardenings")),
+                  subtitle: Text(
+                    tr("Manage filter lists and apply WebLibre hardenings"),
                   ),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => UBlockFilterListsRoute().push<void>(context),
                 ),
               ListTile(
                 leading: const Icon(Icons.privacy_tip_outlined),
-                title: const Text('Permissions'),
+                title: Text(tr("Permissions")),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => AddonPermissionsRoute(
                   addonId: addon.id,
@@ -358,7 +359,7 @@ class _ManagementSection extends ConsumerWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.delete_outline),
-                title: const Text('Remove Extension'),
+                title: Text(tr("Remove Extension")),
                 textColor: theme.colorScheme.error,
                 iconColor: theme.colorScheme.error,
                 onTap: addonAsync.isLoading
@@ -395,16 +396,16 @@ Future<bool?> _showConfirmUninstallDialog(
   return showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Remove extension?'),
-      content: Text('Remove ${addon.displayName} from WebLibre?'),
+      title: Text(tr("Remove extension?")),
+      content: Text(tr("Remove {0} from WebLibre?", [addon.displayName])),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Remove'),
+          child: Text(tr("Remove")),
         ),
       ],
     ),
@@ -438,7 +439,7 @@ class _UpdatesSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Updates', style: theme.textTheme.titleMedium),
+        Text(tr("Updates"), style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         Card(
           child: Padding(
@@ -477,7 +478,7 @@ class _UpdatesSection extends ConsumerWidget {
                         )
                       : const Icon(Icons.system_update_alt),
                   label: Text(
-                    checking ? 'Checking for Updates' : 'Check for Updates',
+                    checking ? tr("Checking for Updates") : 'Check for Updates',
                   ),
                 ),
               ],
@@ -549,7 +550,7 @@ Future<bool?> _confirmUpdateDialog(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Not now'),
+          child: Text(tr("Not now")),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
@@ -595,7 +596,7 @@ class _DescriptionCard extends ConsumerWidget {
         child: markdownAsync.when(
           skipLoadingOnReload: true,
           data: (markdown) => markdown.isEmpty
-              ? const Text('No description provided.')
+              ? Text(tr("No description provided."))
               : MarkdownBody(
                   data: markdown,
                   selectable: true,
@@ -608,12 +609,12 @@ class _DescriptionCard extends ConsumerWidget {
           loading: () => Text(
             addon.description.isNotEmpty
                 ? addon.description
-                : 'Loading description…',
+                : tr("Loading description…"),
           ),
           error: (_, _) => Text(
             addon.description.isNotEmpty
                 ? addon.description
-                : 'No description provided.',
+                : tr("No description provided."),
           ),
         ),
       ),
@@ -643,12 +644,12 @@ class _DetailsCard extends StatelessWidget {
             ),
           ListTile(
             leading: const Icon(Icons.tag_outlined),
-            title: const Text('Version'),
+            title: Text(tr("Version")),
             subtitle: Text(addon.installedVersion ?? addon.version),
           ),
           ListTile(
             leading: const Icon(Icons.update_outlined),
-            title: const Text('Last Updated'),
+            title: Text(tr("Last Updated")),
             subtitle: Text(formatAddonDate(addon.updatedAt)),
           ),
           if (addon.homepageUrl.isNotEmpty)
@@ -662,7 +663,7 @@ class _DetailsCard extends StatelessWidget {
           if (addon.detailUrl.isNotEmpty)
             ListTile(
               leading: const Icon(Icons.storefront_outlined),
-              title: const Text('Addon Listing'),
+              title: Text(tr("Addon Listing")),
               subtitle: Text(addon.detailUrl),
               trailing: const Icon(Icons.open_in_new),
               onTap: () => launchUrl(Uri.parse(addon.detailUrl)),

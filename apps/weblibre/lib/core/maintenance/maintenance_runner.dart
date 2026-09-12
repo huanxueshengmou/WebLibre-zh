@@ -31,6 +31,7 @@ import 'package:weblibre/core/startup/models/maintenance_journal.dart';
 import 'package:weblibre/core/startup/models/startup_config.dart';
 import 'package:weblibre/core/startup/startup_config_store.dart';
 import 'package:weblibre/core/startup/startup_paths.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// How the archive is produced. Injected so the operation stays testable without
 /// running Argon2 over a real profile.
@@ -414,9 +415,9 @@ class MaintenanceRunner {
 
         final summary = switch (recovery.result) {
           RestoreRecoveryResult.restored =>
-            'An interrupted restore was completed.',
+            tr("An interrupted restore was completed."),
           RestoreRecoveryResult.rolledBack =>
-            'An interrupted restore was undone. The profile was left as it was.',
+            tr("An interrupted restore was undone. The profile was left as it was."),
           RestoreRecoveryResult.indeterminate =>
             'An interrupted restore was reconciled. Check the profile to see '
                 'whether the backup was applied.',

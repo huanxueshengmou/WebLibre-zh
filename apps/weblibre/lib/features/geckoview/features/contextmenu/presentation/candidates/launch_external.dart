@@ -24,6 +24,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nullability/nullability.dart';
 import 'package:weblibre/features/geckoview/features/contextmenu/extensions/hit_result.dart';
 import 'package:weblibre/presentation/hooks/cached_future.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class LaunchExternal extends HookConsumerWidget {
   final HitResult hitResult;
@@ -50,7 +51,7 @@ class LaunchExternal extends HookConsumerWidget {
 
     return ListTile(
       leading: const Icon(Icons.open_in_new),
-      title: Text(appName != null ? 'Open in $appName' : 'Open in App'),
+      title: Text(appName != null ? tr("Open in {0}", [appName]) : tr("Open in App")),
       onTap: () async {
         await hitResult.tryGetLink().mapNotNull((url) async {
           final success = await _service.launchAppLink(url);

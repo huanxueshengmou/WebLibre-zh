@@ -22,6 +22,7 @@ import 'package:nullability/nullability.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:weblibre/core/logger.dart';
 import 'package:weblibre/utils/clipboard.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Creates a floating snackbar.
 /// The margin is controlled by the scaffold's snackBarTheme for proper
@@ -110,11 +111,11 @@ void showFindInPageSuggestion(
 }) {
   final snackBar = _createFloatingSnackBar(
     content: Text(
-      'Find "${_truncateForSnackBar(query)}" on this page?',
+      tr("Find \"{0}\" on this page?", [_truncateForSnackBar(query)]),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
     ),
-    action: SnackBarAction(label: 'Find', onPressed: onFind),
+    action: SnackBarAction(label: tr("Find"), onPressed: onFind),
     duration: duration,
     persist: persist,
   );
@@ -147,8 +148,8 @@ void showTabBackButtonMessage(
 }) {
   final snackbar = _createFloatingSnackBar(
     content: (tabCount > 1)
-        ? const Text('Navigate BACK again to close current tab')
-        : const Text('Navigate BACK again to exit app'),
+        ? Text(tr("Navigate BACK again to close current tab"))
+        : Text(tr("Navigate BACK again to exit app")),
     duration: duration,
     persist: persist,
   );
@@ -166,14 +167,14 @@ void showTabOpenedMessage(
   bool persist = false,
 }) {
   final message = switch (tabName.whenNotEmpty) {
-    String() => "New tab '$tabName' opened in background",
-    null => 'New tab opened in background',
+    String() => tr("New tab '{0}' opened in background", [tabName]),
+    null => tr("New tab opened in background"),
   };
 
   final snackBar = _createFloatingSnackBar(
     content: Text(message),
     action: onShow.mapNotNull(
-      (onPressed) => SnackBarAction(label: 'Show', onPressed: onPressed),
+      (onPressed) => SnackBarAction(label: tr("Show"), onPressed: onPressed),
     ),
     duration: duration,
     persist: persist,
@@ -192,9 +193,9 @@ Future<void> showSuggestNewTabMessage(
 
   if (clipboardUrl != null) {
     final snackBar = _createFloatingSnackBar(
-      content: const Text('Want to open link from clipboard?'),
+      content: Text(tr("Want to open link from clipboard?")),
       action: SnackBarAction(
-        label: 'Open',
+        label: tr("Open"),
         onPressed: () {
           onAdd(clipboardUrl.toString());
         },
@@ -219,8 +220,8 @@ void showTabSwitchMessage(
   ScaffoldMessenger.of(context).clearSnackBars();
 
   final message = switch (tabName.whenNotEmpty) {
-    String() => "New tab '$tabName' opened",
-    null => 'New tab opened',
+    String() => tr("New tab '{0}' opened", [tabName]),
+    null => tr("New tab opened"),
   };
 
   final snackBar = _createFloatingSnackBar(
@@ -271,9 +272,9 @@ void showTabUndoClose(
 
   final snackBar = _createFloatingSnackBar(
     content: (count > 1)
-        ? Text('$count Tabs closed')
-        : const Text('Tab closed'),
-    action: SnackBarAction(label: 'Undo', onPressed: onUndo),
+        ? Text(tr("{0} Tabs closed", [count]))
+        : Text(tr("Tab closed")),
+    action: SnackBarAction(label: tr("Undo"), onPressed: onUndo),
     duration: duration,
     persist: persist,
   );
@@ -294,16 +295,16 @@ Future<bool> confirmIsolatedTabClose(
   final result = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Close isolated tabs?'),
+      title: Text(tr("Close isolated tabs?")),
       content: Text(message),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Close'),
+          child: Text(tr("Close")),
         ),
       ],
     ),
@@ -321,7 +322,7 @@ void showDismissOverrideMessage(
   ScaffoldMessenger.of(context).clearSnackBars();
 
   final snackBar = _createFloatingSnackBar(
-    content: const Text('Hiding disabled by site'),
+    content: Text(tr("Hiding disabled by site")),
     action: SnackBarAction(label: 'Dismiss', onPressed: onDismiss),
     duration: duration,
     persist: persist,

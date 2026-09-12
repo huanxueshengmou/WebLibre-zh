@@ -30,14 +30,15 @@ import 'package:weblibre/features/settings/presentation/widgets/settings_detail.
 import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> urlCleanerSettingsSections = [
+List<SettingsSectionDefinition> urlCleanerSettingsSections = [
   SettingsSectionDefinition(
     title: 'Overview',
     entries: [
       SettingsEntryDefinition(
-        title: 'Description',
-        subtitle: 'Tracking parameter removal and offline redirect cleanup',
+        title: tr("Description"),
+        subtitle: tr("Tracking parameter removal and offline redirect cleanup"),
         keywords: ['tracking parameters', 'redirects'],
         child: _UrlCleanerDescriptionTile(),
       ),
@@ -47,20 +48,20 @@ const List<SettingsSectionDefinition> urlCleanerSettingsSections = [
     title: 'Behavior',
     entries: [
       SettingsEntryDefinition(
-        title: 'Enable URL Cleaner',
-        subtitle: 'Remove tracking parameters from URLs',
+        title: tr("Enable URL Cleaner"),
+        subtitle: tr("Remove tracking parameters from URLs"),
         keywords: ['clean urls'],
         child: _UrlCleanerEnabledTile(),
       ),
       SettingsEntryDefinition(
         title: 'Auto-apply',
-        subtitle: 'Automatically replace URL with cleaned version',
+        subtitle: tr("Automatically replace URL with cleaned version"),
         keywords: ['auto apply'],
         child: _UrlCleanerAutoApplyTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Allow referral marketing',
-        subtitle: 'Keep referral and affiliate tracking parameters',
+        title: tr("Allow referral marketing"),
+        subtitle: tr("Keep referral and affiliate tracking parameters"),
         keywords: ['affiliate', 'referral'],
         child: _UrlCleanerAllowReferralTile(),
       ),
@@ -76,12 +77,12 @@ const List<SettingsSectionDefinition> urlCleanerSettingsSections = [
       ),
       SettingsEntryDefinition(
         title: 'Update catalog',
-        subtitle: 'Fetch the latest URL cleaner rules',
+        subtitle: tr("Fetch the latest URL cleaner rules"),
         child: _UrlCleanerUpdateButton(),
       ),
       SettingsEntryDefinition(
-        title: 'Restore defaults',
-        subtitle: 'Reset to bundled catalog and default settings',
+        title: tr("Restore defaults"),
+        subtitle: tr("Reset to bundled catalog and default settings"),
         child: _UrlCleanerRestoreDefaultsButton(),
       ),
     ],
@@ -91,7 +92,7 @@ const List<SettingsSectionDefinition> urlCleanerSettingsSections = [
     entries: [
       SettingsEntryDefinition(
         title: 'Attribution',
-        subtitle: 'Credits and source links',
+        subtitle: tr("Credits and source links"),
         child: _UrlCleanerAttributionTile(),
       ),
     ],
@@ -103,9 +104,9 @@ class UrlCleanerSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
-      title: 'URL Cleaner',
-      subtitle: 'URL cleanup behavior, rule catalog updates, and attribution.',
+    return SettingsDetailScaffold(
+      title: tr("URL Cleaner"),
+      subtitle: tr("URL cleanup behavior, rule catalog updates, and attribution."),
       icon: MdiIcons.broom,
       sections: urlCleanerSettingsSections,
     );
@@ -117,11 +118,10 @@ class _UrlCleanerDescriptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
-      title: Text('Description'),
+    return ListTile(
+      title: Text(tr("Description")),
       subtitle: Text(
-        'This module removes tracking, referrer and other useless parameters from the URL. '
-        'It also allows for common offline URL redirections.',
+        tr("This module removes tracking, referrer and other useless parameters from the URL. It also allows for common offline URL redirections."),
       ),
       leading: Icon(MdiIcons.broom),
     );
@@ -138,8 +138,8 @@ class _UrlCleanerEnabledTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Enable URL Cleaner'),
-      subtitle: const Text('Remove tracking parameters from URLs'),
+      title: Text(tr("Enable URL Cleaner")),
+      subtitle: Text(tr("Remove tracking parameters from URLs")),
       secondary: const Icon(MdiIcons.broom),
       value: enabled,
       onChanged: (value) async {
@@ -162,7 +162,7 @@ class _UrlCleanerAutoApplyTile extends HookConsumerWidget {
 
     return SwitchListTile.adaptive(
       title: const Text('Auto-apply'),
-      subtitle: const Text('Automatically replace URL with cleaned version'),
+      subtitle: Text(tr("Automatically replace URL with cleaned version")),
       secondary: const Icon(MdiIcons.autoFix),
       value: autoApply,
       onChanged: (value) async {
@@ -186,8 +186,8 @@ class _UrlCleanerAllowReferralTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Allow referral marketing'),
-      subtitle: const Text('Keep referral and affiliate tracking parameters'),
+      title: Text(tr("Allow referral marketing")),
+      subtitle: Text(tr("Keep referral and affiliate tracking parameters")),
       secondary: const Icon(MdiIcons.cashMultiple),
       value: allowReferral,
       onChanged: (value) async {
@@ -307,8 +307,8 @@ class _UrlCleanerRestoreDefaultsButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-      title: const Text('Restore defaults'),
-      subtitle: const Text('Reset to bundled catalog and default settings'),
+      title: Text(tr("Restore defaults")),
+      subtitle: Text(tr("Reset to bundled catalog and default settings")),
       leading: const Icon(MdiIcons.restore),
       onTap: () async {
         final confirmed = await showUrlCleanerRestoreDefaultsDialog(context);
@@ -362,7 +362,7 @@ class _UrlCleanerAttributionTile extends StatelessWidget {
             context,
           ).textTheme.bodyMedium?.copyWith(color: textColor),
           children: [
-            const TextSpan(text: 'This module is based on the ClearURL rules:'),
+            TextSpan(text: tr("This module is based on the ClearURL rules:")),
             WidgetSpan(
               alignment: PlaceholderAlignment.baseline,
               baseline: TextBaseline.alphabetic,

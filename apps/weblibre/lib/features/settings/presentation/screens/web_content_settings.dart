@@ -27,75 +27,75 @@ import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/engine_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/hooks/keyed_state.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> webContentSettingsSections = [
+List<SettingsSectionDefinition> webContentSettingsSections = [
   SettingsSectionDefinition(
     title: 'Display',
     entries: [
       SettingsEntryDefinition(
-        title: 'Web Fonts',
-        subtitle: 'Allow websites to use custom fonts',
+        title: tr("Web Fonts"),
+        subtitle: tr("Allow websites to use custom fonts"),
         keywords: ['fonts'],
         child: _WebFontsEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Automatic Font Size',
-        subtitle: 'Adjust font size based on system settings',
+        title: tr("Automatic Font Size"),
+        subtitle: tr("Adjust font size based on system settings"),
         keywords: ['text size'],
         child: _AutomaticFontSizeAdjustmentTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Font Size Factor',
-        subtitle: 'Scale web page text size',
+        title: tr("Font Size Factor"),
+        subtitle: tr("Scale web page text size"),
         keywords: ['zoom', 'text'],
         child: _FontSizeFactorSlider(),
       ),
       SettingsEntryDefinition(
-        title: 'Font Inflation',
-        subtitle: 'Enlarge text on pages without a mobile viewport',
+        title: tr("Font Inflation"),
+        subtitle: tr("Enlarge text on pages without a mobile viewport"),
         keywords: ['readability'],
         child: _FontInflationTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Input Auto Zoom',
-        subtitle: 'Automatically zoom when focusing text inputs',
+        title: tr("Input Auto Zoom"),
+        subtitle: tr("Automatically zoom when focusing text inputs"),
         keywords: ['forms'],
         child: _InputAutoZoomEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Zoom on All Websites',
+        title: tr("Zoom on All Websites"),
         subtitle:
-            'Allow pinch and zoom, even on websites that prevent this '
-            'gesture',
+            tr("Allow pinch and zoom, even on websites that prevent this gesture"),
         keywords: ['pinch', 'accessibility'],
         child: _ForceUserScalableContentTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: 'Content Features',
+    title: tr("Content Features"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Built-in PDF Viewer',
-        subtitle: 'Open PDF files directly in the browser',
+        title: tr("Built-in PDF Viewer"),
+        subtitle: tr("Open PDF files directly in the browser"),
         keywords: ['pdf'],
         child: _PdfViewerTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Enable Reader Mode',
-        subtitle: 'Extract and simplify pages for readability',
+        title: tr("Enable Reader Mode"),
+        subtitle: tr("Extract and simplify pages for readability"),
         keywords: ['reader', 'readability'],
         child: _EnableReaderModeTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Enforce Reader Mode',
-        subtitle: 'Always show Reader Mode capabilities',
+        title: tr("Enforce Reader Mode"),
+        subtitle: tr("Always show Reader Mode capabilities"),
         keywords: ['reader'],
         child: _EnforceReaderModeTile(),
       ),
       SettingsEntryDefinition(
-        title: 'On Device AI',
-        subtitle: 'Local AI features including topic and tab suggestions',
+        title: tr("On Device AI"),
+        subtitle: tr("Local AI features including topic and tab suggestions"),
         keywords: ['local ai', 'suggestions'],
         child: _OnDeviceAiTile(),
       ),
@@ -108,9 +108,9 @@ class WebContentSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
-      title: 'Web Content',
-      subtitle: 'Text rendering, reader mode, PDFs, and local AI features.',
+    return SettingsDetailScaffold(
+      title: tr("Web Content"),
+      subtitle: tr("Text rendering, reader mode, PDFs, and local AI features."),
       icon: MdiIcons.fileDocumentOutline,
       sections: webContentSettingsSections,
     );
@@ -127,8 +127,8 @@ class _WebFontsEnabledTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Web Fonts'),
-      subtitle: const Text('Allow websites to use custom fonts'),
+      title: Text(tr("Web Fonts")),
+      subtitle: Text(tr("Allow websites to use custom fonts")),
       secondary: const Icon(MdiIcons.formatFont),
       value: webFontsEnabled,
       onChanged: (value) async {
@@ -155,9 +155,9 @@ class _AutomaticFontSizeAdjustmentTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Automatic Font Size'),
-      subtitle: const Text(
-        'Automatically adjust font size based on system settings. Disable to manually control font size factor and inflation.',
+      title: Text(tr("Automatic Font Size")),
+      subtitle: Text(
+        tr("Automatically adjust font size based on system settings. Disable to manually control font size factor and inflation."),
       ),
       secondary: const Icon(MdiIcons.formatFontSizeIncrease),
       value: automaticFontSizeAdjustment,
@@ -197,11 +197,11 @@ class _FontSizeFactorSlider extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            title: const Text('Font Size Factor'),
+            title: Text(tr("Font Size Factor")),
             subtitle: Text(
               automaticFontSizeAdjustment
-                  ? 'Disabled while automatic font size is enabled'
-                  : 'Scale web page text size',
+                  ? tr("Disabled while automatic font size is enabled")
+                  : tr("Scale web page text size"),
             ),
             leading: const Icon(MdiIcons.formatSize),
             contentPadding: EdgeInsets.zero,
@@ -268,11 +268,11 @@ class _FontInflationTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Font Inflation'),
+      title: Text(tr("Font Inflation")),
       subtitle: Text(
         automaticFontSizeAdjustment
-            ? 'Disabled while automatic font size is enabled'
-            : 'Enlarge text on pages that lack a mobile viewport meta tag',
+            ? tr("Disabled while automatic font size is enabled")
+            : tr("Enlarge text on pages that lack a mobile viewport meta tag"),
       ),
       secondary: const Icon(MdiIcons.formatTextVariantOutline),
       value: fontInflationEnabled,
@@ -300,8 +300,8 @@ class _InputAutoZoomEnabledTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Input Auto Zoom'),
-      subtitle: const Text('Automatically zoom in when focusing text inputs'),
+      title: Text(tr("Input Auto Zoom")),
+      subtitle: Text(tr("Automatically zoom in when focusing text inputs")),
       secondary: const Icon(MdiIcons.formTextbox),
       value: inputAutoZoomEnabled,
       onChanged: (value) async {
@@ -328,9 +328,9 @@ class _ForceUserScalableContentTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Zoom on All Websites'),
-      subtitle: const Text(
-        'Allow pinch and zoom, even on websites that prevent this gesture',
+      title: Text(tr("Zoom on All Websites")),
+      subtitle: Text(
+        tr("Allow pinch and zoom, even on websites that prevent this gesture"),
       ),
       secondary: const Icon(MdiIcons.gesturePinch),
       value: forceUserScalableContent,
@@ -356,9 +356,9 @@ class _PdfViewerTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Built-in PDF Viewer'),
-      subtitle: const Text(
-        'Open PDF files directly in the browser without downloading',
+      title: Text(tr("Built-in PDF Viewer")),
+      subtitle: Text(
+        tr("Open PDF files directly in the browser without downloading"),
       ),
       secondary: const Icon(MdiIcons.filePdfBox),
       value: enablePdfJs,
@@ -383,9 +383,9 @@ class _EnableReaderModeTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Enable Reader Mode'),
-      subtitle: const Text(
-        'Optional browser app bar tool that extracts and simplifies web pages for improved readability by removing ads, sidebars, and other non-essential elements.',
+      title: Text(tr("Enable Reader Mode")),
+      subtitle: Text(
+        tr("Optional browser app bar tool that extracts and simplifies web pages for improved readability by removing ads, sidebars, and other non-essential elements."),
       ),
       secondary: const Icon(MdiIcons.bookOpen),
       value: enableReadability,
@@ -414,9 +414,9 @@ class _EnforceReaderModeTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Enforce Reader Mode'),
-      subtitle: const Text(
-        'Override readability probability of websites and always show Reader Mode capabilities even the site might not be compatible.',
+      title: Text(tr("Enforce Reader Mode")),
+      subtitle: Text(
+        tr("Override readability probability of websites and always show Reader Mode capabilities even the site might not be compatible."),
       ),
       secondary: const Icon(MdiIcons.bookCheck),
       value: enableReadability && enforceReadability,
@@ -446,9 +446,9 @@ class _OnDeviceAiTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('On Device AI'),
-      subtitle: const Text(
-        'Local on-device features including container topic and tab suggestions',
+      title: Text(tr("On Device AI")),
+      subtitle: Text(
+        tr("Local on-device features including container topic and tab suggestions"),
       ),
       secondary: const Icon(MdiIcons.creation),
       value: enableLocalAiFeatures,

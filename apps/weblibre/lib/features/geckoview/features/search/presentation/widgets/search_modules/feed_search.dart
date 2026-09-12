@@ -36,6 +36,7 @@ import 'package:weblibre/presentation/hooks/on_listenable_change_selector.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/text_highlight.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class FeedSearch extends HookConsumerWidget {
   static const _matchPrefix = '***';
@@ -207,7 +208,7 @@ class FeedSearch extends HookConsumerWidget {
                 error: (error, stackTrace) {
                   return SliverToBoxAdapter(
                     child: FailureWidget(
-                      title: 'Failed searching Articles',
+                      title: tr("Failed searching Articles"),
                       exception: error,
                     ),
                   );

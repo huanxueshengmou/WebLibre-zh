@@ -19,6 +19,7 @@ import 'package:uuid/uuid_value.dart';
 import 'package:weblibre/core/copy/profile_copy.dart';
 import 'package:weblibre/core/startup/profile_discovery.dart';
 import 'package:weblibre/features/user/domain/presentation/utils/profile_labels.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Asks which profile to start, while the selection lease is held.
 ///
@@ -66,14 +67,14 @@ class StartupProfilePicker extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 32, 24, 8),
               child: Text(
-                'Choose a profile',
+                tr("Choose a profile"),
                 style: theme.textTheme.headlineSmall,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                'Each profile keeps its own $profilePickerContents.',
+                tr("Each profile keeps its own {0}.", [profilePickerContents]),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -112,8 +113,8 @@ class StartupProfilePicker extends StatelessWidget {
                     ),
                     title: Text(labelOfProfile(profile.metadata, labels)),
                     subtitle: switch ((isCandidate, isLocked)) {
-                      (true, true) => const Text('Opens by default · Locked'),
-                      (true, false) => const Text('Opens by default'),
+                      (true, true) => Text(tr("Opens by default · Locked")),
+                      (true, false) => Text(tr("Opens by default")),
                       (false, true) => const Text('Locked'),
                       (false, false) => null,
                     },

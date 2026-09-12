@@ -8,6 +8,7 @@ import 'package:weblibre/features/web_search/presentation/widgets/search_result_
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class PagePreviewScreen extends ConsumerWidget {
   final Uri uri;
@@ -38,8 +39,8 @@ class PagePreviewScreen extends ConsumerWidget {
     if (document == null) {
       return Scaffold(
         appBar: AppBar(title: Text(title)),
-        body: const FailureWidget(
-          title: 'Preview unavailable',
+        body: FailureWidget(
+          title: tr("Preview unavailable"),
           exception:
               'Fetch the page from the result list before opening a preview.',
         ),
@@ -51,7 +52,7 @@ class PagePreviewScreen extends ConsumerWidget {
         title: Text(title),
         actions: [
           IconButton(
-            tooltip: 'Open in browser',
+            tooltip: tr("Open in browser"),
             onPressed: () async {
               await ref
                   .read(webSearchTabOpenerProvider)

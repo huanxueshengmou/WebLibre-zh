@@ -25,6 +25,7 @@ import 'package:weblibre/features/proxy/data/models/singbox_proxy_profile.dart';
 import 'package:weblibre/features/proxy/data/proxy_connection.dart';
 import 'package:weblibre/features/proxy/domain/extensions/singbox_proxy_profile_type_x.dart';
 import 'package:weblibre/features/proxy/domain/repositories/singbox_proxy_profiles.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'proxy_connection_options.g.dart';
 
@@ -63,7 +64,7 @@ List<ProxyConnectionOption> proxyConnectionOptions(Ref ref) {
     ProxyConnectionOption(
       id: const TorProxyConnectionId(),
       title: torBrand,
-      subtitle: 'Route through the $torNetworkLabel',
+      subtitle: tr("Route through the {0}", [torNetworkLabel]),
     ),
     for (final profile in singboxProfiles)
       ProxyConnectionOption(

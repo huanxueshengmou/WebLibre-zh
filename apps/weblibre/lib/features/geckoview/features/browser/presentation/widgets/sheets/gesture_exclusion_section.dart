@@ -24,6 +24,7 @@ import 'package:weblibre/features/gestures/data/models/gesture_settings.dart';
 import 'package:weblibre/features/gestures/domain/repositories/gesture_settings.dart';
 import 'package:weblibre/utils/host_rules.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Section widget toggling whether touch gestures are enabled on the current
 /// site. Mirrors the excluded-sites list managed in settings, but scoped to the
@@ -72,7 +73,7 @@ class GestureExclusionSection extends HookConsumerWidget {
       onChanged: (masterEnabled && host != null && parentRule == null)
           ? (enabled) => _toggleExclusion(context, ref, host, enabled)
           : null,
-      title: const Text('Gestures'),
+      title: Text(tr("Gestures")),
       subtitle: Text(subtitle),
       secondary: Icon(
         isEnabledHere ? Icons.gesture : Icons.do_not_touch_outlined,

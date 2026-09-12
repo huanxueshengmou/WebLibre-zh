@@ -40,6 +40,7 @@ import 'package:weblibre/features/geckoview/features/tabs/presentation/widgets/c
 import 'package:weblibre/features/geckoview/features/tabs/utils/background_tab_open.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 sealed class _PickerResult {}
 
@@ -68,7 +69,7 @@ class OpenInContainer extends HookConsumerWidget {
 
     return ListTile(
       leading: const Icon(MdiIcons.selectGroup),
-      title: const Text('Open in container'),
+      title: Text(tr("Open in container")),
       onTap: () async {
         final result = await showModalBottomSheet<_PickerResult?>(
           context: context,
@@ -165,7 +166,7 @@ class _ContainerPickerSheet extends HookConsumerWidget {
                 ),
                 error: (error, stackTrace) => Center(
                   child: FailureWidget(
-                    title: 'Failed to load containers',
+                    title: tr("Failed to load containers"),
                     exception: error,
                     onRetry: () =>
                         ref.invalidate(watchContainersWithCountProvider),
@@ -190,7 +191,7 @@ class _ContainerPickerSheet extends HookConsumerWidget {
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.add),
-            title: const Text('New Container'),
+            title: Text(tr("New Container")),
             onTap: () => Navigator.pop(context, _CreateNewContainer()),
           ),
         ],

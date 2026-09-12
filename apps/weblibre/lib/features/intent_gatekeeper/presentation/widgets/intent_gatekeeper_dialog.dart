@@ -23,6 +23,7 @@ import 'package:weblibre/features/intent_gatekeeper/domain/entities/intent_sourc
 import 'package:weblibre/features/intent_gatekeeper/domain/entities/pending_intent_decision.dart';
 import 'package:weblibre/features/intent_gatekeeper/domain/services/package_label_resolver.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class DialogOutcome {
   final IntentSourcePolicy decision;
@@ -57,7 +58,7 @@ class IntentGatekeeperDialog extends HookConsumerWidget {
 
     return AlertDialog(
       icon: const Icon(Icons.shield_outlined, size: 32),
-      title: const Text('Open link in WebLibre?'),
+      title: Text(tr("Open link in WebLibre?")),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -70,7 +71,7 @@ class IntentGatekeeperDialog extends HookConsumerWidget {
                 ),
                 children: [
                   TextSpan(text: displayName, style: bold),
-                  const TextSpan(text: ' is trying to open a link in '),
+                  TextSpan(text: tr(" is trying to open a link in ")),
                   TextSpan(text: 'WebLibre', style: bold),
                   const TextSpan(text: '.'),
                 ],
@@ -109,21 +110,21 @@ class IntentGatekeeperDialog extends HookConsumerWidget {
                   persist: true,
                 ),
               ),
-              child: const Text('Always allow'),
+              child: Text(tr("Always allow")),
             ),
             const SizedBox(height: 8),
             FilledButton.tonal(
               onPressed: () => Navigator.of(
                 context,
               ).pop(const DialogOutcome(decision: IntentSourcePolicy.allow)),
-              child: const Text('Allow once'),
+              child: Text(tr("Allow once")),
             ),
             const SizedBox(height: 8),
             OutlinedButton(
               onPressed: () => Navigator.of(
                 context,
               ).pop(const DialogOutcome(decision: IntentSourcePolicy.block)),
-              child: const Text('Block once'),
+              child: Text(tr("Block once")),
             ),
             const SizedBox(height: 8),
             TextButton(
@@ -133,7 +134,7 @@ class IntentGatekeeperDialog extends HookConsumerWidget {
                   persist: true,
                 ),
               ),
-              child: const Text('Always block'),
+              child: Text(tr("Always block")),
             ),
           ],
         ),

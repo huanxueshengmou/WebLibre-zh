@@ -33,6 +33,7 @@ import 'package:weblibre/features/user/domain/repositories/general_settings.dart
 import 'package:weblibre/presentation/widgets/browser_page.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 const defaultBangs = ['ddg', 'brave', 'startpage', 'qwant'];
 
@@ -73,11 +74,11 @@ class DefaultSearchPage extends HookConsumerWidget {
               children: [
                 const SizedBox(height: 24),
                 Center(
-                  child: Text('Search', style: theme.textTheme.headlineMedium),
+                  child: Text(tr("Search"), style: theme.textTheme.headlineMedium),
                 ),
                 const SizedBox(height: 24),
-                const ListTile(
-                  title: Text('Default Search Provider'),
+                ListTile(
+                  title: Text(tr("Default Search Provider")),
                   leading: Icon(MdiIcons.cloudSearch),
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -112,7 +113,7 @@ class DefaultSearchPage extends HookConsumerWidget {
                       ),
                     ),
                     ActionChip(
-                      label: const Text('Search more'),
+                      label: Text(tr("Search more")),
                       avatar: const Icon(Icons.search),
                       onPressed: () async {
                         final trigger = await const BangSearchRoute()
@@ -126,8 +127,8 @@ class DefaultSearchPage extends HookConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-                const ListTile(
-                  title: Text('Default Autocomplete Provider'),
+                ListTile(
+                  title: Text(tr("Default Autocomplete Provider")),
                   leading: Icon(MdiIcons.weatherCloudyArrowRight),
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -169,7 +170,7 @@ class DefaultSearchPage extends HookConsumerWidget {
           },
           error: (error, stackTrace) => Center(
             child: FailureWidget(
-              title: 'Could not load search engines',
+              title: tr("Could not load search engines"),
               exception: error,
               onRetry: () =>
                   ref.refresh(bangListProvider(triggers: defaultBangs)),

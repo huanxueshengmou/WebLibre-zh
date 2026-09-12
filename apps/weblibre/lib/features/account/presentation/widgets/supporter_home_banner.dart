@@ -30,6 +30,7 @@ import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/account/domain/repositories/account_auth.dart';
 import 'package:weblibre/features/account/domain/repositories/subscription_repository.dart';
 import 'package:weblibre/features/geckoview/features/open_link_tools/presentation/utils/open_in_custom_tab.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Promotional banner shown above the quote card on the browser home page,
 /// inviting non-subscribers to become a WebLibre Supporter.
@@ -147,7 +148,7 @@ class SupporterHomeBanner extends HookConsumerWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: Text(
-                      'Support WebLibre',
+                      tr("Support WebLibre"),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                         height: 1.25,
@@ -167,15 +168,12 @@ class SupporterHomeBanner extends HookConsumerWidget {
                   height: 1.45,
                 ),
                 children: [
-                  const TextSpan(
+                  TextSpan(
                     text:
-                        'Supporter is an optional subscription that funds '
-                        "WebLibre's development and provides the features that "
-                        'need a hosted service to work. The browser and its '
-                        'privacy features need no subscription. ',
+                        tr("Supporter is an optional subscription that funds WebLibre's development and provides the features that need a hosted service to work. The browser and its privacy features need no subscription. "),
                   ),
                   TextSpan(
-                    text: 'Learn more',
+                    text: tr("Learn more"),
                     style: const TextStyle(
                       color: AppColors.brandPurple,
                       fontWeight: FontWeight.w600,
@@ -187,22 +185,16 @@ class SupporterHomeBanner extends HookConsumerWidget {
               ),
             ),
             const SizedBox(height: 12),
-            const _FeatureBullet(
-              label: 'WebLibre Search',
+            _FeatureBullet(
+              label: tr("WebLibre Search"),
               description:
-                  'A private, ad-free search built into the browser. It blends '
-                  'results from several independent sources, offers tunable '
-                  'search modes, can route over Tor, and lets you preview '
-                  'pages safely — while keeping your searches unlinkable to '
-                  'your account by design.',
+                  tr("A private, ad-free search built into the browser. It blends results from several independent sources, offers tunable search modes, can route over Tor, and lets you preview pages safely — while keeping your searches unlinkable to your account by design."),
             ),
             const SizedBox(height: 8),
-            const _FeatureBullet(
-              label: 'Encrypted account sync',
+            _FeatureBullet(
+              label: tr("Encrypted account sync"),
               description:
-                  'Store and restore your WebLibre settings and preferences '
-                  'across profiles and devices. Everything is encrypted on '
-                  'your device before upload, so only you can read it.',
+                  tr("Store and restore your WebLibre settings and preferences across profiles and devices. Everything is encrypted on your device before upload, so only you can read it."),
             ),
             const SizedBox(height: 18),
             SizedBox(
@@ -214,7 +206,7 @@ class SupporterHomeBanner extends HookConsumerWidget {
                   foregroundColor: colorScheme.surface,
                 ),
                 icon: const Icon(MdiIcons.heart, size: 18),
-                label: const Text('Become a Supporter'),
+                label: Text(tr("Become a Supporter")),
               ),
             ),
           ],

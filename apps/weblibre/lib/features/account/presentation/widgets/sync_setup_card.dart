@@ -26,6 +26,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:secure_archive/secure_archive.dart';
 import 'package:weblibre/features/account/data/repositories/account_sync_repository.dart';
 import 'package:weblibre/features/account/domain/repositories/account_auth.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Lets a signed-in user derive an end-to-end encryption key from their
 /// account password.
@@ -124,23 +125,21 @@ class SyncSetupCard extends HookConsumerWidget {
               const Icon(Icons.lock_outlined),
               const SizedBox(width: 8),
               Text(
-                'Set Up Encrypted Sync',
+                tr("Set Up Encrypted Sync"),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
           ),
           const SizedBox(height: 8),
           Text(
-            'Enter your account password to enable end-to-end encrypted '
-            'sync. Your data is encrypted on-device before upload — '
-            'the server never sees your settings.',
+            tr("Enter your account password to enable end-to-end encrypted sync. Your data is encrypted on-device before upload — the server never sees your settings."),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 16),
           TextField(
             controller: passwordController,
             decoration: InputDecoration(
-              labelText: 'Account Password',
+              labelText: tr("Account Password"),
               border: const OutlineInputBorder(),
               errorText: error.value,
             ),
@@ -151,8 +150,8 @@ class SyncSetupCard extends HookConsumerWidget {
           const SizedBox(height: 12),
           TextField(
             controller: confirmController,
-            decoration: const InputDecoration(
-              labelText: 'Confirm Password',
+            decoration: InputDecoration(
+              labelText: tr("Confirm Password"),
               border: OutlineInputBorder(),
             ),
             obscureText: true,
@@ -170,7 +169,7 @@ class SyncSetupCard extends HookConsumerWidget {
                       width: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Enable Sync'),
+                  : Text(tr("Enable Sync")),
             ),
           ),
         ],
@@ -240,7 +239,7 @@ Future<void> _uploadValidationProbe(
     kind: SyncDocumentKind.syncValidationProbe,
     schemaVersion: 1,
     contentBlob: base64Encode(ciphertext),
-    label: 'sync validation probe',
+    label: tr("sync validation probe"),
   );
 }
 

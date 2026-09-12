@@ -28,6 +28,7 @@ import 'package:weblibre/features/user/domain/entities/fingerprint_overrides.dar
 import 'package:weblibre/features/user/domain/providers.dart';
 import 'package:weblibre/features/user/domain/services/fingerprinting.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class FingerprintSettingsScreen extends HookConsumerWidget {
   const FingerprintSettingsScreen({super.key});
@@ -39,9 +40,9 @@ class FingerprintSettingsScreen extends HookConsumerWidget {
     final search = useSettingsSearch();
 
     return SettingsCustomScrollScaffold(
-      title: 'Fingerprint Protection',
+      title: tr("Fingerprint Protection"),
       searchController: search.controller,
-      searchHintText: 'Search fingerprint override targets',
+      searchHintText: tr("Search fingerprint override targets"),
       actions: [
         MenuAnchor(
           builder: (context, controller, child) {
@@ -59,7 +60,7 @@ class FingerprintSettingsScreen extends HookConsumerWidget {
           menuChildren: [
             MenuItemButton(
               leadingIcon: const Icon(MdiIcons.restore),
-              child: const Text('Load Defaults'),
+              child: Text(tr("Load Defaults")),
               onPressed: () async {
                 await ref
                     .read(saveEngineSettingsControllerProvider.notifier)
@@ -73,7 +74,7 @@ class FingerprintSettingsScreen extends HookConsumerWidget {
             ),
             MenuItemButton(
               leadingIcon: const Icon(MdiIcons.restore),
-              child: const Text('Load Hardened Defaults'),
+              child: Text(tr("Load Hardened Defaults")),
               onPressed: () async {
                 await ref
                     .read(saveEngineSettingsControllerProvider.notifier)
@@ -113,7 +114,7 @@ class FingerprintSettingsScreen extends HookConsumerWidget {
                               ? const []
                               : [
                                   SettingsSectionDefinition(
-                                    title: 'Override Targets',
+                                    title: tr("Override Targets"),
                                     entries: [
                                       for (final target in filteredTargets)
                                         SettingsEntryDefinition(

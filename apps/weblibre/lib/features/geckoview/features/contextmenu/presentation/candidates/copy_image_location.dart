@@ -25,6 +25,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nullability/nullability.dart';
 import 'package:weblibre/features/geckoview/features/contextmenu/extensions/hit_result.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class CopyImageLocation extends HookConsumerWidget {
   final HitResult hitResult;
@@ -39,7 +40,7 @@ class CopyImageLocation extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: const Icon(MdiIcons.imageMarker),
-      title: const Text('Copy image location'),
+      title: Text(tr("Copy image location")),
       onTap: () async {
         await hitResult.tryGetSource().mapNotNull((link) async {
           await Clipboard.setData(ClipboardData(text: link.toString()));

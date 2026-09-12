@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:weblibre/features/gestures/data/models/gesture_action.dart';
 import 'package:weblibre/presentation/widgets/pointer_scrollable_sheet.dart';
 import 'package:weblibre/presentation/widgets/sheet_drag_handle.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows a modal bottom sheet listing every [GestureAction] grouped by category,
 /// each with its icon, title and description, and returns the chosen action (or
@@ -72,7 +73,7 @@ class _GestureActionPicker extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Choose action', style: theme.textTheme.titleLarge),
+                child: Text(tr("Choose action"), style: theme.textTheme.titleLarge),
               ),
             ),
             Expanded(

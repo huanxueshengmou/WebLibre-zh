@@ -18,6 +18,7 @@ import 'package:weblibre/features/tor/presentation/controllers/start_tor_proxy.d
 import 'package:weblibre/features/web_search/domain/entities/captured_page_state.dart';
 import 'package:weblibre/features/web_search/domain/entities/fetch_method.dart';
 import 'package:weblibre/features/web_search/domain/services/capture_artifact_downloader.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'search_controller.g.dart';
 
@@ -303,7 +304,7 @@ class MetaSearchController extends _$MetaSearchController {
       state = state.copyWith(
         status: WebSearchStatus.error,
         errorMessage:
-            'Could not start $torBrand for the search. Disable the $torBrand toggle or try again.',
+            tr("Could not start {0} for the search. Disable the {1} toggle or try again.", [torBrand, torBrand]),
         hasOpenSession: false,
       );
       return;
@@ -339,7 +340,7 @@ class MetaSearchController extends _$MetaSearchController {
       case TokenAvailabilityOutcome.issuanceFailed:
         state = state.copyWith(
           status: WebSearchStatus.error,
-          errorMessage: 'Could not issue search tokens. Please try again.',
+          errorMessage: tr("Could not issue search tokens. Please try again."),
           hasOpenSession: false,
         );
         return;
@@ -383,8 +384,7 @@ class MetaSearchController extends _$MetaSearchController {
           state = state.copyWith(
             status: WebSearchStatus.error,
             errorMessage:
-                'Search connection closed before results arrived. '
-                'Please try again.',
+                tr("Search connection closed before results arrived. Please try again."),
             hasOpenSession: false,
             isLoadingMore: false,
           );
@@ -1027,15 +1027,13 @@ class MetaSearchController extends _$MetaSearchController {
 
   static String _closeCodeUserMessage(int code) {
     return switch (code) {
-      4001 => 'Search session timed out. Please try again.',
+      4001 => tr("Search session timed out. Please try again."),
       4401 =>
-        'Your search credit could not be validated. '
-            'The credit may have been spent — please try again.',
-      4403 => 'The requested page is not permitted by the search policy.',
-      4500 => 'The search failed on the server. Please try again.',
+        tr("Your search credit could not be validated. The credit may have been spent — please try again."),
+      4403 => tr("The requested page is not permitted by the search policy."),
+      4500 => tr("The search failed on the server. Please try again."),
       _ =>
-        'Search connection closed unexpectedly (code $code). '
-            'Please try again.',
+        tr("Search connection closed unexpectedly (code {0}). Please try again.", [code]),
     };
   }
 
@@ -1048,21 +1046,17 @@ class MetaSearchController extends _$MetaSearchController {
     final fallbackDetail = detail.isEmpty ? 'unknown error' : detail;
     return switch (code) {
       'protocol_error' =>
-        'Search protocol error. The session has ended — please try '
-            'again. ($fallbackDetail)',
+        tr("Search protocol error. The session has ended — please try again. ({0})", [fallbackDetail]),
       'search_failed' =>
-        'The search failed on the server. Please try again. '
-            '($fallbackDetail)',
+        tr("The search failed on the server. Please try again. ({0})", [fallbackDetail]),
       'fetch_failed' =>
-        'Could not fetch this page from the source. ($fallbackDetail)',
+        tr("Could not fetch this page from the source. ({0})", [fallbackDetail]),
       'document_extract_failed' =>
-        'Could not extract a readable preview from this page. '
-            '($fallbackDetail)',
+        tr("Could not extract a readable preview from this page. ({0})", [fallbackDetail]),
       'fetch_not_allowed' =>
-        'This page is not permitted by the search policy. '
-            '($fallbackDetail)',
-      'capture_failed' => 'Page capture failed. ($fallbackDetail)',
-      _ => 'Search error: $fallbackDetail',
+        tr("This page is not permitted by the search policy. ({0})", [fallbackDetail]),
+      'capture_failed' => tr("Page capture failed. ({0})", [fallbackDetail]),
+      _ => tr("Search error: {0}", [fallbackDetail]),
     };
   }
 

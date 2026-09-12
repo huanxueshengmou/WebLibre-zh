@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 final _tagSplitPatter = RegExp(r'[,\s]+');
 
@@ -62,8 +63,8 @@ class TagField extends HookWidget {
         ),
         TextField(
           controller: textController,
-          decoration: const InputDecoration(
-            hintText: 'tag1, tag2, ...',
+          decoration: InputDecoration(
+            hintText: tr("tag1, tag2, ..."),
             prefixIcon: Icon(MdiIcons.tagMultiple),
           ),
           onChanged: (String value) {

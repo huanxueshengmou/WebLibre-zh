@@ -25,6 +25,7 @@ import 'package:weblibre/features/geckoview/features/browser/domain/entities/fon
 import 'package:weblibre/features/settings/presentation/controllers/save_settings.dart';
 import 'package:weblibre/features/user/data/models/engine_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/engine_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<void> showFontSizeBottomSheet(BuildContext context) {
   return showModalBottomSheet(
@@ -62,7 +63,7 @@ class FontSizeBottomSheet extends ConsumerWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Text Size',
+                  tr("Text Size"),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -85,8 +86,7 @@ class FontSizeBottomSheet extends ConsumerWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Automatic font size is enabled. '
-                            'Disable in Settings to adjust manually.',
+                            tr("Automatic font size is enabled. Disable in Settings to adjust manually."),
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
@@ -126,7 +126,7 @@ class FontSizeBottomSheet extends ConsumerWidget {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () => _resetFontSize(ref),
-                child: const Text('Reset to 100%'),
+                child: Text(tr("Reset to 100%")),
               ),
             ],
           ],

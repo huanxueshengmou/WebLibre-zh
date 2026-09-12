@@ -27,6 +27,7 @@ import 'package:weblibre/features/geckoview/features/bookmarks/domain/repositori
 import 'package:weblibre/features/geckoview/features/bookmarks/presentation/dialogs/delete_folder_dialog.dart';
 import 'package:weblibre/features/geckoview/features/bookmarks/presentation/widgets/folder_tree_picker.dart';
 import 'package:weblibre/utils/form_validators.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class BookmarkFolderEditScreen extends HookConsumerWidget {
   final String? parentGuid;
@@ -56,7 +57,7 @@ class BookmarkFolderEditScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: (folder != null)
-            ? const Text('Edit Folder')
+            ? Text(tr("Edit Folder"))
             : const Text('Create Folder'),
         actions: [
           IconButton(
@@ -108,8 +109,8 @@ class BookmarkFolderEditScreen extends HookConsumerWidget {
               children: [
                 TextFormField(
                   controller: nameTextController,
-                  decoration: const InputDecoration(
-                    label: Text('Name'),
+                  decoration: InputDecoration(
+                    label: Text(tr("Name")),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
                   validator: validateRequired,
@@ -127,7 +128,7 @@ class BookmarkFolderEditScreen extends HookConsumerWidget {
                     const SizedBox(height: 8),
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Add to top'),
+                      title: Text(tr("Add to top")),
                       value: addToTop.value,
                       onChanged: (value) => addToTop.value = value,
                     ),

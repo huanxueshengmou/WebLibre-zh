@@ -27,6 +27,7 @@ import 'package:weblibre/core/logger.dart';
 import 'package:weblibre/core/startup/startup_bootstrap.dart';
 import 'package:weblibre/presentation/startup_maintenance_screen.dart';
 import 'package:weblibre/presentation/startup_profile_picker.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// How often the picker proves it is still asking.
 ///
@@ -314,7 +315,7 @@ class StartupHaltScreen extends StatelessWidget {
     'Startup halted: ${halted.kind.name}',
     halted.reason,
     if (halted.taskId != null) 'Task: ${halted.taskId}',
-    if (halted.recoveryRequired) 'Recovery required',
+    if (halted.recoveryRequired) tr("Recovery required"),
   ].join('\n');
 
   @override
@@ -381,7 +382,7 @@ class StartupHaltScreen extends StatelessWidget {
                 FilledButton.icon(
                   onPressed: busy ? null : () => unawaited(onRetry!()),
                   icon: const Icon(Icons.refresh),
-                  label: Text(busy ? 'Trying again…' : 'Try again'),
+                  label: Text(busy ? tr("Trying again…") : tr("Try again")),
                 ),
               const SizedBox(height: 8),
               OutlinedButton.icon(
@@ -392,7 +393,7 @@ class StartupHaltScreen extends StatelessWidget {
                 // user.
                 onPressed: busy ? null : () => unawaited(SystemNavigator.pop()),
                 icon: const Icon(Icons.close),
-                label: const Text('Close WebLibre'),
+                label: Text(tr("Close WebLibre")),
               ),
               const SizedBox(height: 24),
               // Folded away rather than dropped. None of it means anything to a
@@ -426,7 +427,7 @@ class _HaltDetails extends StatelessWidget {
       data: theme.copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
         tilePadding: EdgeInsets.zero,
-        title: Text('Technical details', style: theme.textTheme.bodySmall),
+        title: Text(tr("Technical details"), style: theme.textTheme.bodySmall),
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -445,7 +446,7 @@ class _HaltDetails extends StatelessWidget {
               onPressed: () =>
                   unawaited(Clipboard.setData(ClipboardData(text: details))),
               icon: const Icon(Icons.copy, size: 16),
-              label: const Text('Copy details'),
+              label: Text(tr("Copy details")),
             ),
           ),
         ],

@@ -29,14 +29,15 @@ import 'package:weblibre/features/settings/presentation/controllers/save_setting
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> unshortenerSettingsSections = [
+List<SettingsSectionDefinition> unshortenerSettingsSections = [
   SettingsSectionDefinition(
     title: 'Overview',
     entries: [
       SettingsEntryDefinition(
-        title: 'Description',
-        subtitle: 'Resolve shortened URLs using the unshorten.me service',
+        title: tr("Description"),
+        subtitle: tr("Resolve shortened URLs using the unshorten.me service"),
         keywords: ['short links', 'redirects'],
         child: _UnshortenerDescriptionTile(),
       ),
@@ -46,14 +47,14 @@ const List<SettingsSectionDefinition> unshortenerSettingsSections = [
     title: 'Behavior',
     entries: [
       SettingsEntryDefinition(
-        title: 'Enable Unshortener',
-        subtitle: 'Resolve shortened URLs to their destination',
+        title: tr("Enable Unshortener"),
+        subtitle: tr("Resolve shortened URLs to their destination"),
         keywords: ['short links'],
         child: _UnshortenerEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: 'API Token',
-        subtitle: 'Optional token for higher request limits',
+        title: tr("API Token"),
+        subtitle: tr("Optional token for higher request limits"),
         keywords: ['token'],
         child: _UnshortenerTokenField(),
       ),
@@ -63,8 +64,8 @@ const List<SettingsSectionDefinition> unshortenerSettingsSections = [
     title: 'Attribution',
     entries: [
       SettingsEntryDefinition(
-        title: 'Service attribution',
-        subtitle: 'Rate limits, service homepage, and privacy policy',
+        title: tr("Service attribution"),
+        subtitle: tr("Rate limits, service homepage, and privacy policy"),
         keywords: ['privacy policy', 'rate limit'],
         child: _UnshortenerAttributionTile(),
       ),
@@ -77,10 +78,10 @@ class UnshortenerSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
+    return SettingsDetailScaffold(
       title: 'Unshortener',
       subtitle:
-          'Short-link resolution behavior, token configuration, and attribution.',
+          tr("Short-link resolution behavior, token configuration, and attribution."),
       icon: MdiIcons.linkVariant,
       sections: unshortenerSettingsSections,
     );
@@ -97,8 +98,8 @@ class _UnshortenerEnabledTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Enable Unshortener'),
-      subtitle: const Text('Resolve shortened URLs to their destination'),
+      title: Text(tr("Enable Unshortener")),
+      subtitle: Text(tr("Resolve shortened URLs to their destination")),
       secondary: const Icon(MdiIcons.linkVariant),
       value: enabled,
       onChanged: (value) async {
@@ -115,13 +116,11 @@ class _UnshortenerDescriptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
+    return ListTile(
       leading: Icon(MdiIcons.linkVariant),
-      title: Text('Description'),
+      title: Text(tr("Description")),
       subtitle: Text(
-        'This module will unshort links by sending them to unshorten.me, '
-        'which evaluates them on their servers and saves the redirection for future requests. '
-        'Avoid unshortening links with private or sensitive data.',
+        tr("This module will unshort links by sending them to unshorten.me, which evaluates them on their servers and saves the redirection for future requests. Avoid unshortening links with private or sensitive data."),
       ),
     );
   }
@@ -141,7 +140,7 @@ class _UnshortenerAttributionTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'The free API is rate limited to 10 requests per hour for new checks.',
+              tr("The free API is rate limited to 10 requests per hour for new checks."),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 12),
@@ -150,8 +149,8 @@ class _UnshortenerAttributionTile extends StatelessWidget {
               url: 'https://unshorten.me/',
             ),
             const SizedBox(height: 8),
-            const _AttributionLinkRow(
-              label: 'Privacy policy',
+            _AttributionLinkRow(
+              label: tr("Privacy policy"),
               url: 'https://unshorten.me/privacy-policy',
             ),
           ],
@@ -189,9 +188,9 @@ class _UnshortenerTokenField extends HookConsumerWidget {
       child: TextField(
         controller: controller,
         focusNode: focusNode,
-        decoration: const InputDecoration(
-          labelText: 'API Token',
-          hintText: 'Optional token for higher limits',
+        decoration: InputDecoration(
+          labelText: tr("API Token"),
+          hintText: tr("Optional token for higher limits"),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
         obscureText: true,

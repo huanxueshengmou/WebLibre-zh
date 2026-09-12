@@ -27,6 +27,7 @@ import 'package:weblibre/features/proxy/domain/services/routed_http_client.dart'
 import 'package:weblibre/features/proxy/domain/services/subscription_importer.dart';
 import 'package:weblibre/presentation/widgets/button_spinner.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SubscriptionImportScreen extends HookConsumerWidget {
   const SubscriptionImportScreen({super.key});
@@ -113,25 +114,22 @@ class SubscriptionImportScreen extends HookConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Import Subscription')),
+      appBar: AppBar(title: Text(tr("Import Subscription"))),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           TextField(
             controller: urlController,
             keyboardType: TextInputType.url,
-            decoration: const InputDecoration(
-              labelText: 'Subscription URL',
+            decoration: InputDecoration(
+              labelText: tr("Subscription URL"),
               hintText: 'https://example.com/sub',
               border: OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Supports the v2rayN-style format: a base64-encoded list of '
-            'ss://, vless://, vmess://, trojan://, hysteria2://, tuic:// '
-            'and similar URIs. Routing rules from the subscription are '
-            'ignored — only proxy nodes are imported.',
+            tr("Supports the v2rayN-style format: a base64-encoded list of ss://, vless://, vmess://, trojan://, hysteria2://, tuic:// and similar URIs. Routing rules from the subscription are ignored — only proxy nodes are imported."),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 16),
@@ -220,7 +218,7 @@ class _ResultsSection extends StatelessWidget {
             ),
             TextButton(
               onPressed: () => onSelectionChanged(const {}),
-              child: const Text('Clear'),
+              child: Text(tr("Clear")),
             ),
           ],
         ),
@@ -239,7 +237,7 @@ class _ResultsSection extends StatelessWidget {
           icon: isImporting
               ? const ButtonSpinner()
               : const Icon(Icons.download_done),
-          label: Text('Import ${selectedIndices.length} profile(s)'),
+          label: Text(tr("Import {0} profile(s)", [selectedIndices.length])),
         ),
       ],
     );

@@ -35,6 +35,7 @@ import 'package:weblibre/features/small_web/presentation/widgets/wander_console_
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/pointer_scrollable_sheet.dart';
 import 'package:weblibre/presentation/widgets/sheet_drag_handle.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Hand-off between the small-web menu and the wander-console sheet. Each
 /// sheet pops with one of these so [openSmallWebMenuFlow] can re-present the
@@ -92,7 +93,7 @@ class _SmallWebMenuSheet extends ConsumerWidget {
                   Icon(Icons.explore, color: colorScheme.primary),
                   const SizedBox(width: 8),
                   Text(
-                    'Small Web',
+                    tr("Small Web"),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const Spacer(),
@@ -116,7 +117,7 @@ class _SmallWebMenuSheet extends ConsumerWidget {
                           .read(smallWebSessionControllerProvider.notifier)
                           .discover,
                       icon: const Icon(Icons.refresh),
-                      tooltip: 'Retry',
+                      tooltip: tr("Retry"),
                     ),
                   ),
                 ],
@@ -312,9 +313,9 @@ class _WebCategoriesPanel extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Refine Category', style: theme.textTheme.titleSmall),
+                  Text(tr("Refine Category"), style: theme.textTheme.titleSmall),
                   FilterChip(
-                    label: const Text('All'),
+                    label: Text(tr("All")),
                     selected: session.currentCategory == null,
                     showCheckmark: false,
                     onSelected: (_) async {
@@ -523,7 +524,7 @@ class _DefaultContentPanel extends ConsumerWidget {
                 onPressed: () =>
                     Navigator.of(context).pop(SmallWebSheetRequest.showWander),
                 icon: const Icon(Icons.dns, size: 18),
-                label: const Text('Browse Consoles'),
+                label: Text(tr("Browse Consoles")),
               ),
               const SizedBox(height: 12),
             ],
@@ -859,7 +860,7 @@ class _SmallWebMenuError extends StatelessWidget {
             SizedBox(
               height: 240,
               child: FailureWidget(
-                title: 'Small Web unavailable',
+                title: tr("Small Web unavailable"),
                 exception: error,
                 onRetry: onRetry,
               ),
@@ -896,7 +897,7 @@ class _WanderConsoleCard extends ConsumerWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'No console selected',
+                tr("No console selected"),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
@@ -937,7 +938,7 @@ class _WanderConsoleCard extends ConsumerWidget {
             const SizedBox(height: 8),
             statsAsync.when(
               data: (stats) => Text(
-                '${stats.linkedConsoles} linked consoles \u00b7 ${stats.pages} pages',
+                tr("{0} linked consoles · {1} pages", [stats.linkedConsoles, stats.pages]),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),

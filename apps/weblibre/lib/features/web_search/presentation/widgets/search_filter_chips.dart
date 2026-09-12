@@ -22,6 +22,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:search_protocol/search_protocol.dart';
 import 'package:weblibre/features/search_credits/domain/repositories/web_search_settings.dart';
 import 'package:weblibre/features/web_search/data/locale_options.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class _FilterPill extends StatelessWidget {
   final IconData icon;
@@ -187,7 +188,7 @@ class LanguageSelector extends ConsumerWidget {
                 .setLanguage(null);
           },
           child: _MenuRow(
-            label: 'Auto (device default)',
+            label: tr("Auto (device default)"),
             subtitle: defaultOption?.code ?? locale.languageCode,
             isSelected: selected == null,
           ),
@@ -248,7 +249,7 @@ class CountrySelector extends ConsumerWidget {
                 .read(webSearchSettingsControllerProvider.notifier)
                 .setRegion(null);
           },
-          child: _MenuRow(label: 'Any region', isSelected: selected == null),
+          child: _MenuRow(label: tr("Any region"), isSelected: selected == null),
         ),
         if (defaultOption != null) ...[
           const Divider(),
@@ -259,7 +260,7 @@ class CountrySelector extends ConsumerWidget {
                   .setRegion(defaultOption.code);
             },
             child: _MenuRow(
-              label: '${defaultOption.name} (device)',
+              label: tr("{0} (device)", [defaultOption.name]),
               subtitle: defaultOption.code,
               isSelected: selected == defaultOption.code,
             ),
@@ -288,10 +289,10 @@ class SafeSearchSelector extends ConsumerWidget {
   const SafeSearchSelector({super.key});
 
   String _label(SafeSearch? value) => switch (value) {
-    null => 'Safe: default',
-    SafeSearch.none => 'Safe: off',
-    SafeSearch.moderate => 'Safe: moderate',
-    SafeSearch.strict => 'Safe: strict',
+    null => tr("Safe: default"),
+    SafeSearch.none => tr("Safe: off"),
+    SafeSearch.moderate => tr("Safe: moderate"),
+    SafeSearch.strict => tr("Safe: strict"),
   };
 
   @override
@@ -317,7 +318,7 @@ class SafeSearchSelector extends ConsumerWidget {
                 .setSafeSearch(null);
           },
           child: _MenuRow(
-            label: 'Default (moderate)',
+            label: tr("Default (moderate)"),
             isSelected: selected == null,
           ),
         ),
@@ -329,7 +330,7 @@ class SafeSearchSelector extends ConsumerWidget {
                 .setSafeSearch(SafeSearch.none);
           },
           child: _MenuRow(
-            label: 'Off',
+            label: tr("Off"),
             isSelected: selected == SafeSearch.none,
             isHighlighted: true,
           ),
@@ -352,7 +353,7 @@ class SafeSearchSelector extends ConsumerWidget {
                 .setSafeSearch(SafeSearch.strict);
           },
           child: _MenuRow(
-            label: 'Strict',
+            label: tr("Strict"),
             isSelected: selected == SafeSearch.strict,
             isHighlighted: true,
           ),
@@ -366,11 +367,11 @@ class FreshnessSelector extends ConsumerWidget {
   const FreshnessSelector({super.key});
 
   String _label(TimeRange? value) => switch (value) {
-    null => 'Any time',
-    TimeRange.day => 'Past day',
-    TimeRange.week => 'Past week',
-    TimeRange.month => 'Past month',
-    TimeRange.year => 'Past year',
+    null => tr("Any time"),
+    TimeRange.day => tr("Past day"),
+    TimeRange.week => tr("Past week"),
+    TimeRange.month => tr("Past month"),
+    TimeRange.year => tr("Past year"),
   };
 
   @override
@@ -395,7 +396,7 @@ class FreshnessSelector extends ConsumerWidget {
                 .read(webSearchSettingsControllerProvider.notifier)
                 .setTimeRange(null);
           },
-          child: _MenuRow(label: 'Any time', isSelected: selected == null),
+          child: _MenuRow(label: tr("Any time"), isSelected: selected == null),
         ),
         const Divider(),
         for (final value in TimeRange.values)

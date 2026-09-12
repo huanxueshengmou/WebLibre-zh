@@ -23,6 +23,7 @@ import 'package:fast_equatable/fast_equatable.dart';
 import 'package:flutter_singbox_proxy/flutter_singbox_proxy.dart';
 import 'package:weblibre/features/proxy/data/parsers/base64_text.dart';
 import 'package:weblibre/features/proxy/data/parsers/host_port.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Form-spec-shaped result of parsing a single proxy URI (ss://, vless://, …).
 class SingboxProxyUriImport with FastEquatable {
@@ -89,7 +90,7 @@ SingboxProxyUriImport _importShadowsocksUri(String rawUri) {
   }
   final endpoint = parseHostPort(
     decodedPayload.substring(atIndex + 1),
-    invalidMessage: 'Proxy URI endpoint must be host:port.',
+    invalidMessage: tr("Proxy URI endpoint must be host:port."),
   );
 
   return SingboxProxyUriImport(

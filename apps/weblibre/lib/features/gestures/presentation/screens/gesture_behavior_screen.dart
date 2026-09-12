@@ -23,14 +23,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/gestures/data/models/gesture_settings.dart';
 import 'package:weblibre/features/gestures/domain/repositories/gesture_settings.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> _behaviorSections = [
+List<SettingsSectionDefinition> _behaviorSections = [
   SettingsSectionDefinition(
     title: 'Strokes',
     entries: [
       SettingsEntryDefinition(
-        title: 'Minimum stroke length',
-        subtitle: 'Minimum swipe length recognised as a direction',
+        title: tr("Minimum stroke length"),
+        subtitle: tr("Minimum swipe length recognised as a direction"),
         keywords: ['size', 'length', 'sensitivity'],
         child: _StrokeLengthSection(),
       ),
@@ -40,20 +41,20 @@ const List<SettingsSectionDefinition> _behaviorSections = [
     title: 'Timing',
     entries: [
       SettingsEntryDefinition(
-        title: 'Timeout',
+        title: tr("Timeout"),
         subtitle: 'Drop a stroke if no new direction is drawn',
         keywords: ['delay'],
         child: _TimeoutSection(),
       ),
       SettingsEntryDefinition(
         title: 'Cooldown',
-        subtitle: 'Minimum delay between two gestures firing',
+        subtitle: tr("Minimum delay between two gestures firing"),
         keywords: ['interval'],
         child: _CooldownSection(),
       ),
       SettingsEntryDefinition(
-        title: 'Stroke interval',
-        subtitle: 'Reject a gesture when direction changes come too fast',
+        title: tr("Stroke interval"),
+        subtitle: tr("Reject a gesture when direction changes come too fast"),
         keywords: ['debounce', 'jitter', 'accidental'],
         child: _StrokeIntervalSection(),
       ),
@@ -67,9 +68,9 @@ class GestureBehaviorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
-      title: 'Behavior & timing',
-      subtitle: 'Stroke length, timeout, and cooldown.',
+    return SettingsDetailScaffold(
+      title: tr("Behavior & timing"),
+      subtitle: tr("Stroke length, timeout, and cooldown."),
       icon: Icons.tune,
       sections: _behaviorSections,
       actions: [_ResetBehaviorButton()],
@@ -87,26 +88,24 @@ class _ResetBehaviorButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       icon: const Icon(Icons.settings_backup_restore),
-      tooltip: 'Reset to defaults',
+      tooltip: tr("Reset to defaults"),
       onPressed: () async {
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             icon: const Icon(Icons.settings_backup_restore),
-            title: const Text('Reset behavior & timing?'),
-            content: const Text(
-              'Stroke length, timeout, cooldown and stroke interval will be '
-              'restored to their defaults. Your gesture bindings and other '
-              'settings are kept.',
+            title: Text(tr("Reset behavior & timing?")),
+            content: Text(
+              tr("Stroke length, timeout, cooldown and stroke interval will be restored to their defaults. Your gesture bindings and other settings are kept."),
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Cancel'),
+                child: Text(tr("Cancel")),
               ),
               FilledButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('Reset'),
+                child: Text(tr("Reset")),
               ),
             ],
           ),
@@ -138,7 +137,7 @@ class _StrokeLengthSection extends HookConsumerWidget {
 
     return ListTile(
       leading: const Icon(MdiIcons.gestureTap),
-      title: const Text('Minimum stroke length'),
+      title: Text(tr("Minimum stroke length")),
       subtitle: Slider.adaptive(
         min: minGestureStrokeSize.toDouble(),
         max: maxGestureStrokeSize.toDouble(),
@@ -171,7 +170,7 @@ class _TimeoutSection extends HookConsumerWidget {
       children: [
         ListTile(
           leading: const Icon(Icons.hourglass_empty),
-          title: const Text('Timeout'),
+          title: Text(tr("Timeout")),
           subtitle: Slider.adaptive(
             min: minGestureTimeoutMs.toDouble(),
             max: maxGestureTimeoutMs.toDouble(),
@@ -179,7 +178,7 @@ class _TimeoutSection extends HookConsumerWidget {
             value: settings.timeoutMs
                 .clamp(minGestureTimeoutMs, maxGestureTimeoutMs)
                 .toDouble(),
-            label: '${settings.timeoutMs} ms',
+            label: tr("{0} ms", [settings.timeoutMs]),
             onChanged: (value) async {
               await ref
                   .read(gestureSettingsRepositoryProvider.notifier)
@@ -189,10 +188,10 @@ class _TimeoutSection extends HookConsumerWidget {
             },
           ),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(72, 0, 16, 8),
           child: Text(
-            'A stroke is dropped if no new direction is drawn within this time.',
+            tr("A stroke is dropped if no new direction is drawn within this time."),
           ),
         ),
       ],
@@ -232,9 +231,9 @@ class _CooldownSection extends HookConsumerWidget {
             },
           ),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(72, 0, 16, 8),
-          child: Text('Minimum delay between two gestures firing.'),
+          child: Text(tr("Minimum delay between two gestures firing.")),
         ),
       ],
     );
@@ -253,7 +252,7 @@ class _StrokeIntervalSection extends HookConsumerWidget {
       children: [
         ListTile(
           leading: const Icon(Icons.gesture),
-          title: const Text('Stroke interval'),
+          title: Text(tr("Stroke interval")),
           subtitle: Slider.adaptive(
             min: minGestureStrokeIntervalMs.toDouble(),
             max: maxGestureStrokeIntervalMs.toDouble(),
@@ -275,12 +274,10 @@ class _StrokeIntervalSection extends HookConsumerWidget {
             },
           ),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(72, 0, 16, 8),
           child: Text(
-            'Minimum time between direction changes within one gesture. '
-            'Faster changes abort the gesture, guarding against accidental '
-            'triggers.',
+            tr("Minimum time between direction changes within one gesture. Faster changes abort the gesture, guarding against accidental triggers."),
           ),
         ),
       ],

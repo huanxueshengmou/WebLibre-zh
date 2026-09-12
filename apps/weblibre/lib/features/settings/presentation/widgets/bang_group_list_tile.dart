@@ -24,6 +24,7 @@ import 'package:weblibre/features/bangs/domain/providers/bangs.dart';
 import 'package:weblibre/features/bangs/domain/repositories/sync.dart';
 import 'package:weblibre/features/settings/presentation/widgets/custom_list_tile.dart';
 import 'package:weblibre/features/settings/presentation/widgets/sync_details_table.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class BangGroupListTile extends HookConsumerWidget {
   final BangGroup group;
@@ -62,7 +63,7 @@ class BangGroupListTile extends HookConsumerWidget {
               .syncRemoteBangGroup(group, null);
         },
         icon: const Icon(Icons.sync),
-        label: const Text('Sync'),
+        label: Text(tr("Sync")),
       ),
     );
   }

@@ -25,6 +25,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weblibre/extensions/uri.dart';
 import 'package:weblibre/features/geckoview/domain/providers/tab_state.dart';
 import 'package:weblibre/features/web_search/domain/controllers/sandbox_capture_controller.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class CertificateTile extends HookConsumerWidget {
   const CertificateTile({super.key});
@@ -48,9 +49,9 @@ class CertificateTile extends HookConsumerWidget {
           MdiIcons.archiveLockOutline,
           color: Theme.of(context).colorScheme.tertiary,
         ),
-        title: const Text('Sandboxed capture'),
-        subtitle: const Text(
-          'Page is served from an offline archive — no live connection.',
+        title: Text(tr("Sandboxed capture")),
+        subtitle: Text(
+          tr("Page is served from an offline archive — no live connection."),
         ),
       );
     }
@@ -63,7 +64,7 @@ class CertificateTile extends HookConsumerWidget {
             color: Theme.of(context).colorScheme.error,
           ),
           title: Text(
-            'Connection is not secure',
+            tr("Connection is not secure"),
             style: TextStyle(color: Theme.of(context).colorScheme.error),
           ),
         );
@@ -76,7 +77,7 @@ class CertificateTile extends HookConsumerWidget {
             color: Theme.of(context).colorScheme.errorContainer,
           ),
           title: Text(
-            'Connection is not secure',
+            tr("Connection is not secure"),
             style: TextStyle(
               color: Theme.of(context).colorScheme.errorContainer,
             ),
@@ -85,7 +86,7 @@ class CertificateTile extends HookConsumerWidget {
       } else if (!tabState.isLoading) {
         return ListTile(
           leading: const Icon(MdiIcons.lock),
-          title: const Text('Connection is secure'),
+          title: Text(tr("Connection is secure")),
           subtitle: Text('Verified By: ${tabState.securityInfoState.issuer}'),
         );
       } else {

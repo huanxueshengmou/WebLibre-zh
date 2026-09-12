@@ -32,6 +32,7 @@ import 'package:weblibre/features/geckoview/features/browser/features/contextual
 import 'package:weblibre/features/geckoview/features/browser/presentation/widgets/browser_modules/bottom_app_bar.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/features/user/data/database/definitions.drift.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ContextualToolbarSettingsScreen extends HookConsumerWidget {
   const ContextualToolbarSettingsScreen({
@@ -82,7 +83,7 @@ class ContextualToolbarSettingsScreen extends HookConsumerWidget {
     return SettingsCustomScrollScaffold(
       title: title,
       searchController: search.controller,
-      searchHintText: 'Search toolbar buttons',
+      searchHintText: tr("Search toolbar buttons"),
       actions: [
         MenuAnchor(
           builder: (context, controller, child) => IconButton(
@@ -99,7 +100,7 @@ class ContextualToolbarSettingsScreen extends HookConsumerWidget {
             MenuItemButton(
               leadingIcon: const Icon(Icons.restore),
               onPressed: () => _resetToDefaults(ref, location),
-              child: const Text('Reset to Defaults'),
+              child: Text(tr("Reset to Defaults")),
             ),
           ],
         ),
@@ -113,9 +114,9 @@ class ContextualToolbarSettingsScreen extends HookConsumerWidget {
             location: location,
           ),
         ),
-        const SliverPadding(
+        SliverPadding(
           padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
-          sliver: SliverToBoxAdapter(child: _SectionLabel(label: 'Enabled')),
+          sliver: SliverToBoxAdapter(child: _SectionLabel(label: tr("Enabled"))),
         ),
         if (visibleConfigs.isEmpty)
           SliverToBoxAdapter(
@@ -123,8 +124,8 @@ class ContextualToolbarSettingsScreen extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(
                 query.isEmpty
-                    ? 'No enabled buttons. Toggle a button below to enable it.'
-                    : 'No enabled buttons match "${search.rawQuery}".',
+                    ? tr("No enabled buttons. Toggle a button below to enable it.")
+                    : tr("No enabled buttons match \"{0}\".", [search.rawQuery]),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -151,9 +152,9 @@ class ContextualToolbarSettingsScreen extends HookConsumerWidget {
               );
             },
           ),
-        const SliverPadding(
+        SliverPadding(
           padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
-          sliver: SliverToBoxAdapter(child: _SectionLabel(label: 'Disabled')),
+          sliver: SliverToBoxAdapter(child: _SectionLabel(label: tr("Disabled"))),
         ),
         if (hiddenConfigs.isEmpty)
           SliverToBoxAdapter(
@@ -161,8 +162,8 @@ class ContextualToolbarSettingsScreen extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(
                 query.isEmpty
-                    ? 'All buttons are enabled.'
-                    : 'No disabled buttons match "${search.rawQuery}".',
+                    ? tr("All buttons are enabled.")
+                    : tr("No disabled buttons match \"{0}\".", [search.rawQuery]),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -398,7 +399,7 @@ class _LongPressHint extends StatelessWidget {
             const SizedBox(width: 8),
             Flexible(
               child: Text(
-                'Long press available',
+                tr("Long press available"),
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 12,
@@ -438,7 +439,7 @@ class _LongPressHint extends StatelessWidget {
                     Icon(icon, color: Theme.of(context).colorScheme.primary),
                     const SizedBox(width: 12),
                     Text(
-                      '$buttonLabel Long Press',
+                      tr("{0} Long Press", [buttonLabel]),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -447,7 +448,7 @@ class _LongPressHint extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Press and hold this button to access:',
+                  tr("Press and hold this button to access:"),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -499,7 +500,7 @@ class _FallbackPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButton<ToolbarFallbackChoice>(
       value: current,
-      hint: const Text('No fallback'),
+      hint: Text(tr("No fallback")),
       isExpanded: true,
       isDense: true,
       padding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -507,7 +508,7 @@ class _FallbackPicker extends StatelessWidget {
       items: [
         DropdownMenuItem(
           value: ToolbarFallbackNone(),
-          child: const Text('No fallback'),
+          child: Text(tr("No fallback")),
         ),
         for (final opt in options)
           DropdownMenuItem(

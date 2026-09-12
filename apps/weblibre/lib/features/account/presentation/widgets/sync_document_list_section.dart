@@ -29,6 +29,7 @@ import 'package:weblibre/features/account/domain/services/sync_document_service.
 import 'package:weblibre/features/account/presentation/widgets/sync_document_dialogs.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_content_card.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SyncDocumentListSection extends HookWidget {
   const SyncDocumentListSection({
@@ -234,7 +235,7 @@ class SyncDocumentListSection extends HookWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
           child: Text(
-            '${service.kind.displayName} Snapshots',
+            tr("{0} Snapshots", [service.kind.displayName]),
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
@@ -246,7 +247,7 @@ class SyncDocumentListSection extends HookWidget {
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
               : const Icon(Icons.cloud_upload_outlined),
-          title: const Text('Store Current'),
+          title: Text(tr("Store Current")),
           subtitle: Text(
             'Encrypt and upload current ${service.kind.displayName.toLowerCase()}',
           ),
@@ -262,7 +263,7 @@ class SyncDocumentListSection extends HookWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
             child: Text(
-              'No snapshots stored yet',
+              tr("No snapshots stored yet"),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -331,12 +332,12 @@ class _DocumentTile extends StatelessWidget {
           MenuItemButton(
             leadingIcon: const Icon(Icons.cloud_download_outlined),
             onPressed: onRestore,
-            child: const Text('Restore'),
+            child: Text(tr("Restore")),
           ),
           MenuItemButton(
             leadingIcon: const Icon(Icons.edit_outlined),
             onPressed: onEditLabel,
-            child: const Text('Edit Label'),
+            child: Text(tr("Edit Label")),
           ),
           MenuItemButton(
             leadingIcon: Icon(

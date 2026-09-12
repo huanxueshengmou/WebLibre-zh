@@ -6,6 +6,7 @@ import 'package:weblibre/features/web_search/domain/entities/fetch_method.dart';
 import 'package:weblibre/features/web_search/domain/services/capture_artifact_downloader.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<void> showFetchMethodSheet(
   BuildContext context, {
@@ -55,7 +56,7 @@ class _FetchMethodSheet extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Fetch Page Data', style: textTheme.titleLarge),
+                  Text(tr("Fetch Page Data"), style: textTheme.titleLarge),
                   const SizedBox(height: 4),
                   UriBreadcrumb(
                     uri: url,

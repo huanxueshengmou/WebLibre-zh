@@ -41,6 +41,7 @@ import 'package:weblibre/features/user/domain/repositories/general_settings.dart
 import 'package:weblibre/presentation/hooks/menu_controller.dart';
 import 'package:weblibre/presentation/widgets/speech_to_text_button.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Widget for tab filters (container chips with synced option)
 class _TabFilters extends ConsumerWidget {
@@ -294,7 +295,7 @@ class TabViewHeader extends HookConsumerWidget {
                         icon: const Icon(MdiIcons.tabSearch),
                         iconSize: 18,
                         padding: EdgeInsets.zero,
-                        tooltip: 'Search inside tabs',
+                        tooltip: tr("Search inside tabs"),
                         onPressed: () {
                           searchMode.value = true;
                           searchTextFocus.requestFocus();
@@ -354,7 +355,7 @@ class TabViewHeader extends HookConsumerWidget {
                                     },
                                   );
                                 }).toList(),
-                                child: const Text('Tab Type'),
+                                child: Text(tr("Tab Type")),
                               ),
                               // Sort
                               SubmenuButton(
@@ -403,10 +404,10 @@ class TabViewHeader extends HookConsumerWidget {
                                                       .sortPinnedFirst,
                                                 );
                                           },
-                                    child: const Text('Sort Pinned First'),
+                                    child: Text(tr("Sort Pinned First")),
                                   ),
                                 ],
-                                child: const Text('Sort'),
+                                child: Text(tr("Sort")),
                               ),
                               MenuItemButton(
                                 leadingIcon: Icon(
@@ -424,7 +425,7 @@ class TabViewHeader extends HookConsumerWidget {
                                         !filterOptions.showHierarchicalTabs,
                                       );
                                 },
-                                child: const Text('Hierarchical View'),
+                                child: Text(tr("Hierarchical View")),
                               ),
                               const Divider(),
                               // Date range picker
@@ -448,7 +449,7 @@ class TabViewHeader extends HookConsumerWidget {
                                     ? Text(
                                         '${DateFormat.yMd().format(filterOptions.dateRange!.start)} - ${DateFormat.yMd().format(filterOptions.dateRange!.end)}',
                                       )
-                                    : const Text('Filter Date'),
+                                    : Text(tr("Filter Date")),
                                 onPressed: () async {
                                   final range = await showDateRangePicker(
                                     context: context,
@@ -507,13 +508,13 @@ class TabViewHeader extends HookConsumerWidget {
                                       ),
                                     )
                                     .toList(),
-                                child: const Text('Quick Interval'),
+                                child: Text(tr("Quick Interval")),
                               ),
                               const Divider(),
                               // Reset
                               MenuItemButton(
                                 leadingIcon: const Icon(MdiIcons.restore),
-                                child: const Text('Reset Filter'),
+                                child: Text(tr("Reset Filter")),
                                 onPressed: () {
                                   ref
                                       .read(
@@ -525,7 +526,7 @@ class TabViewHeader extends HookConsumerWidget {
                               ),
                             ],
                             child: IconButton(
-                              tooltip: 'Filter & Sort',
+                              tooltip: tr("Filter & Sort"),
                               onPressed: () {
                                 if (filterMenuController.isOpen) {
                                   filterMenuController.close();
@@ -565,7 +566,7 @@ class TabViewHeader extends HookConsumerWidget {
                           )
                           .toList(),
                       child: IconButton(
-                        tooltip: 'Change view mode',
+                        tooltip: tr("Change view mode"),
                         onPressed: isSyncedScope
                             ? null
                             : () {
@@ -714,7 +715,7 @@ class TabViewHeader extends HookConsumerWidget {
                           enableCloseFilteredTabs:
                               tabsViewMode != TabsViewMode.tree,
                           builder: (context, controller, _) => IconButton(
-                            tooltip: 'Tab actions',
+                            tooltip: tr("Tab actions"),
                             onPressed: () {
                               if (controller.isOpen) {
                                 controller.close();
@@ -736,7 +737,7 @@ class TabViewHeader extends HookConsumerWidget {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     prefixIcon: const Icon(MdiIcons.tabSearch, size: 18),
-                    hintText: 'Search tabs',
+                    hintText: tr("Search tabs"),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     suffixIcon: Row(
                       mainAxisSize: MainAxisSize.min,

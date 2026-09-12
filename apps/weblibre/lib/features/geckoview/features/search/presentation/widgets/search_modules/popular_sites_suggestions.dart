@@ -25,6 +25,7 @@ import 'package:weblibre/features/geckoview/features/search/presentation/widgets
 import 'package:weblibre/features/popular_sites/domain/providers/popular_sites_search.dart';
 import 'package:weblibre/presentation/hooks/on_listenable_change_selector.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Omnibar module offering popular-domain completions from the bundled
 /// Tranco-derived `sites.db`. Ranked below history and bookmarks so a user's
@@ -59,7 +60,7 @@ class PopularSitesSuggestions extends HookConsumerWidget {
     }
 
     return SearchModuleSection(
-      title: 'Popular Sites',
+      title: tr("Popular Sites"),
       moduleType: SearchModuleType.popularSites,
       totalCount: results.length,
       contentSliverBuilder:

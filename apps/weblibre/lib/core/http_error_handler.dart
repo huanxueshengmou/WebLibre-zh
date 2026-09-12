@@ -21,24 +21,25 @@ import 'dart:io';
 
 import 'package:exceptions/exceptions.dart';
 import 'package:http/http.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 ErrorMessage handleHttpError(Exception exception, StackTrace stackTrace) {
   return switch (exception) {
-    SocketException() => const ErrorMessage(
+    SocketException() => ErrorMessage(
       source: 'http',
-      message: 'Could not contact remote service',
+      message: tr("Could not contact remote service"),
     ),
-    HttpException() => const ErrorMessage(
+    HttpException() => ErrorMessage(
       source: 'http',
-      message: 'Web request returned error',
+      message: tr("Web request returned error"),
     ),
-    FormatException() => const ErrorMessage(
+    FormatException() => ErrorMessage(
       source: 'http',
-      message: 'Bad response format',
+      message: tr("Bad response format"),
     ),
-    ClientException() => const ErrorMessage(
+    ClientException() => ErrorMessage(
       source: 'http',
-      message: 'Could not contact remote service',
+      message: tr("Could not contact remote service"),
     ),
     _ => ErrorMessage.fromException(exception, stackTrace),
   };

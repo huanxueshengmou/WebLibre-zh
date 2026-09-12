@@ -85,6 +85,7 @@ import 'package:weblibre/features/web_search/domain/controllers/sandbox_capture_
 import 'package:weblibre/presentation/hooks/on_initialization.dart';
 import 'package:weblibre/presentation/main_app.dart';
 import 'package:weblibre/presentation/startup_phase_host.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 ColorScheme _fixSurfaceContainerColors(
   ColorScheme scheme,
@@ -671,6 +672,10 @@ class _MainWidget extends HookConsumerWidget {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // [weblibre-zh] choose the UI language from the device before the first
+  // frame is built, so nothing flashes English first.
+  initI18n();
 
   FlutterError.onError = (e) {
     logger.e(e.toString(), error: e.exception, stackTrace: e.stack);

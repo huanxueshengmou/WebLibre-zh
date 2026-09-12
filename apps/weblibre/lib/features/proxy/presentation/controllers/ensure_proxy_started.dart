@@ -30,6 +30,7 @@ import 'package:weblibre/features/proxy/domain/services/proxy_autostart.dart';
 import 'package:weblibre/features/tor/presentation/controllers/start_tor_proxy.dart';
 import 'package:weblibre/features/tor/presentation/widgets/tor_dialog.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Single entry point that prompts the user to start whichever proxy backend
 /// a container is configured to use. No-op when the container has no proxy
@@ -136,18 +137,18 @@ Future<bool> _maybeStartSingboxProxy(
     context: context,
     builder: (context) => AlertDialog(
       icon: const Icon(Icons.route_outlined),
-      title: const Text('Start Proxy Connection?'),
+      title: Text(tr("Start Proxy Connection?")),
       content: Text(
-        'This tab needs $proxyTitle, but that connection is not running. Start it now?',
+        tr("This tab needs {0}, but that connection is not running. Start it now?", [proxyTitle]),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Start'),
+          child: Text(tr("Start")),
         ),
       ],
     ),

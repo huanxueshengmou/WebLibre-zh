@@ -27,6 +27,8 @@ dependencies:
   file_picker: ^12.1.1
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   flutter_auto_size_text: ^5.0.0
   flutter_displaymode: ^0.7.0
   flutter_hooks: ^0.21.3+1
@@ -49,7 +51,9 @@ dependencies:
   hooks_riverpod: ^3.4.2
   html: ^0.15.6
   http: ^1.6.0
-  intl: ^0.20.3
+  # [weblibre-zh] widened: flutter_localizations pins intl to the SDK version
+  # [weblibre-zh] original: intl: ^0.20.3
+  intl: any
   json_annotation: ^4.12.0
   lexo_rank:
     git:

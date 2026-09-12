@@ -115,7 +115,15 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.release
+            // [weblibre-zh] Use the real keystore only when the secrets are present
+            // AND the file is actually on disk. Testing the env var alone is
+            // not enough: KEY_PATH can be exported while the keystore was
+            // never written (no KEY_JKS secret), and a storeFile pointing at
+            // a missing file fails the build.
+            def zhKeyPath = System.getenv("KEY_PATH")
+            signingConfig = (zhKeyPath != null && !zhKeyPath.isEmpty() && file(zhKeyPath).exists())
+                ? signingConfigs.release
+                : signingConfigs.debug
 
             shrinkResources = !project.hasProperty("disableOptimization")
             minifyEnabled = !project.hasProperty("disableOptimization")

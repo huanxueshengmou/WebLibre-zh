@@ -36,6 +36,7 @@ import 'package:weblibre/core/startup/models/startup_config.dart';
 import 'package:weblibre/core/startup/startup_bootstrap.dart';
 import 'package:weblibre/core/startup/startup_config_store.dart';
 import 'package:weblibre/presentation/widgets/obscurable_text_field.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// How often the screen proves it is still here.
 ///
@@ -484,7 +485,7 @@ class StartupMaintenanceScreen extends HookWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Profile maintenance',
+                tr("Profile maintenance"),
                 style: theme.textTheme.headlineSmall,
                 textAlign: TextAlign.center,
               ),
@@ -492,12 +493,10 @@ class StartupMaintenanceScreen extends HookWidget {
               Text(
                 switch ((next, unresolved.value.isEmpty)) {
                   (final MaintenanceTask _, _) =>
-                    'This must finish before any profile can open. WebLibre '
-                        'keeps the profile closed while it works.',
-                  (null, true) => 'Nothing is left to finish.',
+                    tr("This must finish before any profile can open. WebLibre keeps the profile closed while it works."),
+                  (null, true) => tr("Nothing is left to finish."),
                   (null, false) =>
-                    'WebLibre found interrupted profile work, but cannot read '
-                        'its record.',
+                    tr("WebLibre found interrupted profile work, but cannot read its record."),
                 },
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
@@ -527,7 +526,7 @@ class StartupMaintenanceScreen extends HookWidget {
                       }
                     },
                     decoration: InputDecoration(
-                      labelText: 'Backup file password',
+                      labelText: tr("Backup file password"),
                       errorText: passwordRejected.value
                           ? 'This password did not open the backup file'
                           : null,
@@ -571,7 +570,7 @@ class StartupMaintenanceScreen extends HookWidget {
                     FilledButton.icon(
                       onPressed: busy.value ? null : () => runRecovery(),
                       icon: const Icon(Icons.restart_alt),
-                      label: const Text('Try finishing it again'),
+                      label: Text(tr("Try finishing it again")),
                     ),
                   ],
                   if (unresolved.value.isNotEmpty) ...[
@@ -583,7 +582,7 @@ class StartupMaintenanceScreen extends HookWidget {
                           ? null
                           : () => discardEvidence(context),
                       icon: const Icon(Icons.report_problem_outlined),
-                      label: const Text('Discard the record and continue'),
+                      label: Text(tr("Discard the record and continue")),
                     ),
                   ],
                 ],
@@ -618,19 +617,19 @@ class StartupMaintenanceScreen extends HookWidget {
                             }
                           },
                     icon: const Icon(Icons.refresh),
-                    label: Text('Try the ${_noun(failed)} again'),
+                    label: Text(tr("Try the {0} again", [_noun(failed)])),
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton.icon(
                     onPressed: busy.value ? null : onFinished,
                     icon: const Icon(Icons.arrow_forward),
-                    label: const Text('Open WebLibre'),
+                    label: Text(tr("Open WebLibre")),
                   ),
                 ] else
                   FilledButton.icon(
                     onPressed: busy.value ? null : onFinished,
                     icon: const Icon(Icons.arrow_forward),
-                    label: const Text('Open WebLibre'),
+                    label: Text(tr("Open WebLibre")),
                   ),
               ] else ...[
                 // Nothing queued, but evidence remains — so `onFinished` would
@@ -642,7 +641,7 @@ class StartupMaintenanceScreen extends HookWidget {
                 FilledButton.icon(
                   onPressed: busy.value ? null : () => discardEvidence(context),
                   icon: const Icon(Icons.report_problem_outlined),
-                  label: const Text('Discard the record and continue'),
+                  label: Text(tr("Discard the record and continue")),
                 ),
               ],
 
@@ -658,7 +657,7 @@ class StartupMaintenanceScreen extends HookWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'This can take several minutes. Keep WebLibre open.',
+                    tr("This can take several minutes. Keep WebLibre open."),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -677,7 +676,7 @@ class StartupMaintenanceScreen extends HookWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Then, after this one',
+                    tr("Then, after this one"),
                     style: theme.textTheme.titleSmall,
                   ),
                 ),
@@ -716,7 +715,7 @@ class StartupMaintenanceScreen extends HookWidget {
                 else if (!phase.blocking)
                   TextButton(
                     onPressed: busy.value ? null : onFinished,
-                    child: const Text('Skip for now'),
+                    child: Text(tr("Skip for now")),
                   ),
                 if (!canAbandon)
                   Padding(
@@ -731,16 +730,11 @@ class StartupMaintenanceScreen extends HookWidget {
                         recoverableTasks.value.contains(next.id),
                       )) {
                         (true, _) =>
-                          'This was interrupted after it started. It must '
-                              'finish before any profile can open.',
+                          tr("This was interrupted after it started. It must finish before any profile can open."),
                         (false, true) =>
-                          'This was interrupted after it started, and finishing '
-                              'it did not succeed. It cannot be started over '
-                              'until it has been finished.',
+                          tr("This was interrupted after it started, and finishing it did not succeed. It cannot be started over until it has been finished."),
                         (false, false) =>
-                          'This was interrupted after it started, and WebLibre '
-                              'cannot read what it was doing. It cannot be run '
-                              'again until that record is dealt with.',
+                          tr("This was interrupted after it started, and WebLibre cannot read what it was doing. It cannot be run again until that record is dealt with."),
                       },
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
@@ -804,7 +798,7 @@ Future<bool?> _confirmDiscardEvidence(BuildContext context) => showDialog<bool>(
   context: context,
   builder: (context) => AlertDialog(
     icon: const Icon(Icons.report_problem_outlined),
-    title: const Text('Discard the interrupted record?'),
+    title: Text(tr("Discard the interrupted record?")),
     content: const Text(
       'WebLibre cannot read what a backup, restore or deletion was doing when '
       'it stopped. Discarding the record lets the browser open again, but a '
@@ -817,11 +811,11 @@ Future<bool?> _confirmDiscardEvidence(BuildContext context) => showDialog<bool>(
     actions: [
       TextButton(
         onPressed: () => Navigator.pop(context, false),
-        child: const Text('Cancel'),
+        child: Text(tr("Cancel")),
       ),
       TextButton(
         onPressed: () => Navigator.pop(context, true),
-        child: const Text('Discard it'),
+        child: Text(tr("Discard it")),
       ),
     ],
   ),
@@ -996,13 +990,12 @@ _ActionCopy _copyFor(MaintenanceTask task) => switch (task.action) {
     verb: 'Back up now',
     icon: Icons.lock_outline,
     noun: 'backup',
-    describe: 'Back up "${task.profileName}"',
+    describe: tr("Back up \"{0}\"", [task.profileName]),
     consequence:
-        'Writes an encrypted backup file of this profile, including its '
-        '$profileSecretDataDescription.',
+        tr("Writes an encrypted backup file of this profile, including its {0}.", [profileSecretDataDescription]),
     activity: 'Packing "${task.profileName}"…',
     describeDone:
-        '"${task.profileName}" was backed up to the folder you chose.',
+        tr("\"{0}\" was backed up to the folder you chose.", [task.profileName]),
   ),
   MaintenanceAction.restoreOver => _ActionCopy(
     needsInput: true,
@@ -1011,14 +1004,11 @@ _ActionCopy _copyFor(MaintenanceTask task) => switch (task.action) {
     verb: 'Replace now',
     icon: Icons.settings_backup_restore,
     noun: 'restore',
-    describe: 'Replace "${task.profileName}"',
+    describe: tr("Replace \"{0}\"", [task.profileName]),
     consequence:
-        'Replaces everything in this profile with the backup. '
-        '$signedInFromBackup $olderBackupKeepsCredentials'
-        '${task.adoptArchiveName ? " It also takes the backup's name." : ""}'
-        ' $cannotBeUndone',
+        tr("Replaces everything in this profile with the backup. {0} {1}{2} {3}", [signedInFromBackup, olderBackupKeepsCredentials, task.adoptArchiveName ? tr(" It also takes the backup's name.") : "", cannotBeUndone]),
     activity: 'Replacing "${task.profileName}"…',
-    describeDone: '"${task.profileName}" was replaced with the backup.',
+    describeDone: tr("\"{0}\" was replaced with the backup.", [task.profileName]),
   ),
   MaintenanceAction.delete => _ActionCopy(
     needsInput: false,
@@ -1029,9 +1019,9 @@ _ActionCopy _copyFor(MaintenanceTask task) => switch (task.action) {
     noun: 'deletion',
     describe: 'Delete "${task.profileName}"',
     consequence:
-        'Removes this profile and its $profileDataDescription. $cannotBeUndone',
+        tr("Removes this profile and its {0}. {1}", [profileDataDescription, cannotBeUndone]),
     activity: 'Deleting "${task.profileName}"…',
-    describeDone: '"${task.profileName}" was deleted.',
+    describeDone: tr("\"{0}\" was deleted.", [task.profileName]),
   ),
   MaintenanceAction.restoreClone => _ActionCopy(
     // Not "needs a password" but "must not start on its own":
@@ -1043,12 +1033,11 @@ _ActionCopy _copyFor(MaintenanceTask task) => switch (task.action) {
     verb: 'Cannot run this',
     icon: Icons.restore_page_outlined,
     noun: 'restore',
-    describe: 'Restore "${task.profileName}"',
+    describe: tr("Restore \"{0}\"", [task.profileName]),
     consequence:
-        'This restore was created by a newer version of WebLibre and cannot '
-        'run here.',
+        tr("This restore was created by a newer version of WebLibre and cannot run here."),
     activity: 'Restoring "${task.profileName}"…',
-    describeDone: '"${task.profileName}" was restored.',
+    describeDone: tr("\"{0}\" was restored.", [task.profileName]),
   ),
   null => _ActionCopy(
     needsInput: true,
@@ -1059,7 +1048,7 @@ _ActionCopy _copyFor(MaintenanceTask task) => switch (task.action) {
     noun: 'task',
     describe: 'Unknown task ${task.id}',
     consequence:
-        'This task was created by a newer version of WebLibre and cannot run.',
+        tr("This task was created by a newer version of WebLibre and cannot run."),
     activity: 'Working…',
     describeDone: 'Done.',
   ),

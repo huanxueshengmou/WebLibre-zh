@@ -423,9 +423,9 @@ class NewTabModulesSettingsRoute extends GoRouteData
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const ModuleSurfaceSettingsScreen(
+    return ModuleSurfaceSettingsScreen(
       surface: ModuleSurface.newTab,
-      title: 'Customize New Tab',
+      title: tr("Customize New Tab"),
     );
   }
 }
@@ -456,9 +456,9 @@ class QuickSwitcherToolbarSettingsRoute extends GoRouteData
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const ContextualToolbarSettingsScreen(
+    return ContextualToolbarSettingsScreen(
       location: ToolbarConfigLocation.quickSwitcher,
-      title: 'Customize Switcher Buttons',
+      title: tr("Customize Switcher Buttons"),
     );
   }
 }

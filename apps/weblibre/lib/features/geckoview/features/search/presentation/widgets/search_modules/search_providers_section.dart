@@ -22,6 +22,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/geckoview/features/search/domain/providers/search_modules_view.dart';
 import 'package:weblibre/features/geckoview/features/search/presentation/widgets/search_modules/search_module_section.dart';
 import 'package:weblibre/features/geckoview/features/search/presentation/widgets/smart_bang_selector.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Hosts the [SmartBangSelector] inside the standard collapsible/reorderable
 /// search module header. The selector renders its own empty/default state and
@@ -41,7 +42,7 @@ class SearchProvidersSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SearchModuleSection(
-      title: 'Search Providers',
+      title: tr("Search Providers"),
       moduleType: SearchModuleType.searchProviders,
       totalCount: 0,
       showPagination: false,

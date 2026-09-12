@@ -24,6 +24,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<Barcode?> showQrScannerDialog(BuildContext context) async {
   final cameraPermission = await Permission.camera.request();
@@ -71,7 +72,7 @@ class QrScannerDialog extends HookWidget {
     return Dialog.fullscreen(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Scan code'),
+          title: Text(tr("Scan code")),
           actions: [
             IconButton(
               isSelected: flashState.value,

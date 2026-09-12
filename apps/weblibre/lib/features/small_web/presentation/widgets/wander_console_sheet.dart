@@ -32,6 +32,7 @@ import 'package:weblibre/presentation/widgets/sliding_pill_toggle.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/form_validators.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<SmallWebSheetRequest?> showWanderConsoleSheet(BuildContext context) {
   return showModalBottomSheet<SmallWebSheetRequest>(
@@ -178,7 +179,7 @@ class _WanderConsoleSheetContent extends StatelessWidget {
             controller: searchController,
             autocorrect: false,
             decoration: InputDecoration(
-              hintText: 'Filter consoles...',
+              hintText: tr("Filter consoles..."),
               prefixIcon: const Icon(Icons.search, size: 20),
               suffixIcon: searchQuery.isNotEmpty
                   ? IconButton(
@@ -221,8 +222,8 @@ class _WanderConsoleSheetContent extends StatelessWidget {
                   isLoading: false,
                 )
               else if (currentConsoleUrl == null)
-                const Center(
-                  child: Text('No console selected yet. Press Discover.'),
+                Center(
+                  child: Text(tr("No console selected yet. Press Discover.")),
                 )
               else
                 _LinkedConsoleList(
@@ -237,7 +238,7 @@ class _WanderConsoleSheetContent extends StatelessWidget {
                 bottom: 16,
                 child: FloatingActionButton.small(
                   onPressed: onAddConsole,
-                  tooltip: 'Add console by URL',
+                  tooltip: tr("Add console by URL"),
                   child: const Icon(Icons.add),
                 ),
               ),
@@ -264,9 +265,9 @@ class _WanderConsoleSheetLoading extends StatelessWidget {
           return ListView(
             controller: controller,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            children: const [
+            children: [
               TextField(
-                decoration: InputDecoration(hintText: 'Filter consoles...'),
+                decoration: InputDecoration(hintText: tr("Filter consoles...")),
               ),
               SizedBox(height: 12),
               _SkeletonConsoleTile(),
@@ -334,7 +335,7 @@ class _WanderConsoleSheetError extends StatelessWidget {
             SizedBox(
               height: 240,
               child: FailureWidget(
-                title: 'Could not load Small Web session',
+                title: tr("Could not load Small Web session"),
                 exception: error,
                 onRetry: onRetry,
               ),
@@ -382,8 +383,8 @@ class _LinkedConsoleList extends ConsumerWidget {
           return Center(
             child: Text(
               searchQuery.isEmpty
-                  ? 'No linked consoles found.'
-                  : 'No consoles matching "$searchQuery".',
+                  ? tr("No linked consoles found.")
+                  : tr("No consoles matching \"{0}\".", [searchQuery]),
             ),
           );
         }
@@ -409,7 +410,7 @@ class _LinkedConsoleList extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, _) => const Center(child: Text('Failed to load consoles.')),
+      error: (_, _) => Center(child: Text(tr("Failed to load consoles."))),
     );
   }
 }
@@ -437,8 +438,8 @@ class _AllConsoleList extends ConsumerWidget {
           return Center(
             child: Text(
               searchQuery.isEmpty
-                  ? 'No consoles discovered yet.'
-                  : 'No consoles matching "$searchQuery".',
+                  ? tr("No consoles discovered yet.")
+                  : tr("No consoles matching \"{0}\".", [searchQuery]),
             ),
           );
         }
@@ -464,7 +465,7 @@ class _AllConsoleList extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, _) => const Center(child: Text('Failed to load consoles.')),
+      error: (_, _) => Center(child: Text(tr("Failed to load consoles."))),
     );
   }
 }
@@ -546,7 +547,7 @@ class _ConsoleListTile extends ConsumerWidget {
                       if (pageCount > 0) ...[
                         const SizedBox(height: 3),
                         Text(
-                          '$pageCount pages',
+                          tr("{0} pages", [pageCount]),
                           style: textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ),
@@ -623,7 +624,7 @@ class _AddConsoleDialog extends HookWidget {
     }
 
     return AlertDialog(
-      title: const Text('Add Console'),
+      title: Text(tr("Add Console")),
       content: Form(
         key: formKey,
         child: Column(
@@ -631,8 +632,7 @@ class _AddConsoleDialog extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Enter the URL of a Wander console. '
-              'The URL can point to the site root or the /wander/ path.',
+              tr("Enter the URL of a Wander console. The URL can point to the site root or the /wander/ path."),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 12),
@@ -667,7 +667,7 @@ class _AddConsoleDialog extends HookWidget {
       actions: [
         TextButton(
           onPressed: isLoading.value ? null : () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         TextButton(
           onPressed: isLoading.value ? null : submit,

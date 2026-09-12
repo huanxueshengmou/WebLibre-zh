@@ -28,6 +28,7 @@ import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/addons/domain/providers.dart';
 import 'package:weblibre/features/addons/extensions/addon_info.dart';
 import 'package:weblibre/features/geckoview/domain/providers.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<void> openAddonSettingsFlow(
   BuildContext context,
@@ -93,8 +94,8 @@ class AddonInternalSettingsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           addon == null
-              ? 'Extension Settings'
-              : '${addon.displayName} Settings',
+              ? tr("Extension Settings")
+              : tr("{0} Settings", [addon.displayName]),
         ),
       ),
       body: switch (addonAsync) {
@@ -105,7 +106,7 @@ class AddonInternalSettingsScreen extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              'Failed to load extension settings: $error',
+              tr("Failed to load extension settings: {0}", [error]),
               textAlign: TextAlign.center,
             ),
           ),
@@ -114,8 +115,8 @@ class AddonInternalSettingsScreen extends ConsumerWidget {
             when addon == null ||
                 optionsPageUrl == null ||
                 optionsPageUrl.isEmpty =>
-          const Center(
-            child: Text('This extension does not expose a settings page.'),
+          Center(
+            child: Text(tr("This extension does not expose a settings page.")),
           ),
         _ => _AddonSettingsPlatformView(optionsPageUrl: optionsPageUrl),
       },

@@ -27,6 +27,7 @@ import 'package:weblibre/features/tor/domain/extensions/tor_status_x.dart';
 import 'package:weblibre/features/tor/domain/services/tor_proxy.dart';
 import 'package:weblibre/features/tor/presentation/controllers/start_tor_proxy.dart';
 import 'package:weblibre/presentation/hooks/on_initialization.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class RouteThroughTorToggle extends HookConsumerWidget {
   const RouteThroughTorToggle({super.key});
@@ -122,7 +123,7 @@ class RouteThroughTorToggle extends HookConsumerWidget {
               ),
             const SizedBox(width: 6),
             Text(
-              routeThroughTor ? '$torBrand on' : '$torBrand off',
+              routeThroughTor ? tr("{0} on", [torBrand]) : tr("{0} off", [torBrand]),
               style: textTheme.labelLarge?.copyWith(
                 color: routeThroughTor
                     ? colorScheme.onPrimaryContainer

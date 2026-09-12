@@ -20,6 +20,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/database/definitions.drift.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Dialog to select between extracted or full content for sharing.
 /// Shows options for extracted (reader-optimized) vs full (complete) content.
@@ -36,9 +37,9 @@ Future<void> showContentSelectionDialog(
       title: title,
       children: [
         ListTile(
-          title: const Text('Extracted Content'),
-          subtitle: const Text(
-            'Reader-optimized content without navigation and ads',
+          title: Text(tr("Extracted Content")),
+          subtitle: Text(
+            tr("Reader-optimized content without navigation and ads"),
           ),
           onTap: () async {
             Navigator.of(context).pop();
@@ -49,9 +50,9 @@ Future<void> showContentSelectionDialog(
           },
         ),
         ListTile(
-          title: const Text('Full Content'),
-          subtitle: const Text(
-            'Complete page including all elements and structure',
+          title: Text(tr("Full Content")),
+          subtitle: Text(
+            tr("Complete page including all elements and structure"),
           ),
           onTap: () async {
             Navigator.of(context).pop();

@@ -32,6 +32,7 @@ import 'package:weblibre/presentation/hooks/on_listenable_change_selector.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/text_highlight.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Combined history view: engine frecency-ranked suggestions augmented with
 /// local content snippets, plus local-only content matches appended at the
@@ -97,7 +98,7 @@ class CombinedHistorySuggestions extends HookConsumerWidget {
     final snippetHighlight = snippetBase?.copyWith(fontWeight: FontWeight.bold);
 
     return SearchModuleSection(
-      title: 'History',
+      title: tr("History"),
       moduleType: SearchModuleType.combinedHistory,
       totalCount: items.length,
       contentSliverBuilder:
@@ -153,7 +154,7 @@ class CombinedHistorySuggestions extends HookConsumerWidget {
                       : UriBreadcrumb(uri: item.uri, showHttpScheme: false),
                   trailing: item.source == CombinedHistorySource.local
                       ? Tooltip(
-                          message: 'Content match',
+                          message: tr("Content match"),
                           child: Icon(
                             MdiIcons.textBoxSearchOutline,
                             size: 16,

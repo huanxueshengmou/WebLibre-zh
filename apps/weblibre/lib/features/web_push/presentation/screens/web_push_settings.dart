@@ -26,20 +26,21 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/features/web_push/domain/providers.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> webPushSettingsSections = [
+List<SettingsSectionDefinition> webPushSettingsSections = [
   SettingsSectionDefinition(
     title: 'Delivery',
     entries: [
       SettingsEntryDefinition(
-        title: 'UnifiedPush Distributor',
-        subtitle: 'The app that delivers website push notifications',
+        title: tr("UnifiedPush Distributor"),
+        subtitle: tr("The app that delivers website push notifications"),
         keywords: ['notifications', 'push', 'unifiedpush', 'ntfy'],
         child: _DistributorTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Notification Permission',
-        subtitle: 'Required to display website notifications',
+        title: tr("Notification Permission"),
+        subtitle: tr("Required to display website notifications"),
         keywords: ['notifications', 'permission'],
         child: _NotificationPermissionTile(),
       ),
@@ -49,8 +50,8 @@ const List<SettingsSectionDefinition> webPushSettingsSections = [
     title: 'Subscriptions',
     entries: [
       SettingsEntryDefinition(
-        title: 'Site Subscriptions',
-        subtitle: 'Websites subscribed to push notifications',
+        title: tr("Site Subscriptions"),
+        subtitle: tr("Websites subscribed to push notifications"),
         keywords: ['sites', 'subscriptions'],
         child: _SubscriptionList(),
       ),
@@ -63,9 +64,9 @@ class WebPushSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
+    return SettingsDetailScaffold(
       title: 'Notifications',
-      subtitle: 'Web push delivery, distributor, and site subscriptions.',
+      subtitle: tr("Web push delivery, distributor, and site subscriptions."),
       icon: MdiIcons.bellBadgeOutline,
       sections: webPushSettingsSections,
     );
@@ -74,24 +75,24 @@ class WebPushSettingsScreen extends StatelessWidget {
 
 extension on PushDistributorStatus {
   String get label => switch (this) {
-    PushDistributorStatus.noneAvailable => 'No distributor installed',
-    PushDistributorStatus.notSelected => 'No distributor selected',
-    PushDistributorStatus.pending => 'Waiting for distributor',
+    PushDistributorStatus.noneAvailable => tr("No distributor installed"),
+    PushDistributorStatus.notSelected => tr("No distributor selected"),
+    PushDistributorStatus.pending => tr("Waiting for distributor"),
     PushDistributorStatus.ready => 'Active',
-    PushDistributorStatus.unavailable => 'Distributor uninstalled',
+    PushDistributorStatus.unavailable => tr("Distributor uninstalled"),
   };
 
   String get description => switch (this) {
     PushDistributorStatus.noneAvailable =>
-      'Install a UnifiedPush distributor such as ntfy to receive website push notifications.',
+      tr("Install a UnifiedPush distributor such as ntfy to receive website push notifications."),
     PushDistributorStatus.notSelected =>
-      'Choose which app should deliver website push notifications to WebLibre.',
+      tr("Choose which app should deliver website push notifications to WebLibre."),
     PushDistributorStatus.pending =>
-      'The selected app has not confirmed registration yet. This usually resolves on its own.',
+      tr("The selected app has not confirmed registration yet. This usually resolves on its own."),
     PushDistributorStatus.ready =>
-      'Website push notifications are delivered through this app.',
+      tr("Website push notifications are delivered through this app."),
     PushDistributorStatus.unavailable =>
-      'The app that delivered push notifications was uninstalled. Website notifications will not arrive until you choose another.',
+      tr("The app that delivered push notifications was uninstalled. Website notifications will not arrive until you choose another."),
   };
 
   bool get isProblem =>
@@ -109,15 +110,15 @@ class _DistributorTile extends HookConsumerWidget {
     final isMutating = mutation.isLoading;
 
     return status.when(
-      loading: () => const ListTile(
+      loading: () => ListTile(
         leading: Icon(MdiIcons.bellBadgeOutline),
-        title: Text('UnifiedPush Distributor'),
+        title: Text(tr("UnifiedPush Distributor")),
         subtitle: Text('Checking…'),
       ),
       error: (error, _) => ListTile(
         leading: const Icon(MdiIcons.alertCircleOutline),
-        title: const Text('UnifiedPush Distributor'),
-        subtitle: Text('Could not read push status: $error'),
+        title: Text(tr("UnifiedPush Distributor")),
+        subtitle: Text(tr("Could not read push status: {0}", [error])),
       ),
       data: (pushStatus) {
         final theme = Theme.of(context);
@@ -135,10 +136,10 @@ class _DistributorTile extends HookConsumerWidget {
                     : MdiIcons.bellBadgeOutline,
                 color: isProblem ? theme.colorScheme.error : null,
               ),
-              title: const Text('UnifiedPush Distributor'),
+              title: Text(tr("UnifiedPush Distributor")),
               subtitle: Text(
                 isMutating
-                    ? 'Updating distributor...'
+                    ? tr("Updating distributor...")
                     : current != null
                     ? '${current.label ?? current.packageName} — ${pushStatus.status.label}'
                     : pushStatus.status.label,
@@ -163,7 +164,7 @@ class _DistributorTile extends HookConsumerWidget {
                 child: Text(
                   failure == null
                       ? pushStatus.status.description
-                      : 'Push delivery may be temporarily unavailable while the distributor registration recovers.',
+                      : tr("Push delivery may be temporarily unavailable while the distributor registration recovers."),
                   style: theme.textTheme.bodySmall,
                 ),
               ),
@@ -174,7 +175,7 @@ class _DistributorTile extends HookConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Last registration error: $failure',
+                    tr("Last registration error: {0}", [failure]),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.error,
                     ),
@@ -189,7 +190,7 @@ class _DistributorTile extends HookConsumerWidget {
                   child: TextButton.icon(
                     icon: const Icon(MdiIcons.bellOffOutline),
                     label: Text(
-                      isMutating ? 'Disabling web push...' : 'Disable web push',
+                      isMutating ? tr("Disabling web push...") : tr("Disable web push"),
                     ),
                     onPressed: isMutating
                         ? null
@@ -224,7 +225,7 @@ class _DistributorTile extends HookConsumerWidget {
     final selected = await showDialog<PushDistributor>(
       context: context,
       builder: (context) => SimpleDialog(
-        title: const Text('Choose distributor'),
+        title: Text(tr("Choose distributor")),
         children: [
           for (final distributor in pushStatus.available)
             SimpleDialogOption(
@@ -293,9 +294,9 @@ class _NotificationPermissionTile extends HookConsumerWidget {
     });
 
     return granted.when(
-      loading: () => const ListTile(
+      loading: () => ListTile(
         leading: Icon(MdiIcons.bellBadgeOutline),
-        title: Text('Notification Permission'),
+        title: Text(tr("Notification Permission")),
         subtitle: Text('Checking…'),
       ),
       error: (error, _) => ListTile(
@@ -303,14 +304,14 @@ class _NotificationPermissionTile extends HookConsumerWidget {
           MdiIcons.alertCircleOutline,
           color: theme.colorScheme.error,
         ),
-        title: const Text('Notification Permission'),
-        subtitle: Text('Could not read permission state: $error'),
+        title: Text(tr("Notification Permission")),
+        subtitle: Text(tr("Could not read permission state: {0}", [error])),
       ),
       data: (isGranted) {
         if (isGranted) {
-          return const ListTile(
+          return ListTile(
             leading: Icon(MdiIcons.bellCheckOutline),
-            title: Text('Notification Permission'),
+            title: Text(tr("Notification Permission")),
             subtitle: Text('Granted'),
           );
         }
@@ -320,9 +321,9 @@ class _NotificationPermissionTile extends HookConsumerWidget {
             MdiIcons.bellRemoveOutline,
             color: theme.colorScheme.error,
           ),
-          title: const Text('Notification Permission'),
+          title: Text(tr("Notification Permission")),
           subtitle: Text(
-            'Denied. Push messages arrive but no notification can be shown.',
+            tr("Denied. Push messages arrive but no notification can be shown."),
             style: TextStyle(color: theme.colorScheme.error),
           ),
           trailing: TextButton(
@@ -377,25 +378,25 @@ class _SubscriptionList extends HookConsumerWidget {
         PushDistributorStatus.ready;
 
     return subscriptions.when(
-      loading: () => const ListTile(
+      loading: () => ListTile(
         leading: SizedBox.square(
           dimension: 24,
           child: CircularProgressIndicator.adaptive(strokeWidth: 2),
         ),
-        title: Text('Loading subscriptions…'),
+        title: Text(tr("Loading subscriptions…")),
       ),
       error: (error, _) => ListTile(
         leading: const Icon(MdiIcons.alertCircleOutline),
-        title: const Text('Could not read subscriptions'),
+        title: Text(tr("Could not read subscriptions")),
         subtitle: Text('$error'),
       ),
       data: (items) {
         if (items.isEmpty) {
-          return const ListTile(
+          return ListTile(
             leading: Icon(MdiIcons.webOff),
-            title: Text('No site subscriptions'),
+            title: Text(tr("No site subscriptions")),
             subtitle: Text(
-              'Websites you allow to send notifications will appear here.',
+              tr("Websites you allow to send notifications will appear here."),
             ),
           );
         }
@@ -414,16 +415,15 @@ class _SubscriptionList extends HookConsumerWidget {
                       ? distributorReady
                             ? 'Active'
                             : 'Endpoint saved; delivery is paused until the distributor is ready'
-                      : 'Waiting for the distributor to assign an endpoint',
+                      : tr("Waiting for the distributor to assign an endpoint"),
                 ),
               ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(16, 8, 16, 12),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'To stop a site from sending notifications, revoke its '
-                  'notification permission in the site settings.',
+                  tr("To stop a site from sending notifications, revoke its notification permission in the site settings."),
                 ),
               ),
             ),

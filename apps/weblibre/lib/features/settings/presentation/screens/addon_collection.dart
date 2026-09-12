@@ -27,6 +27,7 @@ import 'package:weblibre/features/user/data/models/engine_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/engine_settings.dart';
 import 'package:weblibre/utils/exit_app.dart';
 import 'package:weblibre/utils/form_validators.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 const _defaultServerUrl = 'https://services.addons.mozilla.org';
 
@@ -59,7 +60,7 @@ class AddonCollectionScreen extends HookConsumerWidget {
     );
 
     return SettingsCustomScrollScaffold(
-      title: 'Custom Extension Collection',
+      title: tr("Custom Extension Collection"),
       actions: [
         if (addonCollectionSetting != null)
           IconButton(
@@ -85,12 +86,12 @@ class AddonCollectionScreen extends HookConsumerWidget {
               child: SettingsSectionList(
                 sections: [
                   SettingsSectionDefinition(
-                    title: 'Collection Source',
+                    title: tr("Collection Source"),
                     entries: [
                       SettingsEntryDefinition(
-                        title: 'Collection configuration',
+                        title: tr("Collection configuration"),
                         subtitle:
-                            'Mozilla server, collection owner, and collection name',
+                            tr("Mozilla server, collection owner, and collection name"),
                         keywords: const ['addons', 'collection'],
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -98,8 +99,8 @@ class AddonCollectionScreen extends HookConsumerWidget {
                             children: [
                               TextFormField(
                                 controller: serverURLController,
-                                decoration: const InputDecoration(
-                                  label: Text('Server URL'),
+                                decoration: InputDecoration(
+                                  label: Text(tr("Server URL")),
                                   hintText: _defaultServerUrl,
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.always,
@@ -116,8 +117,8 @@ class AddonCollectionScreen extends HookConsumerWidget {
                               const SizedBox(height: 8),
                               TextFormField(
                                 controller: collectionUserController,
-                                decoration: const InputDecoration(
-                                  label: Text('Collection User'),
+                                decoration: InputDecoration(
+                                  label: Text(tr("Collection User")),
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.always,
                                 ),
@@ -126,8 +127,8 @@ class AddonCollectionScreen extends HookConsumerWidget {
                               const SizedBox(height: 8),
                               TextFormField(
                                 controller: collectionNameController,
-                                decoration: const InputDecoration(
-                                  label: Text('Collection Name'),
+                                decoration: InputDecoration(
+                                  label: Text(tr("Collection Name")),
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.always,
                                 ),
@@ -143,9 +144,9 @@ class AddonCollectionScreen extends HookConsumerWidget {
                     title: 'Actions',
                     entries: [
                       SettingsEntryDefinition(
-                        title: 'Save & Restart Browser',
+                        title: tr("Save & Restart Browser"),
                         subtitle:
-                            'Apply the custom collection and restart the browser',
+                            tr("Apply the custom collection and restart the browser"),
                         keywords: const ['restart'],
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -179,7 +180,7 @@ class AddonCollectionScreen extends HookConsumerWidget {
                                   await exitApp(ref.container);
                                 }
                               },
-                              child: const Text('Save & Restart Browser'),
+                              child: Text(tr("Save & Restart Browser")),
                             ),
                           ),
                         ),

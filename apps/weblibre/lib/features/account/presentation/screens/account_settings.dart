@@ -34,6 +34,7 @@ import 'package:weblibre/features/account/presentation/widgets/sync_document_lis
 import 'package:weblibre/features/account/presentation/widgets/sync_setup_card.dart';
 import 'package:weblibre/features/search_credits/presentation/widgets/search_credits_section.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class AccountSettingsScreen extends HookConsumerWidget {
   const AccountSettingsScreen({super.key});
@@ -46,9 +47,9 @@ class AccountSettingsScreen extends HookConsumerWidget {
 
     Widget buildBody(Widget sliver) {
       return SettingsCustomScrollScaffold(
-        title: 'WebLibre Account',
+        title: tr("WebLibre Account"),
         searchController: search.controller,
-        searchHintText: 'Search account settings',
+        searchHintText: tr("Search account settings"),
         slivers: [sliver],
       );
     }
@@ -61,9 +62,9 @@ class AccountSettingsScreen extends HookConsumerWidget {
         ),
       ),
       error: (_, _) => buildBody(
-        const SliverFillRemaining(
+        SliverFillRemaining(
           hasScrollBody: false,
-          child: Center(child: Text('Failed to load account')),
+          child: Center(child: Text(tr("Failed to load account"))),
         ),
       ),
       data: (authState) {
@@ -114,19 +115,19 @@ class AccountSettingsScreen extends HookConsumerWidget {
 
     return <SettingsSectionDefinition>[
       SettingsSectionDefinition(
-        title: 'Account',
+        title: tr("Account"),
         entries: [
           SettingsEntryDefinition(
             title: switch (authState.status) {
-              AccountAuthStatus.signedOut => 'Sign in to WebLibre Account',
-              AccountAuthStatus.signingIn => 'Signing in',
-              AccountAuthStatus.signedIn => 'Signed in account',
-              AccountAuthStatus.error => 'Sign-in failed',
+              AccountAuthStatus.signedOut => tr("Sign in to WebLibre Account"),
+              AccountAuthStatus.signingIn => tr("Signing in"),
+              AccountAuthStatus.signedIn => tr("Signed in account"),
+              AccountAuthStatus.error => tr("Sign-in failed"),
             },
             subtitle: switch (authState.status) {
               AccountAuthStatus.signedOut =>
-                'Sync your settings across devices',
-              AccountAuthStatus.signingIn => 'Complete sign-in in your browser',
+                tr("Sync your settings across devices"),
+              AccountAuthStatus.signingIn => tr("Complete sign-in in your browser"),
               AccountAuthStatus.signedIn =>
                 authState.displayName ?? authState.email ?? 'Signed in',
               AccountAuthStatus.error => authState.lastError,
@@ -143,23 +144,23 @@ class AccountSettingsScreen extends HookConsumerWidget {
       ),
       if (authState.isSignedIn)
         SettingsSectionDefinition(
-          title: 'Subscription',
+          title: tr("Subscription"),
           entries: [
             SettingsEntryDefinition(
-              title: 'Supporter subscription',
-              subtitle: 'Status, billing, and subscription management',
+              title: tr("Supporter subscription"),
+              subtitle: tr("Status, billing, and subscription management"),
               keywords: const ['billing', 'supporter'],
               child: SubscriptionCard(subscriptionAsync: subscriptionAsync),
             ),
           ],
         ),
       if (authState.isSignedIn)
-        const SettingsSectionDefinition(
-          title: 'Search Credits',
+        SettingsSectionDefinition(
+          title: tr("Search Credits"),
           entries: [
             SettingsEntryDefinition(
-              title: 'Search credits',
-              subtitle: 'Credits balance, token issuance, and purchases',
+              title: tr("Search credits"),
+              subtitle: tr("Credits balance, token issuance, and purchases"),
               keywords: ['tokens', 'search pack'],
               child: SearchCreditsSection(embedded: true),
             ),
@@ -168,11 +169,11 @@ class AccountSettingsScreen extends HookConsumerWidget {
       if (showSyncSnapshots && syncRepo != null)
         if (authState.hasSyncKey) ...[
           SettingsSectionDefinition(
-            title: 'Settings Snapshots',
+            title: tr("Settings Snapshots"),
             entries: [
               SettingsEntryDefinition(
-                title: 'Settings snapshots',
-                subtitle: 'Store and restore synced application settings',
+                title: tr("Settings snapshots"),
+                subtitle: tr("Store and restore synced application settings"),
                 keywords: const ['backups', 'settings sync'],
                 child: SyncDocumentListSection(
                   service: ref.read(settingsSyncServiceProvider.notifier),
@@ -186,11 +187,11 @@ class AccountSettingsScreen extends HookConsumerWidget {
             ],
           ),
           SettingsSectionDefinition(
-            title: 'Preferences Snapshots',
+            title: tr("Preferences Snapshots"),
             entries: [
               SettingsEntryDefinition(
-                title: 'Preferences snapshots',
-                subtitle: 'Store and restore synced preference documents',
+                title: tr("Preferences snapshots"),
+                subtitle: tr("Store and restore synced preference documents"),
                 keywords: const ['backups', 'prefs sync'],
                 child: SyncDocumentListSection(
                   service: ref.read(prefsSyncServiceProvider.notifier),
@@ -205,12 +206,12 @@ class AccountSettingsScreen extends HookConsumerWidget {
           ),
         ] else
           SettingsSectionDefinition(
-            title: 'Encrypted Sync',
+            title: tr("Encrypted Sync"),
             entries: [
               SettingsEntryDefinition(
-                title: 'Set up encrypted sync',
+                title: tr("Set up encrypted sync"),
                 subtitle:
-                    'Enable end-to-end encrypted sync using your account password',
+                    tr("Enable end-to-end encrypted sync using your account password"),
                 keywords: const ['sync key', 'backups', 'snapshots'],
                 child: SyncSetupCard(email: authState.email),
               ),

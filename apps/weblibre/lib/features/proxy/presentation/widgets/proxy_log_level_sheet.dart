@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/user/data/models/proxy_diagnostics_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/proxy_diagnostics_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// How much the proxy runtimes write to the log, asked where the log is read.
 ///
@@ -54,13 +55,12 @@ class _ProxyLogLevelSheet extends ConsumerWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 0, 24, 4),
-              child: Text('Proxy log level', style: theme.textTheme.titleLarge),
+              child: Text(tr("Proxy log level"), style: theme.textTheme.titleLarge),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
               child: Text(
-                'Raise this only while diagnosing a problem, then put it back. '
-                'Changing it restarts any running proxy.',
+                tr("Raise this only while diagnosing a problem, then put it back. Changing it restarts any running proxy."),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -100,8 +100,7 @@ class _ProxyLogLevelSheet extends ConsumerWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Verbose logging writes a line for every connection and '
-                        'DNS lookup, which noticeably slows browsing.',
+                        tr("Verbose logging writes a line for every connection and DNS lookup, which noticeably slows browsing."),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.error,
                         ),

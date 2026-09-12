@@ -27,6 +27,7 @@ import 'package:weblibre/features/geckoview/features/tabs/data/entities/containe
 import 'package:weblibre/features/geckoview/features/tabs/data/models/container_data.dart';
 import 'package:weblibre/features/geckoview/features/tabs/domain/providers.dart';
 import 'package:weblibre/features/geckoview/features/tabs/domain/repositories/gecko_inference.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ContainerTitle extends HookConsumerWidget {
   final ContainerData container;
@@ -68,7 +69,7 @@ class ContainerTitle extends HookConsumerWidget {
             ),
           ) ??
           Text(
-            containerHasTabs ? 'Untitled' : 'Empty',
+            containerHasTabs ? 'Untitled' : tr("Empty"),
             style: const TextStyle(fontStyle: FontStyle.italic),
           ),
       error: (error, stackTrace) {

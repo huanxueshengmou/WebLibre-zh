@@ -24,6 +24,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/core/logger.dart';
 import 'package:weblibre/features/app_links/domain/services/app_links_coordinator.dart';
 import 'package:weblibre/features/app_links/presentation/widgets/app_link_prompt_dialog.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Non-modal banner for an http(s) app link (§2.2). The page is allowed to load
 /// while the banner is up; nothing blocks on it. Declining leaves the page
@@ -78,8 +79,8 @@ class AppLinkOpenBanner extends HookConsumerWidget {
                 Expanded(
                   child: Text(
                     appName != null
-                        ? 'Open this link in $appName?'
-                        : 'Open this link in an app?',
+                        ? tr("Open this link in {0}?", [appName])
+                        : tr("Open this link in an app?"),
                     style: theme.textTheme.bodyMedium,
                   ),
                 ),
@@ -98,7 +99,7 @@ class AppLinkOpenBanner extends HookConsumerWidget {
                     value: remember.value,
                     onChanged: (value) => remember.value = value ?? false,
                   ),
-                  const Flexible(child: Text('Remember for this site')),
+                  Flexible(child: Text(tr("Remember for this site"))),
                 ],
               ),
             Align(
@@ -108,12 +109,12 @@ class AppLinkOpenBanner extends HookConsumerWidget {
                 children: [
                   TextButton(
                     onPressed: () => resolve(AppLinkDecision.cancel),
-                    child: const Text('Stay in browser'),
+                    child: Text(tr("Stay in browser")),
                   ),
                   const SizedBox(width: 8),
                   FilledButton(
                     onPressed: () => resolve(AppLinkDecision.open),
-                    child: const Text('Open app'),
+                    child: Text(tr("Open app")),
                   ),
                 ],
               ),

@@ -18,13 +18,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<bool?> showImportBookmarksDialog(BuildContext context) {
   return showDialog<bool?>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Import Bookmarks'),
+        title: Text(tr("Import Bookmarks")),
         content: const Text(
           'Do you want to erase all existing bookmarks before importing?\n\n'
           'Choose "Replace" to delete existing bookmarks, or "Merge" to keep them.',
@@ -40,7 +41,7 @@ Future<bool?> showImportBookmarksDialog(BuildContext context) {
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: const Text('Replace'),
+            child: Text(tr("Replace")),
           ),
         ],
       );

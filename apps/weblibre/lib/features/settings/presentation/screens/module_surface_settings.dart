@@ -25,6 +25,7 @@ import 'package:weblibre/features/settings/presentation/controllers/save_setting
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Reorders and toggles the sections of one [ModuleSurface].
 ///
@@ -54,7 +55,7 @@ class ModuleSurfaceSettingsScreen extends HookConsumerWidget {
           menuChildren: [
             MenuItemButton(
               onPressed: notifier.resetToDefaults,
-              child: const Text('Reset to Defaults'),
+              child: Text(tr("Reset to Defaults")),
             ),
           ],
           builder: (context, controller, child) => IconButton(
@@ -69,8 +70,7 @@ class ModuleSurfaceSettingsScreen extends HookConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
             child: Text(
-              'Drag to reorder. Switch a section off to hide it here without '
-              'affecting the other page.',
+              tr("Drag to reorder. Switch a section off to hide it here without affecting the other page."),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
@@ -159,7 +159,7 @@ class _HomeSearchBarRow extends ConsumerWidget {
       ],
       builder: (context, controller, child) => ListTile(
         leading: const Icon(Icons.search),
-        title: const Text('Search bar'),
+        title: Text(tr("Search bar")),
         subtitle: Text(
           stored == HomeSearchBarPlacement.auto
               ? '${stored.label} — currently ${resolved.label.toLowerCase()}'

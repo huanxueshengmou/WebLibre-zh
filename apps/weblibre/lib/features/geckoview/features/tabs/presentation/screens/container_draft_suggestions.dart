@@ -37,6 +37,7 @@ import 'package:weblibre/features/geckoview/features/tabs/domain/repositories/ge
 import 'package:weblibre/features/geckoview/features/tabs/domain/repositories/tab.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/selectable_chips.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ContainerDraftSuggestionsScreen extends HookConsumerWidget {
   const ContainerDraftSuggestionsScreen({super.key});
@@ -68,7 +69,7 @@ class ContainerDraftSuggestionsScreen extends HookConsumerWidget {
     }, [screenWidth, selectedContainer.value?.tabIds.length]);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Draft Containers')),
+      appBar: AppBar(title: Text(tr("Draft Containers"))),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),

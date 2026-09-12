@@ -25,6 +25,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:weblibre/features/geckoview/features/browser/domain/services/browser_addon.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<bool?> showInstallLocalAddonDialog(BuildContext context) {
   return showModalBottomSheet<bool?>(
@@ -113,7 +114,7 @@ class _InstallLocalAddonSheet extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Install Extension from File',
+              tr("Install Extension from File"),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
@@ -185,7 +186,7 @@ class _InstallLocalAddonSheet extends HookConsumerWidget {
                       width: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Install'),
+                  : Text(tr("Install")),
             ),
           ],
         ),

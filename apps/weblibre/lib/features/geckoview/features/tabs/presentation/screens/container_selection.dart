@@ -37,6 +37,7 @@ import 'package:weblibre/features/geckoview/features/tabs/utils/container_icons.
 import 'package:weblibre/features/proxy/domain/providers/proxy_connection_options.dart';
 import 'package:weblibre/features/proxy/domain/repositories/singbox_proxy_profiles.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ContainerSelectionScreen extends HookConsumerWidget {
   const ContainerSelectionScreen({super.key});
@@ -96,7 +97,7 @@ class ContainerSelectionScreen extends HookConsumerWidget {
           data: buildList,
           error: (error, stackTrace) => Center(
             child: FailureWidget(
-              title: 'Failed to load containers',
+              title: tr("Failed to load containers"),
               exception: error,
               onRetry: () => ref.invalidate(watchContainersWithCountProvider),
             ),
@@ -127,7 +128,7 @@ class ContainerSelectionScreen extends HookConsumerWidget {
             containerData: jsonEncode(newContainer.toJson()),
           ).push(context);
         },
-        label: const Text('Container'),
+        label: Text(tr("Container")),
         icon: const Icon(Icons.add),
       ),
     );
@@ -193,7 +194,7 @@ class _UnassignedSelectionCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'Tabs without a container',
+                        tr("Tabs without a container"),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
@@ -313,9 +314,9 @@ class _SelectionContainerCard extends ConsumerWidget {
                                     '$tabCount ${tabCount == 1 ? 'tab' : 'tabs'}',
                               ),
                               if (container.metadata.contextualIdentity != null)
-                                const _SelectionInfoChip(
+                                _SelectionInfoChip(
                                   icon: Icons.cookie_outlined,
-                                  label: 'Isolated',
+                                  label: tr("Isolated"),
                                 ),
                               if (container.metadata.proxyConnectionId != null)
                                 _SelectionInfoChip(
@@ -329,14 +330,14 @@ class _SelectionContainerCard extends ConsumerWidget {
                               if (container.metadata.proxyConnectionId ==
                                       null &&
                                   container.metadata.bypassGlobalProxy)
-                                const _SelectionInfoChip(
+                                _SelectionInfoChip(
                                   icon: Icons.public,
-                                  label: 'Direct',
+                                  label: tr("Direct"),
                                 ),
                               if (container.metadata.clearDataOnExit)
-                                const _SelectionInfoChip(
+                                _SelectionInfoChip(
                                   icon: Icons.cleaning_services_outlined,
-                                  label: 'Clear on exit',
+                                  label: tr("Clear on exit"),
                                 ),
                             ],
                           ),

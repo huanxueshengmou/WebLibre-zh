@@ -29,6 +29,7 @@ import 'package:weblibre/features/gestures/presentation/screens/gesture_bindings
 import 'package:weblibre/features/gestures/presentation/screens/gesture_excluded_sites_screen.dart';
 import 'package:weblibre/features/gestures/presentation/screens/gesture_feedback_screen.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Overview screen for gesture configuration: a master switch plus entries that
 /// open the dedicated bindings / behavior / excluded-sites / feedback subpages.
@@ -50,7 +51,7 @@ class GestureSettingsScreen extends HookConsumerWidget {
     }
 
     return SettingsCustomScrollScaffold(
-      title: 'Gestures',
+      title: tr("Gestures"),
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
@@ -69,14 +70,14 @@ class GestureSettingsScreen extends HookConsumerWidget {
                   color: colorScheme.onPrimaryContainer,
                 ),
                 title: Text(
-                  'Enable Gestures',
+                  tr("Enable Gestures"),
                   style: TextStyle(
                     color: colorScheme.onPrimaryContainer,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 subtitle: Text(
-                  'Draw stroke gestures on web pages to trigger actions',
+                  tr("Draw stroke gestures on web pages to trigger actions"),
                   style: TextStyle(
                     color: colorScheme.onPrimaryContainer.withValues(
                       alpha: 0.8,
@@ -104,11 +105,11 @@ class GestureSettingsScreen extends HookConsumerWidget {
                     title: 'Configuration',
                     entries: [
                       SettingsEntryDefinition(
-                        title: 'Gesture bindings',
+                        title: tr("Gesture bindings"),
                         child: ListTile(
                           leading: const Icon(MdiIcons.gestureDoubleTap),
-                          title: const Text('Gesture bindings'),
-                          subtitle: const Text('Strokes mapped to actions'),
+                          title: Text(tr("Gesture bindings")),
+                          subtitle: Text(tr("Strokes mapped to actions")),
                           trailing: _CountChevron(
                             count: settings.bindings.length,
                           ),
@@ -116,23 +117,23 @@ class GestureSettingsScreen extends HookConsumerWidget {
                         ),
                       ),
                       SettingsEntryDefinition(
-                        title: 'Behavior & timing',
+                        title: tr("Behavior & timing"),
                         child: ListTile(
                           leading: const Icon(Icons.tune),
-                          title: const Text('Behavior & timing'),
-                          subtitle: const Text(
-                            'Stroke length, timeout, cooldown',
+                          title: Text(tr("Behavior & timing")),
+                          subtitle: Text(
+                            tr("Stroke length, timeout, cooldown"),
                           ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => open(const GestureBehaviorScreen()),
                         ),
                       ),
                       SettingsEntryDefinition(
-                        title: 'Excluded sites',
+                        title: tr("Excluded sites"),
                         child: ListTile(
                           leading: const Icon(Icons.public_off),
-                          title: const Text('Excluded sites'),
-                          subtitle: const Text('Disable gestures per site'),
+                          title: Text(tr("Excluded sites")),
+                          subtitle: Text(tr("Disable gestures per site")),
                           trailing: _CountChevron(
                             count: settings.excludedSites.length,
                           ),
@@ -140,11 +141,11 @@ class GestureSettingsScreen extends HookConsumerWidget {
                         ),
                       ),
                       SettingsEntryDefinition(
-                        title: 'Feedback',
+                        title: tr("Feedback"),
                         child: ListTile(
                           leading: const Icon(Icons.bolt_outlined),
-                          title: const Text('Feedback'),
-                          subtitle: const Text('Live overlay and suggestions'),
+                          title: Text(tr("Feedback")),
+                          subtitle: Text(tr("Live overlay and suggestions")),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => open(const GestureFeedbackScreen()),
                         ),

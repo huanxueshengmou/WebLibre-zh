@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:weblibre/core/routing/routes.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// An animated tab type switcher that only shows the label for the currently
 /// active option. Inactive options collapse to show only their icon.
@@ -59,7 +60,7 @@ class AnimatedTabTypeSwitcher extends StatelessWidget {
               _Segment(
                 tabType: TabType.regular,
                 icon: MdiIcons.tab,
-                label: 'Regular',
+                label: tr("Regular"),
                 isSelected: selected == TabType.regular,
                 selectedBackgroundColor: selectedBackgroundColor,
                 onTap: () => onChanged(TabType.regular),
@@ -79,7 +80,7 @@ class AnimatedTabTypeSwitcher extends StatelessWidget {
               _Segment(
                 tabType: TabType.private,
                 icon: MdiIcons.dominoMask,
-                label: 'Private',
+                label: tr("Private"),
                 isSelected: selected == TabType.private,
                 selectedBackgroundColor: selectedBackgroundColor,
                 onTap: () => onChanged(TabType.private),
@@ -89,7 +90,7 @@ class AnimatedTabTypeSwitcher extends StatelessWidget {
                 _Segment(
                   tabType: TabType.isolated,
                   icon: MdiIcons.snowflake,
-                  label: 'Isolated',
+                  label: tr("Isolated"),
                   isSelected: selected == TabType.isolated,
                   selectedBackgroundColor: selectedBackgroundColor,
                   onTap: () => onChanged(TabType.isolated),

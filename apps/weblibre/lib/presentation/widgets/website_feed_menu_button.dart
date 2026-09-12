@@ -26,6 +26,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/presentation/controllers/website_title.dart';
 import 'package:weblibre/presentation/widgets/rounded_text.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class WebsiteFeedMenuButton extends HookConsumerWidget {
   final String tabId;
@@ -64,7 +65,7 @@ class WebsiteFeedMenuButton extends HookConsumerWidget {
                 ),
               ).push(context);
             },
-            child: const Text('Available Web Feeds'),
+            child: Text(tr("Available Web Feeds")),
           );
         },
         error: (error, stackTrace) {
@@ -77,9 +78,9 @@ class WebsiteFeedMenuButton extends HookConsumerWidget {
           //   onRetry: () => ref.refresh(pageInfoProvider(url)),
           // );
         },
-        loading: () => const MenuItemButton(
+        loading: () => MenuItemButton(
           leadingIcon: Icon(Icons.rss_feed),
-          child: Text('Available Web Feeds'),
+          child: Text(tr("Available Web Feeds")),
         ),
       ),
     );

@@ -23,6 +23,7 @@ import 'package:weblibre/features/gestures/data/models/gesture_action.dart';
 import 'package:weblibre/features/gestures/data/models/gesture_stroke.dart';
 import 'package:weblibre/features/gestures/presentation/widgets/gesture_action_picker.dart';
 import 'package:weblibre/features/gestures/presentation/widgets/gesture_stroke_view.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 typedef GestureBindingResult = ({GestureStroke stroke, GestureAction action});
 
@@ -100,19 +101,18 @@ class _GestureBindingEditor extends HookWidget {
           context: context,
           builder: (context) => AlertDialog(
             icon: const Icon(Icons.warning_amber),
-            title: const Text('Replace existing gesture?'),
+            title: Text(tr("Replace existing gesture?")),
             content: Text(
-              'This stroke is already assigned to "${collisionAction.title}". '
-              'Saving will replace that binding.',
+              tr("This stroke is already assigned to \"{0}\". Saving will replace that binding.", [collisionAction.title]),
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Cancel'),
+                child: Text(tr("Cancel")),
               ),
               FilledButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('Replace'),
+                child: Text(tr("Replace")),
               ),
             ],
           ),
@@ -127,7 +127,7 @@ class _GestureBindingEditor extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(initialStroke == null ? 'Create gesture' : 'Edit gesture'),
+        title: Text(initialStroke == null ? 'Create gesture' : tr("Edit gesture")),
       ),
       body: Column(
         children: [
@@ -147,7 +147,7 @@ class _GestureBindingEditor extends HookWidget {
                     clipBehavior: Clip.antiAlias,
                     child: ListTile(
                       leading: Icon(action.value.icon),
-                      title: const Text('Target action'),
+                      title: Text(tr("Target action")),
                       subtitle: Text(action.value.title),
                       trailing: const Icon(Icons.unfold_more),
                       onTap: () async {
@@ -164,7 +164,7 @@ class _GestureBindingEditor extends HookWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Start position',
+                      tr("Start position"),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -214,7 +214,7 @@ class _GestureBindingEditor extends HookWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Stroke pattern',
+                      tr("Stroke pattern"),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -235,7 +235,7 @@ class _GestureBindingEditor extends HookWidget {
                     alignment: Alignment.center,
                     child: arrows.value.isEmpty
                         ? Text(
-                            'Draw a stroke pattern below',
+                            tr("Draw a stroke pattern below"),
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(
@@ -283,7 +283,7 @@ class _GestureBindingEditor extends HookWidget {
                               arrows.value.length - 1,
                             ),
                       icon: const Icon(Icons.backspace_outlined),
-                      label: const Text('Undo last'),
+                      label: Text(tr("Undo last")),
                     ),
                   ),
                 ],
@@ -313,8 +313,8 @@ class _GestureBindingEditor extends HookWidget {
                     onPressed: stroke.isValid ? save : null,
                     child: Text(
                       collisionAction != null
-                          ? 'Replace gesture'
-                          : 'Save gesture',
+                          ? tr("Replace gesture")
+                          : tr("Save gesture"),
                     ),
                   ),
                 ],
@@ -354,7 +354,7 @@ class _CollisionWarning extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'Already assigned to "${action.title}". Saving replaces it.',
+              tr("Already assigned to \"{0}\". Saving replaces it.", [action.title]),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onErrorContainer,
               ),

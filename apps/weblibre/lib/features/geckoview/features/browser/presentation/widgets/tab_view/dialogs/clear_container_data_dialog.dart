@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ClearContainerDataResult {
   final bool confirmed;
@@ -54,20 +55,20 @@ class _ClearContainerDataDialog extends HookWidget {
 
     return AlertDialog(
       icon: const Icon(MdiIcons.databaseRemove),
-      title: const Text('Clear Container Data'),
+      title: Text(tr("Clear Container Data")),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('This will clear all data for this container:'),
+          Text(tr("This will clear all data for this container:")),
           const SizedBox(height: 8),
-          const Text('• Cookies'),
-          const Text('• Site data'),
-          const Text('• Cache'),
-          const Text('• Permissions'),
+          Text(tr("• Cookies")),
+          Text(tr("• Site data")),
+          Text(tr("• Cache")),
+          Text(tr("• Permissions")),
           const SizedBox(height: 8),
           Text(
-            '$tabCount tab(s) will be closed.',
+            tr("{0} tab(s) will be closed.", [tabCount]),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.tertiary,
@@ -80,7 +81,7 @@ class _ClearContainerDataDialog extends HookWidget {
                 reopenTabs.value = value;
               }
             },
-            title: const Text('Recreate tabs after clearing'),
+            title: Text(tr("Recreate tabs after clearing")),
             contentPadding: EdgeInsets.zero,
             controlAffinity: ListTileControlAffinity.trailing,
           ),
@@ -97,7 +98,7 @@ class _ClearContainerDataDialog extends HookWidget {
               ),
             );
           },
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         TextButton(
           onPressed: () {
@@ -109,7 +110,7 @@ class _ClearContainerDataDialog extends HookWidget {
               ),
             );
           },
-          child: const Text('Clear Data'),
+          child: Text(tr("Clear Data")),
         ),
       ],
     );

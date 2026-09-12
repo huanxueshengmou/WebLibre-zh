@@ -24,6 +24,7 @@ import 'package:weblibre/features/geckoview/features/browser/features/menu/domai
 import 'package:weblibre/features/geckoview/features/browser/features/menu/domain/providers/menu_layout.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/menu/presentation/widgets/menu_layout_slivers.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Arranges the browser menu from Settings, editing the same saved layout as
 /// the "Customize menu" button inside the menu itself.
@@ -74,7 +75,7 @@ class MenuLayoutSettingsScreen extends HookConsumerWidget {
                   onPressed: ref
                       .read(menuLayoutProvider.notifier)
                       .resetToDefaults,
-                  child: const Text('Reset to Defaults'),
+                  child: Text(tr("Reset to Defaults")),
                 ),
               ],
               builder: (context, controller, child) => IconButton(
@@ -91,10 +92,9 @@ class MenuLayoutSettingsScreen extends HookConsumerWidget {
               child: Text(
                 switch ((section, item)) {
                   (null, _) =>
-                    'Drag to reorder. Switch a section off to hide it from the '
-                        'menu.',
-                  (_, null) => 'Drag to reorder the rows in this section.',
-                  _ => 'Drag to reorder the rows this one opens.',
+                    tr("Drag to reorder. Switch a section off to hide it from the menu."),
+                  (_, null) => tr("Drag to reorder the rows in this section."),
+                  _ => tr("Drag to reorder the rows this one opens."),
                 },
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,

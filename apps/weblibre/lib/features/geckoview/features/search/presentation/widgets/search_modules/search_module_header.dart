@@ -19,6 +19,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:weblibre/features/geckoview/features/search/domain/providers/search_modules_view.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// A reusable header widget for search modules that displays a collapse/expand
 /// chevron on the left, the section title, and a "Show all N" / "Show less"
@@ -151,7 +152,7 @@ class SearchModuleHeader extends StatelessWidget {
                 foregroundColor: Theme.of(context).colorScheme.primary,
               ),
               child: Text(
-                isExpanded ? 'Show less' : 'Show all $totalCount',
+                isExpanded ? tr("Show less") : tr("Show all {0}", [totalCount]),
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w600,

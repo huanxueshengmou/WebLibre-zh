@@ -34,6 +34,7 @@ import 'package:weblibre/features/geckoview/features/search/presentation/widgets
 import 'package:weblibre/features/geckoview/features/search/presentation/widgets/search_module_reorder_view.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/models/container_data.dart';
 import 'package:weblibre/features/web_feed/data/models/feed_article_summary.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// How a host opens the things its modules surface.
 ///
@@ -189,7 +190,7 @@ class CustomizeSectionsButton extends ConsumerWidget {
             ),
             icon: const Icon(Icons.tune, size: 18),
             label: Text(
-              'Customize sections',
+              tr("Customize sections"),
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ),

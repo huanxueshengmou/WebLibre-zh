@@ -26,6 +26,7 @@ import 'package:weblibre/features/geckoview/features/tabs/utils/setting_groups_s
 import 'package:weblibre/features/settings/presentation/widgets/hardening_group_icon.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class WebEngineHardeningGroupScreen extends HookConsumerWidget {
   final String groupName;
@@ -48,7 +49,7 @@ class WebEngineHardeningGroupScreen extends HookConsumerWidget {
     return SettingsCustomScrollScaffold(
       title: groupName,
       searchController: search.controller,
-      searchHintText: 'Search hardening settings',
+      searchHintText: tr("Search hardening settings"),
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 20),
@@ -78,7 +79,7 @@ class WebEngineHardeningGroupScreen extends HookConsumerWidget {
                 final sections = <SettingsSectionDefinition>[
                   if (group.showMasterSwitch && groupControlMatches)
                     SettingsSectionDefinition(
-                      title: 'Group Controls',
+                      title: tr("Group Controls"),
                       entries: [
                         SettingsEntryDefinition(
                           title: groupName,
@@ -129,7 +130,7 @@ class WebEngineHardeningGroupScreen extends HookConsumerWidget {
                     ),
                   if (filteredSettings.isNotEmpty)
                     SettingsSectionDefinition(
-                      title: 'Preference Settings',
+                      title: tr("Preference Settings"),
                       entries: [
                         for (final setting in filteredSettings)
                           SettingsEntryDefinition(
@@ -151,7 +152,7 @@ class WebEngineHardeningGroupScreen extends HookConsumerWidget {
                 );
               },
               error: (error, stackTrace) => FailureWidget(
-                title: 'Could not load preference settings',
+                title: tr("Could not load preference settings"),
                 exception: error,
                 onRetry: () => ref.refresh(
                   preferenceSettingsGroupRepositoryProvider(

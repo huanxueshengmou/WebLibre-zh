@@ -34,6 +34,7 @@ import 'package:weblibre/features/geckoview/features/browser/features/menu/prese
 import 'package:weblibre/features/geckoview/features/browser/features/menu/presentation/widgets/sections/tab_actions_section.dart';
 import 'package:weblibre/presentation/widgets/pointer_scrollable_sheet.dart';
 import 'package:weblibre/presentation/widgets/sheet_drag_handle.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows the combined browser menu as a modal bottom sheet.
 Future<void> showBrowserMenuSheet(BuildContext context) {
@@ -204,7 +205,7 @@ class _CustomizeMenuButton extends ConsumerWidget {
           ),
           icon: const Icon(Icons.tune, size: 18),
           label: Text(
-            'Customize menu',
+            tr("Customize menu"),
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ),

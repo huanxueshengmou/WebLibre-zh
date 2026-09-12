@@ -25,6 +25,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:weblibre/features/account/data/models/subscription_status.dart';
 import 'package:weblibre/features/account/data/supabase_config.dart';
 import 'package:weblibre/features/account/domain/repositories/subscription_repository.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Visual presentation of one subscription state. All branches of the
 /// subscription UI render through the same ListTile + badge + note + manage
@@ -106,11 +107,11 @@ class _SubscriptionErrorTile extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return ListTile(
       leading: Icon(Icons.error_outline, color: scheme.error),
-      title: const Text('Could not load subscription'),
+      title: Text(tr("Could not load subscription")),
       subtitle: const Text('Check your connection and try again.'),
       trailing: IconButton(
         icon: const Icon(Icons.refresh),
-        tooltip: 'Retry',
+        tooltip: tr("Retry"),
         onPressed: onRetry,
       ),
     );
@@ -143,7 +144,7 @@ _SubscriptionPresentation _resolvePresentation(
           ? 'Until ${_formatDate(status.entitledUntil!)}'
           : null,
       expiryHint: isWindingDown ? endDate : null,
-      manageLabel: 'Manage Subscription',
+      manageLabel: tr("Manage Subscription"),
     );
   }
   if (status.isPaused) {
@@ -151,14 +152,13 @@ _SubscriptionPresentation _resolvePresentation(
       leadingIcon: Icons.pause_circle_outline,
       leadingIconColor: scheme.onSurfaceVariant,
       planTitle: planTitle,
-      badgeLabel: 'Paused',
+      badgeLabel: tr("Paused"),
       badgeColor: scheme.tertiaryContainer,
       badgeTextColor: scheme.onTertiaryContainer,
       note:
-          'Your subscription is paused. Resume it from the customer '
-          'portal to restore access.',
+          tr("Your subscription is paused. Resume it from the customer portal to restore access."),
       noteColor: scheme.onSurfaceVariant,
-      manageLabel: 'Manage Subscription',
+      manageLabel: tr("Manage Subscription"),
     );
   }
   if (status.isPastDue) {
@@ -166,7 +166,7 @@ _SubscriptionPresentation _resolvePresentation(
       leadingIcon: Icons.error_outline,
       leadingIconColor: scheme.onSurfaceVariant,
       planTitle: planTitle,
-      badgeLabel: 'Past due',
+      badgeLabel: tr("Past due"),
       badgeColor: scheme.errorContainer,
       badgeTextColor: scheme.onErrorContainer,
       note:
@@ -183,14 +183,13 @@ _SubscriptionPresentation _resolvePresentation(
       leadingIcon: Icons.history_toggle_off,
       leadingIconColor: scheme.onSurfaceVariant,
       planTitle: planTitle,
-      badgeLabel: 'Will not renew',
+      badgeLabel: tr("Will not renew"),
       badgeColor: scheme.surfaceContainerHighest,
       badgeTextColor: scheme.onSurface,
       note:
-          'Your subscription has ended. Renew from the customer '
-          'portal to continue.',
+          tr("Your subscription has ended. Renew from the customer portal to continue."),
       noteColor: scheme.onSurfaceVariant,
-      manageLabel: 'Renew Subscription',
+      manageLabel: tr("Renew Subscription"),
     );
   }
   return _inactivePresentation(context);
@@ -201,12 +200,12 @@ _SubscriptionPresentation _inactivePresentation(BuildContext context) {
   return _SubscriptionPresentation(
     leadingIcon: Icons.card_membership,
     leadingIconColor: scheme.onSurfaceVariant,
-    planTitle: 'Supporter Subscription',
-    subtitle: 'Subscribe to unlock sync features',
-    badgeLabel: 'Inactive',
+    planTitle: tr("Supporter Subscription"),
+    subtitle: tr("Subscribe to unlock sync features"),
+    badgeLabel: tr("Inactive"),
     badgeColor: scheme.surfaceContainerHighest,
     badgeTextColor: scheme.onSurface,
-    manageLabel: 'Subscribe',
+    manageLabel: tr("Subscribe"),
   );
 }
 
@@ -260,7 +259,7 @@ class _SubscriptionStateBody extends ConsumerWidget {
               : null,
           trailing: IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh status',
+            tooltip: tr("Refresh status"),
             onPressed: () async {
               await ref.read(subscriptionRepositoryProvider.notifier).refresh();
             },

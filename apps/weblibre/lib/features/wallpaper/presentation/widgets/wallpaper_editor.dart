@@ -29,6 +29,7 @@ import 'package:weblibre/features/wallpaper/presentation/widgets/wallpaper_backd
 import 'package:weblibre/presentation/hooks/keyed_state.dart';
 import 'package:weblibre/presentation/widgets/browser_page.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Picks a home wallpaper and tunes its treatment.
 ///
@@ -138,7 +139,7 @@ class WallpaperEditor extends HookConsumerWidget {
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : const Icon(MdiIcons.imageOutline),
-                label: Text(fileName == null ? 'Choose image' : 'Replace'),
+                label: Text(fileName == null ? tr("Choose image") : tr("Replace")),
               ),
             ),
             if (fileName != null) ...[
@@ -146,7 +147,7 @@ class WallpaperEditor extends HookConsumerWidget {
               TextButton.icon(
                 onPressed: importing.value ? null : () => onFileChanged(null),
                 icon: const Icon(Icons.delete_outline),
-                label: const Text('Remove'),
+                label: Text(tr("Remove")),
               ),
             ],
           ],
@@ -174,8 +175,7 @@ class WallpaperEditor extends HookConsumerWidget {
           onChangeEnd: (travel) => onDimChanged(travel * maxHomeWallpaperDim),
         ),
         Text(
-          'Dim blends the image into the app background, so page text stays '
-          'readable in both light and dark themes.',
+          tr("Dim blends the image into the app background, so page text stays readable in both light and dark themes."),
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -339,7 +339,7 @@ class _HomeMock extends StatelessWidget {
           // A section header, drawn straight on the wallpaper in theme colours
           // — the thing the dim slider has to keep readable.
           Text(
-            'Top sites',
+            tr("Top sites"),
             style: theme.textTheme.titleMedium?.copyWith(
               fontSize: (theme.textTheme.titleMedium?.fontSize ?? 16) * scale,
               fontWeight: FontWeight.w700,

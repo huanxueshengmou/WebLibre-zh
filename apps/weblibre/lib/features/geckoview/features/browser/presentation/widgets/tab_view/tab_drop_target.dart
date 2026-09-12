@@ -28,6 +28,7 @@ import 'package:weblibre/features/geckoview/features/tabs/data/models/container_
 import 'package:weblibre/features/geckoview/features/tabs/domain/repositories/container.dart';
 import 'package:weblibre/features/geckoview/features/tabs/domain/repositories/tab.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum _TabDropAction { createContainer, assignParent }
 
@@ -170,9 +171,9 @@ class _TabDropActionSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const ListTile(
+          ListTile(
             title: Text('Drop tab onto tab'),
-            subtitle: Text('Choose how these tabs should be related.'),
+            subtitle: Text(tr("Choose how these tabs should be related.")),
           ),
           ListTile(
             leading: const Icon(MdiIcons.folderPlus),
@@ -183,8 +184,8 @@ class _TabDropActionSheet extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(MdiIcons.fileTree),
-            title: const Text('Assign new parent'),
-            subtitle: const Text('Make the dropped-on tab the parent.'),
+            title: Text(tr("Assign new parent")),
+            subtitle: Text(tr("Make the dropped-on tab the parent.")),
             onTap: () => Navigator.of(context).pop(_TabDropAction.assignParent),
           ),
         ],

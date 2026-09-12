@@ -32,6 +32,7 @@ import 'package:weblibre/features/user/domain/presentation/dialogs/quit_browser_
 import 'package:weblibre/features/user/domain/providers.dart';
 import 'package:weblibre/utils/exit_app.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Tears the app down. Injectable so a test can confirm a quit without the real
 /// implementation ending the process.
@@ -65,7 +66,7 @@ class ProfileSection extends HookConsumerWidget {
             ),
             title: Text(profile.value?.name ?? item.label),
             subtitle: Text(
-              'Tap to switch profile',
+              tr("Tap to switch profile"),
               style: TextStyle(
                 color: theme.colorScheme.onSurfaceVariant,
                 fontSize: 12,

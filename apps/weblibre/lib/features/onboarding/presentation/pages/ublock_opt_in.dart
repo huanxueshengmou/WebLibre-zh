@@ -28,6 +28,7 @@ import 'package:weblibre/features/geckoview/features/browser/domain/services/bro
 import 'package:weblibre/features/onboarding/presentation/onboarding_defaults.dart';
 import 'package:weblibre/features/onboarding/presentation/pages/abstract/i_form_page.dart';
 import 'package:weblibre/presentation/widgets/browser_page.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class UBlockOptInPage extends HookConsumerWidget implements IFormPage {
   @override
@@ -51,7 +52,7 @@ class UBlockOptInPage extends HookConsumerWidget implements IFormPage {
               const SizedBox(height: 8),
               Center(
                 child: Text(
-                  'uBlock Origin',
+                  tr("uBlock Origin"),
                   style: theme.textTheme.headlineMedium,
                 ),
               ),
@@ -81,7 +82,7 @@ There are many other lists available to block even more.
                 builder: (field) => SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   value: field.value ?? false,
-                  title: const Text('Install uBlock Origin Extension'),
+                  title: Text(tr("Install uBlock Origin Extension")),
                   onChanged: (value) {
                     field.didChange(value);
                     installUBlock.value = value;
@@ -98,9 +99,9 @@ There are many other lists available to block even more.
                 builder: (field) => SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   value: field.value ?? false,
-                  title: const Text('Apply optimized defaults'),
-                  subtitle: const Text(
-                    'Enable WebLibre hardening filter lists.',
+                  title: Text(tr("Apply optimized defaults")),
+                  subtitle: Text(
+                    tr("Enable WebLibre hardening filter lists."),
                   ),
                   onChanged: installUBlock.value
                       ? (value) {

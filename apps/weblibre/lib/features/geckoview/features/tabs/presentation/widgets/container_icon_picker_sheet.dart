@@ -23,6 +23,7 @@ import 'package:flutter_material_design_icons/flutter_material_design_icons.dart
 import 'package:weblibre/features/geckoview/features/tabs/utils/container_colors.dart';
 import 'package:weblibre/features/geckoview/features/tabs/utils/container_icons.dart';
 import 'package:weblibre/presentation/widgets/sheet_drag_handle.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 final List<ContainerIconOption> _mdiContainerIconOptions = List.unmodifiable([
   for (final iconData in MdiIcons.values)
@@ -93,11 +94,11 @@ class ContainerIconPickerSheet extends HookWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Choose Icon',
+                            tr("Choose Icon"),
                             style: theme.textTheme.titleMedium,
                           ),
                           Text(
-                            '${filteredIcons.length} mdi icons',
+                            tr("{0} mdi icons", [filteredIcons.length]),
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.onSurfaceVariant,
                             ),
@@ -127,7 +128,7 @@ class ContainerIconPickerSheet extends HookWidget {
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                 child: SearchBar(
                   controller: searchController,
-                  hintText: 'Search MDI icons',
+                  hintText: tr("Search MDI icons"),
                   leading: const Icon(Icons.search),
                   trailing: [
                     if (searchController.text.isNotEmpty)
@@ -146,7 +147,7 @@ class ContainerIconPickerSheet extends HookWidget {
                 child: filteredIcons.isEmpty
                     ? Center(
                         child: Text(
-                          'No icons found.',
+                          tr("No icons found."),
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),

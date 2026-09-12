@@ -1,3 +1,4 @@
+import 'package:weblibre/i18n/i18n.dart';
 /*
  * Copyright (c) 2024-2026 Fabian Freund.
  *
@@ -77,7 +78,7 @@ PermissionDescription describePermission(String raw) {
       raw.contains('://') ||
       raw.contains('*') ||
       raw.startsWith('file:')) {
-    return (text: 'Access your data for $raw', technical: false);
+    return (text: tr("Access your data for {0}", [raw]), technical: false);
   }
   return (text: raw, technical: true);
 }

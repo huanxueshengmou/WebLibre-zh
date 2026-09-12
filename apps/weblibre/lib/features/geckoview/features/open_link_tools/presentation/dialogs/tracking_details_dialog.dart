@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:weblibre/features/geckoview/features/open_link_tools/domain/entities/url_cleaner_result.dart';
 import 'package:weblibre/features/geckoview/features/open_link_tools/domain/services/url_cleaner_service.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class TrackingDetailsDialog extends HookWidget {
   final String currentUrl;
@@ -103,7 +104,7 @@ class TrackingDetailsDialog extends HookWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Remove Tracking Parameters', style: textTheme.titleLarge),
+              Text(tr("Remove Tracking Parameters"), style: textTheme.titleLarge),
               const SizedBox(height: 8),
               Text(
                 'Select parameters to strip from this URL.',
@@ -154,7 +155,7 @@ class TrackingDetailsDialog extends HookWidget {
                                       borderRadius: BorderRadius.circular(999),
                                     ),
                                     child: Text(
-                                      'Referral marketing',
+                                      tr("Referral marketing"),
                                       style: TextStyle(
                                         color: colorScheme.onTertiaryContainer,
                                         fontSize: 11,
@@ -191,14 +192,14 @@ class TrackingDetailsDialog extends HookWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Text(
-                  '$selectedCount of ${items.length} selected for removal',
+                  tr("{0} of {1} selected for removal", [selectedCount, items.length]),
                   style: textTheme.bodySmall?.copyWith(
                     fontStyle: FontStyle.italic,
                   ),
                 ),
               ),
               Text(
-                'Cleaned URL:',
+                tr("Cleaned URL:"),
                 style: textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -226,7 +227,7 @@ class TrackingDetailsDialog extends HookWidget {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text(canApply ? 'Cancel' : 'Close'),
+                    child: Text(canApply ? tr("Cancel") : tr("Close")),
                   ),
                   if (canApply) ...[
                     const SizedBox(width: 8),
@@ -239,7 +240,7 @@ class TrackingDetailsDialog extends HookWidget {
                         backgroundColor: colorScheme.primary,
                         foregroundColor: colorScheme.onPrimary,
                       ),
-                      child: const Text('Apply Changes'),
+                      child: Text(tr("Apply Changes")),
                     ),
                   ],
                 ],

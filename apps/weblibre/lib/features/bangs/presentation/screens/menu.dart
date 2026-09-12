@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/core/routing/routes.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class BangMenuScreen extends HookConsumerWidget {
   const BangMenuScreen({super.key});
@@ -34,7 +35,7 @@ class BangMenuScreen extends HookConsumerWidget {
           children: [
             ListTile(
               leading: const Icon(MdiIcons.accountAlert),
-              title: const Text('Manage User Bangs'),
+              title: Text(tr("Manage User Bangs")),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
                 await const UserBangsRoute().push(context);
@@ -42,7 +43,7 @@ class BangMenuScreen extends HookConsumerWidget {
             ),
             ListTile(
               leading: const Icon(Icons.search),
-              title: const Text('Search Bangs'),
+              title: Text(tr("Search Bangs")),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
                 await const BangSearchRoute().push(context);
@@ -50,7 +51,7 @@ class BangMenuScreen extends HookConsumerWidget {
             ),
             ListTile(
               leading: const Icon(MdiIcons.fileTree),
-              title: const Text('Browse Categories'),
+              title: Text(tr("Browse Categories")),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
                 await const BangCategoriesRoute().push(context);

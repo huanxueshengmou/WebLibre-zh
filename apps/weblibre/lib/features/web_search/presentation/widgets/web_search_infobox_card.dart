@@ -10,6 +10,7 @@ import 'package:weblibre/features/web_search/domain/controllers/search_controlle
 import 'package:weblibre/presentation/hooks/keyed_state.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class WebSearchInfoboxCard extends HookConsumerWidget {
   final CompactInfobox info;
@@ -346,7 +347,7 @@ class _InfoboxLinks extends StatelessWidget {
                 size: 18,
               ),
               label: Text(
-                showAll ? 'Show less' : 'Show $hiddenCount more links',
+                showAll ? tr("Show less") : tr("Show {0} more links", [hiddenCount]),
               ),
               style: TextButton.styleFrom(
                 foregroundColor: colorScheme.primary,

@@ -38,6 +38,7 @@ import 'package:weblibre/features/web_feed/presentation/widgets/tags_horizontal_
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/utils/markdown/image_extractor.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum _Pages { summary, content }
 
@@ -296,7 +297,7 @@ class FeedArticleScreen extends HookConsumerWidget {
         },
         error: (error, stackTrace) => Center(
           child: FailureWidget(
-            title: 'Failed reading article',
+            title: tr("Failed reading article"),
             exception: error,
           ),
         ),

@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows a confirmation dialog before clearing site data.
 ///
@@ -31,19 +32,18 @@ Future<bool?> showClearSiteDataDialog(
     context: context,
     builder: (context) => AlertDialog(
       icon: const Icon(Icons.warning),
-      title: const Text('Clear Site Data'),
+      title: Text(tr("Clear Site Data")),
       content: Text(
-        'This will clear $formattedTypes for $host.\n\n'
-        'You may need to log in again.',
+        tr("This will clear {0} for {1}.\n\nYou may need to log in again.", [formattedTypes, host]),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Clear'),
+          child: Text(tr("Clear")),
         ),
       ],
     ),

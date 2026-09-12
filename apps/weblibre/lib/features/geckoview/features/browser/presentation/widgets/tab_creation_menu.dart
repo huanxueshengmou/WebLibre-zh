@@ -23,6 +23,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/core/design/app_colors.dart';
 import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class TabCreationMenu extends HookConsumerWidget {
   final Widget child;
@@ -58,7 +59,7 @@ class TabCreationMenu extends HookConsumerWidget {
             await const SearchRoute(tabType: TabType.regular).push(context);
           },
           leadingIcon: const Icon(MdiIcons.tab),
-          child: const Text('Add Regular Tab'),
+          child: Text(tr("Add Regular Tab")),
         ),
         if (createChildTabsOption)
           MenuItemButton(
@@ -66,7 +67,7 @@ class TabCreationMenu extends HookConsumerWidget {
               await const SearchRoute(tabType: TabType.child).push(context);
             },
             leadingIcon: const Icon(MdiIcons.fileTree),
-            child: const Text('Add Child Tab'),
+            child: Text(tr("Add Child Tab")),
           ),
         MenuItemButton(
           onPressed: () async {
@@ -76,7 +77,7 @@ class TabCreationMenu extends HookConsumerWidget {
             MdiIcons.dominoMask,
             color: AppColors.of(context).privateTabPurple,
           ),
-          child: const Text('Add Private Tab'),
+          child: Text(tr("Add Private Tab")),
         ),
         if (showIsolatedTabUi)
           MenuItemButton(
@@ -87,7 +88,7 @@ class TabCreationMenu extends HookConsumerWidget {
               MdiIcons.snowflake,
               color: AppColors.of(context).isolatedTabTeal,
             ),
-            child: const Text('Add Isolated Tab'),
+            child: Text(tr("Add Isolated Tab")),
           ),
       ],
       child: child,

@@ -23,6 +23,7 @@ import 'package:weblibre/features/bangs/data/database/database.dart';
 import 'package:weblibre/features/bangs/data/models/bang_group.dart';
 import 'package:weblibre/features/bangs/data/providers.dart';
 import 'package:weblibre/features/bangs/data/services/data_source.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'sync.g.dart';
 
@@ -109,7 +110,7 @@ class BangSyncRepository extends _$BangSyncRepository {
     } catch (e) {
       return Result.failure(
         ErrorMessage(
-          message: "Failed to sync Bangs (${group.name})",
+          message: tr("Failed to sync Bangs ({0})", [group.name]),
           source: 'BangSync',
           details: e,
         ),
@@ -132,7 +133,7 @@ class BangSyncRepository extends _$BangSyncRepository {
     final bundled = group.bundled;
     if (bundled == null) {
       return Result.failure(
-        const ErrorMessage(source: 'BangSync', message: 'Not bundled'),
+        ErrorMessage(source: 'BangSync', message: tr("Not bundled")),
       );
     }
 
@@ -173,7 +174,7 @@ class BangSyncRepository extends _$BangSyncRepository {
     } catch (e) {
       return Result.failure(
         ErrorMessage(
-          message: "Failed to sync Bangs (${group.name})",
+          message: tr("Failed to sync Bangs ({0})", [group.name]),
           source: 'BangSync',
           details: e,
         ),

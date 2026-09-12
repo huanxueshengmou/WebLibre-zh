@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/geckoview/features/search/domain/providers/search_module_order.dart';
 import 'package:weblibre/features/geckoview/features/search/domain/providers/search_modules_view.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SearchModuleReorderView extends ConsumerWidget {
   final ModuleSurface surface;
@@ -43,7 +44,7 @@ class SearchModuleReorderView extends ConsumerWidget {
                   child: Semantics(
                     header: true,
                     child: Text(
-                      'Customize Sections',
+                      tr("Customize Sections"),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -58,7 +59,7 @@ class SearchModuleReorderView extends ConsumerWidget {
                       onPressed: ref
                           .read(searchModuleOrderProvider(surface).notifier)
                           .resetToDefaults,
-                      child: const Text('Reset to Defaults'),
+                      child: Text(tr("Reset to Defaults")),
                     ),
                   ],
                   builder: (context, controller, child) => IconButton(
@@ -72,7 +73,7 @@ class SearchModuleReorderView extends ConsumerWidget {
                   onPressed: () => ref
                       .read(searchReorderModeProvider(surface).notifier)
                       .deactivate(),
-                  child: const Text('Done'),
+                  child: Text(tr("Done")),
                 ),
               ],
             ),

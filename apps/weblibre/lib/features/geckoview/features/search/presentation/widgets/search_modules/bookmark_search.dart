@@ -26,6 +26,7 @@ import 'package:weblibre/features/geckoview/features/search/presentation/widgets
 import 'package:weblibre/presentation/hooks/on_listenable_change_selector.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class BookmarkSearch extends HookConsumerWidget {
   final ValueListenable<TextEditingValue> searchTextListenable;
@@ -57,7 +58,7 @@ class BookmarkSearch extends HookConsumerWidget {
     }
 
     return SearchModuleSection(
-      title: 'Bookmarks',
+      title: tr("Bookmarks"),
       moduleType: SearchModuleType.bookmarks,
       totalCount: totalResults,
       contentSliverBuilder:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:search_protocol/search_protocol.dart';
 import 'package:weblibre/features/search_credits/domain/repositories/web_search_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SearchModeSelector extends ConsumerWidget {
   const SearchModeSelector({super.key});
@@ -100,14 +101,14 @@ class SearchModeSelector extends ConsumerWidget {
   };
 
   static String _labelFor(SearchMode mode) => switch (mode) {
-    SearchMode.general => 'General',
-    SearchMode.independentWeb => 'Independent Web',
-    SearchMode.smallWeb => 'Small Web',
+    SearchMode.general => tr("General"),
+    SearchMode.independentWeb => tr("Independent Web"),
+    SearchMode.smallWeb => tr("Small Web"),
   };
 
   static String _descriptionFor(SearchMode mode) => switch (mode) {
-    SearchMode.general => 'Balanced results across the open web',
-    SearchMode.independentWeb => 'Favor smaller and less corporate sources',
-    SearchMode.smallWeb => 'Independent, personal & niche sites',
+    SearchMode.general => tr("Balanced results across the open web"),
+    SearchMode.independentWeb => tr("Favor smaller and less corporate sources"),
+    SearchMode.smallWeb => tr("Independent, personal & niche sites"),
   };
 }

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/locale.dart' as intl;
 import 'package:search_protocol/search_protocol.dart';
 import 'package:weblibre/domain/repositories/locale_resolver.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 const _expandableKeys = {'snippet', 'review', 'question'};
 
@@ -475,7 +476,7 @@ class SearchResultSnippetsPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Additional Snippets',
+            tr("Additional Snippets"),
             style: textTheme.labelMedium?.copyWith(
               color: colorScheme.primary,
               fontWeight: FontWeight.w700,

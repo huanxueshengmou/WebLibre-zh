@@ -19,6 +19,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Marks a connection that comes up on its own when WebLibre starts.
 class AutostartChip extends StatelessWidget {
@@ -29,7 +30,7 @@ class AutostartChip extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return Tooltip(
-      message: 'Starts with WebLibre',
+      message: tr("Starts with WebLibre"),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         decoration: BoxDecoration(

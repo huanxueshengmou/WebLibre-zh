@@ -28,6 +28,7 @@ import 'package:weblibre/features/user/domain/providers.dart';
 import 'package:weblibre/features/user/domain/providers/backup_directory.dart';
 import 'package:weblibre/features/user/domain/services/user_backup.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ProfileBackupListScreen extends HookConsumerWidget {
   final void Function(BuildContext context, Uri backupFileUri)?
@@ -76,7 +77,7 @@ class ProfileBackupListScreen extends HookConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(MdiIcons.folderCog),
-            tooltip: 'Change backup folder',
+            tooltip: tr("Change backup folder"),
             onPressed: () => _pickDirectory(ref),
           ),
         ],
@@ -91,20 +92,19 @@ class ProfileBackupListScreen extends HookConsumerWidget {
                     children: [
                       const Icon(MdiIcons.folderOpen, size: 64),
                       const SizedBox(height: 16),
-                      const Text(
-                        'Choose where to store your backups.',
+                      Text(
+                        tr("Choose where to store your backups."),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'Pick a location outside the app, so the backups '
-                        'survive uninstalling it.',
+                      Text(
+                        tr("Pick a location outside the app, so the backups survive uninstalling it."),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 24),
                       FilledButton.icon(
                         icon: const Icon(MdiIcons.folderPlus),
-                        label: const Text('Choose folder'),
+                        label: Text(tr("Choose folder")),
                         onPressed: () => _pickDirectory(ref),
                       ),
                     ],
@@ -114,7 +114,7 @@ class ProfileBackupListScreen extends HookConsumerWidget {
             : backupListAsync.when(
                 data: (backupList) {
                   if (backupList.isEmpty) {
-                    return const Center(child: Text('No backups found'));
+                    return Center(child: Text(tr("No backups found")));
                   }
 
                   return ListView.builder(
@@ -150,7 +150,7 @@ class ProfileBackupListScreen extends HookConsumerWidget {
                   );
                 },
                 error: (error, stackTrace) => FailureWidget(
-                  title: 'Could not load backups',
+                  title: tr("Could not load backups"),
                   exception: error,
                   onRetry: () {
                     ref.invalidate(backupListProvider);

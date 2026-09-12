@@ -24,6 +24,7 @@ import 'package:weblibre/features/settings/presentation/widgets/string_list_sett
 import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/utils/host_rules.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Manages the list of sites that always load in desktop mode.
 class DesktopModeSitesScreen extends HookConsumerWidget {
@@ -36,15 +37,13 @@ class DesktopModeSitesScreen extends HookConsumerWidget {
     );
 
     return StringListSettingsScreen(
-      title: 'Desktop mode sites',
+      title: tr("Desktop mode sites"),
       description:
-          'These sites always load in desktop mode, overriding the default. '
-          'Subdomains are included (e.g. "example.com" also covers '
-          '"m.example.com").',
+          tr("These sites always load in desktop mode, overriding the default. Subdomains are included (e.g. \"example.com\" also covers \"m.example.com\")."),
       values: desktopModeSites,
       hintText: 'example.com',
       itemIcon: Icons.desktop_windows,
-      emptyLabel: 'No sites added.',
+      emptyLabel: tr("No sites added."),
       normalize: normalizeRuleHost,
       onChanged: (next) async {
         await ref

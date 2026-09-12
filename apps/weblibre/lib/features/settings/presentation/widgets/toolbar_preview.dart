@@ -32,6 +32,7 @@ import 'package:weblibre/features/geckoview/features/browser/presentation/widget
 import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_mode.dart';
 import 'package:weblibre/features/geckoview/features/tabs/utils/container_colors.dart';
 import 'package:weblibre/features/user/data/models/general_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class TabBarPreviewHeaderDelegate extends SliverPersistentHeaderDelegate {
   const TabBarPreviewHeaderDelegate({
@@ -129,7 +130,7 @@ class TabBarPreviewCard extends HookWidget {
 
     final previewTabState = TabState.$default('preview-tab').copyWith(
       url: Uri.parse('https://weblibre.eu/docs'),
-      title: 'WebLibre Preview',
+      title: tr("WebLibre Preview"),
       securityInfoState: SecurityState(
         secure: true,
         host: 'weblibre.eu',
@@ -154,7 +155,7 @@ class TabBarPreviewCard extends HookWidget {
       QuickTabSwitcherItem(
         id: 'private-preview-tab',
         isActive: false,
-        title: 'Private',
+        title: tr("Private"),
         tabMode: TabMode.private,
         isHistory: false,
         isPinned: false,
@@ -180,7 +181,7 @@ class TabBarPreviewCard extends HookWidget {
         QuickTabSwitcherItem(
           id: 'history-preview-tab',
           isActive: false,
-          title: 'Search',
+          title: tr("Search"),
           tabMode: TabMode.regular,
           isHistory: true,
           isPinned: false,
@@ -353,7 +354,7 @@ class TabBarPreviewCard extends HookWidget {
         ),
       ),
       child: Text(
-        'Page Content',
+        tr("Page Content"),
         style: Theme.of(context).textTheme.labelMedium,
       ),
     );
@@ -416,10 +417,10 @@ class TabBarPreviewCard extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ListTile(
-              title: Text('Live Preview'),
+            ListTile(
+              title: Text(tr("Live Preview")),
               subtitle: Text(
-                'Reflects your current toolbar and layout settings',
+                tr("Reflects your current toolbar and layout settings"),
               ),
               leading: Icon(MdiIcons.televisionGuide),
               contentPadding: EdgeInsets.symmetric(horizontal: 8.0),

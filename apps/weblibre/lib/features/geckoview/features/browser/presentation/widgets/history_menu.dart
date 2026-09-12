@@ -23,6 +23,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/geckoview/domain/entities/states/history.dart';
 import 'package:weblibre/features/geckoview/domain/providers/tab_detail_state.dart';
 import 'package:weblibre/features/geckoview/features/browser/presentation/widgets/history_menu_item.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum HistoryMenuDirection { back, forward }
 
@@ -62,8 +63,8 @@ class HistoryMenu extends HookConsumerWidget {
         MenuItemButton(
           child: Text(
             direction == HistoryMenuDirection.back
-                ? 'No previous pages'
-                : 'No forward pages',
+                ? tr("No previous pages")
+                : tr("No forward pages"),
           ),
         ),
       ];

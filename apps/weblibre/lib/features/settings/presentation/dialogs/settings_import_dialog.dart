@@ -22,6 +22,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:weblibre/features/account/presentation/widgets/sync_document_dialogs.dart';
 import 'package:weblibre/features/settings/domain/entities/settings_export_document.dart';
 import 'package:weblibre/features/settings/domain/services/settings_transfer_service.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Confirms an import and picks which of the file's sections to apply.
 ///
@@ -64,15 +65,14 @@ class _SettingsImportDialog extends HookWidget {
         .toList();
 
     return AlertDialog(
-      title: const Text('Import settings'),
+      title: Text(tr("Import settings")),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'The sections you pick replace what this profile has now. '
-              'Anything you leave unchecked stays as it is.',
+            Text(
+              tr("The sections you pick replace what this profile has now. Anything you leave unchecked stays as it is."),
             ),
             const SizedBox(height: 16),
             for (final section in SettingsTransferSection.values)
@@ -97,7 +97,7 @@ class _SettingsImportDialog extends HookWidget {
             if (unknown.isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                'This build cannot read: ${unknown.join(', ')}.',
+                tr("This build cannot read: {0}.", [unknown.join(', ')]),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -107,12 +107,11 @@ class _SettingsImportDialog extends HookWidget {
             if (document.exportedAt case final exportedAt?)
               MetadataRow(label: 'Exported', value: formatDateTime(exportedAt)),
             if (document.appVersion case final appVersion?)
-              MetadataRow(label: 'App version', value: appVersion),
+              MetadataRow(label: tr("App version"), value: appVersion),
             if (selected.value.contains(SettingsTransferSection.settings)) ...[
               const SizedBox(height: 12),
               Text(
-                'Saved credentials and your wallpaper image are not carried '
-                'by an export — this device keeps its own.',
+                tr("Saved credentials and your wallpaper image are not carried by an export — this device keeps its own."),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -123,8 +122,7 @@ class _SettingsImportDialog extends HookWidget {
             )) ...[
               const SizedBox(height: 12),
               Text(
-                'Some engine preferences only take effect after restarting '
-                'the browser.',
+                tr("Some engine preferences only take effect after restarting the browser."),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -136,13 +134,13 @@ class _SettingsImportDialog extends HookWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: selected.value.isEmpty
               ? null
               : () => Navigator.of(context).pop(selected.value),
-          child: const Text('Replace'),
+          child: Text(tr("Replace")),
         ),
       ],
     );

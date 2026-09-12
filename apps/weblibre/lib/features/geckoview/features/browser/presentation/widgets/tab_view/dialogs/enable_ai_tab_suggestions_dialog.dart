@@ -19,6 +19,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<bool?> showEnableAiTabSuggestionsDialog(BuildContext context) {
   return showDialog<bool?>(
@@ -26,24 +27,22 @@ Future<bool?> showEnableAiTabSuggestionsDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         icon: const Icon(MdiIcons.download),
-        title: const Text('Enable AI Tab Suggestions'),
-        content: const Text(
-          'Enabling this feature may require downloading AI models. '
-          'The download size and progress cannot be determined in advance.\n\n'
-          'Do you want to continue?',
+        title: Text(tr("Enable AI Tab Suggestions")),
+        content: Text(
+          tr("Enabling this feature may require downloading AI models. The download size and progress cannot be determined in advance.\n\nDo you want to continue?"),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: const Text('Enable'),
+            child: Text(tr("Enable")),
           ),
         ],
       );

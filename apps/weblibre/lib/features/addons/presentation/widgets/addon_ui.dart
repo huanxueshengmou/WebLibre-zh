@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mozilla_components/flutter_mozilla_components.dart';
 import 'package:intl/intl.dart';
 import 'package:weblibre/features/addons/extensions/addon_info.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class AddonIconView extends StatelessWidget {
   final AddonInfo addon;
@@ -139,7 +140,7 @@ String formatUpdateAttemptStatus(AddonUpdateAttemptInfo? attempt) {
           ? attempt!.message!
           : 'Updated successfully',
     AddonUpdateStatus.noUpdateAvailable => 'No update available',
-    AddonUpdateStatus.notInstalled => 'Extension not installed',
+    AddonUpdateStatus.notInstalled => tr("Extension not installed"),
     AddonUpdateStatus.error =>
       attempt?.message?.isNotEmpty == true
           ? 'Update failed: ${attempt!.message}'

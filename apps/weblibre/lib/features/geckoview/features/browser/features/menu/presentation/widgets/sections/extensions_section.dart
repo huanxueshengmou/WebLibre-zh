@@ -29,6 +29,7 @@ import 'package:weblibre/features/geckoview/domain/providers.dart';
 import 'package:weblibre/features/geckoview/domain/providers/web_extensions_state.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/menu/presentation/widgets/menu_card.dart';
 import 'package:weblibre/features/geckoview/features/browser/presentation/widgets/extension_badge_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// The installed extensions, as one expandable row.
 ///
@@ -66,7 +67,7 @@ class ExtensionsSection extends HookConsumerWidget {
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
             leading: const Icon(MdiIcons.puzzle),
-            title: const Text('Extensions'),
+            title: Text(tr("Extensions")),
             initiallyExpanded: extensionsExpanded,
             onExpansionChanged: (_) => ref
                 .read(
@@ -93,7 +94,7 @@ class ExtensionsSection extends HookConsumerWidget {
                         const VerticalDivider(indent: 4, endIndent: 4),
                         IconButton(
                           icon: const Icon(Icons.settings, size: 20),
-                          tooltip: 'Extension settings',
+                          tooltip: tr("Extension settings"),
                           onPressed: () async {
                             await openExtensionSettings(extension.extensionId);
                           },
@@ -128,7 +129,7 @@ class ExtensionsSection extends HookConsumerWidget {
                         const VerticalDivider(indent: 4, endIndent: 4),
                         IconButton(
                           icon: const Icon(Icons.settings, size: 20),
-                          tooltip: 'Extension settings',
+                          tooltip: tr("Extension settings"),
                           onPressed: () async {
                             await openExtensionSettings(extension.extensionId);
                           },
@@ -148,7 +149,7 @@ class ExtensionsSection extends HookConsumerWidget {
               ],
               // Management
               buildMenuSubTile(
-                'Manage Extensions',
+                tr("Manage Extensions"),
                 icon: MdiIcons.puzzleEdit,
                 onTap: () async {
                   Navigator.pop(context);

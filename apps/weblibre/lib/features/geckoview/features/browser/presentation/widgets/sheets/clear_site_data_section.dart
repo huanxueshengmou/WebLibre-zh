@@ -29,6 +29,7 @@ import 'package:weblibre/features/geckoview/domain/providers/tab_session.dart';
 import 'package:weblibre/features/geckoview/domain/repositories/tab.dart';
 import 'package:weblibre/features/geckoview/features/browser/presentation/dialogs/clear_site_data_dialog.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Section widget for clearing site data
 class ClearSiteDataSection extends HookConsumerWidget {
@@ -74,11 +75,11 @@ class ClearSiteDataSection extends HookConsumerWidget {
       children: [
         ListTile(
           leading: const Icon(Icons.delete_sweep),
-          title: const Text('Clear Site Data'),
+          title: Text(tr("Clear Site Data")),
           subtitle: Text(
             isExpanded.value
                 ? 'Select data types to clear'
-                : 'Cookies, cache, and site data',
+                : tr("Cookies, cache, and site data"),
           ),
           trailing: Icon(
             isExpanded.value ? Icons.expand_less : Icons.expand_more,
@@ -91,8 +92,8 @@ class ClearSiteDataSection extends HookConsumerWidget {
         ),
         if (isExpanded.value) ...[
           _DataTypeCheckbox(
-            label: 'Auth Sessions',
-            subtitle: 'Saved logins, active sessions',
+            label: tr("Auth Sessions"),
+            subtitle: tr("Saved logins, active sessions"),
             type: ClearDataType.authSessions,
             isSelected: selectedTypes.value.contains(
               ClearDataType.authSessions,
@@ -100,8 +101,8 @@ class ClearSiteDataSection extends HookConsumerWidget {
             onChanged: (selected) => toggleType(ClearDataType.authSessions),
           ),
           _DataTypeCheckbox(
-            label: 'Site Data',
-            subtitle: 'Offline storage, databases, local files',
+            label: tr("Site Data"),
+            subtitle: tr("Offline storage, databases, local files"),
             type: ClearDataType.allSiteData,
             isSelected: selectedTypes.value.contains(ClearDataType.allSiteData),
             onChanged: (selected) => toggleType(ClearDataType.allSiteData),
@@ -110,7 +111,7 @@ class ClearSiteDataSection extends HookConsumerWidget {
             padding: const EdgeInsets.only(left: 16.0),
             child: _DataTypeCheckbox(
               label: 'Cookies',
-              subtitle: 'Login tokens, preferences, tracking data',
+              subtitle: tr("Login tokens, preferences, tracking data"),
               type: ClearDataType.onlyCookies,
               isSelected:
                   selectedTypes.value.contains(ClearDataType.allSiteData) ||
@@ -123,8 +124,8 @@ class ClearSiteDataSection extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: _DataTypeCheckbox(
-              label: 'Cached Files',
-              subtitle: 'Images, scripts, stylesheets',
+              label: tr("Cached Files"),
+              subtitle: tr("Images, scripts, stylesheets"),
               type: ClearDataType.onlyCaches,
               isSelected:
                   selectedTypes.value.contains(ClearDataType.allSiteData) ||
@@ -135,8 +136,8 @@ class ClearSiteDataSection extends HookConsumerWidget {
             ),
           ),
           CheckboxListTile(
-            title: const Text('Close tab after clearing'),
-            subtitle: const Text('Close this tab once data is cleared'),
+            title: Text(tr("Close tab after clearing")),
+            subtitle: Text(tr("Close this tab once data is cleared")),
             value: closeTabAfterClear.value,
             onChanged: isClearing.value
                 ? null
@@ -167,7 +168,7 @@ class ClearSiteDataSection extends HookConsumerWidget {
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : const Icon(Icons.delete),
-                label: Text(isClearing.value ? 'Clearing...' : 'Clear Now'),
+                label: Text(isClearing.value ? 'Clearing...' : tr("Clear Now")),
               ),
             ),
           ),

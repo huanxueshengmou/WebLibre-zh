@@ -36,6 +36,7 @@ import 'package:weblibre/features/settings/presentation/screens/web_content_sett
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/features/settings/presentation/widgets/toolbar_layout_content.dart';
 import 'package:weblibre/features/web_push/presentation/screens/web_push_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SettingsScreen extends HookWidget {
   const SettingsScreen({super.key});
@@ -60,16 +61,16 @@ class SettingsScreen extends HookWidget {
             return CustomScrollView(
               controller: controller,
               slivers: [
-                const SliverAppBar.large(
+                SliverAppBar.large(
                   centerTitle: false,
-                  title: Text('Settings'),
+                  title: Text(tr("Settings")),
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                   sliver: SliverToBoxAdapter(
                     child: SettingsSearchField(
                       controller: search.controller,
-                      hintText: 'Search all settings',
+                      hintText: tr("Search all settings"),
                     ),
                   ),
                 ),
@@ -99,8 +100,8 @@ typedef _CategoryGroups = ({
 _CategoryGroups _buildCategories() {
   final browser = [
     _SettingsCategoryDefinition(
-      title: 'General',
-      subtitle: 'Appearance, downloads',
+      title: tr("General"),
+      subtitle: tr("Appearance, downloads"),
       icon: Icons.tune,
       keywords: const ['theme', 'ui zoom', 'default browser'],
       sections: generalSettingsSections,
@@ -108,15 +109,15 @@ _CategoryGroups _buildCategories() {
     ),
     _SettingsCategoryDefinition(
       title: 'Browsing',
-      subtitle: 'Tabs, navigation, external links',
+      subtitle: tr("Tabs, navigation, external links"),
       icon: MdiIcons.compassOutline,
       keywords: const ['tabs', 'small web', 'url cleaner', 'unshortener'],
       sections: browsingSettingsSections,
       onTap: (context) => BrowsingSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Home & New Tab',
-      subtitle: 'What the home and new tab pages show',
+      title: tr("Home & New Tab"),
+      subtitle: tr("What the home and new tab pages show"),
       icon: MdiIcons.homeOutline,
       keywords: const [
         'home',
@@ -133,15 +134,15 @@ _CategoryGroups _buildCategories() {
       onTap: (context) => const HomeSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Gestures',
-      subtitle: 'Stroke gestures for browser actions',
+      title: tr("Gestures"),
+      subtitle: tr("Stroke gestures for browser actions"),
       icon: MdiIcons.gestureSwipe,
       keywords: const ['gesture', 'swipe', 'stroke'],
       onTap: (context) => GestureSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Toolbar & Layout',
-      subtitle: 'Tab bar, toolbar, quick switcher, tab view',
+      title: tr("Toolbar & Layout"),
+      subtitle: tr("Tab bar, toolbar, quick switcher, tab view"),
       icon: MdiIcons.viewDashboardOutline,
       keywords: const ['contextual toolbar', 'quick tab switcher'],
       sections: [
@@ -151,8 +152,8 @@ _CategoryGroups _buildCategories() {
       onTap: (context) => ToolbarLayoutSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Web Content',
-      subtitle: 'Page display, PDF, reader mode, AI',
+      title: tr("Web Content"),
+      subtitle: tr("Page display, PDF, reader mode, AI"),
       icon: MdiIcons.fileDocumentOutline,
       keywords: const ['reader mode', 'pdf', 'fonts'],
       sections: webContentSettingsSections,
@@ -160,23 +161,23 @@ _CategoryGroups _buildCategories() {
     ),
     _SettingsCategoryDefinition(
       title: 'Notifications',
-      subtitle: 'Web push delivery, distributor, site subscriptions',
+      subtitle: tr("Web push delivery, distributor, site subscriptions"),
       icon: MdiIcons.bellBadgeOutline,
       keywords: const ['push', 'unifiedpush', 'ntfy', 'distributor'],
       sections: webPushSettingsSections,
       onTap: (context) => WebPushSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Search',
-      subtitle: 'Providers, bangs, search history',
+      title: tr("Search"),
+      subtitle: tr("Providers, bangs, search history"),
       icon: MdiIcons.magnify,
       keywords: const ['bangs', 'suggestions', 'local search index'],
       sections: searchSettingsSections,
       onTap: (context) => SearchSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Privacy & Security',
-      subtitle: 'Tracking protection, data clearing',
+      title: tr("Privacy & Security"),
+      subtitle: tr("Tracking protection, data clearing"),
       icon: MdiIcons.shieldLock,
       keywords: const [
         'fingerprinting',
@@ -189,8 +190,8 @@ _CategoryGroups _buildCategories() {
       onTap: (context) => PrivacySecuritySettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Proxy',
-      subtitle: 'Connections and routing',
+      title: tr("Proxy"),
+      subtitle: tr("Connections and routing"),
       icon: MdiIcons.lanConnect,
       keywords: const [
         'proxy',
@@ -209,30 +210,30 @@ _CategoryGroups _buildCategories() {
 
   final services = [
     _SettingsCategoryDefinition(
-      title: 'Extensions',
-      subtitle: 'Install and manage extension sources',
+      title: tr("Extensions"),
+      subtitle: tr("Install and manage extension sources"),
       icon: MdiIcons.puzzleOutline,
       keywords: const ['addons', 'unsigned extensions'],
       sections: extensionsSettingsSections,
       onTap: (context) => ExtensionsSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'WebLibre Account',
-      subtitle: 'Sign in, sync settings',
+      title: tr("WebLibre Account"),
+      subtitle: tr("Sign in, sync settings"),
       icon: Icons.account_circle_outlined,
       keywords: const ['account', 'subscription'],
       onTap: (context) => AccountSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Firefox Sync',
-      subtitle: 'Account, sync now, engine selection',
+      title: tr("Firefox Sync"),
+      subtitle: tr("Account, sync now, engine selection"),
       icon: Icons.sync,
       keywords: const ['pair', 'device name', 'engines'],
       onTap: (context) => SyncSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Advanced',
-      subtitle: 'JavaScript, user agent, debugging',
+      title: tr("Advanced"),
+      subtitle: tr("JavaScript, user agent, debugging"),
       icon: Icons.developer_mode,
       keywords: const ['experimental', 'error logs', 'javascript'],
       sections: advancedSettingsSections,
@@ -255,7 +256,7 @@ List<SettingsSectionDefinition> _buildCategorySections(
       ],
     ),
     SettingsSectionDefinition(
-      title: 'Services & Advanced',
+      title: tr("Services & Advanced"),
       entries: [
         for (final category in categories.services)
           _buildCategoryEntry(category),

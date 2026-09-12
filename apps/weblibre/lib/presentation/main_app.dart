@@ -30,6 +30,8 @@ import 'package:weblibre/features/web_search/domain/controllers/sandbox_capture_
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/multi_finger_tap_guard.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MainApp extends HookConsumerWidget {
   final ThemeData? theme;
@@ -89,6 +91,21 @@ class MainApp extends HookConsumerWidget {
         }
 
         return MaterialApp.router(
+          // [weblibre-zh] framework-level localisation so Flutter's own widgets (date
+          // pickers, text selection menus, accessibility labels) follow the
+          // device language too, not just the tr() table.
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en'), Locale('zh')],
+          localeResolutionCallback: (locale, supported) {
+            for (final l in supported) {
+              if (l.languageCode == locale?.languageCode) return l;
+            }
+            return supported.first;
+          },
           debugShowCheckedModeBanner: false,
           theme: theme,
           darkTheme: darkTheme,
@@ -133,10 +150,10 @@ class MainApp extends HookConsumerWidget {
             );
           },
           home: Scaffold(
-            appBar: AppBar(title: const Text('Initiallization Error')),
+            appBar: AppBar(title: Text(tr("Initiallization Error"))),
             body: Center(
               child: FailureWidget(
-                title: 'Could not initialize App',
+                title: tr("Could not initialize App"),
                 exception: errorMessage.toString(),
                 onRetry: () async {
                   await ref
@@ -173,7 +190,7 @@ class _DownloadStoppedListener extends HookConsumerWidget {
               'Download completed',
               duration: const Duration(seconds: 6),
               action: SnackBarAction(
-                label: 'Open',
+                label: tr("Open"),
                 onPressed: () async {
                   final opened = await GeckoDownloadsService()
                       .openDownloadedFile(
@@ -351,7 +368,7 @@ class _SandboxCaptureErrorListener extends ConsumerWidget {
         SandboxCaptureErrorKind.captureFailed =>
           'Capture failed: ${error.detail ?? 'unknown error'}',
         SandboxCaptureErrorKind.downloadFailed =>
-          'Capture artifact download failed.',
+          tr("Capture artifact download failed."),
         SandboxCaptureErrorKind.unknown =>
           'Sandbox capture error: ${error.detail ?? 'unknown error'}',
       };

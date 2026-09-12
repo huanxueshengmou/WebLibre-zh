@@ -22,6 +22,7 @@ import 'package:go_router/go_router.dart';
 import 'package:weblibre/core/branding/proxy_brands.dart';
 import 'package:weblibre/core/design/app_colors.dart';
 import 'package:weblibre/presentation/icons/tor_icons.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class TorDialog extends StatelessWidget {
   const TorDialog({super.key});
@@ -32,21 +33,21 @@ class TorDialog extends StatelessWidget {
     return AlertDialog(
       icon: Icon(TorIcons.onionAlt, color: appColors.torPurple),
       title: const Text(torProxyLabel),
-      content: const Text(
-        'This container requires a $torBrand proxy for secure connections, which is not currently running.',
+      content: Text(
+        tr("This container requires a {0} proxy for secure connections, which is not currently running.", [torBrand]),
       ),
       actions: [
         TextButton(
           onPressed: () {
             context.pop(false);
           },
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         TextButton(
           onPressed: () {
             context.pop(true);
           },
-          child: const Text('Enable'),
+          child: Text(tr("Enable")),
         ),
       ],
     );

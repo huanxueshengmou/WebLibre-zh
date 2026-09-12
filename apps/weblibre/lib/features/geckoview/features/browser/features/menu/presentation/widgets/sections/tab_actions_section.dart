@@ -57,6 +57,7 @@ import 'package:weblibre/features/web_search/domain/controllers/sandbox_capture_
 import 'package:weblibre/presentation/controllers/website_title.dart';
 import 'package:weblibre/presentation/hooks/cached_future.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Actions on the tab itself.
 ///
@@ -155,10 +156,10 @@ class _ContainerExpansion extends ConsumerWidget {
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
         leading: const Icon(MdiIcons.folder),
-        title: const Text('Containers'),
+        title: Text(tr("Containers")),
         children: orderMenuChildren(items, {
           MenuItemType.manageContainers: () => buildMenuSubTile(
-            'Manage Containers',
+            tr("Manage Containers"),
             icon: MdiIcons.folder,
             onTap: () async {
               Navigator.pop(context);
@@ -166,7 +167,7 @@ class _ContainerExpansion extends ConsumerWidget {
             },
           ),
           MenuItemType.assignContainer: () => buildMenuSubTile(
-            'Assign Container',
+            tr("Assign Container"),
             icon: MdiIcons.folderArrowUpDownOutline,
             onTap: () async {
               final selection = await const ContainerSelectionRoute()
@@ -199,7 +200,7 @@ class _ContainerExpansion extends ConsumerWidget {
           MenuItemType.assignUrlToContainer: () =>
               ContainerRelationUnassignedVisibility(
                 child: buildMenuSubTile(
-                  'Assign URL to Container',
+                  tr("Assign URL to Container"),
                   icon: MdiIcons.webPlus,
                   onTap: () async {
                     final selection = await const ContainerSelectionRoute()
@@ -244,7 +245,7 @@ class _ContainerExpansion extends ConsumerWidget {
           MenuItemType.unassignUrlFromContainer: () =>
               ContainerRelationAssignedVisibility(
                 child: buildMenuSubTile(
-                  'Unassign URL from Container',
+                  tr("Unassign URL from Container"),
                   icon: MdiIcons.webMinus,
                   onTap: () async {
                     final tabState = ref.read(tabStateProvider(selectedTabId));
@@ -287,7 +288,7 @@ class _ContainerExpansion extends ConsumerWidget {
           MenuItemType.unassignContainer: () => ContainerAssignedVisibility(
             tabId: selectedTabId,
             child: buildMenuSubTile(
-              'Unassign Container',
+              tr("Unassign Container"),
               icon: MdiIcons.folderCancelOutline,
               onTap: () async {
                 final tabState = ref.read(tabStateProvider(selectedTabId))!;
@@ -365,7 +366,7 @@ class _ShareExpansion extends HookConsumerWidget {
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
         leading: const Icon(Icons.share),
-        title: const Text('Share'),
+        title: Text(tr("Share")),
         children: [
           if (showCleanerTile)
             UrlCleanerTile(
@@ -377,7 +378,7 @@ class _ShareExpansion extends HookConsumerWidget {
             ),
           ...orderMenuChildren(items, {
             MenuItemType.copyAddress: () => buildMenuSubTile(
-              'Copy Address',
+              tr("Copy Address"),
               icon: MdiIcons.contentCopy,
               trailing: cleanedTrailing,
               onTap: () async {
@@ -388,7 +389,7 @@ class _ShareExpansion extends HookConsumerWidget {
               },
             ),
             MenuItemType.shareScreenshot: () => buildMenuSubTile(
-              'Share Screenshot',
+              tr("Share Screenshot"),
               icon: Icons.mobile_screen_share,
               onTap: () async {
                 final screenshot = await ref
@@ -413,7 +414,7 @@ class _ShareExpansion extends HookConsumerWidget {
               },
             ),
             MenuItemType.shareLink: () => buildMenuSubTile(
-              'Share Link',
+              tr("Share Link"),
               icon: Icons.share,
               trailing: cleanedTrailing,
               onTap: () async {
@@ -424,7 +425,7 @@ class _ShareExpansion extends HookConsumerWidget {
             MenuItemType.sendToDevice: () =>
                 _SendToDeviceExpansion(selectedTabId: selectedTabId),
             MenuItemType.showQrCode: () => buildMenuSubTile(
-              'Show QR Code',
+              tr("Show QR Code"),
               icon: Icons.qr_code,
               trailing: cleanedTrailing,
               onTap: () async {
@@ -460,7 +461,7 @@ class _SendToDeviceExpansion extends ConsumerWidget {
         child: ExpansionTile(
           tilePadding: const EdgeInsets.only(left: 56, right: 16),
           leading: const Icon(Icons.send_outlined, size: 20),
-          title: const Text('Send To Device', style: TextStyle(fontSize: 14)),
+          title: Text(tr("Send To Device"), style: TextStyle(fontSize: 14)),
           children: devices.when(
             data: (deviceList) {
               final targets = deviceList
@@ -471,10 +472,10 @@ class _SendToDeviceExpansion extends ConsumerWidget {
 
               if (targets.isEmpty) {
                 return [
-                  const ListTile(
+                  ListTile(
                     contentPadding: EdgeInsets.only(left: 72, right: 16),
                     title: Text(
-                      'No target devices',
+                      tr("No target devices"),
                       style: TextStyle(fontSize: 13),
                     ),
                   ),
@@ -539,21 +540,21 @@ class _SendToDeviceExpansion extends ConsumerWidget {
                   )
                   .toList(growable: false);
             },
-            loading: () => const [
+            loading: () => [
               ListTile(
                 contentPadding: EdgeInsets.only(left: 72, right: 16),
                 leading: Icon(Icons.devices_other, size: 18),
                 title: Text(
-                  'Loading devices...',
+                  tr("Loading devices..."),
                   style: TextStyle(fontSize: 13),
                 ),
               ),
             ],
-            error: (_, _) => const [
+            error: (_, _) => [
               ListTile(
                 contentPadding: EdgeInsets.only(left: 72, right: 16),
                 title: Text(
-                  'Failed to load devices',
+                  tr("Failed to load devices"),
                   style: TextStyle(fontSize: 13),
                 ),
               ),
@@ -580,10 +581,10 @@ class _CloneTabExpansion extends ConsumerWidget {
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
         leading: const Icon(MdiIcons.contentDuplicate),
-        title: const Text('Clone Tab'),
+        title: Text(tr("Clone Tab")),
         children: orderMenuChildren(items, {
           MenuItemType.cloneRegularTab: () => buildMenuSubTile(
-            'Regular',
+            tr("Regular"),
             icon: MdiIcons.tab,
             onTap: () async {
               final tabState = ref.read(tabStateProvider(selectedTabId))!;
@@ -622,7 +623,7 @@ class _CloneTabExpansion extends ConsumerWidget {
             },
           ),
           MenuItemType.clonePrivateTab: () => buildMenuSubTile(
-            'Private',
+            tr("Private"),
             icon: MdiIcons.dominoMask,
             iconColor: appColors.privateTabPurple,
             onTap: () async {
@@ -663,7 +664,7 @@ class _CloneTabExpansion extends ConsumerWidget {
           ),
           if (settings.showIsolatedTabUi)
             MenuItemType.cloneIsolatedTab: () => buildMenuSubTile(
-              'Isolated',
+              tr("Isolated"),
               icon: MdiIcons.snowflake,
               iconColor: appColors.isolatedTabTeal,
               onTap: () async {
@@ -712,10 +713,10 @@ class _ExportExpansion extends ConsumerWidget {
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
         leading: const Icon(MdiIcons.fileExport),
-        title: const Text('Export'),
+        title: Text(tr("Export")),
         children: orderMenuChildren(items, {
           MenuItemType.copyAsMarkdown: () => buildMenuSubTile(
-            'Copy as Markdown',
+            tr("Copy as Markdown"),
             // ignore: deprecated_member_use
             icon: MdiIcons.languageMarkdownOutline,
             onTap: () async {
@@ -730,11 +731,11 @@ class _ExportExpansion extends ConsumerWidget {
                     'Markdown copied to clipboard',
                   );
                 }
-              }, const Text('Copy as Markdown'));
+              }, Text(tr("Copy as Markdown")));
             },
           ),
           MenuItemType.exportAsMarkdown: () => buildMenuSubTile(
-            'Export as Markdown',
+            tr("Export as Markdown"),
             // ignore: deprecated_member_use
             icon: MdiIcons.languageMarkdown,
             onTap: () async {
@@ -748,11 +749,11 @@ class _ExportExpansion extends ConsumerWidget {
                   allowedExtensions: ['md'],
                   bytes: utf8.encode(content),
                 );
-              }, const Text('Export as Markdown'));
+              }, Text(tr("Export as Markdown")));
             },
           ),
           MenuItemType.exportAsPdf: () => buildMenuSubTile(
-            'Export as PDF',
+            tr("Export as PDF"),
             icon: MdiIcons.filePdfBox,
             onTap: () async {
               await ref
@@ -762,7 +763,7 @@ class _ExportExpansion extends ConsumerWidget {
             },
           ),
           MenuItemType.exportAsPng: () => buildMenuSubTile(
-            'Export as PNG',
+            tr("Export as PNG"),
             icon: MdiIcons.fileImage,
             onTap: () async {
               final screenshot = await ref
@@ -788,7 +789,7 @@ class _ExportExpansion extends ConsumerWidget {
             },
           ),
           MenuItemType.printPage: () => buildMenuSubTile(
-            'Print',
+            tr("Print"),
             icon: MdiIcons.printer,
             onTap: () async {
               try {
@@ -870,7 +871,7 @@ class _PinTopSiteTile extends HookConsumerWidget {
 
     return ListTile(
       leading: Icon(pinned ? MdiIcons.pinOff : MdiIcons.pin),
-      title: Text(pinned ? 'Unpin from Shortcuts' : 'Pin to Shortcuts'),
+      title: Text(pinned ? tr("Unpin from Shortcuts") : tr("Pin to Shortcuts")),
       onTap: () async {
         if (tabState == null || url == null) return;
         Navigator.pop(context);
@@ -912,7 +913,7 @@ class _FetchFeedsTile extends HookConsumerWidget {
     if (!showFeeds.value) {
       return ListTile(
         leading: const Icon(Icons.rss_feed),
-        title: const Text('Fetch Feeds on Page'),
+        title: Text(tr("Fetch Feeds on Page")),
         onTap: () {
           showFeeds.value = true;
         },
@@ -925,16 +926,16 @@ class _FetchFeedsTile extends HookConsumerWidget {
       skipLoadingOnReload: true,
       data: (feeds) {
         if (feeds.value.isEmpty) {
-          return const ListTile(
+          return ListTile(
             leading: Icon(Icons.rss_feed_outlined),
-            title: Text('No Web Feeds Found'),
+            title: Text(tr("No Web Feeds Found")),
             enabled: false,
           );
         }
 
         return ListTile(
           leading: const Icon(Icons.rss_feed),
-          title: const Text('Available Web Feeds'),
+          title: Text(tr("Available Web Feeds")),
           trailing: Badge(label: Text(feeds.value!.length.toString())),
           onTap: () async {
             Navigator.pop(context);
@@ -947,9 +948,9 @@ class _FetchFeedsTile extends HookConsumerWidget {
         );
       },
       error: (_, _) => const SizedBox.shrink(),
-      loading: () => const ListTile(
+      loading: () => ListTile(
         leading: Icon(Icons.rss_feed),
-        title: Text('Fetching Web Feeds...'),
+        title: Text(tr("Fetching Web Feeds...")),
         trailing: SizedBox(
           width: 20,
           height: 20,

@@ -24,6 +24,7 @@ import 'package:weblibre/features/settings/presentation/widgets/settings_detail.
 import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/features/wallpaper/presentation/widgets/wallpaper_editor.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// The profile-wide home wallpaper.
 ///
@@ -52,8 +53,7 @@ class WallpaperSettingsScreen extends ConsumerWidget {
           sliver: SliverList.list(
             children: [
               Text(
-                'Shown behind the home page, in every container that does not '
-                'set its own.',
+                tr("Shown behind the home page, in every container that does not set its own."),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),

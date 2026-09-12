@@ -20,6 +20,7 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:fast_equatable/fast_equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'proxy_diagnostics_settings.g.dart';
 
@@ -39,17 +40,17 @@ enum ProxyLogLevel { warn, info, debug, trace }
 
 extension ProxyLogLevelX on ProxyLogLevel {
   String get label => switch (this) {
-    ProxyLogLevel.warn => 'Warnings and errors',
-    ProxyLogLevel.info => 'Info',
+    ProxyLogLevel.warn => tr("Warnings and errors"),
+    ProxyLogLevel.info => tr("Info"),
     ProxyLogLevel.debug => 'Debug',
-    ProxyLogLevel.trace => 'Trace',
+    ProxyLogLevel.trace => tr("Trace"),
   };
 
   String get description => switch (this) {
-    ProxyLogLevel.warn => 'Normal operation. Problems are still logged.',
-    ProxyLogLevel.info => 'Every connection and DNS lookup. Slows browsing.',
-    ProxyLogLevel.debug => 'Info plus protocol detail. Slows browsing.',
-    ProxyLogLevel.trace => 'Everything sing-box can say. Slows browsing a lot.',
+    ProxyLogLevel.warn => tr("Normal operation. Problems are still logged."),
+    ProxyLogLevel.info => tr("Every connection and DNS lookup. Slows browsing."),
+    ProxyLogLevel.debug => tr("Info plus protocol detail. Slows browsing."),
+    ProxyLogLevel.trace => tr("Everything sing-box can say. Slows browsing a lot."),
   };
 
   /// Whether this level makes sing-box log per connection, which is the point

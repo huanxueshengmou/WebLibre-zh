@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:weblibre/features/addons/domain/providers.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 const _permissionsLearnMoreUrl =
     'https://support.mozilla.org/kb/permission-request-messages-firefox-extensions';
@@ -47,8 +48,8 @@ class AddonPermissionsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           addon == null
-              ? 'Extension Permissions'
-              : '${addon.displayName} Permissions',
+              ? tr("Extension Permissions")
+              : tr("{0} Permissions", [addon.displayName]),
         ),
       ),
       body: switch (addonAsync) {
@@ -59,13 +60,13 @@ class AddonPermissionsScreen extends ConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              'Failed to load extension permissions: $error',
+              tr("Failed to load extension permissions: {0}", [error]),
               textAlign: TextAlign.center,
             ),
           ),
         ),
-        _ when addon == null => const Center(
-          child: Text('This extension could not be found.'),
+        _ when addon == null => Center(
+          child: Text(tr("This extension could not be found.")),
         ),
         _ => ListView(
           padding: const EdgeInsets.all(16),
@@ -73,17 +74,17 @@ class AddonPermissionsScreen extends ConsumerWidget {
             if (permissions.isEmpty && dataCollection.isEmpty)
               Card(
                 color: Theme.of(context).colorScheme.surfaceContainerHigh,
-                child: const ListTile(
+                child: ListTile(
                   leading: Icon(Icons.verified_user_outlined),
-                  title: Text('No special permissions listed'),
+                  title: Text(tr("No special permissions listed")),
                   subtitle: Text(
-                    'This extension does not currently expose any translated permission details.',
+                    tr("This extension does not currently expose any translated permission details."),
                   ),
                 ),
               ),
             if (permissions.isNotEmpty) ...[
               Text(
-                'Permissions',
+                tr("Permissions"),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
@@ -103,7 +104,7 @@ class AddonPermissionsScreen extends ConsumerWidget {
             ],
             if (dataCollection.isNotEmpty) ...[
               Text(
-                'Required Data Collection',
+                tr("Required Data Collection"),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
@@ -126,7 +127,7 @@ class AddonPermissionsScreen extends ConsumerWidget {
                 await launchUrl(Uri.parse(_permissionsLearnMoreUrl));
               },
               icon: const Icon(Icons.open_in_new),
-              label: const Text('Learn More'),
+              label: Text(tr("Learn More")),
             ),
           ],
         ),

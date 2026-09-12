@@ -31,92 +31,93 @@ import 'package:weblibre/features/settings/presentation/widgets/default_search_s
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> searchSettingsSections = [
+List<SettingsSectionDefinition> searchSettingsSections = [
   SettingsSectionDefinition(
     title: 'Providers',
     keywords: ['engines'],
     entries: [
       SettingsEntryDefinition(
-        title: 'Default Search Provider',
-        subtitle: 'Choose the default engine for searches',
+        title: tr("Default Search Provider"),
+        subtitle: tr("Choose the default engine for searches"),
         keywords: ['search engine'],
         child: _DefaultSearchProviderSection(),
       ),
       SettingsEntryDefinition(
-        title: 'Default Autocomplete Provider',
-        subtitle: 'Choose the provider for search suggestions',
+        title: tr("Default Autocomplete Provider"),
+        subtitle: tr("Choose the provider for search suggestions"),
         keywords: ['suggestions'],
         child: _AutocompleteProviderSection(),
       ),
       SettingsEntryDefinition(
-        title: 'Custom Search Engines',
-        subtitle: 'Add and manage your own search providers',
+        title: tr("Custom Search Engines"),
+        subtitle: tr("Add and manage your own search providers"),
         keywords: ['user bangs', 'providers'],
         child: _CustomSearchEnginesTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: 'Bang Shortcuts',
+    title: tr("Bang Shortcuts"),
     keywords: ['bangs'],
     entries: [
       SettingsEntryDefinition(
-        title: 'Bang Settings',
-        subtitle: 'Manage bang repositories and usage data',
+        title: tr("Bang Settings"),
+        subtitle: tr("Manage bang repositories and usage data"),
         keywords: ['shortcuts', 'bangs'],
         child: _BangsTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: 'History & Suggestions',
+    title: tr("History & Suggestions"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Search History Limit',
-        subtitle: 'Maximum number of recent searches to remember',
+        title: tr("Search History Limit"),
+        subtitle: tr("Maximum number of recent searches to remember"),
         keywords: ['history', 'entries'],
         child: _MaxSearchHistoryEntriesSection(),
       ),
       SettingsEntryDefinition(
-        title: 'Allow clipboard access for suggestions',
-        subtitle: 'Browser can read clipboard to suggest URLs',
+        title: tr("Allow clipboard access for suggestions"),
+        subtitle: tr("Browser can read clipboard to suggest URLs"),
         keywords: ['clipboard'],
         child: _AllowClipboardAccessTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Autocomplete on enter',
-        subtitle: 'Accept the inline suggestion when pressing enter',
+        title: tr("Autocomplete on enter"),
+        subtitle: tr("Accept the inline suggestion when pressing enter"),
         keywords: ['submit', 'keyboard', 'suggestions'],
         child: _AcceptSuggestionOnSubmitTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Popular site suggestions',
-        subtitle: 'Complete typed text with well-known domains',
+        title: tr("Popular site suggestions"),
+        subtitle: tr("Complete typed text with well-known domains"),
         keywords: ['popular sites', 'domains', 'ghost text', 'autocomplete'],
         child: _PopularSitesAutocompleteTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: 'Local Search Index',
+    title: tr("Local Search Index"),
     keywords: ['on device search', 'index'],
     entries: [
       SettingsEntryDefinition(
-        title: 'Enable local search index',
-        subtitle: 'Index visited pages locally for content search',
+        title: tr("Enable local search index"),
+        subtitle: tr("Index visited pages locally for content search"),
         keywords: ['page text', 'history'],
         child: _LocalIndexEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Index private tabs',
-        subtitle: 'Include private tabs in the local index',
+        title: tr("Index private tabs"),
+        subtitle: tr("Include private tabs in the local index"),
         keywords: ['incognito'],
         child: _IndexPrivateTabsTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Indexed pages',
-        subtitle: 'View and clear the local index',
+        title: tr("Indexed pages"),
+        subtitle: tr("View and clear the local index"),
         keywords: ['clear index', 'stats'],
         child: _LocalIndexStatsTile(),
       ),
@@ -129,9 +130,9 @@ class SearchSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
-      title: 'Search',
-      subtitle: 'Providers, bangs, history suggestions, and on-device search.',
+    return SettingsDetailScaffold(
+      title: tr("Search"),
+      subtitle: tr("Providers, bangs, history suggestions, and on-device search."),
       icon: MdiIcons.magnify,
       sections: searchSettingsSections,
     );
@@ -143,14 +144,14 @@ class _DefaultSearchProviderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            title: Text('Default Search Provider'),
+            title: Text(tr("Default Search Provider")),
             leading: Icon(MdiIcons.cloudSearch),
             contentPadding: EdgeInsets.zero,
           ),
@@ -182,8 +183,8 @@ class _AutocompleteProviderSection extends HookConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const ListTile(
-            title: Text('Default Autocomplete Provider'),
+          ListTile(
+            title: Text(tr("Default Autocomplete Provider")),
             leading: Icon(MdiIcons.weatherCloudyArrowRight),
             contentPadding: EdgeInsets.zero,
           ),
@@ -235,8 +236,8 @@ class _CustomSearchEnginesTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text('Custom Search Engines'),
-      subtitle: const Text('Add and manage your own search providers'),
+      title: Text(tr("Custom Search Engines")),
+      subtitle: Text(tr("Add and manage your own search providers")),
       contentPadding: const EdgeInsets.symmetric(
         vertical: 8.0,
         horizontal: 16.0,
@@ -256,8 +257,8 @@ class _BangsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text('Bang Settings'),
-      subtitle: const Text('Manage bang repositories and usage data'),
+      title: Text(tr("Bang Settings")),
+      subtitle: Text(tr("Manage bang repositories and usage data")),
       contentPadding: const EdgeInsets.symmetric(
         vertical: 8.0,
         horizontal: 16.0,
@@ -290,9 +291,9 @@ class _MaxSearchHistoryEntriesSection extends HookConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const ListTile(
-            title: Text('Search History Limit'),
-            subtitle: Text('Maximum number of recent searches to remember'),
+          ListTile(
+            title: Text(tr("Search History Limit")),
+            subtitle: Text(tr("Maximum number of recent searches to remember")),
             leading: Icon(MdiIcons.history),
             contentPadding: EdgeInsets.zero,
           ),
@@ -347,8 +348,8 @@ class _AllowClipboardAccessTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Allow clipboard access for suggestions'),
-      subtitle: const Text('Browser can read clipboard to suggest URLs'),
+      title: Text(tr("Allow clipboard access for suggestions")),
+      subtitle: Text(tr("Browser can read clipboard to suggest URLs")),
       secondary: const Icon(MdiIcons.clipboardTextOutline),
       value: allowClipboardAccess,
       onChanged: (value) async {
@@ -375,9 +376,9 @@ class _AcceptSuggestionOnSubmitTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Autocomplete on enter'),
-      subtitle: const Text(
-        'Accept the inline suggestion when pressing enter on the keyboard',
+      title: Text(tr("Autocomplete on enter")),
+      subtitle: Text(
+        tr("Accept the inline suggestion when pressing enter on the keyboard"),
       ),
       secondary: const Icon(Icons.keyboard_return),
       value: acceptSuggestionOnSubmit,
@@ -405,9 +406,9 @@ class _PopularSitesAutocompleteTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Popular site suggestions'),
-      subtitle: const Text(
-        'Complete typed text with well-known domains when your history has no match',
+      title: Text(tr("Popular site suggestions")),
+      subtitle: Text(
+        tr("Complete typed text with well-known domains when your history has no match"),
       ),
       secondary: const Icon(MdiIcons.web),
       value: popularSitesAutocompleteEnabled,
@@ -435,7 +436,7 @@ class _LocalIndexEnabledTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Enable local search index'),
+      title: Text(tr("Enable local search index")),
       subtitle: const Text(
         'Index visited pages locally so the browser can search their '
         'content. Visit metadata stays in the engine; only page text is '
@@ -465,10 +466,9 @@ class _IndexPrivateTabsTile extends HookConsumerWidget {
     final indexPrivate = settings.indexPrivateTabs;
 
     return SwitchListTile.adaptive(
-      title: const Text('Index private tabs'),
-      subtitle: const Text(
-        'Include pages opened in private tabs in the local index. '
-        'Off by default.',
+      title: Text(tr("Index private tabs")),
+      subtitle: Text(
+        tr("Include pages opened in private tabs in the local index. Off by default."),
       ),
       secondary: const Icon(MdiIcons.incognito),
       value: indexPrivate,
@@ -493,19 +493,18 @@ class _LocalIndexStatsTile extends HookConsumerWidget {
     return showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Clear local search index?'),
-        content: const Text(
-          'This removes all locally indexed page content. Engine history '
-          '(visit metadata) is not affected.',
+        title: Text(tr("Clear local search index?")),
+        content: Text(
+          tr("This removes all locally indexed page content. Engine history (visit metadata) is not affected."),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Clear'),
+            child: Text(tr("Clear")),
           ),
         ],
       ),
@@ -525,11 +524,11 @@ class _LocalIndexStatsTile extends HookConsumerWidget {
 
     return ListTile(
       leading: const Icon(MdiIcons.databaseOutline),
-      title: const Text('Indexed pages'),
-      subtitle: Text(count.mapNotNull((c) => '$c pages indexed') ?? 'Loading…'),
+      title: Text(tr("Indexed pages")),
+      subtitle: Text(count.mapNotNull((c) => tr("{0} pages indexed", [c])) ?? 'Loading…'),
       trailing: TextButton.icon(
         icon: const Icon(MdiIcons.deleteOutline),
-        label: const Text('Clear'),
+        label: Text(tr("Clear")),
         onPressed: count == null || count == 0
             ? null
             : () async {

@@ -23,6 +23,7 @@ import 'package:weblibre/features/geckoview/domain/providers/tab_list.dart';
 import 'package:weblibre/features/geckoview/features/search/domain/providers/search_modules_view.dart';
 import 'package:weblibre/features/geckoview/features/search/presentation/widgets/search_modules/search_module_section.dart';
 import 'package:weblibre/features/geckoview/features/tabs/domain/providers/selected_container.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// New tab / View tabs / Resume last tab.
 ///
@@ -64,7 +65,7 @@ class QuickActionsSection extends ConsumerWidget {
     final canResume = hasContainer ? hasContainerTabs : hasTabs;
 
     return SearchModuleSection(
-      title: 'Quick Actions',
+      title: tr("Quick Actions"),
       moduleType: SearchModuleType.quickActions,
       totalCount: 0,
       showPagination: false,
@@ -80,19 +81,19 @@ class QuickActionsSection extends ConsumerWidget {
                   FilledButton.icon(
                     onPressed: onNewTab,
                     icon: const Icon(Icons.add_rounded),
-                    label: const Text('New tab'),
+                    label: Text(tr("New tab")),
                   ),
                   if (hasTabs)
                     OutlinedButton.icon(
                       onPressed: onViewTabs,
                       icon: const Icon(Icons.tab_rounded),
-                      label: const Text('View tabs'),
+                      label: Text(tr("View tabs")),
                     ),
                   if (canResume)
                     FilledButton.tonalIcon(
                       onPressed: onResumeLastTab,
                       icon: const Icon(Icons.history_rounded),
-                      label: const Text('Resume last tab'),
+                      label: Text(tr("Resume last tab")),
                     ),
                 ],
               ),

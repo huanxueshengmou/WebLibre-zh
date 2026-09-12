@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/menu/domain/providers/menu_layout.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/menu/presentation/widgets/menu_layout_slivers.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Replaces the menu's scrolling content while the user is arranging it.
 ///
@@ -79,9 +80,9 @@ class MenuReorderHeader extends ConsumerWidget {
       title: item?.type.label ?? section?.type.label ?? 'Customize Menu',
       subtitle: switch ((section, item)) {
         (null, _) =>
-          'Drag to reorder. Switch a section off to hide it from the menu.',
-        (_, null) => 'Drag to reorder the rows in this section.',
-        _ => 'Drag to reorder the rows this one opens.',
+          tr("Drag to reorder. Switch a section off to hide it from the menu."),
+        (_, null) => tr("Drag to reorder the rows in this section."),
+        _ => tr("Drag to reorder the rows this one opens."),
       },
       onBack: section == null ? null : reorderNotifier.stepBack,
       onDone: reorderNotifier.deactivate,
@@ -135,7 +136,7 @@ class _Header extends StatelessWidget {
               if (onBack case final onBack?)
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
-                  tooltip: 'Back to sections',
+                  tooltip: tr("Back to sections"),
                   onPressed: onBack,
                 )
               else
@@ -155,7 +156,7 @@ class _Header extends StatelessWidget {
                     MenuItemButton(
                       leadingIcon: const Icon(Icons.restore),
                       onPressed: onReset,
-                      child: const Text('Reset to Defaults'),
+                      child: Text(tr("Reset to Defaults")),
                     ),
                   ],
                   builder: (context, controller, child) => IconButton(
@@ -165,7 +166,7 @@ class _Header extends StatelessWidget {
                         : controller.open(),
                   ),
                 ),
-              TextButton(onPressed: onDone, child: const Text('Done')),
+              TextButton(onPressed: onDone, child: Text(tr("Done"))),
             ],
           ),
           Padding(

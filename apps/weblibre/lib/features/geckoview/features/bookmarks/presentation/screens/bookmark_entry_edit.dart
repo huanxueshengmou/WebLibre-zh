@@ -29,6 +29,7 @@ import 'package:weblibre/features/geckoview/features/bookmarks/presentation/dial
 import 'package:weblibre/features/geckoview/features/bookmarks/presentation/widgets/folder_tree_picker.dart';
 import 'package:weblibre/utils/form_validators.dart';
 import 'package:weblibre/utils/uri_input_parser.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class BookmarkEntryEditScreen extends HookConsumerWidget {
   final BookmarkInfo? initialInfo;
@@ -62,7 +63,7 @@ class BookmarkEntryEditScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: (exisitingEntry != null)
-            ? const Text('Edit Bookmark')
+            ? Text(tr("Edit Bookmark"))
             : const Text('Create Bookmark'),
         actions: [
           IconButton(
@@ -128,8 +129,8 @@ class BookmarkEntryEditScreen extends HookConsumerWidget {
               children: [
                 TextFormField(
                   controller: nameTextController,
-                  decoration: const InputDecoration(
-                    label: Text('Name'),
+                  decoration: InputDecoration(
+                    label: Text(tr("Name")),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
                   minLines: 1,
@@ -164,7 +165,7 @@ class BookmarkEntryEditScreen extends HookConsumerWidget {
                   const SizedBox(height: 8),
                   SwitchListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Add to top'),
+                    title: Text(tr("Add to top")),
                     value: addToTop.value,
                     onChanged: (value) => addToTop.value = value,
                   ),

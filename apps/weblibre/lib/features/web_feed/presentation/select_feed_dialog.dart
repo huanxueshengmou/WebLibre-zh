@@ -25,6 +25,7 @@ import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/extensions/uri.dart';
 import 'package:weblibre/features/web_feed/domain/providers.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Bottom sheet widget to select a feed from discovered feeds.
 class SelectFeedDialog extends HookConsumerWidget {
@@ -41,7 +42,7 @@ class SelectFeedDialog extends HookConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Add Feed', style: Theme.of(context).textTheme.titleLarge),
+            Text(tr("Add Feed"), style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 16),
             ...feedUris.map(
               (uri) => HookConsumer(
@@ -53,7 +54,7 @@ class SelectFeedDialog extends HookConsumerWidget {
                     data: (data) {
                       return ListTile(
                         title: Text(
-                          data.feedData.title.whenNotEmpty ?? 'Unnamed Feed',
+                          data.feedData.title.whenNotEmpty ?? tr("Unnamed Feed"),
                         ),
                         subtitle: Text(uri.displayString),
                         trailing: const Icon(Icons.add),
@@ -63,7 +64,7 @@ class SelectFeedDialog extends HookConsumerWidget {
                       );
                     },
                     error: (error, stackTrace) => FailureWidget(
-                      title: 'Failed to fetch Feed',
+                      title: tr("Failed to fetch Feed"),
                       exception: error,
                       onRetry: () {
                         // ignore: unused_result

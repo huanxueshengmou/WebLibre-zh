@@ -23,6 +23,7 @@ import 'package:weblibre/features/settings/presentation/widgets/toolbar_layout_c
 import 'package:weblibre/features/settings/presentation/widgets/toolbar_preview.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/widgets/browser_page.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ToolbarLayoutPage extends HookConsumerWidget {
   const ToolbarLayoutPage({super.key});
@@ -40,7 +41,7 @@ class ToolbarLayoutPage extends HookConsumerWidget {
               padding: const EdgeInsets.fromLTRB(12, 32, 12, 16),
               child: Center(
                 child: Text(
-                  'Toolbar & Layout',
+                  tr("Toolbar & Layout"),
                   style: theme.textTheme.headlineMedium,
                 ),
               ),

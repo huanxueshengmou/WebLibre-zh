@@ -51,6 +51,7 @@ import 'package:weblibre/features/user/data/models/proxy_routing_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/proxy_routing_settings.dart';
 import 'package:weblibre/presentation/icons/tor_icons.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 /// How the current tab is routed, the settings that decide it, and the backends
 /// those settings name.
@@ -109,7 +110,7 @@ class ConnectionSection extends ConsumerWidget {
       // The global route, which every container without its own route inherits.
       _RouteRow(
         icon: MdiIcons.tab,
-        label: 'Regular tabs',
+        label: tr("Regular tabs"),
         value:
             routingSettings.regularTabsMode == ProxyRegularTabRoutingMode.all &&
                 routingSettings.regularTabsProxyConnectionId != null
@@ -125,14 +126,14 @@ class ConnectionSection extends ConsumerWidget {
 
           final outcome = await showProxyConnectionPicker(
             context,
-            title: 'Regular tabs',
+            title: tr("Regular tabs"),
             selectedProxyConnectionId:
                 routingSettings.regularTabsMode ==
                     ProxyRegularTabRoutingMode.all
                 ? routingSettings.regularTabsProxyConnectionId
                 : null,
-            noneTitle: 'Per container',
-            noneSubtitle: 'Only containers with a proxy assigned are routed',
+            noneTitle: tr("Per container"),
+            noneSubtitle: tr("Only containers with a proxy assigned are routed"),
           );
 
           switch (outcome) {
@@ -163,10 +164,10 @@ class ConnectionSection extends ConsumerWidget {
         _RouteRow(
           icon: MdiIcons.dominoMask,
           iconColor: appColors.privateTabPurple,
-          label: 'Private tabs',
+          label: tr("Private tabs"),
           value: switch (routingSettings.privateTabsProxyConnectionId) {
             final id? => proxyConnectionTitle(proxyOptions, id),
-            null => 'Direct',
+            null => tr("Direct"),
           },
           onTap: () async {
             final repository = ref.read(
@@ -175,11 +176,11 @@ class ConnectionSection extends ConsumerWidget {
 
             final outcome = await showProxyConnectionPicker(
               context,
-              title: 'Private tabs',
+              title: tr("Private tabs"),
               selectedProxyConnectionId:
                   routingSettings.privateTabsProxyConnectionId,
-              noneTitle: 'Direct',
-              noneSubtitle: 'Private tabs never inherit the global route',
+              noneTitle: tr("Direct"),
+              noneSubtitle: tr("Private tabs never inherit the global route"),
             );
 
             final proxyConnectionId = switch (outcome) {
@@ -211,7 +212,7 @@ class ConnectionSection extends ConsumerWidget {
         _RouteRow(
           icon: MdiIcons.snowflake,
           iconColor: appColors.isolatedTabTeal,
-          label: 'This isolated tab',
+          label: tr("This isolated tab"),
           value: switch (routingSettings
               .isolationContextRoutes[isolationContextId]) {
             final id? => proxyConnectionTitle(proxyOptions, id),
@@ -230,15 +231,15 @@ class ConnectionSection extends ConsumerWidget {
 
             final outcome = await showProxyConnectionPicker(
               context,
-              title: 'This isolated tab',
+              title: tr("This isolated tab"),
               selectedProxyConnectionId: routes[isolationContextId],
               isDirectSelected:
                   routes.containsKey(isolationContextId) &&
                   routes[isolationContextId] == null,
-              noneTitle: 'Follow its container',
-              noneSubtitle: 'Use whatever routes the container it sits in',
-              directTitle: 'Direct',
-              directSubtitle: 'Bypass the route its container would apply',
+              noneTitle: tr("Follow its container"),
+              noneSubtitle: tr("Use whatever routes the container it sits in"),
+              directTitle: tr("Direct"),
+              directSubtitle: tr("Bypass the route its container would apply"),
             );
             if (outcome == null) return;
 
@@ -269,8 +270,8 @@ class ConnectionSection extends ConsumerWidget {
           label: container.name ?? 'This container',
           value: switch (container.metadata.proxyConnectionId) {
             final id? => proxyConnectionTitle(proxyOptions, id),
-            null when container.metadata.bypassGlobalProxy => 'Direct',
-            null => 'Follows global routing',
+            null when container.metadata.bypassGlobalProxy => tr("Direct"),
+            null => tr("Follows global routing"),
           },
           onTap: () async {
             final containerRepository = ref.read(
@@ -282,10 +283,10 @@ class ConnectionSection extends ConsumerWidget {
               title: container.name ?? 'Container',
               selectedProxyConnectionId: container.metadata.proxyConnectionId,
               isDirectSelected: container.metadata.bypassGlobalProxy,
-              noneTitle: 'Follow global routing',
-              noneSubtitle: 'Use whatever routes regular tabs',
-              directTitle: 'Direct',
-              directSubtitle: 'Bypass the global proxy for this container',
+              noneTitle: tr("Follow global routing"),
+              noneSubtitle: tr("Use whatever routes regular tabs"),
+              directTitle: tr("Direct"),
+              directSubtitle: tr("Bypass the global proxy for this container"),
             );
             if (outcome == null) return;
 
@@ -493,7 +494,7 @@ class ConnectionSection extends ConsumerWidget {
               // here only asks the user to pick before they know which they
               // want.
               buildMenuSubTile(
-                'Proxy Settings',
+                tr("Proxy Settings"),
                 icon: Icons.settings_outlined,
                 onTap: () async {
                   Navigator.pop(context);
@@ -512,18 +513,18 @@ class ConnectionSection extends ConsumerWidget {
 String _routingSummary(TabRouting routing) {
   if (routing.isContextMismatch) {
     return switch (routing.containerName) {
-      final container? => 'Not routed by container "$container"',
-      null => "Not routed by this tab's container",
+      final container? => tr("Not routed by container \"{0}\"", [container]),
+      null => tr("Not routed by this tab's container"),
     };
   }
 
   return switch (routing.status) {
-    TabRoutingStatus.unknown => 'Checking routing…',
-    TabRoutingStatus.pending => 'Starting routing…',
+    TabRoutingStatus.unknown => tr("Checking routing…"),
+    TabRoutingStatus.pending => tr("Starting routing…"),
     TabRoutingStatus.blocked =>
-      'Blocked — ${routing.proxyTitle} is not running',
+      tr("Blocked — {0} is not running", [routing.proxyTitle]),
     TabRoutingStatus.active => 'This tab: ${routing.proxyTitle}',
-    TabRoutingStatus.direct => 'This tab: direct connection',
+    TabRoutingStatus.direct => tr("This tab: direct connection"),
   };
 }
 
@@ -639,7 +640,7 @@ class _ConnectionRow extends StatelessWidget {
           const VerticalDivider(indent: 4, endIndent: 4),
           IconButton(
             icon: const Icon(Icons.chevron_right),
-            tooltip: 'Edit',
+            tooltip: tr("Edit"),
             onPressed: () => onEdit(),
           ),
         ],
@@ -675,7 +676,7 @@ class _ConnectionUsageLine extends StatelessWidget {
 
     if (usage.isUnused) {
       return Text(
-        'Not used by any route',
+        tr("Not used by any route"),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: isBlocking ? TextStyle(color: colorScheme.error) : null,
@@ -701,8 +702,8 @@ class _ConnectionUsageLine extends StatelessWidget {
       // Leads rather than trails: it is the one word that must survive the
       // ellipsis, and the icons say nothing about it.
       if (isBlocking) const TextSpan(text: 'Blocked'),
-      if (usage.routesRegularTabs) const TextSpan(text: 'Regular tabs'),
-      if (usage.routesPrivateTabs) const TextSpan(text: 'Private tabs'),
+      if (usage.routesRegularTabs) TextSpan(text: tr("Regular tabs")),
+      if (usage.routesPrivateTabs) TextSpan(text: tr("Private tabs")),
       if (usage.containerCount > 0)
         countSpan(defaultContainerIcon, usage.containerCount, 'container'),
       if (usage.isolatedGroupCount > 0)

@@ -27,6 +27,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 IconData _levelIcon(Level level) {
   return switch (level) {
@@ -164,7 +165,7 @@ class LogDetailsDialog extends StatelessWidget {
                   ],
                   if (stackTrace != null) ...[
                     Text(
-                      'Stack Trace:',
+                      tr("Stack Trace:"),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.primary,
@@ -185,12 +186,12 @@ class LogDetailsDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Close'),
+          child: Text(tr("Close")),
         ),
         TextButton.icon(
           onPressed: () => _copyEntryToClipboard(context),
           icon: const Icon(Icons.copy),
-          label: const Text('Copy'),
+          label: Text(tr("Copy")),
         ),
       ],
     );

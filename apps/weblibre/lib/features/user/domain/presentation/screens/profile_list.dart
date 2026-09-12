@@ -29,6 +29,7 @@ import 'package:weblibre/core/startup/startup_settings.dart';
 import 'package:weblibre/features/user/domain/presentation/utils/profile_labels.dart';
 import 'package:weblibre/features/user/domain/repositories/profile.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ProfileListScreen extends HookConsumerWidget {
   const ProfileListScreen({super.key});
@@ -90,7 +91,7 @@ class ProfileListScreen extends HookConsumerWidget {
           },
           error: (error, stackTrace) => Center(
             child: FailureWidget(
-              title: 'Could not load profiles',
+              title: tr("Could not load profiles"),
               exception: error,
             ),
           ),
@@ -124,8 +125,8 @@ class _StartupPromptTile extends HookConsumerWidget {
 
     return SwitchListTile(
       secondary: const Icon(MdiIcons.accountQuestion),
-      title: const Text('Ask which profile to open'),
-      subtitle: const Text('At startup, when more than one profile exists'),
+      title: Text(tr("Ask which profile to open")),
+      subtitle: Text(tr("At startup, when more than one profile exists")),
       value: setting.value == ProfilePromptMode.browserOnly,
       onChanged: setting.isLoading
           ? null

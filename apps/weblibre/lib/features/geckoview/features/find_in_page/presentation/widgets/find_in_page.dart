@@ -25,6 +25,7 @@ import 'package:weblibre/features/geckoview/domain/providers/tab_state.dart';
 import 'package:weblibre/features/geckoview/features/find_in_page/presentation/controllers/find_in_page.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_mode.dart';
 import 'package:weblibre/presentation/hooks/debouncer.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class FindInPageWidget extends HookConsumerWidget {
   final String tabId;
@@ -103,8 +104,8 @@ class FindInPageWidget extends HookConsumerWidget {
                     autofocus: true,
                     autocorrect: false,
                     enableIMEPersonalizedLearning: !privateTabMode,
-                    decoration: const InputDecoration.collapsed(
-                      hintText: 'Find in Page',
+                    decoration: InputDecoration.collapsed(
+                      hintText: tr("Find in Page"),
                     ),
                     keyboardType: TextInputType.text,
                     onChanged: onSearchTextChanged,
@@ -126,7 +127,7 @@ class FindInPageWidget extends HookConsumerWidget {
                 Text(
                   searchResult.hasMatches
                       ? '${searchResult.activeMatchOrdinal + 1} of ${searchResult.numberOfMatches}'
-                      : 'Not found',
+                      : tr("Not found"),
                 ),
                 IconButton(
                   icon: const Icon(Icons.arrow_upward),

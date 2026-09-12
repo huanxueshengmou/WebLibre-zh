@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:json_annotation/json_annotation.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'ublock_asset.g.dart';
 
@@ -38,9 +39,9 @@ enum UBlockAssetGroup {
   regions;
 
   String get label => switch (this) {
-    $default => 'Default',
+    $default => tr("Default"),
     ads => 'Ads',
-    privacy => 'Privacy',
+    privacy => tr("Privacy"),
     malware => 'Malware',
     annoyances => 'Annoyances',
     multipurpose => 'Multipurpose',
@@ -57,8 +58,8 @@ enum UBlockAssetSubGroup {
   social;
 
   String get label => switch (this) {
-    cookies => 'Cookie Notices',
-    social => 'Social Widgets',
+    cookies => tr("Cookie Notices"),
+    social => tr("Social Widgets"),
   };
 }
 

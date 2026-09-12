@@ -26,6 +26,7 @@ import 'package:weblibre/features/proxy/data/models/proxy_profile_seed.dart';
 import 'package:weblibre/features/proxy/domain/services/proxy_input_consumer.dart';
 import 'package:weblibre/features/qr_scanner/presentation/dialogs/qr_scanner_dialog.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Outcome of the add-proxy bottom sheet. The sheet itself does not navigate
 /// or surface success messages: it pops with one of these so the caller can
@@ -115,7 +116,7 @@ class AddProxyMethodSheet extends ConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Add Connection',
+                tr("Add Connection"),
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
@@ -125,7 +126,7 @@ class AddProxyMethodSheet extends ConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Choose how you want to add a proxy profile.',
+                tr("Choose how you want to add a proxy profile."),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: scheme.onSurfaceVariant,
                 ),
@@ -143,26 +144,26 @@ class AddProxyMethodSheet extends ConsumerWidget {
                 _MethodCard(
                   icon: Icons.content_paste,
                   title: 'Clipboard',
-                  subtitle: 'Paste share link or URI',
+                  subtitle: tr("Paste share link or URI"),
                   onTap: pasteClipboard,
                   isPrimary: true,
                 ),
                 _MethodCard(
                   icon: Icons.qr_code_scanner,
-                  title: 'Scan QR',
-                  subtitle: 'From another device',
+                  title: tr("Scan QR"),
+                  subtitle: tr("From another device"),
                   onTap: scanQr,
                 ),
                 _MethodCard(
                   icon: Icons.cloud_download_outlined,
-                  title: 'Subscription',
-                  subtitle: 'Fetch from URL',
+                  title: tr("Subscription"),
+                  subtitle: tr("Fetch from URL"),
                   onTap: () => popWith(const AddProxySubscription()),
                 ),
                 _MethodCard(
                   icon: Icons.upload_file_outlined,
-                  title: 'Import file',
-                  subtitle: '.conf or sing-box JSON',
+                  title: tr("Import file"),
+                  subtitle: tr(".conf or sing-box JSON"),
                   onTap: importFromFile,
                 ),
               ],
@@ -172,7 +173,7 @@ class AddProxyMethodSheet extends ConsumerWidget {
               child: TextButton.icon(
                 onPressed: () => popWith(const AddProxyManual()),
                 icon: const Icon(Icons.edit_note),
-                label: const Text('Enter manually'),
+                label: Text(tr("Enter manually")),
               ),
             ),
           ],
@@ -264,7 +265,7 @@ class _FileKindPicker extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Import from file',
+                  tr("Import from file"),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -272,15 +273,15 @@ class _FileKindPicker extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.vpn_lock),
               title: const Text(wireGuardConfigLabel),
-              subtitle: const Text('.conf file with [Interface]/[Peer]'),
+              subtitle: Text(tr(".conf file with [Interface]/[Peer]")),
               onTap: () =>
                   Navigator.of(context).pop(ProxyFileImportKind.wireguardConf),
             ),
             ListTile(
               leading: const Icon(Icons.data_object),
-              title: const Text('Sing-box outbound JSON'),
-              subtitle: const Text(
-                'Shadowsocks, Trojan, VMess, VLESS, Hysteria, …',
+              title: Text(tr("Sing-box outbound JSON")),
+              subtitle: Text(
+                tr("Shadowsocks, Trojan, VMess, VLESS, Hysteria, …"),
               ),
               onTap: () => Navigator.of(
                 context,

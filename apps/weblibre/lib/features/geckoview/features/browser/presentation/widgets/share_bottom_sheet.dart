@@ -45,6 +45,7 @@ import 'package:weblibre/presentation/hooks/cached_future.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<void> showShareBottomSheet(
   BuildContext context, {
@@ -135,7 +136,7 @@ class ShareBottomSheet extends HookConsumerWidget {
             // Copy Address
             ListTile(
               leading: const Icon(MdiIcons.contentCopy),
-              title: const Text('Copy Address'),
+              title: Text(tr("Copy Address")),
               trailing: trackingStatusTrailing,
               onTap: () async {
                 await Clipboard.setData(
@@ -151,7 +152,7 @@ class ShareBottomSheet extends HookConsumerWidget {
             // Share Screenshot
             ListTile(
               leading: const Icon(Icons.mobile_screen_share),
-              title: const Text('Share Screenshot'),
+              title: Text(tr("Share Screenshot")),
               onTap: () async {
                 final screenshot = await ref
                     .read(selectedTabSessionProvider)
@@ -178,7 +179,7 @@ class ShareBottomSheet extends HookConsumerWidget {
             // Share Link
             ListTile(
               leading: const Icon(Icons.share),
-              title: const Text('Share Link'),
+              title: Text(tr("Share Link")),
               trailing: trackingStatusTrailing,
               onTap: () async {
                 await SharePlus.instance.share(ShareParams(uri: effectiveUrl));
@@ -192,7 +193,7 @@ class ShareBottomSheet extends HookConsumerWidget {
             // Show QR Code
             ListTile(
               leading: const Icon(Icons.qr_code),
-              title: const Text('Show QR Code'),
+              title: Text(tr("Show QR Code")),
               trailing: trackingStatusTrailing,
               onTap: () async {
                 if (context.mounted) {
@@ -289,8 +290,8 @@ class _ShareHeader extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           paramCount == 1
-                              ? '1 tracking parameter detected'
-                              : '$paramCount tracking parameters detected',
+                              ? tr("1 tracking parameter detected")
+                              : tr("{0} tracking parameters detected", [paramCount]),
                           style: TextStyle(
                             fontSize: 12,
                             color: colorScheme.error,
@@ -308,7 +309,7 @@ class _ShareHeader extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          'Link is clean',
+                          tr("Link is clean"),
                           style: TextStyle(
                             fontSize: 12,
                             color: colorScheme.primary,
@@ -323,7 +324,7 @@ class _ShareHeader extends StatelessWidget {
               IconButton.filledTonal(
                 onPressed: onClean,
                 icon: const Icon(MdiIcons.linkVariantRemove),
-                tooltip: 'Remove tracking',
+                tooltip: tr("Remove tracking"),
               ),
           ],
         ),
@@ -355,7 +356,7 @@ class _OpenInAppTile extends HookConsumerWidget {
 
     return ListTile(
       leading: const Icon(Icons.open_in_new),
-      title: Text(appName != null ? 'Open in $appName' : 'Open in App'),
+      title: Text(appName != null ? tr("Open in {0}", [appName]) : tr("Open in App")),
       onTap: () async {
         if (url == null) return;
         final success = await _service.launchAppLink(url);
@@ -383,7 +384,7 @@ class _SendToDeviceTile extends ConsumerWidget {
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
           leading: const Icon(Icons.send_outlined),
-          title: const Text('Send To Device'),
+          title: Text(tr("Send To Device")),
           children: devices.when(
             data: (deviceList) {
               final targets = deviceList
@@ -393,10 +394,10 @@ class _SendToDeviceTile extends ConsumerWidget {
                   .toList(growable: false);
 
               if (targets.isEmpty) {
-                return const [
+                return [
                   ListTile(
                     contentPadding: EdgeInsets.only(left: 72, right: 16),
-                    title: Text('No target devices'),
+                    title: Text(tr("No target devices")),
                   ),
                 ];
               }
@@ -456,17 +457,17 @@ class _SendToDeviceTile extends ConsumerWidget {
                   )
                   .toList(growable: false);
             },
-            loading: () => const [
+            loading: () => [
               ListTile(
                 contentPadding: EdgeInsets.only(left: 72, right: 16),
                 leading: Icon(Icons.devices_other, size: 18),
-                title: Text('Loading devices...'),
+                title: Text(tr("Loading devices...")),
               ),
             ],
-            error: (_, _) => const [
+            error: (_, _) => [
               ListTile(
                 contentPadding: EdgeInsets.only(left: 72, right: 16),
-                title: Text('Failed to load devices'),
+                title: Text(tr("Failed to load devices")),
               ),
             ],
           ),

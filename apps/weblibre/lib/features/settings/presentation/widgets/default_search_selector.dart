@@ -26,6 +26,7 @@ import 'package:weblibre/features/bangs/presentation/widgets/bang_label.dart';
 import 'package:weblibre/features/settings/presentation/controllers/save_settings.dart';
 import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class DefaultSearchSelector extends HookConsumerWidget {
   const DefaultSearchSelector({super.key});
@@ -61,7 +62,7 @@ class DefaultSearchSelector extends HookConsumerWidget {
                 ? OutlinedButton.icon(
                     onPressed: pickProvider,
                     icon: const Icon(Icons.search),
-                    label: const Text('Choose a search provider'),
+                    label: Text(tr("Choose a search provider")),
                   )
                 : ActionChip(
                     avatar: UrlIcon([activeBang.getDefaultUrl()], iconSize: 20),

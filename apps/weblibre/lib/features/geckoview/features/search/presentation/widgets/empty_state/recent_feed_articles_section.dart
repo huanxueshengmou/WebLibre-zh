@@ -29,6 +29,7 @@ import 'package:weblibre/features/web_feed/data/models/feed_link.dart';
 import 'package:weblibre/features/web_feed/extensions/atom.dart';
 import 'package:weblibre/features/web_feed/extensions/feed_article.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class RecentFeedArticlesSection extends ConsumerWidget {
   final void Function(FeedArticleSummary article) onArticleSelected;
@@ -48,7 +49,7 @@ class RecentFeedArticlesSection extends ConsumerWidget {
     }
 
     return SearchModuleSection(
-      title: 'Recent Articles',
+      title: tr("Recent Articles"),
       moduleType: SearchModuleType.recentArticles,
       totalCount: articles.length,
       contentSliverBuilder:

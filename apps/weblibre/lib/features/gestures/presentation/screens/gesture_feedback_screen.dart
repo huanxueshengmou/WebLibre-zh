@@ -22,24 +22,25 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/gestures/data/models/gesture_settings.dart';
 import 'package:weblibre/features/gestures/domain/repositories/gesture_settings.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> _feedbackSections = [
+List<SettingsSectionDefinition> _feedbackSections = [
   SettingsSectionDefinition(
     title: 'Overlay',
     entries: [
       SettingsEntryDefinition(
-        title: 'Live feedback',
-        subtitle: 'Show the stroke and its action while you draw',
+        title: tr("Live feedback"),
+        subtitle: tr("Show the stroke and its action while you draw"),
         child: _LiveFeedbackTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Suggest next',
-        subtitle: 'Also show the other gestures you can complete',
+        title: tr("Suggest next"),
+        subtitle: tr("Also show the other gestures you can complete"),
         child: _SuggestNextTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Suggest after',
-        subtitle: 'Number of strokes to draw before suggestions appear',
+        title: tr("Suggest after"),
+        subtitle: tr("Number of strokes to draw before suggestions appear"),
         child: _SuggestAfterSection(),
       ),
     ],
@@ -52,9 +53,9 @@ class GestureFeedbackScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
-      title: 'Feedback',
-      subtitle: 'Live overlay and gesture suggestions.',
+    return SettingsDetailScaffold(
+      title: tr("Feedback"),
+      subtitle: tr("Live overlay and gesture suggestions."),
       icon: Icons.bolt_outlined,
       sections: _feedbackSections,
     );
@@ -72,8 +73,8 @@ class _LiveFeedbackTile extends HookConsumerWidget {
 
     return SwitchListTile.adaptive(
       secondary: const Icon(Icons.bolt_outlined),
-      title: const Text('Live feedback'),
-      subtitle: const Text('Show the stroke and its action while you draw'),
+      title: Text(tr("Live feedback")),
+      subtitle: Text(tr("Show the stroke and its action while you draw")),
       value: showFeedback,
       onChanged: (value) async {
         await ref
@@ -93,8 +94,8 @@ class _SuggestNextTile extends HookConsumerWidget {
 
     return SwitchListTile.adaptive(
       secondary: const Icon(Icons.lightbulb_outline),
-      title: const Text('Suggest next'),
-      subtitle: const Text('Also show the other gestures you can complete'),
+      title: Text(tr("Suggest next")),
+      subtitle: Text(tr("Also show the other gestures you can complete")),
       value: settings.suggestNext,
       onChanged: settings.showFeedback
           ? (value) async {
@@ -123,7 +124,7 @@ class _SuggestAfterSection extends HookConsumerWidget {
         ListTile(
           enabled: enabled,
           leading: const Icon(Icons.straighten),
-          title: const Text('Suggest after'),
+          title: Text(tr("Suggest after")),
           subtitle: Slider.adaptive(
             min: minGestureMinSuggestionStroke.toDouble(),
             max: maxGestureMinSuggestionStroke.toDouble(),
@@ -135,7 +136,7 @@ class _SuggestAfterSection extends HookConsumerWidget {
                   maxGestureMinSuggestionStroke,
                 )
                 .toDouble(),
-            label: '${settings.minSuggestionStroke} strokes',
+            label: tr("{0} strokes", [settings.minSuggestionStroke]),
             onChanged: enabled
                 ? (value) async {
                     await ref
@@ -149,9 +150,9 @@ class _SuggestAfterSection extends HookConsumerWidget {
                 : null,
           ),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(72, 0, 16, 8),
-          child: Text('Number of strokes to draw before suggestions appear.'),
+          child: Text(tr("Number of strokes to draw before suggestions appear.")),
         ),
       ],
     );

@@ -34,46 +34,46 @@ import 'package:weblibre/features/user/domain/providers.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/hooks/cached_future.dart';
 import 'package:weblibre/presentation/hooks/keyed_state.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> generalSettingsSections = [
+List<SettingsSectionDefinition> generalSettingsSections = [
   SettingsSectionDefinition(
-    title: 'Default Browser',
+    title: tr("Default Browser"),
     keywords: ['browser defaults'],
     entries: [
       SettingsEntryDefinition(
-        title: 'Default Browser',
-        subtitle: 'Set WebLibre as your default browser',
+        title: tr("Default Browser"),
+        subtitle: tr("Set WebLibre as your default browser"),
         keywords: ['system browser'],
         child: _DefaultBrowserTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: 'Appearance',
+    title: tr("Appearance"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Theme',
-        subtitle: 'Choose system, light, or dark mode',
+        title: tr("Theme"),
+        subtitle: tr("Choose system, light, or dark mode"),
         keywords: ['light', 'dark', 'theme mode'],
         child: _ThemeSection(),
       ),
       SettingsEntryDefinition(
-        title: 'Pure Black (OLED)',
+        title: tr("Pure Black (OLED)"),
         subtitle:
-            'Use true-black surfaces in dark mode to save power on OLED '
-            'screens',
+            tr("Use true-black surfaces in dark mode to save power on OLED screens"),
         keywords: ['oled', 'amoled', 'high contrast', 'black', 'dark'],
         child: _PureBlackTile(),
       ),
       SettingsEntryDefinition(
-        title: 'User Interface Zoom',
-        subtitle: 'Make the user interface smaller or larger',
+        title: tr("User Interface Zoom"),
+        subtitle: tr("Make the user interface smaller or larger"),
         keywords: ['ui scale', 'zoom'],
         child: _UiZoomSection(),
       ),
       SettingsEntryDefinition(
-        title: 'Refresh Rate',
-        subtitle: 'Request a high or low display refresh rate (Android)',
+        title: tr("Refresh Rate"),
+        subtitle: tr("Request a high or low display refresh rate (Android)"),
         keywords: [
           'fps',
           'hz',
@@ -90,22 +90,21 @@ const List<SettingsSectionDefinition> generalSettingsSections = [
         child: _RefreshRateSection(),
       ),
       SettingsEntryDefinition(
-        title: 'Disable Animations',
-        subtitle: 'Reduce motion and turn off app animations',
+        title: tr("Disable Animations"),
+        subtitle: tr("Reduce motion and turn off app animations"),
         keywords: ['motion'],
         child: _DisableAnimationsTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Show Modal Barrier',
-        subtitle: 'Dim the background behind dialogs and bottom sheets',
+        title: tr("Show Modal Barrier"),
+        subtitle: tr("Dim the background behind dialogs and bottom sheets"),
         keywords: ['dialogs', 'bottom sheets', 'overlay'],
         child: _ShowModalBarrierTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Show Close Button',
+        title: tr("Show Close Button"),
         subtitle:
-            'Add a button to dismiss the search / new-tab page without '
-            'a back gesture',
+            tr("Add a button to dismiss the search / new-tab page without a back gesture"),
         keywords: [
           'back',
           'close',
@@ -124,8 +123,8 @@ const List<SettingsSectionDefinition> generalSettingsSections = [
     keywords: ['user', 'profile'],
     entries: [
       SettingsEntryDefinition(
-        title: 'Back up this profile',
-        subtitle: 'Write an encrypted backup file of the profile you are using',
+        title: tr("Back up this profile"),
+        subtitle: tr("Write an encrypted backup file of the profile you are using"),
         keywords: [
           'backup',
           'archive',
@@ -137,8 +136,8 @@ const List<SettingsSectionDefinition> generalSettingsSections = [
         child: _BackupProfileTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Export & Import Settings',
-        subtitle: 'Move settings to another profile, device, or a bug report',
+        title: tr("Export & Import Settings"),
+        subtitle: tr("Move settings to another profile, device, or a bug report"),
         keywords: [
           'export',
           'import',
@@ -155,11 +154,11 @@ const List<SettingsSectionDefinition> generalSettingsSections = [
     ],
   ),
   SettingsSectionDefinition(
-    title: 'Downloads',
+    title: tr("Downloads"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Use external download manager',
-        subtitle: 'Manage downloads with another app',
+        title: tr("Use external download manager"),
+        subtitle: tr("Manage downloads with another app"),
         keywords: ['downloads'],
         child: _ExternalDownloadManagerTile(),
       ),
@@ -184,11 +183,11 @@ class _BackupProfileTile extends HookConsumerWidget {
     return ListTile(
       enabled: profile.hasValue,
       leading: const Icon(MdiIcons.safe),
-      title: const Text('Back up this profile'),
+      title: Text(tr("Back up this profile")),
       subtitle: Text(switch (profile) {
         AsyncData(:final value) =>
-          'Write "${value.name}" to an encrypted backup file',
-        AsyncError() => 'Could not read the active profile',
+          tr("Write \"{0}\" to an encrypted backup file", [value.name]),
+        AsyncError() => tr("Could not read the active profile"),
         _ => 'Loading…',
       }),
       trailing: const Icon(Icons.chevron_right),
@@ -215,9 +214,9 @@ class _SettingsTransferTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(MdiIcons.swapHorizontal),
-      title: const Text('Export & Import Settings'),
-      subtitle: const Text(
-        'Write settings to a file or the clipboard, and read them back',
+      title: Text(tr("Export & Import Settings")),
+      subtitle: Text(
+        tr("Write settings to a file or the clipboard, and read them back"),
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => const SettingsTransferRoute().push(context),
@@ -230,9 +229,9 @@ class GeneralSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
-      title: 'General',
-      subtitle: 'Appearance, downloads, and browser defaults.',
+    return SettingsDetailScaffold(
+      title: tr("General"),
+      subtitle: tr("Appearance, downloads, and browser defaults."),
       icon: Icons.tune,
       sections: generalSettingsSections,
     );
@@ -260,7 +259,7 @@ class _DefaultBrowserTile extends HookConsumerWidget {
     final isCurrentDefaultBrowser = isDefault.data == true;
 
     return CustomListTile(
-      title: 'Default Browser',
+      title: tr("Default Browser"),
       subtitle: isCurrentDefaultBrowser
           ? 'WebLibre is your default browser'
           : 'Set WebLibre as your default browser',
@@ -280,7 +279,7 @@ class _DefaultBrowserTile extends HookConsumerWidget {
                 defaultBrowserRefreshKey.value++;
               },
         icon: Icon(isCurrentDefaultBrowser ? Icons.check : Icons.open_in_new),
-        label: Text(isCurrentDefaultBrowser ? 'Default' : 'Set'),
+        label: Text(isCurrentDefaultBrowser ? tr("Default") : 'Set'),
       ),
     );
   }
@@ -307,9 +306,9 @@ class _UiZoomSection extends HookConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const ListTile(
-            title: Text('User Interface Zoom'),
-            subtitle: Text('Make the user interface smaller or larger'),
+          ListTile(
+            title: Text(tr("User Interface Zoom")),
+            subtitle: Text(tr("Make the user interface smaller or larger")),
             leading: Icon(Icons.zoom_in),
             contentPadding: EdgeInsets.zero,
           ),
@@ -367,8 +366,8 @@ class _DisableAnimationsTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Disable Animations'),
-      subtitle: const Text('Reduce motion and turn off app animations'),
+      title: Text(tr("Disable Animations")),
+      subtitle: Text(tr("Reduce motion and turn off app animations")),
       secondary: const Icon(Icons.animation),
       value: disableAnimations,
       onChanged: (value) async {
@@ -393,9 +392,9 @@ class _ShowModalBarrierTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Show Modal Barrier'),
-      subtitle: const Text(
-        'Dim the background behind dialogs and bottom sheets',
+      title: Text(tr("Show Modal Barrier")),
+      subtitle: Text(
+        tr("Dim the background behind dialogs and bottom sheets"),
       ),
       secondary: const Icon(Icons.layers),
       value: showModalBarrier,
@@ -423,10 +422,9 @@ class _ShowSearchCloseButtonTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Show Close Button'),
-      subtitle: const Text(
-        'Add a button to dismiss the search / new-tab page without a back '
-        'gesture, useful on devices without a back button',
+      title: Text(tr("Show Close Button")),
+      subtitle: Text(
+        tr("Add a button to dismiss the search / new-tab page without a back gesture, useful on devices without a back button"),
       ),
       secondary: const Icon(Icons.close),
       value: showSearchCloseButton,
@@ -459,9 +457,9 @@ class _PureBlackTile extends HookConsumerWidget {
     final enabled = themeMode != ThemeMode.light;
 
     return SwitchListTile.adaptive(
-      title: const Text('Pure Black (OLED)'),
-      subtitle: const Text(
-        'Use true-black surfaces in dark mode to save power on OLED screens',
+      title: Text(tr("Pure Black (OLED)")),
+      subtitle: Text(
+        tr("Use true-black surfaces in dark mode to save power on OLED screens"),
       ),
       secondary: const Icon(Icons.contrast),
       value: pureBlack,
@@ -494,8 +492,8 @@ class _ThemeSection extends HookConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const ListTile(
-            title: Text('Theme'),
+          ListTile(
+            title: Text(tr("Theme")),
             leading: Icon(Icons.palette),
             contentPadding: EdgeInsets.zero,
           ),
@@ -550,11 +548,10 @@ class _RefreshRateSection extends HookConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const ListTile(
-            title: Text('Refresh Rate'),
+          ListTile(
+            title: Text(tr("Refresh Rate")),
             subtitle: Text(
-              'Choose "High" for the smoothest scrolling and animations on '
-              '90/120Hz screens, or "Low" to save battery.',
+              tr("Choose \"High\" for the smoothest scrolling and animations on 90/120Hz screens, or \"Low\" to save battery."),
             ),
             leading: Icon(Icons.speed),
             contentPadding: EdgeInsets.zero,
@@ -607,8 +604,8 @@ class _ExternalDownloadManagerTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Use external download manager'),
-      subtitle: const Text('Manage downloads with another app'),
+      title: Text(tr("Use external download manager")),
+      subtitle: Text(tr("Manage downloads with another app")),
       secondary: const Icon(Icons.download),
       value: useExternalDownloadManager,
       onChanged: (value) async {

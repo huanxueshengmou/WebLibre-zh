@@ -26,31 +26,32 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/services/browser_addon.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> extensionsSettingsSections = [
+List<SettingsSectionDefinition> extensionsSettingsSections = [
   SettingsSectionDefinition(
-    title: 'Extensions',
+    title: tr("Extensions"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Manage Extensions',
+        title: tr("Manage Extensions"),
         subtitle:
-            'Browse installed, disabled, available, and unsupported extensions',
+            tr("Browse installed, disabled, available, and unsupported extensions"),
         keywords: ['addons', 'browser extensions'],
         child: _ManageExtensionsTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Custom Collection',
-        subtitle: 'Use a custom Mozilla addon collection',
+        title: tr("Custom Collection"),
+        subtitle: tr("Use a custom Mozilla addon collection"),
         keywords: ['addons'],
         child: _AddonCollectionTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: 'Updates',
+    title: tr("Updates"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Automatic updates',
+        title: tr("Automatic updates"),
         subtitle:
             'Automatically check for and install extension updates every 12 hours',
         keywords: ['addons'],
@@ -59,11 +60,11 @@ const List<SettingsSectionDefinition> extensionsSettingsSections = [
     ],
   ),
   SettingsSectionDefinition(
-    title: 'Security',
+    title: tr("Security"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Allow unsigned extensions',
-        subtitle: 'Unsigned extensions have not been verified by Mozilla',
+        title: tr("Allow unsigned extensions"),
+        subtitle: tr("Unsigned extensions have not been verified by Mozilla"),
         keywords: ['addons'],
         child: _AllowUnsignedExtensionsTile(),
       ),
@@ -76,8 +77,8 @@ class ExtensionsSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
-      title: 'Extensions',
+    return SettingsDetailScaffold(
+      title: tr("Extensions"),
       subtitle: 'Manage add-ons, update behavior, and extension security.',
       icon: MdiIcons.puzzleOutline,
       sections: extensionsSettingsSections,
@@ -95,9 +96,9 @@ class _ManageExtensionsTile extends StatelessWidget {
         MdiIcons.puzzleEdit,
         color: Theme.of(context).colorScheme.onSurfaceVariant,
       ),
-      title: const Text('Manage Extensions'),
-      subtitle: const Text(
-        'Browse installed, disabled, available, and unsupported extensions',
+      title: Text(tr("Manage Extensions")),
+      subtitle: Text(
+        tr("Browse installed, disabled, available, and unsupported extensions"),
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () async {
@@ -117,8 +118,8 @@ class _AddonCollectionTile extends StatelessWidget {
         MdiIcons.folderMultiple,
         color: Theme.of(context).colorScheme.onSurfaceVariant,
       ),
-      title: const Text('Custom Collection'),
-      subtitle: const Text('Use a custom Mozilla addon collection'),
+      title: Text(tr("Custom Collection")),
+      subtitle: Text(tr("Use a custom Mozilla addon collection")),
       trailing: const Icon(Icons.chevron_right),
       onTap: () async {
         await AddonCollectionRoute().push(context);
@@ -136,7 +137,7 @@ class _AutoUpdateTile extends ConsumerWidget {
 
     return autoUpdate.when(
       data: (enabled) => SwitchListTile.adaptive(
-        title: const Text('Automatic updates'),
+        title: Text(tr("Automatic updates")),
         subtitle: const Text(
           'Automatically check for and install extension updates every 12 hours',
         ),
@@ -148,8 +149,8 @@ class _AutoUpdateTile extends ConsumerWidget {
               .setEnabled(enabled: value);
         },
       ),
-      loading: () => const SwitchListTile.adaptive(
-        title: Text('Automatic updates'),
+      loading: () => SwitchListTile.adaptive(
+        title: Text(tr("Automatic updates")),
         subtitle: Text(
           'Automatically check for and install extension updates every 12 hours',
         ),
@@ -159,8 +160,8 @@ class _AutoUpdateTile extends ConsumerWidget {
       ),
       error: (error, stack) => ListTile(
         leading: const Icon(Icons.error_outline),
-        title: const Text('Automatic updates'),
-        subtitle: Text('Failed to load: $error'),
+        title: Text(tr("Automatic updates")),
+        subtitle: Text(tr("Failed to load: {0}", [error])),
       ),
     );
   }
@@ -177,9 +178,9 @@ class _AllowUnsignedExtensionsTile extends ConsumerWidget {
       data: (allowed) => Column(
         children: [
           SwitchListTile.adaptive(
-            title: const Text('Allow unsigned extensions'),
-            subtitle: const Text(
-              'Unsigned extensions have not been verified by Mozilla',
+            title: Text(tr("Allow unsigned extensions")),
+            subtitle: Text(
+              tr("Unsigned extensions have not been verified by Mozilla"),
             ),
             secondary: const Icon(Icons.extension_off),
             value: allowed,
@@ -219,8 +220,7 @@ class _AllowUnsignedExtensionsTile extends ConsumerWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Only install unsigned extensions from sources you trust. '
-                        'They may contain malicious code.',
+                        tr("Only install unsigned extensions from sources you trust. They may contain malicious code."),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onErrorContainer,
                           fontSize: 12,
@@ -233,17 +233,17 @@ class _AllowUnsignedExtensionsTile extends ConsumerWidget {
             ),
         ],
       ),
-      loading: () => const SwitchListTile.adaptive(
-        title: Text('Allow unsigned extensions'),
-        subtitle: Text('Unsigned extensions have not been verified by Mozilla'),
+      loading: () => SwitchListTile.adaptive(
+        title: Text(tr("Allow unsigned extensions")),
+        subtitle: Text(tr("Unsigned extensions have not been verified by Mozilla")),
         secondary: Icon(Icons.extension_off),
         value: false,
         onChanged: null,
       ),
       error: (error, stack) => ListTile(
         leading: const Icon(Icons.error_outline),
-        title: const Text('Allow unsigned extensions'),
-        subtitle: Text('Failed to load: $error'),
+        title: Text(tr("Allow unsigned extensions")),
+        subtitle: Text(tr("Failed to load: {0}", [error])),
       ),
     );
   }
@@ -283,32 +283,25 @@ class _AllowUnsignedConfirmationDialog extends HookWidget {
         color: theme.colorScheme.error,
         size: 40,
       ),
-      title: const Text('Allow unsigned extensions?'),
+      title: Text(tr("Allow unsigned extensions?")),
       content: Text.rich(
         TextSpan(
           children: [
             TextSpan(
               text:
-                  "Warning: This significantly weakens your browser's security."
-                  '\n\n',
+                  tr("Warning: This significantly weakens your browser's security.\n\n"),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: theme.colorScheme.error,
               ),
             ),
-            const TextSpan(
+            TextSpan(
               text:
-                  "Unsigned extensions bypass Mozilla's safety review process. "
-                  'Malicious extensions can:\n\n'
-                  '\u2022 Read and modify everything you see on any website\n'
-                  '\u2022 Steal passwords, banking details, and personal data\n'
-                  '\u2022 Monitor your browsing activity silently\n'
-                  '\u2022 Install additional malware on your device\n\n',
+                  tr("Unsigned extensions bypass Mozilla's safety review process. Malicious extensions can:\n\n• Read and modify everything you see on any website\n• Steal passwords, banking details, and personal data\n• Monitor your browsing activity silently\n• Install additional malware on your device\n\n"),
             ),
-            const TextSpan(
+            TextSpan(
               text:
-                  'Only enable this if you are a developer installing your own '
-                  'extension or absolutely trust the source.',
+                  tr("Only enable this if you are a developer installing your own extension or absolutely trust the source."),
             ),
           ],
         ),
@@ -316,7 +309,7 @@ class _AllowUnsignedConfirmationDialog extends HookWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: canConfirm ? () => Navigator.of(context).pop(true) : null,
@@ -324,7 +317,7 @@ class _AllowUnsignedConfirmationDialog extends HookWidget {
             backgroundColor: theme.colorScheme.error,
             foregroundColor: theme.colorScheme.onError,
           ),
-          child: Text(canConfirm ? 'Allow' : 'Allow (${remaining.value})'),
+          child: Text(canConfirm ? tr("Allow") : tr("Allow ({0})", [remaining.value])),
         ),
       ],
     );

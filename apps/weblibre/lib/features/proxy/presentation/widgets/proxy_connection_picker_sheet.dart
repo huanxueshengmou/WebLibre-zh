@@ -23,6 +23,7 @@ import 'package:nullability/nullability.dart';
 import 'package:weblibre/features/proxy/data/proxy_connection.dart';
 import 'package:weblibre/features/proxy/domain/providers/proxy_connection_options.dart';
 import 'package:weblibre/features/proxy/domain/repositories/singbox_proxy_profiles.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Radio sentinels. Neither can collide with an encoded [ProxyConnectionId],
 /// whose forms are `tor` and `singbox:<id>`.
@@ -172,12 +173,12 @@ class ProxyConnectionPickerSheet extends ConsumerWidget {
                   Icons.warning_amber_outlined,
                   color: Theme.of(context).colorScheme.error,
                 ),
-                title: const Text('Unknown proxy'),
-                subtitle: const Text('This proxy profile no longer exists'),
+                title: Text(tr("Unknown proxy")),
+                subtitle: Text(tr("This proxy profile no longer exists")),
                 trailing: TextButton(
                   onPressed: () =>
                       Navigator.pop(context, const ProxyPickerCleared()),
-                  child: const Text('Clear'),
+                  child: Text(tr("Clear")),
                 ),
               ),
             for (final option in options)

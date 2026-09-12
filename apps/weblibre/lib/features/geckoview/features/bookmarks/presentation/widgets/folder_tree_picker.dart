@@ -26,6 +26,7 @@ import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/geckoview/features/bookmarks/domain/entities/bookmark_item.dart';
 import 'package:weblibre/features/geckoview/features/bookmarks/domain/providers/bookmarks.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Indentation applied per level of folder nesting.
 const _indentPerDepth = 20.0;
@@ -96,7 +97,7 @@ class FolderTreePicker extends HookConsumerWidget {
           },
           error: (error, stackTrace) => Center(
             child: FailureWidget(
-              title: 'Failed to load Bookmark Folders',
+              title: tr("Failed to load Bookmark Folders"),
               exception: error,
               onRetry: () {
                 ref.invalidate(bookmarkFolderProvider(entryGuid));

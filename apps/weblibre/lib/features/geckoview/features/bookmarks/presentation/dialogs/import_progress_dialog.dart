@@ -20,6 +20,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:weblibre/features/geckoview/features/bookmarks/domain/entities/import_bookmark_node.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows how far a running bookmark import has got.
 ///
@@ -39,7 +40,7 @@ class ImportProgressDialog extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: AlertDialog(
-        title: const Text('Importing bookmarks'),
+        title: Text(tr("Importing bookmarks")),
         content: ValueListenableBuilder<BookmarkImportProgress>(
           valueListenable: progress,
           builder: (context, value, child) {
@@ -48,11 +49,11 @@ class ImportProgressDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(switch (value.phase) {
-                  BookmarkImportPhase.parsing => 'Reading the file…',
-                  BookmarkImportPhase.erasing => 'Removing existing bookmarks…',
+                  BookmarkImportPhase.parsing => tr("Reading the file…"),
+                  BookmarkImportPhase.erasing => tr("Removing existing bookmarks…"),
                   BookmarkImportPhase.inserting when value.total > 0 =>
-                    '${value.inserted} of ${value.total} bookmarks',
-                  BookmarkImportPhase.inserting => 'Saving bookmarks…',
+                    tr("{0} of {1} bookmarks", [value.inserted, value.total]),
+                  BookmarkImportPhase.inserting => tr("Saving bookmarks…"),
                 }),
                 const SizedBox(height: 16.0),
                 LinearProgressIndicator(value: value.fraction),

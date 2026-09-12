@@ -29,6 +29,7 @@ import 'package:weblibre/features/settings/presentation/dialogs/delete_all_excep
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Screen to view and manage tracking protection exceptions
 ///
@@ -43,9 +44,9 @@ class TrackingProtectionExceptionsScreen extends HookConsumerWidget {
     final search = useSettingsSearch();
 
     return SettingsCustomScrollScaffold(
-      title: 'Tracking Protection Exceptions',
+      title: tr("Tracking Protection Exceptions"),
       searchController: search.controller,
-      searchHintText: 'Search exception URLs',
+      searchHintText: tr("Search exception URLs"),
       actions: [
         exceptionsAsync.maybeWhen(
           data: (exceptions) => exceptions.isNotEmpty
@@ -99,12 +100,12 @@ class TrackingProtectionExceptionsScreen extends HookConsumerWidget {
                 return SettingsSectionList(
                   sections: [
                     SettingsSectionDefinition(
-                      title: 'Exception List',
+                      title: tr("Exception List"),
                       entries: [
                         for (final exception in filteredExceptions)
                           SettingsEntryDefinition(
                             title: exception.url,
-                            subtitle: 'Site with tracking protection disabled',
+                            subtitle: tr("Site with tracking protection disabled"),
                             child: _ExceptionTile(
                               exception: exception,
                               onDelete: () =>
@@ -187,7 +188,7 @@ class _ExceptionTile extends StatelessWidget {
       trailing: IconButton(
         icon: const Icon(Icons.close),
         onPressed: onDelete,
-        tooltip: 'Remove exception',
+        tooltip: tr("Remove exception"),
       ),
     );
   }
@@ -208,10 +209,10 @@ class _EmptyState extends StatelessWidget {
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           const SizedBox(height: 16),
-          Text('No exceptions', style: Theme.of(context).textTheme.titleMedium),
+          Text(tr("No exceptions"), style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           Text(
-            'Sites added to exceptions will appear here',
+            tr("Sites added to exceptions will appear here"),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
@@ -236,7 +237,7 @@ class _ErrorState extends StatelessWidget {
           const Icon(Icons.error_outline, size: 64),
           const SizedBox(height: 16),
           Text(
-            'Error loading exceptions',
+            tr("Error loading exceptions"),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),

@@ -30,6 +30,7 @@ import 'package:weblibre/features/geckoview/features/contextmenu/extensions/hit_
 import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_mode.dart';
 import 'package:weblibre/features/geckoview/features/tabs/utils/background_tab_open.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class OpenInNewTab extends HookConsumerWidget {
   final HitResult hitResult;
@@ -82,7 +83,7 @@ class OpenInNewTab extends HookConsumerWidget {
 
     return ListTile(
       leading: const Icon(MdiIcons.tabPlus),
-      title: const Text('Open in new tab'),
+      title: Text(tr("Open in new tab")),
       trailing: alternativeTypes.isEmpty
           ? null
           : MenuAnchor(
@@ -100,7 +101,7 @@ class OpenInNewTab extends HookConsumerWidget {
               ],
               builder: (context, controller, child) => IconButton(
                 icon: const Icon(Icons.expand_more),
-                tooltip: 'Open in a different tab type',
+                tooltip: tr("Open in a different tab type"),
                 onPressed: () =>
                     controller.isOpen ? controller.close() : controller.open(),
               ),
@@ -123,7 +124,7 @@ Color? _colorFor(BuildContext context, TabType type) => switch (type) {
 };
 
 String _labelFor(TabType type) => switch (type) {
-  TabType.private => 'New private tab',
-  TabType.isolated => 'New isolated tab',
-  _ => 'New regular tab',
+  TabType.private => tr("New private tab"),
+  TabType.isolated => tr("New isolated tab"),
+  _ => tr("New regular tab"),
 };

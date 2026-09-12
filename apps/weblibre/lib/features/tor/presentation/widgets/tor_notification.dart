@@ -26,6 +26,7 @@ import 'package:weblibre/features/tor/domain/extensions/tor_status_x.dart';
 import 'package:weblibre/features/tor/domain/services/tor_proxy.dart';
 import 'package:weblibre/presentation/icons/tor_icons.dart';
 import 'package:weblibre/presentation/widgets/animate_gradient_shader.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class TorNotification extends HookConsumerWidget {
   const TorNotification({super.key});
@@ -69,7 +70,7 @@ class TorNotification extends HookConsumerWidget {
                     ),
                     Expanded(
                       child: Text(
-                        '$torProxyLabel is connecting...',
+                        tr("{0} is connecting...", [torProxyLabel]),
                         style: Theme.of(
                           context,
                         ).textTheme.bodyMedium?.copyWith(color: Colors.white),

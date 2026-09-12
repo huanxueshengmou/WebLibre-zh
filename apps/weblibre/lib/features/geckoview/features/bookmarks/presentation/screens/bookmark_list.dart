@@ -59,6 +59,7 @@ import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// How many hits an in-list search asks storage for.
 ///
@@ -183,11 +184,11 @@ class BookmarkListScreen extends HookConsumerWidget {
                       uiState,
                       uiStateNotifier,
                       expandedGuids,
-                      emptyLabel: 'Empty',
+                      emptyLabel: tr("Empty"),
                     ),
                     error: (error, stackTrace) => Center(
                       child: FailureWidget(
-                        title: 'Failed to load Bookmarks',
+                        title: tr("Failed to load Bookmarks"),
                         exception: error,
                         onRetry: () {
                           ref.invalidate(bookmarkFolderProvider(entryGuid));
@@ -343,18 +344,18 @@ class BookmarkListScreen extends HookConsumerWidget {
         icon: const Icon(Icons.close),
         onPressed: () => uiStateNotifier.exitSelectionMode(),
       ),
-      title: Text('$count selected'),
+      title: Text(tr("{0} selected", [count])),
       actions: [
         IconButton(
           icon: const Icon(MdiIcons.tabPlus),
-          tooltip: 'Open in background',
+          tooltip: tr("Open in background"),
           onPressed: count > 0
               ? () => _bulkOpenInBackground(context, ref, uiState, rows)
               : null,
         ),
         IconButton(
           icon: const Icon(MdiIcons.folderMove),
-          tooltip: 'Move selected',
+          tooltip: tr("Move selected"),
           onPressed: count > 0
               ? () => _bulkMove(context, ref, uiState, rows)
               : null,
@@ -385,16 +386,16 @@ class BookmarkListScreen extends HookConsumerWidget {
           ? TextField(
               controller: textFilterController,
               textAlignVertical: TextAlignVertical.center,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 // Collapsed so the box is exactly the text: any asymmetric
                 // content padding would offset the text from the centre the
                 // app bar aligns the action icons to.
                 isCollapsed: true,
                 border: InputBorder.none,
-                hintText: 'Filter bookmarks...',
+                hintText: tr("Filter bookmarks..."),
               ),
             )
-          : const Text('Bookmarks'),
+          : Text(tr("Bookmarks")),
       actions: [
         // One button, one slot: it opens the search, then clears it, then
         // closes it. A clear button attached to the field would sit left of
@@ -423,7 +424,7 @@ class BookmarkListScreen extends HookConsumerWidget {
             if (entryGuid != BookmarkRoot.root.id) ...[
               MenuItemButton(
                 leadingIcon: const Icon(MdiIcons.bookmarkPlus),
-                child: const Text('Add Bookmark Here'),
+                child: Text(tr("Add Bookmark Here")),
                 onPressed: () async {
                   await BookmarkEntryAddRoute(
                     bookmarkInfo: jsonEncode(
@@ -434,7 +435,7 @@ class BookmarkListScreen extends HookConsumerWidget {
               ),
               MenuItemButton(
                 leadingIcon: const Icon(MdiIcons.folderPlus),
-                child: const Text('Add Subfolder Here'),
+                child: Text(tr("Add Subfolder Here")),
                 onPressed: () async {
                   await BookmarkFolderAddRoute(
                     parentGuid: entryGuid,
@@ -450,7 +451,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                   onPressed: expandedGuids.value.isEmpty
                       ? null
                       : () => expandedGuids.value = <String>{},
-                  child: const Text('Collapse All'),
+                  child: Text(tr("Collapse All")),
                 ),
                 if (entryGuid == BookmarkRoot.root.id)
                   MenuItemButton(
@@ -461,8 +462,8 @@ class BookmarkListScreen extends HookConsumerWidget {
                     ),
                     child: Text(
                       hideEmptyRoots.value
-                          ? 'Show Empty Folders'
-                          : 'Hide Empty Folders',
+                          ? tr("Show Empty Folders")
+                          : tr("Hide Empty Folders"),
                     ),
                     onPressed: () {
                       hideEmptyRoots.value = !hideEmptyRoots.value;
@@ -476,7 +477,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                   ),
                   onPressed: uiStateNotifier.toggleFoldersOnly,
                   child: Text(
-                    uiState.foldersOnly ? 'Show Bookmarks' : 'Folders Only',
+                    uiState.foldersOnly ? tr("Show Bookmarks") : tr("Folders Only"),
                   ),
                 ),
               ],
@@ -494,7 +495,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                     onPressed: () => uiStateNotifier.setSortType(sortType),
                   ),
               ],
-              child: const Text('Sort'),
+              child: Text(tr("Sort")),
             ),
             SubmenuButton(
               leadingIcon: const Icon(MdiIcons.import),
@@ -512,7 +513,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                       _handleImport(context, ref, BookmarkImportFormat.html),
                 ),
               ],
-              child: const Text('Import'),
+              child: Text(tr("Import")),
             ),
             SubmenuButton(
               leadingIcon: const Icon(MdiIcons.export),
@@ -528,7 +529,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                   onPressed: () => _handleExport(context, ref, 'html'),
                 ),
               ],
-              child: const Text('Export'),
+              child: Text(tr("Export")),
             ),
           ],
           builder: (context, controller, child) => IconButton(
@@ -616,7 +617,7 @@ class BookmarkListScreen extends HookConsumerWidget {
           menuChildren: [
             MenuItemButton(
               leadingIcon: const Icon(MdiIcons.openInNew),
-              child: const Text('Open'),
+              child: Text(tr("Open")),
               onPressed: () async {
                 final result = await OpenSharedContentRoute(
                   sharedUrl: bookmark.url.toString(),
@@ -628,7 +629,7 @@ class BookmarkListScreen extends HookConsumerWidget {
             ),
             MenuItemButton(
               leadingIcon: const Icon(MdiIcons.tabPlus),
-              child: const Text('Open in New Tab'),
+              child: Text(tr("Open in New Tab")),
               onPressed: () async {
                 await _openInNewTab(
                   context,
@@ -640,7 +641,7 @@ class BookmarkListScreen extends HookConsumerWidget {
             ),
             MenuItemButton(
               leadingIcon: const Icon(MdiIcons.tab),
-              child: const Text('Open in Background'),
+              child: Text(tr("Open in Background")),
               onPressed: () async {
                 await _openInNewTab(
                   context,
@@ -652,7 +653,7 @@ class BookmarkListScreen extends HookConsumerWidget {
             ),
             MenuItemButton(
               leadingIcon: const Icon(Icons.share),
-              child: const Text('Share'),
+              child: Text(tr("Share")),
               onPressed: () async {
                 await SharePlus.instance.share(
                   ShareParams(text: bookmark.url.toString()),
@@ -679,7 +680,7 @@ class BookmarkListScreen extends HookConsumerWidget {
             ),
             MenuItemButton(
               leadingIcon: const Icon(Icons.edit),
-              child: const Text('Edit'),
+              child: Text(tr("Edit")),
               onPressed: () async {
                 await BookmarkEntryEditRoute(
                   bookmarkEntry: jsonEncode(bookmark.toJson()),
@@ -814,7 +815,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                     ),
                   MenuItemButton(
                     leadingIcon: const Icon(MdiIcons.folderEdit),
-                    child: const Text('Edit'),
+                    child: Text(tr("Edit")),
                     onPressed: () async {
                       await BookmarkFolderEditRoute(
                         folder: jsonEncode(folder.toJson()),
@@ -836,7 +837,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                 ],
                 MenuItemButton(
                   leadingIcon: const Icon(MdiIcons.folderPlus),
-                  child: const Text('Add Subfolder'),
+                  child: Text(tr("Add Subfolder")),
                   onPressed: () async {
                     await BookmarkFolderAddRoute(
                       parentGuid: folder.guid,
@@ -845,7 +846,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                 ),
                 MenuItemButton(
                   leadingIcon: const Icon(MdiIcons.bookmarkPlus),
-                  child: const Text('Add Bookmark'),
+                  child: Text(tr("Add Bookmark")),
                   onPressed: () async {
                     await BookmarkEntryAddRoute(
                       bookmarkInfo: jsonEncode(
@@ -1230,7 +1231,7 @@ class BookmarkListScreen extends HookConsumerWidget {
           'bookmarks_$timestamp.${format == 'json' ? 'json' : 'html'}';
 
       final outputPath = await FilePicker.saveFile(
-        dialogTitle: 'Export Bookmarks',
+        dialogTitle: tr("Export Bookmarks"),
         fileName: defaultFileName,
         type: FileType.custom,
         allowedExtensions: format == 'json' ? ['json'] : ['html', 'htm'],

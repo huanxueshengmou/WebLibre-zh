@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:weblibre/i18n/i18n.dart';
 
 class SyncDetailsTable extends StatelessWidget {
   final int? count;
@@ -41,7 +42,7 @@ class SyncDetailsTable extends StatelessWidget {
           ),
           TableRow(
             children: [
-              const Text('Last Sync'),
+              Text(tr("Last Sync")),
               Text((lastSync != null) ? timeago.format(lastSync!) : 'N/A'),
             ],
           ),

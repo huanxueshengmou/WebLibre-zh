@@ -27,6 +27,7 @@ import 'package:weblibre/features/onboarding/domain/entities/onboarding_mode.dar
 import 'package:weblibre/features/onboarding/domain/providers.dart';
 import 'package:weblibre/presentation/widgets/browser_page.dart';
 import 'package:weblibre/presentation/widgets/pointer_scrollable_sheet.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class WelcomePage extends ConsumerWidget {
   final bool isReturningUser;
@@ -50,7 +51,7 @@ class WelcomePage extends ConsumerWidget {
             BrandHeader(colorScheme: colorScheme),
             const SizedBox(height: 24),
             Text(
-              isReturningUser ? 'Welcome back!' : 'WebLibre is ready',
+              isReturningUser ? tr("Welcome back!") : tr("WebLibre is ready"),
               textAlign: TextAlign.center,
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w700,
@@ -65,7 +66,7 @@ class WelcomePage extends ConsumerWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Choose your onboarding experience:',
+                  tr("Choose your onboarding experience:"),
                   style: theme.textTheme.titleSmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
@@ -74,8 +75,8 @@ class WelcomePage extends ConsumerWidget {
               const SizedBox(height: 12),
               _ModeOption(
                 mode: OnboardingMode.express,
-                title: 'Quick Start',
-                subtitle: 'Use recommended defaults and get browsing.',
+                title: tr("Quick Start"),
+                subtitle: tr("Use recommended defaults and get browsing."),
                 icon: Icons.bolt,
                 selected: selectedMode == OnboardingMode.express,
                 onTap: () => ref
@@ -85,8 +86,8 @@ class WelcomePage extends ConsumerWidget {
               const SizedBox(height: 12),
               _ModeOption(
                 mode: OnboardingMode.detailed,
-                title: 'Custom Setup',
-                subtitle: 'Configure DNS, toolbar, extensions, and more.',
+                title: tr("Custom Setup"),
+                subtitle: tr("Configure DNS, toolbar, extensions, and more."),
                 icon: Icons.tune,
                 selected: selectedMode == OnboardingMode.detailed,
                 onTap: () => ref
@@ -96,8 +97,8 @@ class WelcomePage extends ConsumerWidget {
               const SizedBox(height: 12),
               _ModeOption(
                 mode: OnboardingMode.restore,
-                title: 'Restore from Backup',
-                subtitle: 'Import a profile from an encrypted backup file.',
+                title: tr("Restore from Backup"),
+                subtitle: tr("Import a profile from an encrypted backup file."),
                 icon: Icons.settings_backup_restore,
                 selected: selectedMode == OnboardingMode.restore,
                 onTap: () => ref
@@ -151,7 +152,7 @@ class _UpdateNotice extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'A lot has changed!',
+                    tr("A lot has changed!"),
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -200,8 +201,7 @@ class _UpdateNotice extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Your existing settings will not be overridden '
-                      'unless you explicitly change them during this setup.',
+                      tr("Your existing settings will not be overridden unless you explicitly change them during this setup."),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
@@ -320,7 +320,7 @@ class _EulaCheckbox extends StatelessWidget {
       title: Wrap(
         children: [
           Text(
-            'I have read and accept the ',
+            tr("I have read and accept the "),
             style: theme.textTheme.bodySmall?.copyWith(
               color: colorScheme.onSurfaceVariant,
             ),
@@ -328,7 +328,7 @@ class _EulaCheckbox extends StatelessWidget {
           GestureDetector(
             onTap: () => _showLegalDocument(
               context,
-              title: 'End User License Agreement',
+              title: tr("End User License Agreement"),
               assetPath: 'assets/legal/EULA.md',
             ),
             child: Text(
@@ -349,11 +349,11 @@ class _EulaCheckbox extends StatelessWidget {
           GestureDetector(
             onTap: () => _showLegalDocument(
               context,
-              title: 'Privacy Policy',
+              title: tr("Privacy Policy"),
               assetPath: 'assets/legal/PRIVACY_POLICY.md',
             ),
             child: Text(
-              'Privacy Policy',
+              tr("Privacy Policy"),
               style: theme.textTheme.bodySmall?.copyWith(
                 color: AppColors.of(context).brandLink,
                 decoration: TextDecoration.underline,

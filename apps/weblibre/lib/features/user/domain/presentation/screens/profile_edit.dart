@@ -39,6 +39,7 @@ import 'package:weblibre/features/user/domain/services/local_authentication.dart
 import 'package:weblibre/utils/exit_app.dart';
 import 'package:weblibre/utils/form_validators.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Scope for the confirmation taken *before* a locked profile exists.
 ///
@@ -143,7 +144,7 @@ class ProfileEditScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: (profile != null)
-            ? const Text('Edit Profile')
+            ? Text(tr("Edit Profile"))
             : const Text('Create Profile'),
         actions: [
           IconButton(
@@ -168,8 +169,8 @@ class ProfileEditScreen extends HookConsumerWidget {
             children: [
               TextFormField(
                 controller: nameTextController,
-                decoration: const InputDecoration(
-                  label: Text('Name'),
+                decoration: InputDecoration(
+                  label: Text(tr("Name")),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
                 validator: validateProfileName,
@@ -210,8 +211,8 @@ class _AuthSection extends StatelessWidget {
         const SettingSection(name: 'Authentication'),
         SwitchListTile.adaptive(
           value: authSettings.authenticationRequired,
-          title: const Text('Require authentication'),
-          subtitle: const Text('Ask before this profile can be opened'),
+          title: Text(tr("Require authentication")),
+          subtitle: Text(tr("Ask before this profile can be opened")),
           secondary: const Icon(MdiIcons.fingerprint),
           contentPadding: EdgeInsets.zero,
           onChanged: (value) {
@@ -227,9 +228,9 @@ class _AuthSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ListTile(
+                ListTile(
                   title: Text('Auto-lock'),
-                  subtitle: Text('When to lock the profile again'),
+                  subtitle: Text(tr("When to lock the profile again")),
                   contentPadding: EdgeInsets.zero,
                   leading: Icon(MdiIcons.lockClock),
                 ),
@@ -242,24 +243,23 @@ class _AuthSection extends StatelessWidget {
                       );
                     }
                   },
-                  child: const Column(
+                  child: Column(
                     children: [
                       RadioListTile.adaptive(
                         value: AutoLockMode.background,
-                        title: Text('Lock in background'),
-                        subtitle: Text('As soon as WebLibre leaves the screen'),
+                        title: Text(tr("Lock in background")),
+                        subtitle: Text(tr("As soon as WebLibre leaves the screen")),
                       ),
                       RadioListTile.adaptive(
                         value: AutoLockMode.timeout,
-                        title: Text('Lock after a timeout'),
-                        subtitle: Text('After a period of inactivity'),
+                        title: Text(tr("Lock after a timeout")),
+                        subtitle: Text(tr("After a period of inactivity")),
                       ),
                       RadioListTile.adaptive(
                         value: AutoLockMode.startup,
-                        title: Text('Lock on startup only'),
+                        title: Text(tr("Lock on startup only")),
                         subtitle: Text(
-                          'Unlock once at startup, then stay unlocked until '
-                          'WebLibre is fully closed',
+                          tr("Unlock once at startup, then stay unlocked until WebLibre is fully closed"),
                         ),
                       ),
                     ],
@@ -270,8 +270,8 @@ class _AuthSection extends StatelessWidget {
           ),
           if (authSettings.autoLockMode == AutoLockMode.timeout)
             ListTile(
-              title: const Text('Timeout'),
-              subtitle: const Text('How long to wait before locking'),
+              title: Text(tr("Timeout")),
+              subtitle: Text(tr("How long to wait before locking")),
               leading: const Icon(MdiIcons.timerOutline),
               contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
               trailing: DropdownButton<Duration?>(
@@ -326,8 +326,7 @@ class _ProfileActionsSection extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(top: 12),
             child: Text(
-              'Switching and deleting are unavailable for the profile you '
-              'are using.',
+              tr("Switching and deleting are unavailable for the profile you are using."),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -338,7 +337,7 @@ class _ProfileActionsSection extends ConsumerWidget {
           SizedBox(
             width: double.infinity,
             child: OutlinedButton.icon(
-              label: const Text('Switch to this profile'),
+              label: Text(tr("Switch to this profile")),
               icon: const Icon(MdiIcons.accountSwitch),
               onPressed: () async {
                 await handleSwitchProfile(context, ref, profile);

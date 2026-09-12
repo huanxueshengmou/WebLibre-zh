@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class StatusHeader extends StatelessWidget {
   final int totalCount;
@@ -78,8 +79,8 @@ class StatusHeader extends StatelessWidget {
                 ),
                 Text(
                   isAnyRunning
-                      ? '$runningCount of $totalCount routing traffic'
-                      : 'Tap a profile to connect',
+                      ? tr("{0} of {1} routing traffic", [runningCount, totalCount])
+                      : tr("Tap a profile to connect"),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: onBackground.withValues(alpha: 0.8),
                   ),
@@ -89,7 +90,7 @@ class StatusHeader extends StatelessWidget {
           ),
           if (onStopAll != null)
             IconButton.filled(
-              tooltip: 'Stop all',
+              tooltip: tr("Stop all"),
               onPressed: isBusy ? null : onStopAll,
               style: IconButton.styleFrom(
                 backgroundColor: scheme.errorContainer,

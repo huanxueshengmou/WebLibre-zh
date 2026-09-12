@@ -23,6 +23,7 @@ import 'package:flutter_mozilla_components/flutter_mozilla_components.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/app_links/domain/entities/app_link_rule.dart';
 import 'package:weblibre/features/app_links/domain/services/app_links_coordinator.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Build the `alwaysOpen` rule for a target, or null when it cannot be remembered
 /// (ambiguous resolution / no bound package).
@@ -95,13 +96,13 @@ class AppLinkPromptDialog extends HookConsumerWidget {
     return AlertDialog(
       icon: const Icon(Icons.open_in_new),
       title: Text(
-        appName != null ? 'Open in $appName?' : 'Open in another app?',
+        appName != null ? tr("Open in {0}?", [appName]) : tr("Open in another app?"),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('This link is handled by an app outside WebLibre.'),
+          Text(tr("This link is handled by an app outside WebLibre.")),
           const SizedBox(height: 8),
           Text(
             _displayScope(target.scopeKey),
@@ -113,18 +114,18 @@ class AppLinkPromptDialog extends HookConsumerWidget {
               controlAffinity: ListTileControlAffinity.leading,
               value: remember.value,
               onChanged: (value) => remember.value = value ?? false,
-              title: const Text('Remember my choice for this site'),
+              title: Text(tr("Remember my choice for this site")),
             ),
         ],
       ),
       actions: [
         TextButton(
           onPressed: () => resolve(AppLinkDecision.cancel),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () => resolve(AppLinkDecision.open),
-          child: const Text('Open'),
+          child: Text(tr("Open")),
         ),
       ],
     );

@@ -25,6 +25,7 @@ import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/widgets/qr_scanner_button.dart';
 import 'package:weblibre/presentation/widgets/speech_to_text_button.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// The home surface's entry into search.
 ///
@@ -92,7 +93,7 @@ class HomeSearchPill extends ConsumerWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Search or enter URL',
+                          tr("Search or enter URL"),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.bodyLarge?.copyWith(

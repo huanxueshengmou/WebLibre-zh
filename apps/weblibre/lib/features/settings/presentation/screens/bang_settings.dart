@@ -25,14 +25,15 @@ import 'package:weblibre/features/bangs/domain/repositories/data.dart';
 import 'package:weblibre/features/settings/presentation/widgets/bang_group_list_tile.dart';
 import 'package:weblibre/features/settings/presentation/widgets/custom_list_tile.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> bangSettingsSections = [
+List<SettingsSectionDefinition> bangSettingsSections = [
   SettingsSectionDefinition(
-    title: 'Usage Data',
+    title: tr("Usage Data"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Bang Frequencies',
-        subtitle: 'Tracked usage for bang recommendations',
+        title: tr("Bang Frequencies"),
+        subtitle: tr("Tracked usage for bang recommendations"),
         keywords: ['usage', 'recommendations'],
         child: _BangFrequenciesTile(),
       ),
@@ -42,23 +43,23 @@ const List<SettingsSectionDefinition> bangSettingsSections = [
     title: 'Repositories',
     entries: [
       SettingsEntryDefinition(
-        title: 'General Bangs',
-        subtitle: 'Sync on demand from GitHub',
+        title: tr("General Bangs"),
+        subtitle: tr("Sync on demand from GitHub"),
         keywords: ['repository'],
         child: BangGroupListTile(
           group: BangGroup.general,
-          title: 'General Bangs',
-          subtitle: 'Sync on demand from GitHub',
+          title: tr("General Bangs"),
+          subtitle: tr("Sync on demand from GitHub"),
         ),
       ),
       SettingsEntryDefinition(
-        title: 'Kagi Bangs',
-        subtitle: 'Sync on demand from GitHub',
+        title: tr("Kagi Bangs"),
+        subtitle: tr("Sync on demand from GitHub"),
         keywords: ['repository'],
         child: BangGroupListTile(
           group: BangGroup.kagi,
-          title: 'Kagi Bangs',
-          subtitle: 'Sync on-demand from GitHub',
+          title: tr("Kagi Bangs"),
+          subtitle: tr("Sync on-demand from GitHub"),
         ),
       ),
     ],
@@ -70,9 +71,9 @@ class BangSettingsScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SettingsDetailScaffold(
-      title: 'Bang Settings',
-      subtitle: 'Bang shortcuts usage, repositories, and on-demand sync.',
+    return SettingsDetailScaffold(
+      title: tr("Bang Settings"),
+      subtitle: tr("Bang shortcuts usage, repositories, and on-demand sync."),
       icon: MdiIcons.exclamationThick,
       sections: bangSettingsSections,
     );
@@ -85,8 +86,8 @@ class _BangFrequenciesTile extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomListTile(
-      title: 'Bang Frequencies',
-      subtitle: 'Tracked usage for bang recommendations',
+      title: tr("Bang Frequencies"),
+      subtitle: tr("Tracked usage for bang recommendations"),
       suffix: FilledButton.icon(
         onPressed: () async {
           await ref
@@ -94,7 +95,7 @@ class _BangFrequenciesTile extends HookConsumerWidget {
               .resetFrequencies();
         },
         icon: const Icon(Icons.delete),
-        label: const Text('Clear'),
+        label: Text(tr("Clear")),
       ),
     );
   }

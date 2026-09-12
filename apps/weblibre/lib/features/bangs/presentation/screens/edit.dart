@@ -31,6 +31,7 @@ import 'package:weblibre/features/bangs/domain/services/bang_query.dart';
 import 'package:weblibre/features/bangs/presentation/dialogs/delete_bang_dialog.dart';
 import 'package:weblibre/utils/form_validators.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 class EditBangScreen extends HookConsumerWidget {
   final Bang? initialBang;
@@ -93,10 +94,10 @@ class EditBangScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(
           fork
-              ? 'Customize Bang'
+              ? tr("Customize Bang")
               : initialBang == null
-              ? 'New Bang'
-              : 'Edit Bang',
+              ? tr("New Bang")
+              : tr("Edit Bang"),
         ),
         actions: [
           IconButton(
@@ -185,10 +186,10 @@ class EditBangScreen extends HookConsumerWidget {
               children: [
                 TextFormField(
                   controller: nameTextController,
-                  decoration: const InputDecoration(
-                    label: Text('Name'),
+                  decoration: InputDecoration(
+                    label: Text(tr("Name")),
                     helper: Text(
-                      'The name of the website associated with the bang',
+                      tr("The name of the website associated with the bang"),
                     ),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
@@ -197,10 +198,10 @@ class EditBangScreen extends HookConsumerWidget {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: triggerTextController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     label: Text('Trigger'),
                     helper: Text(
-                      'The specific trigger word or phrase used to invoke the bang.',
+                      tr("The specific trigger word or phrase used to invoke the bang."),
                     ),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
@@ -210,10 +211,10 @@ class EditBangScreen extends HookConsumerWidget {
                 TextFormField(
                   controller: aliasTextController,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    label: Text('Additional triggers'),
+                  decoration: InputDecoration(
+                    label: Text(tr("Additional triggers")),
                     helper: Text(
-                      'Other words that invoke this bang, separated by commas or spaces. A leading ! is optional.',
+                      tr("Other words that invoke this bang, separated by commas or spaces. A leading ! is optional."),
                     ),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
@@ -222,10 +223,10 @@ class EditBangScreen extends HookConsumerWidget {
                 TextFormField(
                   controller: urlTextController,
                   keyboardType: TextInputType.url,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     label: Text('URL'),
                     helper: Text(
-                      "The URL template to use when the bang is invoked, where `{{{s}}}` is replaced by the user's query.",
+                      tr("The URL template to use when the bang is invoked, where `{{{s}}}` is replaced by the user's query."),
                     ),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
@@ -270,7 +271,7 @@ class EditBangScreen extends HookConsumerWidget {
                   ),
                   enableFilter: true,
                   requestFocusOnTap: true,
-                  label: const Text('Sub Category'),
+                  label: Text(tr("Sub Category")),
                   expandedInsets: EdgeInsets.zero,
                   initialSelection: subCategory.value,
                   dropdownMenuEntries: [
@@ -290,9 +291,9 @@ class EditBangScreen extends HookConsumerWidget {
                 CheckboxListTile(
                   contentPadding: EdgeInsets.zero,
                   value: formatFlags.value.contains(BangFormat.openBasePath),
-                  title: const Text('Open Base Path'),
-                  subtitle: const Text(
-                    'When the bang is invoked with no query, opens the base path of the URL (/) instead of any path given in the template (g., /search)',
+                  title: Text(tr("Open Base Path")),
+                  subtitle: Text(
+                    tr("When the bang is invoked with no query, opens the base path of the URL (/) instead of any path given in the template (g., /search)"),
                   ),
                   onChanged: (value) {
                     if (value != null) {
@@ -305,9 +306,9 @@ class EditBangScreen extends HookConsumerWidget {
                   value: formatFlags.value.contains(
                     BangFormat.urlEncodePlaceholder,
                   ),
-                  title: const Text('URL Encode Placeholder'),
-                  subtitle: const Text(
-                    'URL encode the search terms. Some sites do not work with this, so it can be disabled by omitting this.',
+                  title: Text(tr("URL Encode Placeholder")),
+                  subtitle: Text(
+                    tr("URL encode the search terms. Some sites do not work with this, so it can be disabled by omitting this."),
                   ),
                   onChanged: (value) {
                     if (value != null) {
@@ -320,9 +321,9 @@ class EditBangScreen extends HookConsumerWidget {
                   value: formatFlags.value.contains(
                     BangFormat.urlEncodeSpaceToPlus,
                   ),
-                  title: const Text('URL Encode Space to Plus'),
-                  subtitle: const Text(
-                    'URL encodes spaces as +, instead of %20. Some sites only work correctly with one or the other.',
+                  title: Text(tr("URL Encode Space to Plus")),
+                  subtitle: Text(
+                    tr("URL encodes spaces as +, instead of %20. Some sites only work correctly with one or the other."),
                   ),
                   onChanged: (value) {
                     if (value != null) {

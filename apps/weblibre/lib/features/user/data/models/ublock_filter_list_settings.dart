@@ -21,6 +21,7 @@ import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:fast_equatable/fast_equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:weblibre/features/user/data/models/ublock_asset.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'ublock_filter_list_settings.g.dart';
 
@@ -39,7 +40,7 @@ final kUBlockHardeningExternalLists = <UBlockExternalList>[
   UBlockExternalList(
     url:
         'https://raw.githubusercontent.com/DandelionSprout/adfilt/master/LegitimateURLShortener.txt',
-    description: 'Legitimate URL Shortener Tool (DandelionSprout)',
+    description: tr("Legitimate URL Shortener Tool (DandelionSprout)"),
   ),
 ];
 

@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:weblibre/utils/ordered_layout.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'menu_layout.g.dart';
 
@@ -57,14 +58,14 @@ enum MenuSectionType {
   about;
 
   String get label => switch (this) {
-    quickToggles => 'Quick Toggles',
-    pageActions => 'Page Actions',
-    extensions => 'Extensions',
-    tabActions => 'Tab Actions',
-    quickLinks => 'Quick Links',
+    quickToggles => tr("Quick Toggles"),
+    pageActions => tr("Page Actions"),
+    extensions => tr("Extensions"),
+    tabActions => tr("Tab Actions"),
+    quickLinks => tr("Quick Links"),
     connection => 'Connection',
-    profile => 'Profile & App',
-    about => 'About',
+    profile => tr("Profile & App"),
+    about => tr("About"),
   };
 
   /// Identity icon for the arrangement UI. The sheet itself draws no section
@@ -157,48 +158,48 @@ enum MenuItemType {
   String get label => switch (this) {
     desktopMode => 'Desktop',
     readerMode => 'Reader',
-    gestures => 'Gestures',
-    addBookmark => 'Add Bookmark',
-    findInPage => 'Find in Page',
-    translatePage => 'Translate Page',
-    addToHomeScreen => 'Add to Home Screen',
-    openInApp => 'Open in App',
-    containers => 'Containers',
-    manageContainers => 'Manage Containers',
-    assignContainer => 'Assign Container',
-    assignUrlToContainer => 'Assign URL to Container',
-    unassignUrlFromContainer => 'Unassign URL from Container',
-    unassignContainer => 'Unassign Container',
-    share => 'Share',
-    copyAddress => 'Copy Address',
-    shareScreenshot => 'Share Screenshot',
-    shareLink => 'Share Link',
-    sendToDevice => 'Send To Device',
-    showQrCode => 'Show QR Code',
-    moreDisclosure => 'More',
-    cloneTab => 'Clone Tab',
-    cloneRegularTab => 'Regular',
-    clonePrivateTab => 'Private',
-    cloneIsolatedTab => 'Isolated',
-    export => 'Export',
-    copyAsMarkdown => 'Copy as Markdown',
-    exportAsMarkdown => 'Export as Markdown',
-    exportAsPdf => 'Export as PDF',
-    exportAsPng => 'Export as PNG',
-    printPage => 'Print',
-    pinTopSite => 'Pin to Shortcuts',
-    fetchFeeds => 'Fetch Feeds',
-    history => 'History',
-    bookmarks => 'Bookmarks',
-    downloads => 'Downloads',
+    gestures => tr("Gestures"),
+    addBookmark => tr("Add Bookmark"),
+    findInPage => tr("Find in Page"),
+    translatePage => tr("Translate Page"),
+    addToHomeScreen => tr("Add to Home Screen"),
+    openInApp => tr("Open in App"),
+    containers => tr("Containers"),
+    manageContainers => tr("Manage Containers"),
+    assignContainer => tr("Assign Container"),
+    assignUrlToContainer => tr("Assign URL to Container"),
+    unassignUrlFromContainer => tr("Unassign URL from Container"),
+    unassignContainer => tr("Unassign Container"),
+    share => tr("Share"),
+    copyAddress => tr("Copy Address"),
+    shareScreenshot => tr("Share Screenshot"),
+    shareLink => tr("Share Link"),
+    sendToDevice => tr("Send To Device"),
+    showQrCode => tr("Show QR Code"),
+    moreDisclosure => tr("More"),
+    cloneTab => tr("Clone Tab"),
+    cloneRegularTab => tr("Regular"),
+    clonePrivateTab => tr("Private"),
+    cloneIsolatedTab => tr("Isolated"),
+    export => tr("Export"),
+    copyAsMarkdown => tr("Copy as Markdown"),
+    exportAsMarkdown => tr("Export as Markdown"),
+    exportAsPdf => tr("Export as PDF"),
+    exportAsPng => tr("Export as PNG"),
+    printPage => tr("Print"),
+    pinTopSite => tr("Pin to Shortcuts"),
+    fetchFeeds => tr("Fetch Feeds"),
+    history => tr("History"),
+    bookmarks => tr("Bookmarks"),
+    downloads => tr("Downloads"),
     bangs => 'Bangs',
     feeds => 'Feeds',
-    smallWeb => 'Small Web',
+    smallWeb => tr("Small Web"),
     profileSwitch => 'Profile',
-    syncNow => 'Sync Now',
-    appSettings => 'Settings',
-    quitBrowser => 'Quit Browser',
-    about => 'About',
+    syncNow => tr("Sync Now"),
+    appSettings => tr("Settings"),
+    quitBrowser => tr("Quit Browser"),
+    about => tr("About"),
   };
 
   /// Identity icon for the arrangement UI.
@@ -259,8 +260,8 @@ enum MenuItemType {
   /// Shown under the label while arranging, for rows whose behaviour is not
   /// obvious from the name alone.
   String? get description => switch (this) {
-    moreDisclosure => 'Folds everything below it behind a "More" row',
-    sendToDevice => 'The devices themselves come from your account',
+    moreDisclosure => tr("Folds everything below it behind a \"More\" row"),
+    sendToDevice => tr("The devices themselves come from your account"),
     _ => null,
   };
 }

@@ -28,6 +28,7 @@ import 'package:weblibre/features/app_links/domain/entities/context_app_link_pol
 import 'package:weblibre/features/app_links/domain/services/effective_app_link_policy.dart';
 import 'package:weblibre/features/settings/presentation/controllers/save_settings.dart';
 import 'package:weblibre/features/user/data/models/general_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 final _appLinkTargetProvider = FutureProvider.autoDispose
     .family<AppLinkTarget?, Uri>((ref, url) {
@@ -62,21 +63,21 @@ class AppLinkSection extends HookConsumerWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Text(
-            'App Links',
+            tr("App Links"),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ),
         if (policy == null || isLoadingTarget)
-          const Skeletonizer(
+          Skeletonizer(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
                   leading: Icon(Icons.link),
-                  title: Text('Open links for this site'),
-                  subtitle: Text('Follows the default'),
+                  title: Text(tr("Open links for this site")),
+                  subtitle: Text(tr("Follows the default")),
                 ),
               ],
             ),
@@ -123,24 +124,24 @@ class _SiteRuleTile extends ConsumerWidget {
 
     return ListTile(
       leading: Icon(icon, color: color),
-      title: const Text('Open links for this site'),
+      title: Text(tr("Open links for this site")),
       subtitle: Text(_subtitle(scope, rule, choice, canAlwaysOpen)),
       trailing: DropdownButton<_SiteRuleChoice>(
         value: choice,
         underline: const SizedBox(),
         items: [
-          const DropdownMenuItem(
+          DropdownMenuItem(
             value: _SiteRuleChoice.followDefault,
-            child: Text('Follow default'),
+            child: Text(tr("Follow default")),
           ),
           DropdownMenuItem(
             value: _SiteRuleChoice.alwaysOpen,
             enabled: canAlwaysOpen || choice == _SiteRuleChoice.alwaysOpen,
-            child: const Text('Open in app'),
+            child: Text(tr("Open in app")),
           ),
-          const DropdownMenuItem(
+          DropdownMenuItem(
             value: _SiteRuleChoice.neverOpen,
-            child: Text('Keep in browser'),
+            child: Text(tr("Keep in browser")),
           ),
         ],
         onChanged: scope == null || scope.isEmpty
@@ -164,14 +165,14 @@ class _SiteRuleTile extends ConsumerWidget {
     return switch (choice) {
       _SiteRuleChoice.alwaysOpen =>
         'Always opens in ${rule!.packageName ?? 'the app'}',
-      _SiteRuleChoice.neverOpen => 'Always stays in the browser',
+      _SiteRuleChoice.neverOpen => tr("Always stays in the browser"),
       _SiteRuleChoice.followDefault => switch (policy.mode) {
         AppLinksMode.always =>
           canAlwaysOpen
               ? 'Follows the default: opens in apps'
               : 'Follows the default: no app found',
-        AppLinksMode.ask => 'Follows the default: asks first',
-        AppLinksMode.never => 'Follows the default: stays in the browser',
+        AppLinksMode.ask => tr("Follows the default: asks first"),
+        AppLinksMode.never => tr("Follows the default: stays in the browser"),
       },
     };
   }

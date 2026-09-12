@@ -25,6 +25,7 @@ import 'package:weblibre/features/proxy/data/forms/singbox_form_spec.dart';
 import 'package:weblibre/features/proxy/presentation/controllers/proxy_profile_draft_controller.dart';
 import 'package:weblibre/features/proxy/presentation/widgets/profile_editor/profile_editor_section.dart';
 import 'package:weblibre/presentation/widgets/obscurable_text_field.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class StructuredProfileForm extends HookConsumerWidget {
   final SingboxProxyFormSpec spec;
@@ -83,7 +84,7 @@ class StructuredProfileForm extends HookConsumerWidget {
         ],
         const SizedBox(height: 12),
         Text(
-          'Advanced protocol options can still be entered with Custom Outbound JSON.',
+          tr("Advanced protocol options can still be entered with Custom Outbound JSON."),
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
@@ -274,14 +275,14 @@ class _BooleanField extends HookWidget {
           Expanded(
             child: Text(
               value == null
-                  ? 'Unset (uses default)'
+                  ? tr("Unset (uses default)")
                   : (value ? 'Enabled' : 'Disabled'),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           if (value != null)
             IconButton(
-              tooltip: 'Clear',
+              tooltip: tr("Clear"),
               icon: const Icon(Icons.clear, size: 18),
               onPressed: () {
                 controller.text = '';

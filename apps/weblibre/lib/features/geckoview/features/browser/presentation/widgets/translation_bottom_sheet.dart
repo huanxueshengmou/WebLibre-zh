@@ -29,6 +29,7 @@ import 'package:weblibre/features/geckoview/domain/providers.dart';
 import 'package:weblibre/features/geckoview/domain/providers/tab_detail_state.dart';
 import 'package:weblibre/features/geckoview/domain/providers/tab_session.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 enum _TranslatePhase { idle, submitting, processing }
 
@@ -145,7 +146,7 @@ class TranslationBottomSheet extends HookConsumerWidget {
                 Icon(Icons.translate, color: colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
-                  'Translate Page',
+                  tr("Translate Page"),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const Spacer(),
@@ -192,7 +193,7 @@ class TranslationBottomSheet extends HookConsumerWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    'Translation error: $errorName',
+                    tr("Translation error: {0}", [errorName]),
                     style: TextStyle(color: colorScheme.onErrorContainer),
                   ),
                 ),
@@ -225,7 +226,7 @@ class TranslationBottomSheet extends HookConsumerWidget {
                               }
                               if (context.mounted) Navigator.pop(context);
                             },
-                      child: const Text('Show Original'),
+                      child: Text(tr("Show Original")),
                     ),
                   ),
                 if (isTranslated) const SizedBox(width: 12),

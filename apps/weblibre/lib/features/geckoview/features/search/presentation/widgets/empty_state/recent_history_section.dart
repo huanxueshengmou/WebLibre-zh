@@ -23,6 +23,7 @@ import 'package:weblibre/features/geckoview/features/search/domain/providers/emp
 import 'package:weblibre/features/geckoview/features/search/domain/providers/search_modules_view.dart';
 import 'package:weblibre/features/geckoview/features/search/presentation/widgets/search_modules/search_module_section.dart';
 import 'package:weblibre/presentation/widgets/url_list_tile.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class RecentHistorySection extends ConsumerWidget {
   final void Function(Uri uri) onUriSelected;
@@ -40,7 +41,7 @@ class RecentHistorySection extends ConsumerWidget {
     }
 
     return SearchModuleSection(
-      title: 'Recent History',
+      title: tr("Recent History"),
       moduleType: SearchModuleType.recentHistory,
       totalCount: visits.length,
       contentSliverBuilder:

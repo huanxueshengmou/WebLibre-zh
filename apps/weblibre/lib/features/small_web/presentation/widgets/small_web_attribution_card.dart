@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:weblibre/features/small_web/data/models/kagi_small_web_mode.dart';
 import 'package:weblibre/features/small_web/data/models/small_web_source_kind.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SmallWebAttributionAction {
   final String label;
@@ -67,7 +68,7 @@ class SmallWebAttributionData {
   factory SmallWebAttributionData._forKagi(KagiSmallWebMode mode) {
     final commonActions = [
       SmallWebAttributionAction(
-        label: 'Blog Post',
+        label: tr("Blog Post"),
         icon: Icons.article_outlined,
         uri: Uri.https('blog.kagi.com', '/small-web'),
       ),
@@ -80,23 +81,23 @@ class SmallWebAttributionData {
 
     final description = switch (mode) {
       KagiSmallWebMode.web =>
-        'Kagi Small Web surfaces recent posts from personal sites and blogs by individual authors across the small web.',
+        tr("Kagi Small Web surfaces recent posts from personal sites and blogs by individual authors across the small web."),
       KagiSmallWebMode.appreciated =>
-        'This Kagi Small Web mode highlights appreciated posts from the small web as curated by the open-source project.',
+        tr("This Kagi Small Web mode highlights appreciated posts from the small web as curated by the open-source project."),
       KagiSmallWebMode.videos =>
-        'This Kagi Small Web mode focuses on video posts from smaller independent creators and curated channel seeds.',
+        tr("This Kagi Small Web mode focuses on video posts from smaller independent creators and curated channel seeds."),
       KagiSmallWebMode.code =>
-        'This Kagi Small Web mode focuses on code-oriented posts from personal sites and other small web sources.',
+        tr("This Kagi Small Web mode focuses on code-oriented posts from personal sites and other small web sources."),
       KagiSmallWebMode.comics =>
-        'This Kagi Small Web mode focuses on comics and illustrated posts surfaced through the Small Web project.',
+        tr("This Kagi Small Web mode focuses on comics and illustrated posts surfaced through the Small Web project."),
     };
 
     return SmallWebAttributionData(
       icon: Icons.travel_explore,
-      title: 'Kagi Small Web',
+      title: tr("Kagi Small Web"),
       badgeLabel: mode.label,
       description: description,
-      attributionLine: 'By Kagi Search - open source under the MIT License.',
+      attributionLine: tr("By Kagi Search - open source under the MIT License."),
       actions: [...commonActions],
     );
   }
@@ -106,8 +107,8 @@ class SmallWebAttributionData {
       icon: Icons.dns,
       title: 'Wander',
       description:
-          'Wander is a network of personal websites connected through shared consoles that help people browse pages across the wider Wander community.',
-      attributionLine: 'By Susam Pal - open source under the MIT License.',
+          tr("Wander is a network of personal websites connected through shared consoles that help people browse pages across the wider Wander community."),
+      attributionLine: tr("By Susam Pal - open source under the MIT License."),
       actions: [
         SmallWebAttributionAction(
           label: 'Project',
@@ -115,7 +116,7 @@ class SmallWebAttributionData {
           uri: Uri.https('codeberg.org', '/susam/wander'),
         ),
         SmallWebAttributionAction(
-          label: 'Setup your Console',
+          label: tr("Setup your Console"),
           icon: Icons.forum_outlined,
           uri: Uri.https('codeberg.org', '/susam/wander#install'),
         ),

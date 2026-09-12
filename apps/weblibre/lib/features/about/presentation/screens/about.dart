@@ -26,6 +26,7 @@ import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/about/domain/providers.dart';
 import 'package:weblibre/features/geckoview/domain/repositories/tab.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_mode.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class AboutDialogScreen extends HookConsumerWidget {
   const AboutDialogScreen({super.key});
@@ -50,7 +51,7 @@ class AboutDialogScreen extends HookConsumerWidget {
       children: [
         ListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Gecko Version'),
+          title: Text(tr("Gecko Version")),
           subtitle: Consumer(
             builder: (context, ref, child) {
               final geckoVersion = ref.watch(geckoVersionProvider);
@@ -63,7 +64,7 @@ class AboutDialogScreen extends HookConsumerWidget {
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: const Icon(MdiIcons.charity),
-          title: const Text('Feedback'),
+          title: Text(tr("Feedback")),
           onTap: () async {
             await ref
                 .read(tabRepositoryProvider.notifier)

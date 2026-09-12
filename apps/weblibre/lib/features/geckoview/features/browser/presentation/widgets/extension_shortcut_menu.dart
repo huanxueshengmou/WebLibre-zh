@@ -26,6 +26,7 @@ import 'package:weblibre/features/addons/domain/providers.dart';
 import 'package:weblibre/features/geckoview/domain/providers.dart';
 import 'package:weblibre/features/geckoview/domain/providers/web_extensions_state.dart';
 import 'package:weblibre/features/geckoview/features/browser/presentation/widgets/extension_badge_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ExtensionShortcutMenu extends HookConsumerWidget {
   final Widget child;
@@ -82,7 +83,7 @@ class ExtensionShortcutMenu extends HookConsumerWidget {
             await const AddonManagerRoute().push<void>(context);
           },
           leadingIcon: const Icon(MdiIcons.puzzleEdit),
-          child: const Text('Manage extensions'),
+          child: Text(tr("Manage extensions")),
         ),
       ],
       child: Visibility(

@@ -27,6 +27,7 @@ import 'package:weblibre/features/bangs/domain/providers/search.dart';
 import 'package:weblibre/features/bangs/presentation/widgets/bang_details.dart';
 import 'package:weblibre/features/user/domain/providers.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class BangSearchScreen extends HookConsumerWidget {
   final String? initialSearchText;
@@ -57,7 +58,7 @@ class BangSearchScreen extends HookConsumerWidget {
           controller: textEditingController,
           autofocus: true,
           autocorrect: false,
-          decoration: const InputDecoration.collapsed(hintText: 'Search'),
+          decoration: InputDecoration.collapsed(hintText: tr("Search")),
         ),
         actions: [
           IconButton(
@@ -97,7 +98,7 @@ class BangSearchScreen extends HookConsumerWidget {
             );
           },
           error: (error, stackTrace) => Center(
-            child: FailureWidget(title: 'Bang Search failed', exception: error),
+            child: FailureWidget(title: tr("Bang Search failed"), exception: error),
           ),
           loading: () => const Center(child: CircularProgressIndicator()),
         ),

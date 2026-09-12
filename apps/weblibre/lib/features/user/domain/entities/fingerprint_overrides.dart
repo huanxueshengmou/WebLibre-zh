@@ -19,6 +19,7 @@
  */
 import 'package:exceptions/exceptions.dart';
 import 'package:fast_equatable/fast_equatable.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class FingerprintOverrides with FastEquatable {
   static final pattern = RegExp('([+-])([a-zA-Z_][a-zA-Z0-9_]{1,64})');
@@ -128,7 +129,7 @@ class FingerprintOverrides with FastEquatable {
       final match = pattern.firstMatch(word);
       if (match == null) {
         return Result.failure(
-          const ErrorMessage(source: 'FpParser', message: 'Invalid Override'),
+          ErrorMessage(source: 'FpParser', message: tr("Invalid Override")),
         );
       }
 
@@ -142,9 +143,9 @@ class FingerprintOverrides with FastEquatable {
 
       if (!availableTargets.contains(name)) {
         return Result.failure(
-          const ErrorMessage(
+          ErrorMessage(
             source: 'FpParser',
-            message: 'Invalid target name',
+            message: tr("Invalid target name"),
           ),
         );
       }

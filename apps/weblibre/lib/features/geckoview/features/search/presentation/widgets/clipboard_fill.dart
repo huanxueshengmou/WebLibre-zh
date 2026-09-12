@@ -24,6 +24,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/hooks/cached_future.dart';
 import 'package:weblibre/utils/clipboard.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ClipboardFillLink extends HookConsumerWidget {
   final TextEditingController controller;
@@ -49,7 +50,7 @@ class ClipboardFillLink extends HookConsumerWidget {
           clipboardUrl.data.toString() != currentText.text,
       child: ListTile(
         leading: const Icon(MdiIcons.linkPlus),
-        title: const Text('Fill link from clipboard'),
+        title: Text(tr("Fill link from clipboard")),
         onTap: () {
           controller.text = clipboardUrl.data.toString();
         },

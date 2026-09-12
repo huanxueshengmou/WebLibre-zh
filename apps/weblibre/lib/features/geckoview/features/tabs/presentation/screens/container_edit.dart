@@ -44,6 +44,7 @@ import 'package:weblibre/features/proxy/presentation/widgets/proxy_connection_pi
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/features/wallpaper/domain/entities/wallpaper_override.dart';
 import 'package:weblibre/features/wallpaper/presentation/widgets/wallpaper_editor.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum _DialogMode { create, edit }
 
@@ -245,7 +246,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                 const SizedBox(height: 8),
                 ListTile(
                   leading: const Icon(Icons.palette_outlined),
-                  title: const Text('Change Color'),
+                  title: Text(tr("Change Color")),
                   onTap: () {
                     Navigator.of(context).pop();
                     unawaited(openColorPicker());
@@ -253,7 +254,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                 ),
                 ListTile(
                   leading: Icon(resolveContainerIcon(selectedIcon.value)),
-                  title: const Text('Change Icon'),
+                  title: Text(tr("Change Icon")),
                   onTap: () {
                     Navigator.of(context).pop();
                     unawaited(openIconPicker());
@@ -314,8 +315,8 @@ class ContainerEditScreen extends HookConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(switch (_mode) {
-            _DialogMode.create => 'New Container',
-            _DialogMode.edit => 'Edit Container',
+            _DialogMode.create => tr("New Container"),
+            _DialogMode.edit => tr("Edit Container"),
           }),
           actions: [
             IconButton(onPressed: saveAndClose, icon: const Icon(Icons.check)),
@@ -386,7 +387,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                               controller: textController,
                               style: theme.textTheme.titleLarge,
                               decoration: InputDecoration(
-                                hintText: 'Container Name',
+                                hintText: tr("Container Name"),
                                 border: InputBorder.none,
                                 suffixIcon: _buildMagicWandButton(
                                   context,
@@ -417,9 +418,9 @@ class ContainerEditScreen extends HookConsumerWidget {
                       children: [
                         SwitchListTile.adaptive(
                           value: isPinned.value,
-                          title: const Text('Pin Container'),
-                          subtitle: const Text(
-                            'Keep this container at the top of the list',
+                          title: Text(tr("Pin Container")),
+                          subtitle: Text(
+                            tr("Keep this container at the top of the list"),
                           ),
                           secondary: const Icon(MdiIcons.pin),
                           onChanged: (value) {
@@ -437,9 +438,8 @@ class ContainerEditScreen extends HookConsumerWidget {
                           title: const Text('Wallpaper'),
                           subtitle: Text(
                             wallpaper.value != null
-                                ? 'Shown on home while this container is '
-                                      'selected'
-                                : 'Uses the wallpaper from settings',
+                                ? tr("Shown on home while this container is selected")
+                                : tr("Uses the wallpaper from settings"),
                           ),
                           children: [
                             Padding(
@@ -466,8 +466,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                                         override?.dim ??
                                         settings.homeWallpaperDim,
                                     emptyDescription:
-                                        'This container falls back to the '
-                                        'wallpaper set in settings.',
+                                        tr("This container falls back to the wallpaper set in settings."),
                                     // Replacing the picture keeps the
                                     // treatment; removing it drops the whole
                                     // override, so a later pick starts from
@@ -499,7 +498,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Privacy & Security',
+                    tr("Privacy & Security"),
                     style: theme.textTheme.titleSmall?.copyWith(
                       color: colorScheme.primary,
                       fontWeight: FontWeight.w700,
@@ -514,7 +513,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                       children: [
                         SwitchListTile.adaptive(
                           value: contextualIdentity.value != null,
-                          title: const Text('Cookie Isolation'),
+                          title: Text(tr("Cookie Isolation")),
                           secondary: const Icon(MdiIcons.cookieLock),
                           onChanged: (_mode == _DialogMode.create)
                               ? (value) {
@@ -539,14 +538,14 @@ class ContainerEditScreen extends HookConsumerWidget {
                         const Divider(height: 1, indent: 56),
                         ListTile(
                           leading: const Icon(Icons.route_outlined),
-                          title: const Text('Proxy Connection'),
+                          title: Text(tr("Proxy Connection")),
                           subtitle: Text(switch (proxyConnectionId.value) {
                             final id? => proxyConnectionTitle(
                               proxyOptions,
                               id,
                               isLoading: proxyOptionsLoading,
                             ),
-                            null => 'None',
+                            null => tr("None"),
                           }),
                           trailing: const Icon(Icons.chevron_right),
                           enabled: canPickProxy,
@@ -601,9 +600,9 @@ class ContainerEditScreen extends HookConsumerWidget {
                         SwitchListTile.adaptive(
                           value:
                               canBypassGlobalProxy && bypassGlobalProxy.value,
-                          title: const Text('Bypass Global Proxy'),
-                          subtitle: const Text(
-                            'Use the normal connection for this container when global routing is enabled',
+                          title: Text(tr("Bypass Global Proxy")),
+                          subtitle: Text(
+                            tr("Use the normal connection for this container when global routing is enabled"),
                           ),
                           secondary: const Icon(Icons.public),
                           onChanged: canBypassGlobalProxy
@@ -615,11 +614,9 @@ class ContainerEditScreen extends HookConsumerWidget {
                         const Divider(height: 1, indent: 56),
                         SwitchListTile.adaptive(
                           value: clearDataOnExit.value,
-                          title: const Text('Clear Data on Exit'),
-                          subtitle: const Text(
-                            "Clear cookies and site data for this container's "
-                            'regular tabs when the app closes. Isolated tabs '
-                            'keep separate data.',
+                          title: Text(tr("Clear Data on Exit")),
+                          subtitle: Text(
+                            tr("Clear cookies and site data for this container's regular tabs when the app closes. Isolated tabs keep separate data."),
                           ),
                           secondary: const Icon(MdiIcons.databaseRemove),
                           onChanged: (contextualIdentity.value != null)
@@ -631,9 +628,9 @@ class ContainerEditScreen extends HookConsumerWidget {
                         const Divider(height: 1, indent: 56),
                         SwitchListTile.adaptive(
                           value: excludeFromIndex.value,
-                          title: const Text('Exclude from Search Index'),
-                          subtitle: const Text(
-                            'Skip pages in this container from the local search index',
+                          title: Text(tr("Exclude from Search Index")),
+                          subtitle: Text(
+                            tr("Skip pages in this container from the local search index"),
                           ),
                           secondary: const Icon(MdiIcons.magnifyRemoveOutline),
                           onChanged: (value) {
@@ -643,7 +640,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                         const Divider(height: 1, indent: 56),
                         SwitchListTile.adaptive(
                           value: excludeFromHistory.value,
-                          title: const Text('Exclude from History'),
+                          title: Text(tr("Exclude from History")),
                           subtitle: const Text(
                             "Don't record new visits from this container's "
                             'tabs, and drop its pages from local search. '
@@ -674,13 +671,13 @@ class ContainerEditScreen extends HookConsumerWidget {
                       children: [
                         ListTile(
                           leading: const Icon(Icons.web),
-                          title: const Text('Assigned Sites'),
+                          title: Text(tr("Assigned Sites")),
                           subtitle: assignedSiteCount > 0
                               ? Text(
-                                  '$assignedSiteCount ${assignedSiteCount == 1 ? 'rule' : 'rules'} configured',
+                                  tr("{0} {1} configured", [assignedSiteCount, assignedSiteCount == 1 ? 'rule' : 'rules']),
                                 )
-                              : const Text(
-                                  'Route matching origins into this container',
+                              : Text(
+                                  tr("Route matching origins into this container"),
                                 ),
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () async {
@@ -704,11 +701,11 @@ class ContainerEditScreen extends HookConsumerWidget {
                           value:
                               contextualIdentity.value != null &&
                               strictMode.value,
-                          title: const Text('Strict Mode'),
+                          title: Text(tr("Strict Mode")),
                           subtitle: Text(
                             contextualIdentity.value != null
                                 ? 'Only allow assigned sites to load; block everything else'
-                                : 'Requires cookie isolation to be enabled',
+                                : tr("Requires cookie isolation to be enabled"),
                           ),
                           secondary: const Icon(MdiIcons.shieldLockOutline),
                           onChanged: (contextualIdentity.value != null)
@@ -722,7 +719,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'App Links',
+                    tr("App Links"),
                     style: theme.textTheme.titleSmall?.copyWith(
                       color: colorScheme.primary,
                       fontWeight: FontWeight.w700,
@@ -739,13 +736,11 @@ class ContainerEditScreen extends HookConsumerWidget {
                           value:
                               contextualIdentity.value != null &&
                               isolatedAppLinkSettings.value,
-                          title: const Text('Isolated App Link Settings'),
+                          title: Text(tr("Isolated App Link Settings")),
                           subtitle: Text(
                             contextualIdentity.value != null
-                                ? 'Use a separate open-in-app mode and remembered '
-                                      'site rules for this container instead of the '
-                                      'global settings'
-                                : 'Requires cookie isolation to be enabled',
+                                ? tr("Use a separate open-in-app mode and remembered site rules for this container instead of the global settings")
+                                : tr("Requires cookie isolation to be enabled"),
                           ),
                           secondary: const Icon(MdiIcons.openInApp),
                           onChanged: (contextualIdentity.value != null)
@@ -767,10 +762,9 @@ class ContainerEditScreen extends HookConsumerWidget {
                           const Divider(height: 1, indent: 56),
                           ListTile(
                             leading: const Icon(Icons.tune),
-                            title: const Text('App Link Behavior'),
-                            subtitle: const Text(
-                              "Configure this container's open-in-app mode and "
-                              'remembered sites',
+                            title: Text(tr("App Link Behavior")),
+                            subtitle: Text(
+                              tr("Configure this container's open-in-app mode and remembered sites"),
                             ),
                             trailing: const Icon(Icons.chevron_right),
                             onTap: () async {

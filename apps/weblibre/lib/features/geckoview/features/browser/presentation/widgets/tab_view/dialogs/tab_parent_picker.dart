@@ -24,6 +24,7 @@ import 'package:weblibre/features/geckoview/features/browser/presentation/widget
 import 'package:weblibre/features/geckoview/features/tabs/domain/providers.dart';
 import 'package:weblibre/features/geckoview/features/tabs/domain/repositories/tab.dart';
 import 'package:weblibre/presentation/widgets/pointer_scrollable_sheet.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Matches the fixed itemExtent used by the main tab list
 /// (`tab_list_view.dart`'s `_itemHeight`).
@@ -96,14 +97,14 @@ class _TabParentPickerSheet extends HookConsumerWidget {
       builder: (context, scrollController) {
         return movingTabAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, _) => Center(child: Text('Error: $e')),
+          error: (e, _) => Center(child: Text(tr("Error: {0}", [e]))),
           data: (movingTab) {
             if (movingTab == null) {
-              return const Center(child: Text('Tab no longer exists'));
+              return Center(child: Text(tr("Tab no longer exists")));
             }
             return descendantsAsync.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text('Error: $e')),
+              error: (e, _) => Center(child: Text(tr("Error: {0}", [e]))),
               data: (descendants) {
                 final excluded = descendants.keys.toSet()..add(tabId);
                 final containerId = movingTab.containerId;
@@ -113,7 +114,7 @@ class _TabParentPickerSheet extends HookConsumerWidget {
                 return candidatesAsync.when(
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
-                  error: (e, _) => Center(child: Text('Error: $e')),
+                  error: (e, _) => Center(child: Text(tr("Error: {0}", [e]))),
                   data: (tabs) {
                     final candidates = tabs
                         .where((t) => !excluded.contains(t.id))
@@ -121,11 +122,11 @@ class _TabParentPickerSheet extends HookConsumerWidget {
                     return CustomScrollView(
                       controller: scrollController,
                       slivers: [
-                        const SliverPadding(
+                        SliverPadding(
                           padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                           sliver: SliverToBoxAdapter(
                             child: Text(
-                              'Choose a parent tab',
+                              tr("Choose a parent tab"),
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -136,8 +137,8 @@ class _TabParentPickerSheet extends HookConsumerWidget {
                         SliverToBoxAdapter(
                           child: ListTile(
                             leading: const Icon(MdiIcons.fileTreeOutline),
-                            title: const Text('Make standalone'),
-                            subtitle: const Text('Detach from current parent'),
+                            title: Text(tr("Make standalone")),
+                            subtitle: Text(tr("Detach from current parent")),
                             enabled: movingTab.parentId != null,
                             onTap: () => Navigator.of(
                               context,
@@ -146,11 +147,11 @@ class _TabParentPickerSheet extends HookConsumerWidget {
                         ),
                         const SliverToBoxAdapter(child: Divider(height: 1)),
                         if (candidates.isEmpty)
-                          const SliverToBoxAdapter(
+                          SliverToBoxAdapter(
                             child: Padding(
                               padding: EdgeInsets.all(24),
                               child: Text(
-                                'No candidate tabs in this container.',
+                                tr("No candidate tabs in this container."),
                                 textAlign: TextAlign.center,
                               ),
                             ),

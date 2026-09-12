@@ -39,6 +39,7 @@ import 'package:weblibre/features/tor/domain/services/tor_proxy.dart';
 import 'package:weblibre/features/user/data/database/definitions.drift.dart'
     show ProxyProfile;
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SingboxProxyProfilesScreen extends HookConsumerWidget {
   const SingboxProxyProfilesScreen({super.key});
@@ -68,7 +69,7 @@ class SingboxProxyProfilesScreen extends HookConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => unawaited(_showAddSheet(context)),
         icon: const Icon(Icons.add),
-        label: const Text('Add Profile'),
+        label: Text(tr("Add Profile")),
       ),
       body: SafeArea(
         child: FadingScroll(
@@ -79,10 +80,10 @@ class SingboxProxyProfilesScreen extends HookConsumerWidget {
               slivers: [
                 SliverAppBar.large(
                   centerTitle: false,
-                  title: const Text('Proxy Connections'),
+                  title: Text(tr("Proxy Connections")),
                   actions: [
                     IconButton(
-                      tooltip: 'View logs',
+                      tooltip: tr("View logs"),
                       icon: const Icon(Icons.subject),
                       onPressed: () =>
                           const SingboxProxyLogsRoute().push(context),
@@ -145,7 +146,7 @@ class SingboxProxyProfilesScreen extends HookConsumerWidget {
                           padding: const EdgeInsets.all(24),
                           child: Center(
                             child: Text(
-                              'Failed to load proxy profiles:\n$error',
+                              tr("Failed to load proxy profiles:\n{0}", [error]),
                               textAlign: TextAlign.center,
                             ),
                           ),

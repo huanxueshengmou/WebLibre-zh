@@ -30,33 +30,34 @@ import 'package:weblibre/features/settings/presentation/widgets/settings_detail.
 import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/utils/uri_parser.dart' as uri_parser;
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> homeSettingsSections = [
+List<SettingsSectionDefinition> homeSettingsSections = [
   SettingsSectionDefinition(
     title: 'Startup',
     keywords: ['startup', 'home', 'resume', 'last tab', 'custom url'],
     entries: [
       SettingsEntryDefinition(
-        title: 'When there is no tab to show',
-        subtitle: 'On startup, and after closing the last tab',
+        title: tr("When there is no tab to show"),
+        subtitle: tr("On startup, and after closing the last tab"),
         keywords: ['startup', 'resume', 'last tab', 'custom url', 'homepage'],
         child: _HomeTargetTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Apply when the last tab closes',
-        subtitle: 'Otherwise a tab from another container is opened instead',
+        title: tr("Apply when the last tab closes"),
+        subtitle: tr("Otherwise a tab from another container is opened instead"),
         keywords: ['close', 'last tab', 'container'],
         child: _HomeTargetOnLastTabClosedTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: 'Appearance',
+    title: tr("Appearance"),
     keywords: ['home', 'wallpaper', 'background', 'image', 'blur', 'dim'],
     entries: [
       SettingsEntryDefinition(
         title: 'Wallpaper',
-        subtitle: 'A background image for the home page',
+        subtitle: tr("A background image for the home page"),
         keywords: [
           'wallpaper',
           'background',
@@ -76,8 +77,8 @@ const List<SettingsSectionDefinition> homeSettingsSections = [
     keywords: ['home', 'new tab', 'sections', 'modules', 'layout'],
     entries: [
       SettingsEntryDefinition(
-        title: 'Search bar position',
-        subtitle: 'Where the home page offers its search field',
+        title: tr("Search bar position"),
+        subtitle: tr("Where the home page offers its search field"),
         keywords: [
           'search',
           'bar',
@@ -92,8 +93,8 @@ const List<SettingsSectionDefinition> homeSettingsSections = [
         child: _HomeSearchBarPlacementTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Customize home sections',
-        subtitle: 'Choose and order what the home page shows',
+        title: tr("Customize home sections"),
+        subtitle: tr("Choose and order what the home page shows"),
         keywords: [
           'home',
           'sections',
@@ -105,8 +106,8 @@ const List<SettingsSectionDefinition> homeSettingsSections = [
         child: _CustomizeHomeSectionsTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Customize new tab sections',
-        subtitle: 'Choose and order what the new tab page shows',
+        title: tr("Customize new tab sections"),
+        subtitle: tr("Choose and order what the new tab page shows"),
         keywords: ['new tab', 'sections', 'shortcuts', 'reorder'],
         child: _CustomizeNewTabSectionsTile(),
       ),
@@ -119,9 +120,9 @@ class HomeSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
-      title: 'Home & New Tab',
-      subtitle: 'What the home and new tab pages show',
+    return SettingsDetailScaffold(
+      title: tr("Home & New Tab"),
+      subtitle: tr("What the home and new tab pages show"),
       icon: MdiIcons.homeOutline,
       sections: homeSettingsSections,
     );
@@ -225,10 +226,9 @@ class _HomeTargetOnLastTabClosedTile extends ConsumerWidget {
 
     return SwitchListTile.adaptive(
       value: enabled,
-      title: const Text('Apply when the last tab closes'),
-      subtitle: const Text(
-        'Closing the last tab in a container stays there instead of opening a '
-        'tab from somewhere else',
+      title: Text(tr("Apply when the last tab closes")),
+      subtitle: Text(
+        tr("Closing the last tab in a container stays there instead of opening a tab from somewhere else"),
       ),
       secondary: const Icon(Icons.tab_unselected),
       onChanged: (value) async {
@@ -300,8 +300,8 @@ class _WallpaperTile extends ConsumerWidget {
       title: const Text('Wallpaper'),
       subtitle: Text(
         hasWallpaper
-            ? 'A background image is set for the home page'
-            : 'Set a background image for the home page',
+            ? tr("A background image is set for the home page")
+            : tr("Set a background image for the home page"),
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => const WallpaperSettingsRoute().push(context),
@@ -316,8 +316,8 @@ class _CustomizeHomeSectionsTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: const Icon(MdiIcons.homeOutline),
-      title: const Text('Customize home sections'),
-      subtitle: const Text('Choose and order what the home page shows'),
+      title: Text(tr("Customize home sections")),
+      subtitle: Text(tr("Choose and order what the home page shows")),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => const HomeModulesSettingsRoute().push(context),
     );
@@ -331,8 +331,8 @@ class _CustomizeNewTabSectionsTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: const Icon(MdiIcons.tabPlus),
-      title: const Text('Customize new tab sections'),
-      subtitle: const Text('Choose and order what the new tab page shows'),
+      title: Text(tr("Customize new tab sections")),
+      subtitle: Text(tr("Choose and order what the new tab page shows")),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => const NewTabModulesSettingsRoute().push(context),
     );

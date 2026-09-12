@@ -35,6 +35,7 @@ import 'package:weblibre/features/proxy/presentation/widgets/profile_list/share_
 import 'package:weblibre/features/user/data/database/definitions.drift.dart'
     show ProxyProfile;
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum ProfileAction { edit, testLatency, share, delete }
 
@@ -92,9 +93,9 @@ class ProfileTile extends ConsumerWidget {
             enabled: !isBusy,
             onSelected: (action) => _onAction(context, ref, action),
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: ProfileAction.edit,
-                child: MenuRow(icon: Icons.edit_outlined, label: 'Edit'),
+                child: MenuRow(icon: Icons.edit_outlined, label: tr("Edit")),
               ),
               PopupMenuItem(
                 value: ProfileAction.testLatency,
@@ -103,12 +104,12 @@ class ProfileTile extends ConsumerWidget {
                   icon: latencyResult is AsyncLoading
                       ? Icons.hourglass_bottom
                       : Icons.network_check,
-                  label: 'Test connection',
+                  label: tr("Test connection"),
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: ProfileAction.share,
-                child: MenuRow(icon: Icons.share_outlined, label: 'Share'),
+                child: MenuRow(icon: Icons.share_outlined, label: tr("Share")),
               ),
               const PopupMenuItem(
                 value: ProfileAction.delete,
@@ -215,7 +216,7 @@ class ProfileTile extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),

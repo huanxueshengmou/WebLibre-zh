@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'search_modules_view.g.dart';
 
@@ -74,25 +75,25 @@ enum SearchModuleType {
   quickActions;
 
   String get label => switch (this) {
-    recentSearches => 'Recent Searches',
-    searchProviders => 'Search Providers',
+    recentSearches => tr("Recent Searches"),
+    searchProviders => tr("Search Providers"),
     searchSuggestions => 'Suggestions',
-    tabs => 'Tabs',
+    tabs => tr("Tabs"),
     articles => 'Articles',
-    bookmarks => 'Bookmarks',
-    history => 'History (engine)',
-    localHistory => 'Local content',
-    combinedHistory => 'History',
-    popularSites => 'Popular Sites',
-    historyHighlights => 'History Highlights',
+    bookmarks => tr("Bookmarks"),
+    history => tr("History (engine)"),
+    localHistory => tr("Local content"),
+    combinedHistory => tr("History"),
+    popularSites => tr("Popular Sites"),
+    historyHighlights => tr("History Highlights"),
     topSites => 'Shortcuts',
-    recentHistory => 'Recent History',
-    recentArticles => 'Recent Articles',
-    recentTabs => 'Recent Tabs',
-    containers => 'Containers',
-    frequentBangs => 'Frequent Bangs',
+    recentHistory => tr("Recent History"),
+    recentArticles => tr("Recent Articles"),
+    recentTabs => tr("Recent Tabs"),
+    containers => tr("Containers"),
+    frequentBangs => tr("Frequent Bangs"),
     quote => 'Quote',
-    quickActions => 'Quick Actions',
+    quickActions => tr("Quick Actions"),
   };
 }
 

@@ -23,6 +23,7 @@ import 'package:weblibre/features/settings/presentation/widgets/settings_detail.
 import 'package:weblibre/features/settings/presentation/widgets/toolbar_layout_content.dart';
 import 'package:weblibre/features/settings/presentation/widgets/toolbar_preview.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ToolbarLayoutSettingsScreen extends HookConsumerWidget {
   const ToolbarLayoutSettingsScreen({super.key});
@@ -33,9 +34,9 @@ class ToolbarLayoutSettingsScreen extends HookConsumerWidget {
     final search = useSettingsSearch();
 
     return SettingsCustomScrollScaffold(
-      title: 'Toolbar & Layout',
+      title: tr("Toolbar & Layout"),
       searchController: search.controller,
-      searchHintText: 'Search toolbar and layout settings',
+      searchHintText: tr("Search toolbar and layout settings"),
       slivers: [
         const SliverToBoxAdapter(child: SizedBox(height: 16)),
         SliverPersistentHeader(

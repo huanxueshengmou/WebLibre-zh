@@ -35,6 +35,7 @@ import 'package:weblibre/features/settings/domain/services/settings_transfer_ser
 import 'package:weblibre/features/settings/presentation/dialogs/settings_import_dialog.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// MIME type an export is written and picked with. Kept plain `application/json`
 /// so other apps — a file manager, a mail client, a bug tracker — recognise it.
@@ -341,7 +342,7 @@ class SettingsTransferScreen extends HookConsumerWidget {
             context,
             error is SettingsExportFormatException
                 ? error.message
-                : 'Could not import the settings: $error',
+                : tr("Could not import the settings: {0}", [error]),
           );
         }
       } finally {
@@ -410,13 +411,13 @@ class SettingsTransferScreen extends HookConsumerWidget {
     }
 
     return SettingsCustomScrollScaffold(
-      title: 'Export & Import',
+      title: tr("Export & Import"),
       actions: [
         MenuAnchor(
           menuChildren: [
             MenuItemButton(
               onPressed: busy.value ? null : chooseExportFolder,
-              child: const Text('Change export folder'),
+              child: Text(tr("Change export folder")),
             ),
           ],
           builder: (context, controller, child) => IconButton(
@@ -435,10 +436,7 @@ class SettingsTransferScreen extends HookConsumerWidget {
               spacing: 12,
               children: [
                 Text(
-                  'Move settings between profiles or devices, or attach them '
-                  'to a bug report. This carries settings only — no tabs, '
-                  'history, bookmarks or logins. For those, back up the whole '
-                  'profile.',
+                  tr("Move settings between profiles or devices, or attach them to a bug report. This carries settings only — no tabs, history, bookmarks or logins. For those, back up the whole profile."),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -447,8 +445,7 @@ class SettingsTransferScreen extends HookConsumerWidget {
                 // settings repositories an export reads, so neither this nor
                 // account sync carries them yet.
                 Text(
-                  'Web search preferences, home and new-tab layout, menu '
-                  'order and pinned add-ons stay on this device',
+                  tr("Web search preferences, home and new-tab layout, menu order and pinned add-ons stay on this device"),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -466,12 +463,11 @@ class SettingsTransferScreen extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const ListTile(
+                  ListTile(
                     leading: Icon(MdiIcons.fileExportOutline),
-                    title: Text('Export'),
+                    title: Text(tr("Export")),
                     subtitle: Text(
-                      'Write the sections you pick as a file you '
-                      'can read',
+                      tr("Write the sections you pick as a file you can read"),
                     ),
                   ),
                   for (final section in SettingsTransferSection.values)
@@ -503,7 +499,7 @@ class SettingsTransferScreen extends HookConsumerWidget {
                                 ? null
                                 : exportToFile,
                             icon: const Icon(Icons.save_outlined),
-                            label: const Text('Save file'),
+                            label: Text(tr("Save file")),
                           ),
                         ),
                         Expanded(
@@ -512,7 +508,7 @@ class SettingsTransferScreen extends HookConsumerWidget {
                                 ? null
                                 : exportToClipboard,
                             icon: const Icon(Icons.copy_outlined),
-                            label: const Text('Copy'),
+                            label: Text(tr("Copy")),
                           ),
                         ),
                       ],
@@ -532,12 +528,11 @@ class SettingsTransferScreen extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const ListTile(
+                  ListTile(
                     leading: Icon(MdiIcons.fileImportOutline),
-                    title: Text('Import'),
+                    title: Text(tr("Import")),
                     subtitle: Text(
-                      'You choose what to apply after the file is '
-                      'read',
+                      tr("You choose what to apply after the file is read"),
                     ),
                   ),
                   Padding(
@@ -549,14 +544,14 @@ class SettingsTransferScreen extends HookConsumerWidget {
                           child: FilledButton.icon(
                             onPressed: busy.value ? null : importFromFile,
                             icon: const Icon(Icons.folder_open_outlined),
-                            label: const Text('Open file'),
+                            label: Text(tr("Open file")),
                           ),
                         ),
                         Expanded(
                           child: OutlinedButton.icon(
                             onPressed: busy.value ? null : importFromClipboard,
                             icon: const Icon(Icons.paste_outlined),
-                            label: const Text('Paste'),
+                            label: Text(tr("Paste")),
                           ),
                         ),
                       ],

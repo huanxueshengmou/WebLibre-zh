@@ -25,6 +25,7 @@ import 'package:weblibre/core/startup/maintenance_scanner.dart';
 import 'package:weblibre/core/startup/models/maintenance_journal.dart';
 import 'package:weblibre/core/startup/startup_paths.dart';
 import 'package:weblibre/utils/filesystem.dart' as fs;
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Reading a [MaintenanceScan] the way the maintenance screen has to.
 ///
@@ -65,10 +66,10 @@ extension MaintenanceEvidence on MaintenanceScan {
   /// native to hand it straight back, rendering the same screen forever.
   List<String> get unresolvedEvidence => [
     for (final entry in unreadableJournals)
-      'Unreadable record: ${p.basename(entry.path)} (${entry.reason})',
+      tr("Unreadable record: {0} ({1})", [p.basename(entry.path), entry.reason]),
     for (final artifact in artifacts)
       if (artifact.hasOld)
-        'Interrupted replace: ${artifact.taskId} left a copy of the previous profile data aside',
+        tr("Interrupted replace: {0} left a copy of the previous profile data aside", [artifact.taskId]),
   ];
 
   /// Task ids with a journal of some kind, readable or not.

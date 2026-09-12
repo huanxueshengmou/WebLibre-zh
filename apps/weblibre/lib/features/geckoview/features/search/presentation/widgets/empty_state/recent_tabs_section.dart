@@ -25,6 +25,7 @@ import 'package:weblibre/features/geckoview/features/search/domain/providers/sea
 import 'package:weblibre/features/geckoview/features/search/presentation/widgets/search_modules/search_module_section.dart';
 import 'package:weblibre/features/web_search/domain/controllers/sandbox_capture_controller.dart';
 import 'package:weblibre/presentation/widgets/url_list_tile.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class RecentTabsSection extends ConsumerWidget {
   final void Function(String tabId) onTabSelected;
@@ -40,7 +41,7 @@ class RecentTabsSection extends ConsumerWidget {
     }
 
     return SearchModuleSection(
-      title: 'Recent Tabs',
+      title: tr("Recent Tabs"),
       moduleType: SearchModuleType.recentTabs,
       totalCount: tabs.length,
       contentSliverBuilder:

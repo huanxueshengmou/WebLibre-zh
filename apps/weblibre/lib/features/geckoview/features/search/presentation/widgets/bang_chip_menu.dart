@@ -31,6 +31,7 @@ import 'package:weblibre/features/geckoview/features/search/presentation/dialogs
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/hooks/menu_controller.dart';
 import 'package:weblibre/presentation/widgets/reorderable_hold_drag.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Whether resetting [bang]'s usage frequency is offered.
 ///
@@ -86,7 +87,7 @@ class BangChipMenu extends HookConsumerWidget {
           onPressed: () async {
             await ref.read(pinnedBangsProvider.notifier).toggle(bang.toKey());
           },
-          child: Text(isPinned ? 'Unpin' : 'Pin'),
+          child: Text(isPinned ? tr("Unpin") : tr("Pin")),
         ),
         if (canResetBangFrequency(bang: bang, defaultBang: defaultBang))
           MenuItemButton(
@@ -103,7 +104,7 @@ class BangChipMenu extends HookConsumerWidget {
                     .resetFrequency(bang.toKey());
               }
             },
-            child: const Text('Reset frequency'),
+            child: Text(tr("Reset frequency")),
           ),
         MenuItemButton(
           leadingIcon: const Icon(MdiIcons.pencilBoxOutline),
@@ -116,7 +117,7 @@ class BangChipMenu extends HookConsumerWidget {
               fork: !isUserBang,
             ).push(context);
           },
-          child: Text(isUserBang ? 'Edit bang' : 'Customize as your own bang'),
+          child: Text(isUserBang ? tr("Edit bang") : tr("Customize as your own bang")),
         ),
       ],
       builder: (context, controller, _) => HoldMenuListener(

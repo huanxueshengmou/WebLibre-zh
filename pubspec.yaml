@@ -24,7 +24,9 @@ melos:
 
   command:
     bootstrap:
-      enforceLockfile: true
+      # [weblibre-zh] relaxed: we add a dependency (flutter_localizations),
+      # so the lockfile necessarily differs from upstream's.
+      enforceLockfile: false
     clean:
       hooks:
         pre: melos exec -c 1 -- "flutter clean"

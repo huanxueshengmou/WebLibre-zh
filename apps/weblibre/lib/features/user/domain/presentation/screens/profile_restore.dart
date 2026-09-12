@@ -37,6 +37,7 @@ import 'package:weblibre/presentation/widgets/obscurable_text_field.dart';
 import 'package:weblibre/utils/exit_app.dart';
 import 'package:weblibre/utils/form_validators.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum RestoreTarget { createOrOverride, createNew }
 
@@ -221,7 +222,7 @@ class ProfileRestoreScreen extends HookConsumerWidget {
         restoreTarget.value == RestoreTarget.createNew && passwordText.isEmpty;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Restore Backup')),
+      appBar: AppBar(title: Text(tr("Restore Backup"))),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -256,8 +257,7 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                           ? 'This password did not open the backup file'
                           : null,
                       helperText:
-                          'The password this backup file was created '
-                          'with.',
+                          tr("The password this backup file was created with."),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -276,16 +276,16 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                           enabled: !disableInteraction,
                           value: RestoreTarget.createNew,
                           title: const Text('Create a new profile'),
-                          subtitle: const Text(
-                            'Keep your existing profiles and add this backup',
+                          subtitle: Text(
+                            tr("Keep your existing profiles and add this backup"),
                           ),
                         ),
                         RadioListTile(
                           enabled: !disableInteraction,
                           value: RestoreTarget.createOrOverride,
-                          title: const Text('Replace an existing profile'),
-                          subtitle: const Text(
-                            'Restart and overwrite one profile with this backup',
+                          title: Text(tr("Replace an existing profile")),
+                          subtitle: Text(
+                            tr("Restart and overwrite one profile with this backup"),
                           ),
                         ),
                       ],
@@ -295,8 +295,8 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                   TextFormField(
                     controller: nameTextController,
                     enabled: !disableInteraction,
-                    decoration: const InputDecoration(
-                      label: Text('Name'),
+                    decoration: InputDecoration(
+                      label: Text(tr("Name")),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
                     validator: validateProfileName,
@@ -306,15 +306,14 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                   // a different profile from the one the archive was taken from,
                   // so the state that identifies that profile does not come with
                   // it — see `applyCloneParticipantPolicy`.
-                  const ListTile(
+                  ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: Icon(Icons.info_outline),
                     title: Text(
-                      'A new profile starts without WebLibre sign-in',
+                      tr("A new profile starts without WebLibre sign-in"),
                     ),
                     subtitle: Text(
-                      'Tabs, history and bookmarks are restored. Sign-in and '
-                      'sync data stay with the original profile.',
+                      tr("Tabs, history and bookmarks are restored. Sign-in and sync data stay with the original profile."),
                     ),
                   ),
                 ],
@@ -324,12 +323,12 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.person_outline),
                       title: Text(
-                        'Restoring into "${labelFor(forcedOverwriteTarget!)}"',
+                        tr("Restoring into \"{0}\"", [labelFor(forcedOverwriteTarget!)]),
                       ),
                       subtitle: Text(
                         adoptArchiveName
-                            ? 'The backup keeps the lock you configured.'
-                            : 'The profile keeps its name and lock.',
+                            ? tr("The backup keeps the lock you configured.")
+                            : tr("The profile keeps its name and lock."),
                       ),
                     )
                   else
@@ -349,8 +348,8 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                       // target the user cannot see was already chosen.
                       key: ValueKey(overwriteTarget.value?.id),
                       initialValue: overwriteTarget.value,
-                      decoration: const InputDecoration(
-                        label: Text('Profile to replace'),
+                      decoration: InputDecoration(
+                        label: Text(tr("Profile to replace")),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                       ),
                       items: [
@@ -377,12 +376,10 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.help_outline),
                       title: Text(
-                        '${archiveMatches.length} profiles are called '
-                        '"${archive!.profileName}"',
+                        tr("{0} profiles are called \"{1}\"", [archiveMatches.length, archive!.profileName]),
                       ),
-                      subtitle: const Text(
-                        'The backup names a profile but cannot say which one, '
-                        'so pick the one to replace. $cannotBeUndone',
+                      subtitle: Text(
+                        tr("The backup names a profile but cannot say which one, so pick the one to replace. {0}", [cannotBeUndone]),
                       ),
                     ),
                   ],
@@ -392,7 +389,7 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.swap_horiz),
                       title: Text(
-                        'This backup was taken from "${archive.profileName}"',
+                        tr("This backup was taken from \"{0}\"", [archive.profileName]),
                       ),
                       // Allowed, and worth saying anyway: the uuid names where a
                       // tree lives rather than what is in it, so the data is
@@ -406,9 +403,7 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                       // shortcuts would otherwise still authenticate into data
                       // that is now someone else's.
                       subtitle: Text(
-                        'It replaces '
-                        '"${labelFor(overwriteTarget.value!)}", which keeps '
-                        'its name and lock. $shortcutsNeedPinningAgain',
+                        tr("It replaces \"{0}\", which keeps its name and lock. {1}", [labelFor(overwriteTarget.value!), shortcutsNeedPinningAgain]),
                       ),
                     ),
                   ],
@@ -418,11 +413,10 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.badge_outlined),
                       title: Text(
-                        'This profile will be called "${archive.profileName}"',
+                        tr("This profile will be called \"{0}\"", [archive.profileName]),
                       ),
-                      subtitle: const Text(
-                        'The name comes from the backup. '
-                        '$shortcutsNeedPinningAgain',
+                      subtitle: Text(
+                        tr("The name comes from the backup. {0}", [shortcutsNeedPinningAgain]),
                       ),
                     ),
                   ],
@@ -432,14 +426,12 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                   // see `applyCloneParticipantPolicy` — and saying so on only one of
                   // the two branches is what made the backup screen's
                   // "comes back signed in" read as a contradiction.
-                  const ListTile(
+                  ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: Icon(Icons.key_outlined),
-                    title: Text('WebLibre account data is restored'),
+                    title: Text(tr("WebLibre account data is restored")),
                     subtitle: Text(
-                      "Replacing restores the backup file's "
-                      '$profileSecretDataDescription. $signedInFromBackup '
-                      '$olderBackupKeepsCredentials',
+                      tr("Replacing restores the backup file's {0}. {1} {2}", [profileSecretDataDescription, signedInFromBackup, olderBackupKeepsCredentials]),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -451,8 +443,8 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                     ),
                     title: Text(
                       _targetIsFixed
-                          ? 'This replaces the profile you are setting up'
-                          : 'This replaces everything in that profile',
+                          ? tr("This replaces the profile you are setting up")
+                          : tr("This replaces everything in that profile"),
                     ),
                     // Two sentences rather than one with a hole in it: the
                     // first-run target was created minutes ago, and telling
@@ -460,12 +452,8 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                     // they have none is how a warning stops being read.
                     subtitle: Text(
                       _targetIsFixed
-                          ? '$restartsThenAsksPassword Anything already in '
-                                'this profile is gone once it starts.'
-                          : '$restartsThenAsksPassword The current '
-                                '$profileDataDescription of '
-                                '${overwriteTarget.value == null ? 'that profile' : '"${labelFor(overwriteTarget.value!)}"'} '
-                                'are gone once it starts.',
+                          ? tr("{0} Anything already in this profile is gone once it starts.", [restartsThenAsksPassword])
+                          : tr("{0} The current {1} of {2} are gone once it starts.", [restartsThenAsksPassword, profileDataDescription, overwriteTarget.value == null ? 'that profile' : '"${labelFor(overwriteTarget.value!)}"']),
                     ),
                   ),
                 ],
@@ -481,8 +469,8 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                       // until the next process asks for the password.
                       Text(
                         restoreTarget.value == RestoreTarget.createNew
-                            ? 'Restoring backup…'
-                            : 'Closing WebLibre to restore…',
+                            ? tr("Restoring backup…")
+                            : tr("Closing WebLibre to restore…"),
                       ),
                     ],
                   )
@@ -547,7 +535,7 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                                     );
                             }
                           },
-                    label: const Text('Restore'),
+                    label: Text(tr("Restore")),
                   ),
               ],
             ),

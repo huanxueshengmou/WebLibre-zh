@@ -24,14 +24,15 @@ import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/features/user/data/models/proxy_diagnostics_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/proxy_diagnostics_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
-const List<SettingsSectionDefinition> proxySettingsSections = [
+List<SettingsSectionDefinition> proxySettingsSections = [
   SettingsSectionDefinition(
-    title: 'Proxy',
+    title: tr("Proxy"),
     entries: [
       SettingsEntryDefinition(
-        title: 'Proxy Connections',
-        subtitle: 'Manage proxy profiles and connections',
+        title: tr("Proxy Connections"),
+        subtitle: tr("Manage proxy profiles and connections"),
         keywords: [
           'sing-box',
           'socks',
@@ -46,14 +47,14 @@ const List<SettingsSectionDefinition> proxySettingsSections = [
         child: _ProxyConnectionsTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Proxy Routing',
-        subtitle: 'Choose which proxy carries regular and private tabs',
+        title: tr("Proxy Routing"),
+        subtitle: tr("Choose which proxy carries regular and private tabs"),
         keywords: ['routing', 'container'],
         child: _ProxyRoutingTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Proxy Logs',
-        subtitle: 'Read the proxy log and set how much it records',
+        title: tr("Proxy Logs"),
+        subtitle: tr("Read the proxy log and set how much it records"),
         keywords: [
           'log',
           'logging',
@@ -76,9 +77,9 @@ class ProxySettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SettingsDetailScaffold(
-      title: 'Proxy',
-      subtitle: 'Manage proxy connections and choose which tabs use them.',
+    return SettingsDetailScaffold(
+      title: tr("Proxy"),
+      subtitle: tr("Manage proxy connections and choose which tabs use them."),
       icon: MdiIcons.lanConnect,
       sections: proxySettingsSections,
     );
@@ -92,8 +93,8 @@ class _ProxyConnectionsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(MdiIcons.lanConnect),
-      title: const Text('Proxy Connections'),
-      subtitle: const Text('Manage proxy profiles and connections'),
+      title: Text(tr("Proxy Connections")),
+      subtitle: Text(tr("Manage proxy profiles and connections")),
       trailing: const Icon(Icons.chevron_right),
       contentPadding: const EdgeInsets.symmetric(
         vertical: 8.0,
@@ -113,9 +114,9 @@ class _ProxyRoutingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.route_outlined),
-      title: const Text('Proxy Routing'),
-      subtitle: const Text(
-        'Choose which proxy carries regular and private tabs',
+      title: Text(tr("Proxy Routing")),
+      subtitle: Text(
+        tr("Choose which proxy carries regular and private tabs"),
       ),
       trailing: const Icon(Icons.chevron_right),
       contentPadding: const EdgeInsets.symmetric(
@@ -152,10 +153,10 @@ class _ProxyLogsTile extends ConsumerWidget {
             : MdiIcons.textBoxOutline,
         color: logLevel.isVerbose ? Theme.of(context).colorScheme.error : null,
       ),
-      title: const Text('Proxy Logs'),
+      title: Text(tr("Proxy Logs")),
       subtitle: Text(
         logLevel.isVerbose
-            ? 'Recording ${logLevel.label.toLowerCase()} — this slows browsing'
+            ? tr("Recording {0} — this slows browsing", [logLevel.label.toLowerCase()])
             : 'Recording ${logLevel.label.toLowerCase()}',
       ),
       trailing: const Icon(Icons.chevron_right),

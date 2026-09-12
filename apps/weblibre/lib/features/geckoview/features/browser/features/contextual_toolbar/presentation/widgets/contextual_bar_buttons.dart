@@ -39,6 +39,7 @@ import 'package:weblibre/features/geckoview/features/tabs/utils/background_tab_o
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/features/web_search/domain/controllers/sandbox_capture_controller.dart';
 import 'package:weblibre/presentation/hooks/menu_controller.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ShareMenuButton extends StatelessWidget {
   final String? selectedTabId;
@@ -233,7 +234,7 @@ class CloneTabMenu extends HookConsumerWidget {
           onPressed: selectedTabId == null
               ? null
               : () => _cloneTabAsRegular(context, ref, selectedTabId!),
-          child: const Text('Clone as Regular'),
+          child: Text(tr("Clone as Regular")),
         ),
         MenuItemButton(
           leadingIcon: Icon(
@@ -243,7 +244,7 @@ class CloneTabMenu extends HookConsumerWidget {
           onPressed: selectedTabId == null
               ? null
               : () => _cloneTabAsPrivate(context, ref, selectedTabId!),
-          child: const Text('Clone as Private'),
+          child: Text(tr("Clone as Private")),
         ),
         if (showIsolatedTabUi)
           MenuItemButton(
@@ -254,7 +255,7 @@ class CloneTabMenu extends HookConsumerWidget {
             onPressed: selectedTabId == null
                 ? null
                 : () => _cloneTabAsIsolated(context, ref, selectedTabId!),
-            child: const Text('Clone as Isolated'),
+            child: Text(tr("Clone as Isolated")),
           ),
       ],
       child: child,

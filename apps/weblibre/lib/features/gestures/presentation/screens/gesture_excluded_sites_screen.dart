@@ -23,6 +23,7 @@ import 'package:weblibre/features/gestures/data/models/gesture_settings.dart';
 import 'package:weblibre/features/gestures/domain/repositories/gesture_settings.dart';
 import 'package:weblibre/features/settings/presentation/widgets/string_list_settings_screen.dart';
 import 'package:weblibre/utils/host_rules.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Manages the list of sites on which gestures are disabled.
 class GestureExcludedSitesScreen extends HookConsumerWidget {
@@ -35,14 +36,13 @@ class GestureExcludedSitesScreen extends HookConsumerWidget {
     );
 
     return StringListSettingsScreen(
-      title: 'Excluded sites',
+      title: tr("Excluded sites"),
       description:
-          'Gestures are disabled on these sites. Subdomains are included '
-          '(e.g. "example.com" also covers "m.example.com").',
+          tr("Gestures are disabled on these sites. Subdomains are included (e.g. \"example.com\" also covers \"m.example.com\")."),
       values: excludedSites,
       hintText: 'example.com',
       itemIcon: Icons.public_off,
-      emptyLabel: 'No sites excluded.',
+      emptyLabel: tr("No sites excluded."),
       normalize: normalizeRuleHost,
       onChanged: (next) async {
         await ref

@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class FailureWidget extends StatelessWidget {
   const FailureWidget({
@@ -40,7 +41,7 @@ class FailureWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            title: Text(title ?? 'Something went wrong'),
+            title: Text(title ?? tr("Something went wrong")),
             subtitle: exception != null
                 ? switch (exception) {
                     final String string => Text(string),
@@ -71,7 +72,7 @@ class FailureWidget extends StatelessWidget {
                   style: OutlinedButton.styleFrom(
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  label: const Text('Retry'),
+                  label: Text(tr("Retry")),
                   icon: const Icon(Icons.refresh_outlined),
                 ),
               ),

@@ -28,6 +28,7 @@ import 'package:weblibre/features/small_web/domain/providers.dart';
 import 'package:weblibre/features/small_web/presentation/controllers/small_web_session_controller.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SmallWebHistoryHeader extends ConsumerWidget {
   final SmallWebSourceKind sourceKind;
@@ -47,7 +48,7 @@ class SmallWebHistoryHeader extends ConsumerWidget {
 
     return Row(
       children: [
-        Text('Recent Discoveries', style: theme.textTheme.titleSmall),
+        Text(tr("Recent Discoveries"), style: theme.textTheme.titleSmall),
         const Spacer(),
         MenuAnchor(
           builder: (context, controller, _) => IconButton(
@@ -77,7 +78,7 @@ class SmallWebHistoryHeader extends ConsumerWidget {
                         mode: mode,
                       );
                 },
-                child: Text('Clear $modeLabel'),
+                child: Text(tr("Clear {0}", [modeLabel])),
               ),
             MenuItemButton(
               leadingIcon: Icon(
@@ -89,18 +90,18 @@ class SmallWebHistoryHeader extends ConsumerWidget {
                 final confirmed = await showDialog<bool>(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Clear all discoveries?'),
-                    content: const Text(
-                      'This will permanently remove all recent discovery history across every mode and source.',
+                    title: Text(tr("Clear all discoveries?")),
+                    content: Text(
+                      tr("This will permanently remove all recent discovery history across every mode and source."),
                     ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
-                        child: const Text('Cancel'),
+                        child: Text(tr("Cancel")),
                       ),
                       FilledButton(
                         onPressed: () => Navigator.pop(context, true),
-                        child: const Text('Clear All'),
+                        child: Text(tr("Clear All")),
                       ),
                     ],
                   ),
@@ -113,7 +114,7 @@ class SmallWebHistoryHeader extends ConsumerWidget {
                 }
               },
               child: Text(
-                'Clear all discoveries',
+                tr("Clear all discoveries"),
                 style: TextStyle(color: colorScheme.error),
               ),
             ),
@@ -151,7 +152,7 @@ class SmallWebHistoryList extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Center(
               child: Text(
-                'No discoveries yet.\nTap Discover to start exploring!',
+                tr("No discoveries yet.\nTap Discover to start exploring!"),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -186,14 +187,14 @@ class SmallWebHistoryList extends HookConsumerWidget {
             if (hasMore && !expanded.value)
               TextButton(
                 onPressed: () => expanded.value = true,
-                child: Text('Show ${visits.length - _initialCount} more'),
+                child: Text(tr("Show {0} more", [visits.length - _initialCount])),
               ),
           ],
         );
       },
       error: (error, _) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Center(child: Text('Failed to load history: $error')),
+        child: Center(child: Text(tr("Failed to load history: {0}", [error]))),
       ),
       loading: () => const Padding(
         padding: EdgeInsets.symmetric(vertical: 16),

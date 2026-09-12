@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/settings/presentation/widgets/doh_settings_content.dart';
 import 'package:weblibre/presentation/widgets/browser_page.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class DohSettingsPage extends HookConsumerWidget {
   const DohSettingsPage({super.key});
@@ -37,7 +38,7 @@ class DohSettingsPage extends HookConsumerWidget {
             const SizedBox(height: 24),
             Center(
               child: Text(
-                'DNS over HTTPS',
+                tr("DNS over HTTPS"),
                 style: theme.textTheme.headlineMedium,
               ),
             ),

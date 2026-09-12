@@ -27,6 +27,7 @@ import 'package:weblibre/features/geckoview/features/pwa/domain/providers.dart';
 import 'package:weblibre/features/geckoview/features/pwa/presentation/dialogs/pwa_install_dialog.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows install bottom sheet for sites with a valid PWA manifest (existing flow).
 Future<void> showPwaInstallDialog(BuildContext context, WidgetRef ref) async {
@@ -94,7 +95,7 @@ Future<void> showShortcutInstallDialog(
   final tabState = ref.read(tabStateProvider(selectedTabId));
   final defaultName = tabState?.title.trim().isNotEmpty == true
       ? tabState!.title
-      : 'this site';
+      : tr("this site");
   final url = tabState?.url ?? Uri.parse('about:blank');
 
   final settings = ref.read(generalSettingsWithDefaultsProvider);

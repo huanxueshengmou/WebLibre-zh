@@ -25,6 +25,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/geckoview/domain/providers/tab_state.dart';
 import 'package:weblibre/features/geckoview/features/contextmenu/extensions/hit_result.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_mode.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SaveImage extends HookConsumerWidget {
   final HitResult hitResult;
@@ -39,7 +40,7 @@ class SaveImage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: const Icon(MdiIcons.imageMove),
-      title: const Text('Save image'),
+      title: Text(tr("Save image")),
       onTap: () async {
         final currentTab = ref.read(selectedTabStateProvider);
         final url = hitResult.tryGetSource();

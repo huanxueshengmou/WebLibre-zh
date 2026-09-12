@@ -33,6 +33,7 @@ import 'package:weblibre/features/user/domain/providers/backup_directory.dart';
 import 'package:weblibre/features/user/domain/services/user_backup.dart';
 import 'package:weblibre/utils/exit_app.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ProfileBackupScreen extends HookConsumerWidget {
   final Profile profile;
@@ -87,20 +88,18 @@ class ProfileBackupScreen extends HookConsumerWidget {
               // profile is closed", which is only half of it: the profile that
               // closes is *this* one, whether or not it is the one being
               // backed up.
-              const ListTile(
+              ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.restart_alt),
-                title: Text('WebLibre restarts to do this'),
+                title: Text(tr("WebLibre restarts to do this")),
                 subtitle: Text(
-                  '$restartClosesCurrentProfile The backup is then taken with '
-                  'nothing writing to the profile it copies, which is what '
-                  'makes it consistent.',
+                  tr("{0} The backup is then taken with nothing writing to the profile it copies, which is what makes it consistent.", [restartClosesCurrentProfile]),
                 ),
               ),
-              const ListTile(
+              ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.lock_outline),
-                title: Text('You set the password next'),
+                title: Text(tr("You set the password next")),
                 // Asked for after the restart instead of here. A password is
                 // the one thing that must not be written into the durable task
                 // record that survives it.
@@ -115,21 +114,20 @@ class ProfileBackupScreen extends HookConsumerWidget {
                     : (value) {
                         integrityVerification.value = value;
                       },
-                title: const Text('Verify backup integrity'),
+                title: Text(tr("Verify backup integrity")),
                 subtitle: const Text('Check that the backup can be restored'),
               ),
-              const ListTile(
+              ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.info_outline),
-                title: Text('Temporary data is skipped'),
+                title: Text(tr("Temporary data is skipped")),
                 // Not a toggle any more: the exclusion list is part of the
                 // backup format, so a restored profile can rely on it.
                 subtitle: Text(
-                  'Cache files and other data WebLibre can rebuild are not '
-                  'saved. $shortcutsNeedPinningAgain',
+                  tr("Cache files and other data WebLibre can rebuild are not saved. {0}", [shortcutsNeedPinningAgain]),
                 ),
               ),
-              const ListTile(
+              ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.key_outlined),
                 // Said plainly, because it changes what the file is. It also has
@@ -140,7 +138,7 @@ class ProfileBackupScreen extends HookConsumerWidget {
                 // profiles is the isolation failure the profile boundary exists
                 // to prevent. Saying only the first half read as a contradiction
                 // of what the restore screen says.
-                title: Text('WebLibre account data is included'),
+                title: Text(tr("WebLibre account data is included")),
                 subtitle: Text(
                   'The backup file includes this profile’s '
                   '$profileSecretDataDescription. Replacing a profile restores '
@@ -149,14 +147,14 @@ class ProfileBackupScreen extends HookConsumerWidget {
               ),
               const SizedBox(height: 16),
               if (disableInteraction)
-                const Column(
+                Column(
                   children: [
                     LinearProgressIndicator(),
                     SizedBox(height: 8),
                     // Not "Creating Backup": nothing is written here. This
                     // records the task and closes the app, and the next
                     // process takes the archive.
-                    Text('Closing WebLibre to take the backup…'),
+                    Text(tr("Closing WebLibre to take the backup…")),
                   ],
                 )
               else

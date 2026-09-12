@@ -44,6 +44,7 @@ import 'package:weblibre/features/web_search/domain/controllers/sandbox_capture_
 import 'package:weblibre/presentation/widgets/qr_scanner_button.dart';
 import 'package:weblibre/presentation/widgets/speech_to_text_button.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class CompactAppBarTitle extends ConsumerWidget {
   const CompactAppBarTitle({
@@ -762,7 +763,7 @@ class _EmptyRailAddressField extends StatelessWidget {
         child: RotatedBox(
           quarterTurns: quarterTurns,
           child: Text(
-            'Search or enter URL',
+            tr("Search or enter URL"),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: theme.textTheme.bodyMedium?.copyWith(
@@ -849,7 +850,7 @@ class _EmptyAppBarAddressField extends StatelessWidget {
     }
 
     final label = Text(
-      'Search or enter URL',
+      tr("Search or enter URL"),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: theme.textTheme.bodyMedium?.copyWith(

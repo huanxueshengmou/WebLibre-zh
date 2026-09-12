@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/proxy/domain/services/proxy_latency_tester.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class LatencyChip extends StatelessWidget {
   final AsyncValue<ProxyLatencyData> result;
@@ -50,7 +51,7 @@ class _LatencyStatusChip extends StatelessWidget {
   const _LatencyStatusChip.loading()
     : this(
         label: 'Testing...',
-        tooltip: 'Latency test running',
+        tooltip: tr("Latency test running"),
         isError: false,
       );
 
@@ -84,8 +85,8 @@ class _LatencySuccessChip extends StatelessWidget {
     final (background, foreground) = _latencyColors(scheme, value.latency);
 
     return _LatencyChipContainer(
-      label: '${value.latency.inMilliseconds} ms',
-      tooltip: 'HTTP ${value.statusCode} in ${value.latency.inMilliseconds} ms',
+      label: tr("{0} ms", [value.latency.inMilliseconds]),
+      tooltip: tr("HTTP {0} in {1} ms", [value.statusCode, value.latency.inMilliseconds]),
       backgroundColor: background,
       foregroundColor: foreground,
     );

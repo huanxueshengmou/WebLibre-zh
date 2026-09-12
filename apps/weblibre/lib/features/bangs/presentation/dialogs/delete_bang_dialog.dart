@@ -19,6 +19,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Dialog to confirm bang deletion.
 /// Returns true if user confirms deletion, false if cancelled, null if dismissed.
@@ -35,7 +36,7 @@ Future<bool?> showDeleteBangDialog(BuildContext context) {
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           TextButton(
             onPressed: () {

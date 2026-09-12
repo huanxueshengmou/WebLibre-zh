@@ -28,6 +28,7 @@ import 'package:weblibre/features/web_feed/presentation/controllers/fetch_articl
 import 'package:weblibre/features/web_feed/presentation/widgets/feed_article_card.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/speech_to_text_button.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class FeedArticleListScreen extends HookConsumerWidget {
   final Uri? feedId;
@@ -90,7 +91,7 @@ class FeedArticleListScreen extends HookConsumerWidget {
                         focusNode: focusNode,
                         controller: searchTextController,
                         decoration: InputDecoration(
-                          label: const Text('Search'),
+                          label: Text(tr("Search")),
                           suffixIcon: hasText
                               ? IconButton(
                                   onPressed: () {
@@ -186,7 +187,7 @@ class FeedArticleListScreen extends HookConsumerWidget {
           },
           error: (error, stackTrace) => Center(
             child: FailureWidget(
-              title: 'Failed to load Articles',
+              title: tr("Failed to load Articles"),
               exception: error,
             ),
           ),

@@ -76,6 +76,7 @@ import 'package:weblibre/presentation/hooks/sampled_value_notifier.dart';
 import 'package:weblibre/utils/input_classification.dart';
 import 'package:weblibre/utils/text_field_line_count.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 class SearchScreen extends HookConsumerWidget {
   final String? initialSearchText;
@@ -695,7 +696,7 @@ class SearchScreen extends HookConsumerWidget {
                     automaticallyImplyLeading: false,
                     leading: showCloseButton
                         ? IconButton(
-                            tooltip: 'Close',
+                            tooltip: tr("Close"),
                             icon: const Icon(Icons.close),
                             onPressed: () => context.pop(),
                           )
@@ -798,7 +799,7 @@ class SearchScreen extends HookConsumerWidget {
                         focusNode: searchFocusNode,
                         maxLines: isEditMode ? 3 : 1,
                         privateMode: privateTabMode,
-                        label: const Text('Search or enter URL'),
+                        label: Text(tr("Search or enter URL")),
                         unfocusOnTapOutside: false,
                         onClearPressed: () {
                           final url = revertUrl.value;

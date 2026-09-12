@@ -31,6 +31,7 @@ import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/text_highlight.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// FTS5-backed search over the local history index. Sits next to the engine
 /// "History" module (which is frecency-ranked from Places). Future iteration
@@ -63,7 +64,7 @@ class LocalHistorySuggestions extends HookConsumerWidget {
     );
 
     return SearchModuleSection(
-      title: 'Local content',
+      title: tr("Local content"),
       moduleType: SearchModuleType.localHistory,
       totalCount: results.length,
       contentSliverBuilder:
@@ -161,7 +162,7 @@ class LocalHistorySuggestions extends HookConsumerWidget {
                 },
                 error: (error, stackTrace) => SliverToBoxAdapter(
                   child: FailureWidget(
-                    title: 'Could not load local content',
+                    title: tr("Could not load local content"),
                     exception: error,
                   ),
                 ),

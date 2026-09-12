@@ -24,6 +24,7 @@ import 'package:flutter_mozilla_components/flutter_mozilla_components.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/geckoview/features/bookmarks/presentation/widgets/folder_tree_picker.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows a bottom sheet for selecting a bookmark folder destination (for move operations).
 ///
@@ -64,7 +65,7 @@ class _SelectBookmarkFolderSheet extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Move to Folder',
+              tr("Move to Folder"),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
@@ -92,7 +93,7 @@ class _SelectBookmarkFolderSheet extends HookConsumerWidget {
               children: [
                 TextButton(
                   onPressed: () => context.pop(),
-                  child: const Text('Cancel'),
+                  child: Text(tr("Cancel")),
                 ),
                 const SizedBox(width: 8),
                 FilledButton(

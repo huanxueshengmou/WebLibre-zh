@@ -23,6 +23,7 @@ import 'package:weblibre/core/maintenance/backup_operation.dart';
 import 'package:weblibre/core/maintenance/saf_archive_target.dart' as saf;
 import 'package:weblibre/core/startup/models/startup_config.dart';
 import 'package:weblibre/utils/number_format.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// The operation stopped before it changed anything, and cleaned up after
 /// itself.
@@ -122,7 +123,7 @@ final class DamagedArchive extends MaintenanceFailure {
 
   @override
   String get message =>
-      'This backup file is damaged and could not be read. $nothingChanged';
+      tr("This backup file is damaged and could not be read. {0}", [nothingChanged]);
 }
 
 /// The archive was written in a format this build does not know.
@@ -139,8 +140,7 @@ final class UnsupportedArchiveVersion extends MaintenanceFailure {
 
   @override
   String get message =>
-      'This backup file was created by a newer version of WebLibre and cannot be '
-      'read here. $nothingChanged';
+      tr("This backup file was created by a newer version of WebLibre and cannot be read here. {0}", [nothingChanged]);
 }
 
 /// There is not enough room to do the work.
@@ -180,8 +180,7 @@ final class BackupFolderUnavailableFailure extends MaintenanceFailure {
 
   @override
   String get message =>
-      'The backup could not be written to the folder. Choose the folder again '
-      'and retry. $nothingChanged';
+      tr("The backup could not be written to the folder. Choose the folder again and retry. {0}", [nothingChanged]);
 }
 
 /// The staged archive is not what it has to be to be installed.

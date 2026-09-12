@@ -30,6 +30,7 @@ import 'package:weblibre/features/proxy/presentation/widgets/proxy_log_level_she
 import 'package:weblibre/features/user/data/models/proxy_diagnostics_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/proxy_diagnostics_settings.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Built once. Constructing a [DateFormat] parses its pattern, and doing that
 /// per line per frame is most of what a log line costs to paint.
@@ -89,20 +90,20 @@ class SingboxProxyLogsScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Proxy Logs'),
+        title: Text(tr("Proxy Logs")),
         actions: [
           IconButton(
-            tooltip: 'Copy all',
+            tooltip: tr("Copy all"),
             icon: const Icon(Icons.copy_all),
             onPressed: hasLogs ? copyAll : null,
           ),
           IconButton(
-            tooltip: 'Share',
+            tooltip: tr("Share"),
             icon: const Icon(Icons.share),
             onPressed: hasLogs ? share : null,
           ),
           IconButton(
-            tooltip: 'Clear log',
+            tooltip: tr("Clear log"),
             icon: const Icon(Icons.delete_outline),
             onPressed: hasLogs
                 ? () => ref.read(singboxProxyLogsProvider.notifier).clear()
@@ -163,7 +164,7 @@ class _RecordingLevelBanner extends ConsumerWidget {
           Expanded(
             child: Text(
               logLevel.isVerbose
-                  ? 'Recording ${logLevel.label.toLowerCase()} — this slows browsing'
+                  ? tr("Recording {0} — this slows browsing", [logLevel.label.toLowerCase()])
                   : 'Recording ${logLevel.label.toLowerCase()}',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: logLevel.isVerbose
@@ -206,8 +207,8 @@ class _SeverityFilterBar extends StatelessWidget {
         spacing: 8,
         children: [
           _SeverityChip(
-            label: 'All',
-            semanticsLabel: 'Show all levels',
+            label: tr("All"),
+            semanticsLabel: tr("Show all levels"),
             selected: minimumSeverity == null,
             onSelected: () => onChanged(null),
           ),
@@ -410,9 +411,8 @@ class _EmptyLogs extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Text(
           hasFilter
-              ? 'No log lines at this level. Lower the filter, or raise what '
-                    'the proxy records.'
-              : 'No log lines yet. Start a proxy or $torBrand to see output here.',
+              ? tr("No log lines at this level. Lower the filter, or raise what the proxy records.")
+              : tr("No log lines yet. Start a proxy or {0} to see output here.", [torBrand]),
           textAlign: TextAlign.center,
         ),
       ),

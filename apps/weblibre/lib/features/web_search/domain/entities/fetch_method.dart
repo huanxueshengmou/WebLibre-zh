@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Capture pipeline selector. Each choice maps to a (method, variant) pair
 /// understood by the search backend's capture clients.
@@ -34,10 +35,10 @@ enum FetchMethodChoice {
   }
 
   String get title => switch (this) {
-    FetchMethodChoice.trafilatura => 'Extracted Preview',
-    FetchMethodChoice.singlefileHtml => 'Full Page Capture',
-    FetchMethodChoice.shotScraperPdf => 'PDF Snapshot',
-    FetchMethodChoice.shotScraperPng => 'Image Snapshot',
+    FetchMethodChoice.trafilatura => tr("Extracted Preview"),
+    FetchMethodChoice.singlefileHtml => tr("Full Page Capture"),
+    FetchMethodChoice.shotScraperPdf => tr("PDF Snapshot"),
+    FetchMethodChoice.shotScraperPng => tr("Image Snapshot"),
   };
 
   String get shortLabel => switch (this) {
@@ -49,13 +50,13 @@ enum FetchMethodChoice {
 
   String get subtitle => switch (this) {
     FetchMethodChoice.trafilatura =>
-      'Reader-optimized text and metadata for the in-app preview',
+      tr("Reader-optimized text and metadata for the in-app preview"),
     FetchMethodChoice.singlefileHtml =>
-      'Archive the full page with layout and assets for later use',
+      tr("Archive the full page with layout and assets for later use"),
     FetchMethodChoice.shotScraperPdf =>
-      'Render the page to a PDF for offline reading and sharing',
+      tr("Render the page to a PDF for offline reading and sharing"),
     FetchMethodChoice.shotScraperPng =>
-      'Capture a full-page PNG screenshot of the rendered page',
+      tr("Capture a full-page PNG screenshot of the rendered page"),
   };
 
   IconData get icon => switch (this) {

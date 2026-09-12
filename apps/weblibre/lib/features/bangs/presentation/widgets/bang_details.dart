@@ -31,6 +31,7 @@ import 'package:weblibre/features/geckoview/domain/repositories/tab.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_mode.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class BangDetails extends HookConsumerWidget {
   final BangData bangData;
@@ -89,8 +90,8 @@ class BangDetails extends HookConsumerWidget {
                     ),
                   ),
                   if (bangData.group == BangGroup.weblibre)
-                    const Tooltip(
-                      message: 'Official WebLibre search',
+                    Tooltip(
+                      message: tr("Official WebLibre search"),
                       child: Icon(
                         MdiIcons.crown,
                         color: Colors.amber,
@@ -99,7 +100,7 @@ class BangDetails extends HookConsumerWidget {
                     ),
                   if (bangData.group != BangGroup.user)
                     IconButton(
-                      tooltip: 'Customize as your own bang',
+                      tooltip: tr("Customize as your own bang"),
                       icon: const Icon(MdiIcons.pencilBoxOutline),
                       onPressed: () async {
                         // Seeds a user bang from this one. With user bangs

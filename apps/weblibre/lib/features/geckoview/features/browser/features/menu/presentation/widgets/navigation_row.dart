@@ -33,6 +33,7 @@ import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_mode
 import 'package:weblibre/features/geckoview/features/tabs/domain/repositories/tab.dart';
 import 'package:weblibre/presentation/hooks/menu_controller.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 /// The fixed row pinned below the menu's scrolling content: back,
 /// forward, close and reload for the tab in front.
@@ -146,7 +147,7 @@ class MenuNavigationRow extends HookConsumerWidget {
                   Navigator.pop(context);
                 }
               },
-              child: const Text('Close Others'),
+              child: Text(tr("Close Others")),
             ),
             if (host != null && host.isNotEmpty)
               MenuItemButton(
@@ -164,7 +165,7 @@ class MenuNavigationRow extends HookConsumerWidget {
                     Navigator.pop(context);
                   }
                 },
-                child: const Text('Close from Same Host'),
+                child: Text(tr("Close from Same Host")),
               ),
             MenuItemButton(
               leadingIcon: const Icon(Icons.account_tree),
@@ -182,12 +183,12 @@ class MenuNavigationRow extends HookConsumerWidget {
                   Navigator.pop(context);
                 }
               },
-              child: const Text('Close Tab and Descendants'),
+              child: Text(tr("Close Tab and Descendants")),
             ),
           ],
           child: _buildNavIcon(
             icon: MdiIcons.tabMinus,
-            label: 'Close Tab',
+            label: tr("Close Tab"),
             onTap: () async {
               final tabState = ref.read(tabStateProvider(selectedTabId));
               if (tabState != null && tabState.tabMode is IsolatedTabMode) {
@@ -241,12 +242,12 @@ class MenuNavigationRow extends HookConsumerWidget {
                   Navigator.pop(context);
                 }
               },
-              child: const Text('Hard Refresh'),
+              child: Text(tr("Hard Refresh")),
             ),
           ],
           child: _buildNavIcon(
             icon: Icons.refresh,
-            label: 'Reload',
+            label: tr("Reload"),
             onTap: () async {
               await ref
                   .read(tabSessionProvider(tabId: selectedTabId).notifier)

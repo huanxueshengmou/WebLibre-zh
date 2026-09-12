@@ -23,6 +23,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/proxy/presentation/controllers/proxy_profile_draft_controller.dart';
 import 'package:weblibre/features/proxy/presentation/widgets/profile_editor/profile_editor_section.dart';
 import 'package:weblibre/presentation/widgets/obscurable_text_field.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class CustomOutboundProfileForm extends HookConsumerWidget {
   final ProxyProfileDraftProvider draftProvider;
@@ -71,10 +72,10 @@ class CustomOutboundProfileForm extends HookConsumerWidget {
               minLines: 10,
               maxLines: 18,
               keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 alignLabelWithHint: true,
-                labelText: 'Outbound JSON',
-                helperText: 'Public sing-box outbound object.',
+                labelText: tr("Outbound JSON"),
+                helperText: tr("Public sing-box outbound object."),
                 border: OutlineInputBorder(),
               ),
               onChanged: notifier.setCustomConfigJson,
@@ -91,11 +92,11 @@ class CustomOutboundProfileForm extends HookConsumerWidget {
               enabled: draft.secretLoaded,
               revealedMinLines: 4,
               revealedMaxLines: 10,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 alignLabelWithHint: true,
-                labelText: 'Secret JSON',
+                labelText: tr("Secret JSON"),
                 helperText:
-                    'Optional values merged into the outbound at runtime.',
+                    tr("Optional values merged into the outbound at runtime."),
                 border: OutlineInputBorder(),
               ),
               onChanged: notifier.setCustomSecretJson,

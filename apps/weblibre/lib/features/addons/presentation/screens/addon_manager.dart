@@ -28,6 +28,7 @@ import 'package:weblibre/features/addons/presentation/screens/addon_browse.dart'
 import 'package:weblibre/features/addons/presentation/widgets/addon_ui.dart';
 import 'package:weblibre/features/geckoview/features/browser/presentation/dialogs/install_local_addon_dialog.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class AddonManagerScreen extends ConsumerWidget {
   const AddonManagerScreen({super.key});
@@ -42,7 +43,7 @@ class AddonManagerScreen extends ConsumerWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Extensions'),
+          title: Text(tr("Extensions")),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Installed'),
@@ -129,7 +130,7 @@ class _AddonManagerOverflowMenu extends ConsumerWidget {
           onPressed: () async {
             await showInstallLocalAddonDialog(context);
           },
-          child: const Text('Install from file'),
+          child: Text(tr("Install from file")),
         ),
       ],
     );
@@ -163,12 +164,12 @@ class _AddonList extends StatelessWidget {
           children: [
             if (enabled.isNotEmpty) ...[
               const SizedBox(height: 16),
-              const _Section(title: 'Enabled'),
+              _Section(title: tr("Enabled")),
               for (final addon in enabled) _AddonCard(addon: addon),
             ],
             if (disabled.isNotEmpty) ...[
               const SizedBox(height: 16),
-              const _Section(title: 'Disabled'),
+              _Section(title: tr("Disabled")),
               for (final addon in disabled) _AddonCard(addon: addon),
             ],
             if (unsupported.isNotEmpty) ...[
@@ -181,11 +182,11 @@ class _AddonList extends StatelessWidget {
                 ),
             ],
             if (installed == 0)
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 48),
                 child: Center(
                   child: Text(
-                    'No extensions installed yet.\nBrowse the store to find some.',
+                    tr("No extensions installed yet.\nBrowse the store to find some."),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -206,7 +207,7 @@ class _UninstallAction extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final busy = ref.watch(addonBusyIdsProvider).contains(addon.id);
     return IconButton(
-      tooltip: 'Remove extension',
+      tooltip: tr("Remove extension"),
       onPressed: busy
           ? null
           : () async {
@@ -278,7 +279,7 @@ class _AddonCard extends ConsumerWidget {
                           spacing: 8,
                           children: [
                             if (addon.isAllowedInPrivateBrowsing)
-                              const Chip(label: Text('Private Browsing')),
+                              Chip(label: Text(tr("Private Browsing"))),
                             if (addon.ratingAverage != null)
                               Chip(
                                 avatar: const Icon(Icons.star, size: 16),
@@ -323,11 +324,11 @@ class _AddonLoadError extends StatelessWidget {
           children: [
             const Icon(Icons.error_outline, size: 40),
             const SizedBox(height: 12),
-            const Text('Failed to load extensions'),
+            Text(tr("Failed to load extensions")),
             const SizedBox(height: 8),
             Text(error.toString(), textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            FilledButton(onPressed: onRetry, child: const Text('Retry')),
+            FilledButton(onPressed: onRetry, child: Text(tr("Retry"))),
           ],
         ),
       ),

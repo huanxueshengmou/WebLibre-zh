@@ -20,6 +20,7 @@
 import 'package:flutter_singbox_proxy/flutter_singbox_proxy.dart';
 
 import 'package:weblibre/core/branding/proxy_brands.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 extension SingboxProxyProfileTypeExt on SingboxProxyProfileType {
   /// Long human label for menus, dialogs, subtitles.
@@ -38,7 +39,7 @@ extension SingboxProxyProfileTypeExt on SingboxProxyProfileType {
     SingboxProxyProfileType.wireguard => wireGuardBrand,
     SingboxProxyProfileType.shadowTls => 'ShadowTLS',
     SingboxProxyProfileType.anyTls => 'AnyTLS',
-    SingboxProxyProfileType.customOutbound => 'Custom Outbound',
+    SingboxProxyProfileType.customOutbound => tr("Custom Outbound"),
   };
 
   /// Short 2-5 char protocol abbreviation for the profile-list badge.

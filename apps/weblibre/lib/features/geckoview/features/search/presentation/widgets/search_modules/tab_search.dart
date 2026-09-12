@@ -46,6 +46,7 @@ import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/text_highlight.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 class TabSearch extends HookConsumerWidget {
   static const _matchPrefix = '***';
@@ -138,7 +139,7 @@ class TabSearch extends HookConsumerWidget {
     final filteredResultCount = filteredTabs.length;
 
     return SearchModuleSection(
-      title: 'Tabs',
+      title: tr("Tabs"),
       moduleType: SearchModuleType.tabs,
       totalCount: filteredResultCount,
       contentSliverBuilder:

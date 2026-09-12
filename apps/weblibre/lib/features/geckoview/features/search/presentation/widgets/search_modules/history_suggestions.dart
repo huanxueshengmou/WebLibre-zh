@@ -30,6 +30,7 @@ import 'package:weblibre/features/geckoview/features/search/presentation/widgets
 import 'package:weblibre/presentation/hooks/on_listenable_change_selector.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class HistorySuggestions extends HookConsumerWidget {
   final ValueListenable<TextEditingValue> searchTextListenable;
@@ -64,7 +65,7 @@ class HistorySuggestions extends HookConsumerWidget {
     }
 
     return SearchModuleSection(
-      title: 'History',
+      title: tr("History"),
       moduleType: SearchModuleType.history,
       totalCount: totalResults,
       contentSliverBuilder:
@@ -121,7 +122,7 @@ class HistorySuggestions extends HookConsumerWidget {
                 error: (error, stackTrace) {
                   return SliverToBoxAdapter(
                     child: FailureWidget(
-                      title: 'Could not load history',
+                      title: tr("Could not load history"),
                       exception: error,
                     ),
                   );

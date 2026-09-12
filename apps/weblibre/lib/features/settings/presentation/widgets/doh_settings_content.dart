@@ -27,6 +27,7 @@ import 'package:weblibre/features/settings/presentation/controllers/save_setting
 import 'package:weblibre/features/user/data/models/engine_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/engine_settings.dart';
 import 'package:weblibre/utils/form_validators.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class DohSettingsContent extends HookConsumerWidget {
   const DohSettingsContent({super.key});
@@ -56,11 +57,11 @@ class DohSettingsContent extends HookConsumerWidget {
 
     return Column(
       children: [
-        const ListTile(
+        ListTile(
           leading: Icon(MdiIcons.dns),
-          title: Text('Protection Level'),
+          title: Text(tr("Protection Level")),
           subtitle: Text(
-            'Domain Name System (DNS) over HTTPS sends your request for a domain name through an encrypted connection, providing a secure DNS and making it harder for others to see which web site you’re about to access.',
+            tr("Domain Name System (DNS) over HTTPS sends your request for a domain name through an encrypted connection, providing a secure DNS and making it harder for others to see which web site you’re about to access."),
           ),
         ),
         RadioGroup(
@@ -73,34 +74,34 @@ class DohSettingsContent extends HookConsumerWidget {
               );
             }
           },
-          child: const Column(
+          child: Column(
             children: [
               RadioListTile.adaptive(
                 value: DohSettingsMode.geckoDefault,
-                title: Text('Default Protection'),
-                subtitle: Text('DoH used only when default DNS fails'),
+                title: Text(tr("Default Protection")),
+                subtitle: Text(tr("DoH used only when default DNS fails")),
               ),
               RadioListTile.adaptive(
                 value: DohSettingsMode.increased,
-                title: Text('Increased Protection'),
-                subtitle: Text('DoH preferred, default DNS as fallback'),
+                title: Text(tr("Increased Protection")),
+                subtitle: Text(tr("DoH preferred, default DNS as fallback")),
               ),
               RadioListTile.adaptive(
                 value: DohSettingsMode.max,
-                title: Text('Max Protection'),
-                subtitle: Text('DoH only, no fallback'),
+                title: Text(tr("Max Protection")),
+                subtitle: Text(tr("DoH only, no fallback")),
               ),
               RadioListTile.adaptive(
                 value: DohSettingsMode.off,
-                title: Text('Off'),
-                subtitle: Text('Use your default DNS resolver'),
+                title: Text(tr("Off")),
+                subtitle: Text(tr("Use your default DNS resolver")),
               ),
             ],
           ),
         ),
-        const ListTile(
+        ListTile(
           leading: Icon(MdiIcons.routerNetwork),
-          title: Text('DoH Provider'),
+          title: Text(tr("DoH Provider")),
         ),
         RadioGroup(
           groupValue: selectedUrl,
@@ -125,7 +126,7 @@ class DohSettingsContent extends HookConsumerWidget {
                 ListTile(
                   dense: true,
                   title: Text(
-                    'Your resolvers',
+                    tr("Your resolvers"),
                     style: theme.textTheme.labelLarge?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -196,7 +197,7 @@ class DohSettingsContent extends HookConsumerWidget {
             width: double.infinity,
             child: FilledButton.tonalIcon(
               icon: const Icon(Icons.add),
-              label: const Text('Add custom resolver'),
+              label: Text(tr("Add custom resolver")),
               onPressed: resolvers.length >= kMaxCustomDohProviders
                   ? null
                   : () async {
@@ -242,14 +243,14 @@ class _ResolverActions extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.edit_outlined),
           color: colorScheme.onSurfaceVariant,
-          tooltip: 'Edit',
+          tooltip: tr("Edit"),
           visualDensity: VisualDensity.compact,
           onPressed: onEdit,
         ),
         IconButton(
           icon: const Icon(Icons.delete_outline),
           color: colorScheme.onSurfaceVariant,
-          tooltip: 'Remove',
+          tooltip: tr("Remove"),
           visualDensity: VisualDensity.compact,
           onPressed: onDelete,
         ),
@@ -284,7 +285,7 @@ class _CustomResolverDialog extends HookWidget {
     final nameController = useTextEditingController(text: initial?.name ?? '');
 
     return AlertDialog(
-      title: Text(isEdit ? 'Edit custom resolver' : 'Add custom resolver'),
+      title: Text(isEdit ? tr("Edit custom resolver") : tr("Add custom resolver")),
       content: Form(
         key: formKey,
         child: Column(
@@ -294,8 +295,8 @@ class _CustomResolverDialog extends HookWidget {
               controller: urlController,
               autofocus: !isEdit,
               keyboardType: TextInputType.url,
-              decoration: const InputDecoration(
-                labelText: 'Resolver URL',
+              decoration: InputDecoration(
+                labelText: tr("Resolver URL"),
                 hintText: 'https://example.com/dns-query',
               ),
               validator: (value) {
@@ -329,9 +330,9 @@ class _CustomResolverDialog extends HookWidget {
               controller: nameController,
               autofocus: isEdit,
               maxLength: 40,
-              decoration: const InputDecoration(
-                labelText: 'Name (optional)',
-                hintText: 'e.g. dnsforge (adblock)',
+              decoration: InputDecoration(
+                labelText: tr("Name (optional)"),
+                hintText: tr("e.g. dnsforge (adblock)"),
               ),
             ),
           ],
@@ -340,7 +341,7 @@ class _CustomResolverDialog extends HookWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () {
@@ -355,7 +356,7 @@ class _CustomResolverDialog extends HookWidget {
               );
             }
           },
-          child: Text(isEdit ? 'Save' : 'Save and use'),
+          child: Text(isEdit ? tr("Save") : tr("Save and use")),
         ),
       ],
     );

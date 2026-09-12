@@ -20,6 +20,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Result of the delete-container confirmation.
 class DeleteContainerDecision {
@@ -69,8 +70,8 @@ class _DeleteContainerDialog extends HookWidget {
               wipeHistory.value = value ?? false;
             },
             title: const Text("Also delete this container's history"),
-            subtitle: const Text(
-              'Otherwise it is kept and shown as uncontained',
+            subtitle: Text(
+              tr("Otherwise it is kept and shown as uncontained"),
             ),
           ),
         ],
@@ -80,7 +81,7 @@ class _DeleteContainerDialog extends HookWidget {
           onPressed: () {
             Navigator.pop(context, null);
           },
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         TextButton(
           onPressed: () {

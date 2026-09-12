@@ -38,6 +38,7 @@ import 'package:weblibre/features/geckoview/features/top_sites/domain/repositori
 import 'package:weblibre/presentation/hooks/keyed_state.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 const _gridMainAxisSpacing = 8.0;
 const _gridCrossAxisSpacing = 8.0;
@@ -312,7 +313,7 @@ class _AddShortcutTile extends StatelessWidget {
     return _TopSiteTileSurface(
       onTap: onPressed,
       child: Tooltip(
-        message: 'Add shortcut',
+        message: tr("Add shortcut"),
         child: Icon(Icons.add, color: colorScheme.onSurfaceVariant),
       ),
     );
@@ -568,16 +569,16 @@ class _TopSiteGridTileState extends State<_TopSiteGridTile> {
       controller: _menuController,
       menuChildren: [
         if (widget.onPin != null)
-          MenuItemButton(onPressed: widget.onPin, child: const Text('Pin')),
+          MenuItemButton(onPressed: widget.onPin, child: Text(tr("Pin"))),
         if (widget.onEdit != null)
-          MenuItemButton(onPressed: widget.onEdit, child: const Text('Edit')),
+          MenuItemButton(onPressed: widget.onEdit, child: Text(tr("Edit"))),
         // Offered for history-derived tiles too. Without it a frequently
         // visited site — a PWA especially — could occupy most of the grid
         // with no way to get rid of it.
         if (widget.onRemove != null)
           MenuItemButton(
             onPressed: widget.onRemove,
-            child: const Text('Remove'),
+            child: Text(tr("Remove")),
           ),
         if (widget.onRemoveDomain != null &&
             canonicalTopSiteHost(widget.item.url).isNotEmpty)
@@ -779,7 +780,7 @@ Future<void> _editItem(
 Future<void> _addItem(BuildContext context, WidgetRef ref) async {
   final result = await showEditTopSiteDialog(
     context,
-    dialogTitle: 'Add shortcut',
+    dialogTitle: tr("Add shortcut"),
     confirmLabel: 'Add',
   );
 
@@ -823,7 +824,7 @@ Future<void> _removeItem(
             ? 'Hid all shortcuts from ${canonicalTopSiteHost(item.url)}'
             : 'Removed "${item.title}"',
         action: SnackBarAction(
-          label: 'Undo',
+          label: tr("Undo"),
           onPressed: () async {
             try {
               // Lift the suppression first, then restore the pin only if the

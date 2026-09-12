@@ -24,6 +24,7 @@ import 'package:flutter_material_design_icons/flutter_material_design_icons.dart
 import 'package:weblibre/features/geckoview/features/open_link_tools/domain/entities/url_cleaner_result.dart';
 import 'package:weblibre/features/geckoview/features/open_link_tools/domain/services/url_cleaner_service.dart';
 import 'package:weblibre/features/geckoview/features/open_link_tools/presentation/dialogs/tracking_details_dialog.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class UrlCleanerTile extends StatelessWidget {
   final UrlCleanerResult result;
@@ -88,7 +89,7 @@ class UrlCleanerTile extends StatelessWidget {
 
                 IconButton(
                   icon: const Icon(MdiIcons.linkVariantRemove),
-                  tooltip: 'Clean URL',
+                  tooltip: tr("Clean URL"),
                   onPressed: onClean,
                 ),
               ],

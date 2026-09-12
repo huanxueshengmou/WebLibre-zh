@@ -30,6 +30,7 @@ import 'package:weblibre/features/search_credits/domain/controllers/search_token
 import 'package:weblibre/features/search_credits/domain/repositories/search_credits_repository.dart';
 import 'package:weblibre/features/search_credits/domain/repositories/search_token_stash_repository.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_content_card.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SearchCreditsSection extends HookConsumerWidget {
   final bool embedded;
@@ -96,21 +97,20 @@ class SearchCreditsSection extends HookConsumerWidget {
                 : theme.colorScheme.primary,
           ),
           title: Text(
-            creditsError ? 'Could not load credits' : 'Search credits',
+            creditsError ? tr("Could not load credits") : tr("Search credits"),
           ),
           subtitle: creditsError
               ? const Text('Check your connection and tap refresh to retry.')
               : isEmpty
-              ? const Text('Buy a search pack to get started')
+              ? Text(tr("Buy a search pack to get started"))
               : Text(
                   monthlyAllowance > 0
-                      ? 'Credits: $credits / $monthlyAllowance  ·  '
-                            'Stashed tokens: $stash'
-                      : 'Credits: $credits  ·  Stashed tokens: $stash',
+                      ? tr("Credits: {0} / {1}  ·  Stashed tokens: {2}", [credits, monthlyAllowance, stash])
+                      : tr("Credits: {0}  ·  Stashed tokens: {1}", [credits, stash]),
                 ),
           trailing: IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: tr("Refresh"),
             onPressed: () async {
               await ref
                   .read(searchCreditsRepositoryProvider.notifier)
@@ -131,13 +131,12 @@ class SearchCreditsSection extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
             child: Text(
-              'Last issuance: ${timeago.format(lastIssuanceAt)}  '
-              '(${DateFormat.yMMMd().add_Hm().format(lastIssuanceAt.toLocal())})',
+              tr("Last issuance: {0}  ({1})", [timeago.format(lastIssuanceAt), DateFormat.yMMMd().add_Hm().format(lastIssuanceAt.toLocal())]),
               style: theme.textTheme.bodySmall,
             ),
           ),
         if (isRequesting)
-          const Padding(
+          Padding(
             padding: EdgeInsets.fromLTRB(16, 0, 16, 12),
             child: Row(
               children: [
@@ -147,7 +146,7 @@ class SearchCreditsSection extends HookConsumerWidget {
                   child: CircularProgressIndicator(strokeWidth: 2),
                 ),
                 SizedBox(width: 12),
-                Text('Requesting tokens...'),
+                Text(tr("Requesting tokens...")),
               ],
             ),
           ),
@@ -163,7 +162,7 @@ class SearchCreditsSection extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
             child: Text(
-              'Please sign in again to request tokens.',
+              tr("Please sign in again to request tokens."),
               style: TextStyle(color: theme.colorScheme.error),
             ),
           ),
@@ -171,7 +170,7 @@ class SearchCreditsSection extends HookConsumerWidget {
         if (isEmpty)
           ListTile(
             leading: const Icon(Icons.shopping_cart_outlined),
-            title: const Text('Buy a search pack'),
+            title: Text(tr("Buy a search pack")),
             contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
             onTap: openBuyMore,
           )
@@ -179,17 +178,17 @@ class SearchCreditsSection extends HookConsumerWidget {
           ListTile(
             leading: const Icon(Icons.download_for_offline_outlined),
             enabled: canIssue,
-            title: const Text('Get tokens'),
+            title: Text(tr("Get tokens")),
             subtitle: credits > 0
-                ? Text('Request ${min(25, credits)} tokens')
-                : const Text('No credits remaining'),
+                ? Text(tr("Request {0} tokens", [min(25, credits)]))
+                : Text(tr("No credits remaining")),
             contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
             onTap: canIssue ? onIssue : null,
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.shopping_cart_outlined),
-            title: const Text('Buy more'),
+            title: Text(tr("Buy more")),
             contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
             onTap: openBuyMore,
           ),

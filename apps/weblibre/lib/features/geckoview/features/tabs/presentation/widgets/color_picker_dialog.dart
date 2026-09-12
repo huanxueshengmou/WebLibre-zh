@@ -22,6 +22,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:weblibre/features/geckoview/features/tabs/presentation/widgets/custom_color_picker_dialog.dart';
 import 'package:weblibre/features/geckoview/features/tabs/utils/color_palette.dart';
 import 'package:weblibre/features/geckoview/features/tabs/utils/container_colors.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 typedef ColorPickerResult = ({Color color, bool useCustomColor});
 
@@ -74,7 +75,7 @@ class ColorPickerDialog extends HookWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop<ColorPickerResult?>(context),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         TextButton(
           onPressed: () => Navigator.pop<ColorPickerResult?>(context, (

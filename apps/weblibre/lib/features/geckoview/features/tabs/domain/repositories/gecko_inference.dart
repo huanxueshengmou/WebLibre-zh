@@ -33,6 +33,7 @@ import 'package:weblibre/features/geckoview/domain/providers/tab_state.dart';
 import 'package:weblibre/features/geckoview/features/tabs/domain/providers.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/utils/lru_cache.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 part 'gecko_inference.g.dart';
 
@@ -93,9 +94,9 @@ class GeckoInferenceRepository extends _$GeckoInferenceRepository {
         return title;
       } on TimeoutException {
         return Result.failure(
-          const ErrorMessage(
+          ErrorMessage(
             source: 'Document Title Prediction',
-            message: 'Timeout',
+            message: tr("Timeout"),
           ),
         );
       }
@@ -283,7 +284,7 @@ class GeckoInferenceRepository extends _$GeckoInferenceRepository {
           return Result.failure(
             ErrorMessage(
               source: 'Document Embeddings',
-              message: 'Unexpected embedding count',
+              message: tr("Unexpected embedding count"),
               details: {
                 'expected': embeddingsToGenerate.length,
                 'actual': generated.length,
@@ -306,7 +307,7 @@ class GeckoInferenceRepository extends _$GeckoInferenceRepository {
       });
     } on TimeoutException {
       return Result.failure(
-        const ErrorMessage(source: 'Document Embeddings', message: 'Timeout'),
+        ErrorMessage(source: 'Document Embeddings', message: tr("Timeout")),
       );
     } catch (e, s) {
       return Result.failure(

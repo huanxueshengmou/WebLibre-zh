@@ -19,6 +19,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum DiscardChangesChoice { discard, save }
 
@@ -28,16 +29,16 @@ Future<DiscardChangesChoice?> showDiscardChangesDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         icon: const Icon(Icons.warning),
-        title: const Text('Unsaved Changes'),
-        content: const Text(
-          'You have unsaved changes. Do you want to save them before leaving?',
+        title: Text(tr("Unsaved Changes")),
+        content: Text(
+          tr("You have unsaved changes. Do you want to save them before leaving?"),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('Cancel'),
+            child: Text(tr("Cancel")),
           ),
           TextButton(
             onPressed: () {
@@ -49,7 +50,7 @@ Future<DiscardChangesChoice?> showDiscardChangesDialog(BuildContext context) {
             onPressed: () {
               Navigator.pop(context, DiscardChangesChoice.save);
             },
-            child: const Text('Save'),
+            child: Text(tr("Save")),
           ),
         ],
       );

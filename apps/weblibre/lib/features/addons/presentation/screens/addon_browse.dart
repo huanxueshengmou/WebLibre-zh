@@ -27,6 +27,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/addons/domain/providers.dart';
 import 'package:weblibre/features/addons/presentation/widgets/addon_listing_card.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class AddonBrowseView extends HookConsumerWidget {
   const AddonBrowseView({super.key});
@@ -88,7 +89,7 @@ class AddonBrowseView extends HookConsumerWidget {
           child: TextField(
             controller: searchController,
             decoration: InputDecoration(
-              hintText: 'Search addons.mozilla.org',
+              hintText: tr("Search addons.mozilla.org"),
               prefixIcon: const Icon(Icons.search),
               suffixIcon: query.value.isEmpty
                   ? null
@@ -130,7 +131,7 @@ class AddonBrowseView extends HookConsumerWidget {
                   children: [
                     const Icon(Icons.error_outline, size: 40),
                     const SizedBox(height: 12),
-                    const Text('Failed to load extensions'),
+                    Text(tr("Failed to load extensions")),
                     const SizedBox(height: 8),
                     Text(error.toString(), textAlign: TextAlign.center),
                   ],
@@ -165,8 +166,7 @@ class _DesktopCompatibilityWarning extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Desktop extensions are not reviewed for mobile. Some may not '
-              'work, may crash, or may behave unexpectedly on Android.',
+              tr("Desktop extensions are not reviewed for mobile. Some may not work, may crash, or may behave unexpectedly on Android."),
               style: TextStyle(
                 color: theme.colorScheme.onTertiaryContainer,
                 fontSize: 12,
@@ -188,7 +188,7 @@ class _ListingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (listings.isEmpty) {
-      return const Center(child: Text('No extensions found.'));
+      return Center(child: Text(tr("No extensions found.")));
     }
 
     return FadingScroll(

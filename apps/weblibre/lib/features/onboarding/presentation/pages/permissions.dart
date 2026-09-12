@@ -26,6 +26,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weblibre/features/onboarding/presentation/pages/abstract/i_form_page.dart';
 import 'package:weblibre/presentation/hooks/cached_future.dart';
 import 'package:weblibre/presentation/widgets/browser_page.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class PermissionsPage extends HookConsumerWidget implements IFormPage {
   @override
@@ -56,7 +57,7 @@ class PermissionsPage extends HookConsumerWidget implements IFormPage {
               const SizedBox(height: 24),
               Center(
                 child: Text(
-                  'Permissions',
+                  tr("Permissions"),
                   style: theme.textTheme.headlineMedium,
                 ),
               ),
@@ -75,8 +76,8 @@ class PermissionsPage extends HookConsumerWidget implements IFormPage {
                     contentPadding: EdgeInsets.zero,
                     value: field.value ?? true,
                     title: const Text('Notifications'),
-                    subtitle: const Text(
-                      'Required to inform about download status',
+                    subtitle: Text(
+                      tr("Required to inform about download status"),
                     ),
                     onChanged: (notificationPermissionEnabled.data == true)
                         ? null
@@ -99,9 +100,9 @@ class PermissionsPage extends HookConsumerWidget implements IFormPage {
                   builder: (field) => SwitchListTile(
                     contentPadding: EdgeInsets.zero,
                     value: field.value ?? isCurrentDefaultBrowser,
-                    title: const Text('Default Browser'),
-                    subtitle: const Text(
-                      'Set WebLibre as your default browser',
+                    title: Text(tr("Default Browser")),
+                    subtitle: Text(
+                      tr("Set WebLibre as your default browser"),
                     ),
                     onChanged: isCurrentDefaultBrowser
                         ? null

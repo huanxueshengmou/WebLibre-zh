@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:weblibre/features/geckoview/features/tabs/utils/container_colors.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Freeform color picker for power users.
 ///
@@ -69,7 +70,7 @@ class CustomColorPickerDialog extends HookWidget {
         horizontal: 20.0,
         vertical: 8.0,
       ),
-      title: const Text('Custom Color'),
+      title: Text(tr("Custom Color")),
       content: SizedBox(
         width: 320,
         child: Column(
@@ -159,7 +160,7 @@ class CustomColorPickerDialog extends HookWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop<Color?>(context),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         TextButton(
           onPressed: () => Navigator.pop<Color?>(context, color),

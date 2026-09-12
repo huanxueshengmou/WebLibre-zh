@@ -1,0 +1,23 @@
+{
+ "keys": 1860,
+ "translated_total": 1858,
+ "coverage": 99.9,
+ "by_source": {
+  "glossary": 228,
+  "cache": 0,
+  "translated": 1630,
+  "dropped": 2
+ },
+ "failed": [
+  {
+   "key": "Replaces everything in this profile with the backup. {0} {1}{2} {3}",
+   "reason": "placeholder-mismatch",
+   "got": ""
+  },
+  {
+   "key": "This backup file was created by a newer version of WebLibre and cannot be read here. {0}",
+   "reason": "placeholder-mismatch",
+   "got": ""
+  }
+ ]
+}

@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class IpChip extends StatelessWidget {
   final String ip;
@@ -29,7 +30,7 @@ class IpChip extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return Tooltip(
-      message: 'Egress IP $ip',
+      message: tr("Egress IP {0}", [ip]),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         decoration: BoxDecoration(

@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:path/path.dart' as p;
+import 'package:weblibre/i18n/i18n.dart';
 
 typedef DeleteDecision = ({bool delete, bool remember});
 
@@ -54,13 +55,13 @@ Future<DeleteDecision?> showDeleteFileDialog(
                         text: fileName,
                         style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
-                      const TextSpan(text: ' from your device?'),
+                      TextSpan(text: tr(" from your device?")),
                     ],
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'This action cannot be undone.',
+                  tr("This action cannot be undone."),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -74,7 +75,7 @@ Future<DeleteDecision?> showDeleteFileDialog(
                     onChanged: (value) {
                       remember.value = value!;
                     },
-                    title: const Text('Remember my choice for remaining files'),
+                    title: Text(tr("Remember my choice for remaining files")),
                   ),
                 ],
               ],
@@ -87,7 +88,7 @@ Future<DeleteDecision?> showDeleteFileDialog(
                     remember: remember.value,
                   ));
                 },
-                child: const Text('Keep File'),
+                child: Text(tr("Keep File")),
               ),
               FilledButton(
                 onPressed: () {

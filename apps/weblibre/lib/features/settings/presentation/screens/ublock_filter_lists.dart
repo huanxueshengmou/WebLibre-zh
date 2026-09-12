@@ -31,6 +31,7 @@ import 'package:weblibre/features/user/data/providers/ublock_assets.dart';
 import 'package:weblibre/features/user/domain/repositories/engine_settings.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/utils/form_validators.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 typedef _SettingsMutator =
     Future<void> Function(
@@ -170,9 +171,9 @@ class UBlockFilterListsScreen extends HookConsumerWidget {
     final search = useSettingsSearch();
 
     return SettingsCustomScrollScaffold(
-      title: 'uBlock Filter Lists',
+      title: tr("uBlock Filter Lists"),
       searchController: search.controller,
-      searchHintText: 'Search lists, groups, and external URLs',
+      searchHintText: tr("Search lists, groups, and external URLs"),
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 20),
@@ -205,39 +206,32 @@ class UBlockFilterListsScreen extends HookConsumerWidget {
                 ),
                 if (settings.enabled) ...[
                   const SizedBox(height: 24),
-                  const _SectionHeader(label: 'Quick Actions'),
+                  _SectionHeader(label: tr("Quick Actions")),
                   _QuickActionsCard(
                     enabled: registryReady,
                     onResetDefaults: () => _confirmAndRun(
                       context,
-                      title: 'Reset to defaults?',
+                      title: tr("Reset to defaults?"),
                       message:
-                          'This will restore uBlock Origin to its default '
-                          'filter list configuration and remove any external '
-                          'lists you added.',
-                      confirmLabel: 'Reset',
+                          tr("This will restore uBlock Origin to its default filter list configuration and remove any external lists you added."),
+                      confirmLabel: tr("Reset"),
                       action: resetToDefaults,
                     ),
                     onApplyHardenings: () => _confirmAndRun(
                       context,
-                      title: 'Apply WebLibre Hardenings?',
+                      title: tr("Apply WebLibre Hardenings?"),
                       message:
-                          'This will enable a curated set of additional '
-                          'filter lists and add a legitimate URL shortener '
-                          'list as an external list.',
-                      confirmLabel: 'Apply',
+                          tr("This will enable a curated set of additional filter lists and add a legitimate URL shortener list as an external list."),
+                      confirmLabel: tr("Apply"),
                       action: applyWebLibreHardenings,
                     ),
                   ),
                 ],
                 const SizedBox(height: 24),
-                const _SectionHeader(label: 'Filter Lists'),
-                const _InfoBanner(
+                _SectionHeader(label: tr("Filter Lists")),
+                _InfoBanner(
                   message:
-                      'Changes to uBlock Origin filter lists require an '
-                      'app restart to take effect. Due to caching, '
-                      'some changes may need a few minutes and an '
-                      'additional restart to fully apply.',
+                      tr("Changes to uBlock Origin filter lists require an app restart to take effect. Due to caching, some changes may need a few minutes and an additional restart to fully apply."),
                 ),
                 registryAsync.when(
                   data: (registry) => _FilterListGroups(
@@ -252,11 +246,11 @@ class UBlockFilterListsScreen extends HookConsumerWidget {
                   ),
                   error: (error, _) => Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Text('Failed to load filter list assets: $error'),
+                    child: Text(tr("Failed to load filter list assets: {0}", [error])),
                   ),
                 ),
                 const SizedBox(height: 24),
-                const _SectionHeader(label: 'External Lists'),
+                _SectionHeader(label: tr("External Lists")),
                 _ExternalListsCard(
                   settings: settings,
                   onUpdate: updateSettings,
@@ -287,7 +281,7 @@ Future<void> _confirmAndRun(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
@@ -325,9 +319,9 @@ class _QuickActionsCard extends StatelessWidget {
         children: [
           ListTile(
             leading: const Icon(Icons.restart_alt),
-            title: const Text('Reset to defaults'),
-            subtitle: const Text(
-              "Restore uBlock Origin's default filter list configuration.",
+            title: Text(tr("Reset to defaults")),
+            subtitle: Text(
+              tr("Restore uBlock Origin's default filter list configuration."),
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: enabled ? onResetDefaults : null,
@@ -341,9 +335,9 @@ class _QuickActionsCard extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.shield_outlined),
-            title: const Text('Apply WebLibre Hardenings'),
-            subtitle: const Text(
-              'Enable a curated set of additional filter lists.',
+            title: Text(tr("Apply WebLibre Hardenings")),
+            subtitle: Text(
+              tr("Enable a curated set of additional filter lists."),
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: enabled ? onApplyHardenings : null,
@@ -435,10 +429,9 @@ class _ManagementCard extends StatelessWidget {
       child: Column(
         children: [
           SwitchListTile.adaptive(
-            title: const Text('Manage with WebLibre'),
-            subtitle: const Text(
-              "WebLibre controls uBlock Origin's enabled filter lists on "
-              'next browser start.',
+            title: Text(tr("Manage with WebLibre")),
+            subtitle: Text(
+              tr("WebLibre controls uBlock Origin's enabled filter lists on next browser start."),
             ),
             value: settings.enabled,
             onChanged: !registryReady ? null : onToggleManagement,
@@ -449,8 +442,7 @@ class _ManagementCard extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Enabling management starts from uBO's common baseline "
-                  'lists and preserves My filters.',
+                  tr("Enabling management starts from uBO's common baseline lists and preserves My filters."),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -465,8 +457,8 @@ class _ManagementCard extends StatelessWidget {
             ),
             SwitchListTile.adaptive(
               title: const Text('Auto-select languages'),
-              subtitle: const Text(
-                'Enable regional filter lists matching your device languages.',
+              subtitle: Text(
+                tr("Enable regional filter lists matching your device languages."),
               ),
               value: settings.autoSelectRegionalLists,
               onChanged: !registryReady ? null : onToggleAutoSelect,
@@ -804,7 +796,7 @@ class _FilterListTile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 4),
                   child: Tooltip(
-                    message: 'Auto-selected for your language',
+                    message: tr("Auto-selected for your language"),
                     child: Icon(
                       Icons.language,
                       size: 16,
@@ -816,7 +808,7 @@ class _FilterListTile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 4),
                   child: Tooltip(
-                    message: 'Default on',
+                    message: tr("Default on"),
                     child: Icon(
                       Icons.recommend_outlined,
                       size: 16,
@@ -842,7 +834,7 @@ class _FilterListTile extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.open_in_new, size: 18),
                   color: colorScheme.onSurfaceVariant,
-                  tooltip: 'Visit support page',
+                  tooltip: tr("Visit support page"),
                   visualDensity: VisualDensity.compact,
                   onPressed: () => launchUrl(Uri.parse(supportUrl)),
                 ),
@@ -897,18 +889,17 @@ class _ExternalListsCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Raw URLs are forwarded to uBlock Origin as external lists. '
-                'Descriptions are only shown here in WebLibre.',
+                tr("Raw URLs are forwarded to uBlock Origin as external lists. Descriptions are only shown here in WebLibre."),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
           ),
           if (lists.isEmpty)
-            const Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(16, 8, 16, 12),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text('No external lists configured.'),
+                child: Text(tr("No external lists configured.")),
               ),
             )
           else if (filteredLists.isEmpty)
@@ -916,7 +907,7 @@ class _ExternalListsCard extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text('No external lists match "$query".'),
+                child: Text(tr("No external lists match \"{0}\".", [query])),
               ),
             )
           else
@@ -943,7 +934,7 @@ class _ExternalListsCard extends StatelessWidget {
               width: double.infinity,
               child: FilledButton.tonalIcon(
                 icon: const Icon(Icons.add),
-                label: const Text('Add external list'),
+                label: Text(tr("Add external list")),
                 onPressed: !canAdd
                     ? null
                     : () async {
@@ -1023,7 +1014,7 @@ class _ExternalListRow extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.edit_outlined),
             color: colorScheme.onSurfaceVariant,
-            tooltip: 'Edit',
+            tooltip: tr("Edit"),
             visualDensity: VisualDensity.compact,
             onPressed: enabled
                 ? () async {
@@ -1044,7 +1035,7 @@ class _ExternalListRow extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.delete_outline),
             color: colorScheme.onSurfaceVariant,
-            tooltip: 'Remove',
+            tooltip: tr("Remove"),
             visualDensity: VisualDensity.compact,
             onPressed: enabled
                 ? () async {
@@ -1091,7 +1082,7 @@ class _ExternalListDialog extends HookWidget {
 
     return AlertDialog(
       title: Text(
-        isEdit ? 'Edit external filter list' : 'Add external filter list',
+        isEdit ? tr("Edit external filter list") : tr("Add external filter list"),
       ),
       content: Form(
         key: formKey,
@@ -1102,8 +1093,8 @@ class _ExternalListDialog extends HookWidget {
               controller: urlController,
               autofocus: !isEdit,
               keyboardType: TextInputType.url,
-              decoration: const InputDecoration(
-                labelText: 'List URL',
+              decoration: InputDecoration(
+                labelText: tr("List URL"),
                 hintText: 'https://example.com/list.txt',
               ),
               validator: (value) {
@@ -1128,9 +1119,9 @@ class _ExternalListDialog extends HookWidget {
               controller: descriptionController,
               autofocus: isEdit,
               maxLength: 80,
-              decoration: const InputDecoration(
-                labelText: 'Description (optional)',
-                hintText: 'e.g. Annoyances — myAuthor',
+              decoration: InputDecoration(
+                labelText: tr("Description (optional)"),
+                hintText: tr("e.g. Annoyances — myAuthor"),
               ),
             ),
           ],
@@ -1139,7 +1130,7 @@ class _ExternalListDialog extends HookWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         FilledButton(
           onPressed: () {
@@ -1153,7 +1144,7 @@ class _ExternalListDialog extends HookWidget {
               );
             }
           },
-          child: Text(isEdit ? 'Save' : 'Add'),
+          child: Text(isEdit ? tr("Save") : 'Add'),
         ),
       ],
     );

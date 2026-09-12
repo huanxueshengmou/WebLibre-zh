@@ -25,6 +25,7 @@ import 'package:weblibre/features/geckoview/domain/providers/tab_session.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/entities/permission_type.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/entities/site_permissions.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/repositories/site_permissions.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Section widget displaying site permissions with toggles
 class PermissionsSection extends HookConsumerWidget {
@@ -55,7 +56,7 @@ class PermissionsSection extends HookConsumerWidget {
       ),
       error: (error, stack) => Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Text('Error loading permissions: $error'),
+        child: Text(tr("Error loading permissions: {0}", [error])),
       ),
     );
   }
@@ -129,7 +130,7 @@ class _PermissionsList extends HookConsumerWidget {
           child: Row(
             children: [
               Text(
-                'Permissions',
+                tr("Permissions"),
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -138,7 +139,7 @@ class _PermissionsList extends HookConsumerWidget {
               if (hiddenCount > 0)
                 TextButton(
                   onPressed: () => showAll.value = !showAll.value,
-                  child: Text(showAll.value ? 'Show less' : 'Show all'),
+                  child: Text(showAll.value ? tr("Show less") : tr("Show all")),
                 ),
             ],
           ),
@@ -158,7 +159,7 @@ class _PermissionsList extends HookConsumerWidget {
               vertical: 8.0,
             ),
             child: Text(
-              'No permissions set for this site',
+              tr("No permissions set for this site"),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -217,18 +218,18 @@ class _PermissionTile extends StatelessWidget {
       trailing: DropdownButton<SitePermissionStatus>(
         value: currentStatus,
         underline: const SizedBox(),
-        items: const [
+        items: [
           DropdownMenuItem(
             value: SitePermissionStatus.noDecision,
             child: Text('Ask'),
           ),
           DropdownMenuItem(
             value: SitePermissionStatus.allowed,
-            child: Text('Allow'),
+            child: Text(tr("Allow")),
           ),
           DropdownMenuItem(
             value: SitePermissionStatus.blocked,
-            child: Text('Block'),
+            child: Text(tr("Block")),
           ),
         ],
         onChanged: (value) {
@@ -263,18 +264,18 @@ class _AutoplayTile extends StatelessWidget {
       trailing: DropdownButton<_AutoplayCombined>(
         value: combinedStatus,
         underline: const SizedBox(),
-        items: const [
+        items: [
           DropdownMenuItem(
             value: _AutoplayCombined.allowAll,
-            child: Text('Allow All'),
+            child: Text(tr("Allow All")),
           ),
           DropdownMenuItem(
             value: _AutoplayCombined.blockAudible,
-            child: Text('Block Audible'),
+            child: Text(tr("Block Audible")),
           ),
           DropdownMenuItem(
             value: _AutoplayCombined.blockAll,
-            child: Text('Block All'),
+            child: Text(tr("Block All")),
           ),
         ],
         onChanged: (value) {

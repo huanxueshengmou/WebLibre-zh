@@ -23,6 +23,7 @@ import 'package:fast_equatable/fast_equatable.dart';
 import 'package:weblibre/core/branding/proxy_brands.dart';
 import 'package:weblibre/features/proxy/data/parsers/cidr.dart';
 import 'package:weblibre/features/proxy/data/parsers/host_port.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class WireguardConfigImport with FastEquatable {
   /// Values that seed the shared [SingboxProxyFormSpec]-driven WireGuard form.
@@ -53,7 +54,7 @@ class WireguardConfigImport with FastEquatable {
         ? (host: '', port: '')
         : parseHostPort(
             rawEndpoint,
-            invalidMessage: '$wireGuardBrand endpoint must be host:port.',
+            invalidMessage: tr("{0} endpoint must be host:port.", [wireGuardBrand]),
           );
     final mtu = interface['mtu']?.trim();
     // A phone is always behind NAT. Without keepalives the mapping for the

@@ -18,23 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<bool?> showUrlCleanerRestoreDefaultsDialog(BuildContext context) {
   return showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Restore defaults?'),
-      content: const Text(
-        'This will reset URL cleaner settings and remove the locally stored catalog.',
+      title: Text(tr("Restore defaults?")),
+      content: Text(
+        tr("This will reset URL cleaner settings and remove the locally stored catalog."),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         TextButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Restore'),
+          child: Text(tr("Restore")),
         ),
       ],
     ),

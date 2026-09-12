@@ -1,0 +1,246 @@
+{
+ "files_changed": 297,
+ "replacements": 2604,
+ "const_removed": 1105,
+ "imports_added": 296,
+ "skipped": [
+  {
+   "file": "core/maintenance/backup_manifest.dart",
+   "value": "Gecko cache, regenerated on first run",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "core/maintenance/backup_manifest.dart",
+   "value": "Read-only asset database, reseeded from the bundled asset",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "core/maintenance/backup_manifest.dart",
+   "value": "Install stamp for an excluded asset database",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "core/startup/maintenance_scanner.dart",
+   "value": "no maintenance evidence",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "New Tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Open a new tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Close Tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Close the current tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Duplicate Tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Open a copy of the current tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Next Tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Switch to the next tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Previous Tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Switch to the previous tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Last Used Tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Switch to the previously used tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Pin / Unpin Tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/gestures/data/models/gesture_action.dart",
+   "value": "Toggle the pinned state of the current tab",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Server Address",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Server Port",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "TLS Enabled",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "true or false.",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "TLS Server Name",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Allow Invalid TLS Certificates",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "TLS ALPN",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Comma-separated or one value per line.",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Transport Type",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "For example ws, http, grpc, or quic.",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Transport Path",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "gRPC Service Name",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Multiplex Enabled",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Multiplex Protocol",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Multiplex Max Connections",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Dial Detour",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Bind Interface",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Routing Mark",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Domain Strategy",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "For example prefer_ipv4 or prefer_ipv6.",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Connect Timeout",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "For example 5s.",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Entry Country",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Exit Country",
+   "reason": "enum-const-arg"
+  },
+  {
+   "file": "features/user/domain/presentation/screens/profile_edit.dart",
+   "value": "1 minute",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/user/domain/presentation/screens/profile_edit.dart",
+   "value": "5 minutes",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/user/domain/presentation/screens/profile_edit.dart",
+   "value": "15 minutes",
+   "reason": "const-var-decl"
+  },
+  {
+   "file": "features/user/domain/presentation/screens/profile_edit.dart",
+   "value": "1 hour",
+   "reason": "const-var-decl"
+  }
+ ],
+ "skip_reasons": {
+  "const-var-decl": 102,
+  "enum-const-arg": 48
+ },
+ "import_targets": [
+  "core/routing/routes.dart"
+ ],
+ "passes": 3
+}

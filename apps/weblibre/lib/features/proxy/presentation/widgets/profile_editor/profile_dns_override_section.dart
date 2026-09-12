@@ -25,6 +25,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/core/branding/proxy_brands.dart';
 import 'package:weblibre/features/proxy/presentation/controllers/proxy_profile_draft_controller.dart';
 import 'package:weblibre/features/user/data/models/proxy_dns_override.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Per-profile DNS override editor. Keeps the UI surface minimal: a switch to
 /// opt in, plus the most common shape (single resolver routed through *this*
@@ -87,9 +88,7 @@ class ProfileDnsOverrideSection extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Resolve names through a server reachable inside this profile '
-          '(e.g. an internal DoH server behind a corporate $wireGuardBrand tunnel). '
-          'Leave off to use automatic DNS handling.',
+          tr("Resolve names through a server reachable inside this profile (e.g. an internal DoH server behind a corporate {0} tunnel). Leave off to use automatic DNS handling.", [wireGuardBrand]),
           style: Theme.of(context).textTheme.bodySmall,
         ),
         SwitchListTile(
@@ -99,14 +98,14 @@ class ProfileDnsOverrideSection extends HookConsumerWidget {
             enabled.value = value;
             emitChange();
           },
-          title: const Text('Use a profile-specific resolver'),
+          title: Text(tr("Use a profile-specific resolver")),
         ),
         if (enabled.value) ...[
           const SizedBox(height: 8),
           TextField(
             controller: addressController,
-            decoration: const InputDecoration(
-              labelText: 'DNS server address',
+            decoration: InputDecoration(
+              labelText: tr("DNS server address"),
               hintText: 'https://10.0.0.1/dns-query',
               border: OutlineInputBorder(),
             ),

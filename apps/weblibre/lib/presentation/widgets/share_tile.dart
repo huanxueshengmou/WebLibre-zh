@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ShareTile extends StatelessWidget {
   final void Function()? onTap;
@@ -29,7 +30,7 @@ class ShareTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.share),
-      title: const Text('Share link'),
+      title: Text(tr("Share link")),
       onTap: onTap,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,

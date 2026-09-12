@@ -49,6 +49,7 @@ import 'package:weblibre/presentation/widgets/failure_widget.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 class Section extends MultiSliver {
   static final _datePattern = DateFormat.MMMd().addPattern('Hm');
@@ -138,20 +139,20 @@ class Section extends MultiSliver {
                              _ => null,
                            },
                            label: switch (item.visitType) {
-                             VisitType.link => const Text('Followed Link'),
-                             VisitType.typed => const Text('Typed Address'),
-                             VisitType.embed => const Text(
-                               'Embedded Page Element',
+                             VisitType.link => Text(tr("Followed Link")),
+                             VisitType.typed => Text(tr("Typed Address")),
+                             VisitType.embed => Text(
+                               tr("Embedded Page Element"),
                              ),
-                             VisitType.redirectPermanent => const Text(
-                               'Temporary Redirect',
+                             VisitType.redirectPermanent => Text(
+                               tr("Temporary Redirect"),
                              ),
-                             VisitType.redirectTemporary => const Text(
-                               'Permanent Redirect',
+                             VisitType.redirectTemporary => Text(
+                               tr("Permanent Redirect"),
                              ),
-                             VisitType.download => const Text('Download'),
+                             VisitType.download => Text(tr("Download")),
                              VisitType.framedLink => const Text('Frame'),
-                             VisitType.reload => const Text('Page Reload'),
+                             VisitType.reload => Text(tr("Page Reload")),
                              VisitType.bookmark => const Text('Bookmark'),
                            },
                          ),
@@ -172,7 +173,7 @@ class Section extends MultiSliver {
                                  backgroundColor: container.color,
                                  radius: 8,
                                ),
-                               label: Text(container.name ?? 'Container'),
+                               label: Text(container.name ?? tr("Container")),
                              ),
                        ],
                      ),
@@ -272,7 +273,7 @@ class HistoryScreen extends HookConsumerWidget {
         context: context,
         builder: (context) => AlertDialog(
           icon: const Icon(Icons.warning),
-          title: const Text('Clear Container History'),
+          title: Text(tr("Clear Container History")),
           content: Text(
             'Delete all browsing history recorded for '
             '"${container.name ?? 'Container'}"? The visits are removed from '
@@ -281,11 +282,11 @@ class HistoryScreen extends HookConsumerWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
+              child: Text(tr("Cancel")),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Clear'),
+              child: Text(tr("Clear")),
             ),
           ],
         ),
@@ -317,8 +318,8 @@ class HistoryScreen extends HookConsumerWidget {
                 ),
               )
             : selectedItems.value.isEmpty
-            ? Text(isDownloadsMode ? 'Downloads' : 'History')
-            : Text('${selectedItems.value.length} selected'),
+            ? Text(isDownloadsMode ? tr("Downloads") : tr("History"))
+            : Text(tr("{0} selected", [selectedItems.value.length])),
         actions: [
           if (selectedItems.value.isEmpty)
             IconButton(
@@ -426,7 +427,7 @@ class HistoryScreen extends HookConsumerWidget {
                           '${DateFormat.yMd().format(range.start)} - ${DateFormat.yMd().format(range.end)}',
                         ),
                       ) ??
-                      const Text('Filter Date'),
+                      Text(tr("Filter Date")),
                   onPressed: () async {
                     final range = await showDateRangePicker(
                       context: context,
@@ -465,19 +466,19 @@ class HistoryScreen extends HookConsumerWidget {
                         }
                       },
                       child: switch (type) {
-                        VisitType.link => const Text('Followed Links'),
-                        VisitType.typed => const Text('Typed Addresses'),
-                        VisitType.embed => const Text('Embedded Page Elements'),
-                        VisitType.redirectPermanent => const Text(
-                          'Temporary Redirects',
+                        VisitType.link => Text(tr("Followed Links")),
+                        VisitType.typed => Text(tr("Typed Addresses")),
+                        VisitType.embed => Text(tr("Embedded Page Elements")),
+                        VisitType.redirectPermanent => Text(
+                          tr("Temporary Redirects"),
                         ),
-                        VisitType.redirectTemporary => const Text(
-                          'Permanent Redirects',
+                        VisitType.redirectTemporary => Text(
+                          tr("Permanent Redirects"),
                         ),
-                        VisitType.download => const Text('Downloads'),
+                        VisitType.download => Text(tr("Downloads")),
                         VisitType.framedLink => const Text('Frames'),
-                        VisitType.reload => const Text('Page Reloads'),
-                        VisitType.bookmark => const Text('Bookmarks'),
+                        VisitType.reload => Text(tr("Page Reloads")),
+                        VisitType.bookmark => Text(tr("Bookmarks")),
                       },
                     ),
                   ),
@@ -497,7 +498,7 @@ class HistoryScreen extends HookConsumerWidget {
                               .read(historyVisitsFilterProvider.notifier)
                               .setContainer(null);
                         },
-                        child: const Text('All Containers'),
+                        child: Text(tr("All Containers")),
                       ),
                       for (final container in containers!)
                         MenuItemButton(
@@ -512,20 +513,20 @@ class HistoryScreen extends HookConsumerWidget {
                                 .read(historyVisitsFilterProvider.notifier)
                                 .setContainer(container.id);
                           },
-                          child: Text(container.name ?? 'Container'),
+                          child: Text(container.name ?? tr("Container")),
                         ),
                     ],
                     child: Text(
                       filterContainer != null
                           ? 'Container: ${filterContainer.name ?? 'Container'}'
-                          : 'Filter Container',
+                          : tr("Filter Container"),
                     ),
                   ),
                 ],
                 const Divider(),
                 MenuItemButton(
                   leadingIcon: const Icon(MdiIcons.restore),
-                  child: const Text('Reset Filter'),
+                  child: Text(tr("Reset Filter")),
                   onPressed: () {
                     textFilterController.clear();
                     textFilterEnabled.value = false;

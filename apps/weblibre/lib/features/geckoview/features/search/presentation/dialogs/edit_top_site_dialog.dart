@@ -19,6 +19,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:weblibre/utils/uri_parser.dart' as uri_parser;
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Edits an existing shortcut, or — with both initial values omitted — creates
 /// one from scratch.
@@ -123,7 +124,7 @@ class _EditTopSiteDialogState extends State<_EditTopSiteDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(tr("Cancel")),
         ),
         TextButton(
           onPressed: () {

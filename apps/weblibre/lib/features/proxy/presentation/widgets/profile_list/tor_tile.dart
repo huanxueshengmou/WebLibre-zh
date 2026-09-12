@@ -32,6 +32,7 @@ import 'package:weblibre/features/tor/domain/services/tor_proxy.dart';
 import 'package:weblibre/features/user/domain/repositories/tor_settings.dart';
 import 'package:weblibre/presentation/icons/tor_icons.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 enum TorAction { edit, testLatency }
 
@@ -103,9 +104,9 @@ class TorProfileTile extends ConsumerWidget {
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: TorAction.edit,
-                child: MenuRow(icon: Icons.edit_outlined, label: 'Edit'),
+                child: MenuRow(icon: Icons.edit_outlined, label: tr("Edit")),
               ),
               PopupMenuItem(
                 value: TorAction.testLatency,
@@ -114,7 +115,7 @@ class TorProfileTile extends ConsumerWidget {
                   icon: latencyResult is AsyncLoading
                       ? Icons.hourglass_bottom
                       : Icons.network_check,
-                  label: 'Test connection',
+                  label: tr("Test connection"),
                 ),
               ),
             ],

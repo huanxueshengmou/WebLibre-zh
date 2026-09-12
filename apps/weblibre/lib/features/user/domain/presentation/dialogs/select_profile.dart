@@ -29,6 +29,7 @@ import 'package:weblibre/features/user/domain/presentation/utils/profile_labels.
 import 'package:weblibre/features/user/domain/presentation/utils/profile_switch_handler.dart';
 import 'package:weblibre/features/user/domain/repositories/profile.dart';
 import 'package:weblibre/presentation/widgets/failure_widget.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Bottom sheet widget to select a user profile.
 class SelectProfileDialog extends HookConsumerWidget {
@@ -91,7 +92,7 @@ class SelectProfileDialog extends HookConsumerWidget {
               },
               error: (error, stackTrace) => Center(
                 child: FailureWidget(
-                  title: 'Could not load profiles',
+                  title: tr("Could not load profiles"),
                   exception: error,
                 ),
               ),
@@ -103,7 +104,7 @@ class SelectProfileDialog extends HookConsumerWidget {
                 await ProfileListRoute().push(context);
               },
               icon: const Icon(MdiIcons.accountGroup),
-              label: const Text('Manage profiles'),
+              label: Text(tr("Manage profiles")),
             ),
           ],
         ),
@@ -143,9 +144,9 @@ class _ProfileAvatar extends StatelessWidget {
       button: true,
       selected: isActive,
       label: label,
-      hint: 'Switch to this profile. Long press to edit it.',
+      hint: tr("Switch to this profile. Long press to edit it."),
       child: Tooltip(
-        message: '$label\nLong press to edit',
+        message: tr("{0}\nLong press to edit", [label]),
         child: InkWell(
           onTap: onTap,
           onLongPress: onLongPress,
@@ -199,7 +200,7 @@ class _AddProfileAvatar extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: 'Add a profile',
+      label: tr("Add a profile"),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
@@ -230,7 +231,7 @@ class _AddProfileAvatar extends StatelessWidget {
               SizedBox(
                 width: 72,
                 child: Text(
-                  'Add profile',
+                  tr("Add profile"),
                   style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                   maxLines: 1,

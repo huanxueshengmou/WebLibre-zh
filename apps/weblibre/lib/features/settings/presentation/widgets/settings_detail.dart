@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/settings/domain/providers/pending_settings_highlight.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Default total-entry count at or below which [SettingsDetailScaffold] hides
 /// its search field — searching three toggles is just visual noise.
@@ -269,8 +270,8 @@ class SettingsSectionList extends StatelessWidget {
         child: Center(
           child: Text(
             query.trim().isEmpty
-                ? 'No settings available.'
-                : 'No settings match "$query".',
+                ? tr("No settings available.")
+                : tr("No settings match \"{0}\".", [query]),
             style: Theme.of(context).textTheme.bodyLarge,
             textAlign: TextAlign.center,
           ),

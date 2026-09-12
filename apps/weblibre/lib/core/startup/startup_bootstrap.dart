@@ -25,6 +25,7 @@ import 'package:weblibre/core/startup/models/startup_config.dart';
 import 'package:weblibre/core/startup/profile_discovery.dart';
 import 'package:weblibre/core/startup/startup_config_store.dart';
 import 'package:weblibre/core/uuid.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Identity of this Flutter engine for the lifetime of its isolate.
 ///
@@ -165,14 +166,14 @@ Future<StartupPhase> resolveStartupPhase({
 
   switch (claimed) {
     case null:
-      return const StartupHalted(
+      return StartupHalted(
         kind: StartupHaltKind.arbitrationFailed,
-        reason: 'The profile arbiter did not answer',
+        reason: tr("The profile arbiter did not answer"),
       );
     case false:
-      return const StartupHalted(
+      return StartupHalted(
         kind: StartupHaltKind.profileAccessBusy,
-        reason: 'Another part of WebLibre is using this profile',
+        reason: tr("Another part of WebLibre is using this profile"),
       );
     case true:
       break;
@@ -329,9 +330,9 @@ Future<StartupPhase> _resolveUnderAccess(
       error: error,
       stackTrace: stackTrace,
     );
-    return const StartupHalted(
+    return StartupHalted(
       kind: StartupHaltKind.arbitrationFailed,
-      reason: 'The profile arbiter did not answer',
+      reason: tr("The profile arbiter did not answer"),
     );
   }
 
@@ -339,9 +340,9 @@ Future<StartupPhase> _resolveUnderAccess(
     case ProfileStartupDirectiveKind.committed:
       final profileId = directive.profileId;
       if (profileId == null) {
-        return const StartupHalted(
+        return StartupHalted(
           kind: StartupHaltKind.arbitrationFailed,
-          reason: 'Native reported a commitment without a profile',
+          reason: tr("Native reported a commitment without a profile"),
         );
       }
       await filesystem.activate(UuidValue.withValidation(profileId));
@@ -396,9 +397,9 @@ Future<StartupPhase> _runSelection(
 ) async {
   final leaseId = directive.leaseId;
   if (leaseId == null) {
-    return const StartupHalted(
+    return StartupHalted(
       kind: StartupHaltKind.arbitrationFailed,
-      reason: 'Native granted a selection without a lease',
+      reason: tr("Native granted a selection without a lease"),
     );
   }
 
@@ -408,9 +409,9 @@ Future<StartupPhase> _runSelection(
   } catch (error, stackTrace) {
     logger.e('Profile discovery failed', error: error, stackTrace: stackTrace);
     await service.releaseSelection(leaseId, 'discovery failed');
-    return const StartupHalted(
+    return StartupHalted(
       kind: StartupHaltKind.noProfile,
-      reason: 'Profiles could not be read',
+      reason: tr("Profiles could not be read"),
     );
   }
 
@@ -429,9 +430,9 @@ Future<StartupPhase> _runSelection(
   final chosen = _chooseProfile(directive.candidateProfileId, discovery);
   if (chosen == null) {
     await service.releaseSelection(leaseId, 'no valid profile');
-    return const StartupHalted(
+    return StartupHalted(
       kind: StartupHaltKind.noProfile,
-      reason: 'No profile could be validated or created',
+      reason: tr("No profile could be validated or created"),
     );
   }
 
@@ -583,9 +584,9 @@ Future<StartupPhase> finishMaintenanceAndResolve({
     // would be refused for as long as it lives. Same rule as every other halt
     // below: nothing was opened, so the lease goes back.
     await _releaseQuietly(service, ProfileStartupOwnerType.ui, owner, null);
-    return const StartupHalted(
+    return StartupHalted(
       kind: StartupHaltKind.arbitrationFailed,
-      reason: 'The maintenance lease could not be released',
+      reason: tr("The maintenance lease could not be released"),
     );
   }
 

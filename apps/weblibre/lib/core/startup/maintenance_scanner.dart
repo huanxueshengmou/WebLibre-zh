@@ -25,6 +25,7 @@ import 'package:weblibre/core/startup/atomic_json_file.dart';
 import 'package:weblibre/core/startup/models/maintenance_journal.dart';
 import 'package:weblibre/core/startup/models/startup_config.dart';
 import 'package:weblibre/core/startup/startup_paths.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// A journal file that could not be understood. It reserves maintenance just
 /// like a live journal would; the alternative is booting a profile that may be
@@ -233,7 +234,7 @@ class MaintenanceReservation {
         required: false,
         recoveryRequired: false,
         taskId: null,
-        reason: 'no maintenance evidence',
+        reason: tr("no maintenance evidence"),
         scan: scan,
       );
     }

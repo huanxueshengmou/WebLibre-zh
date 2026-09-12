@@ -37,6 +37,7 @@ import 'package:weblibre/features/geckoview/features/pwa/domain/providers.dart';
 import 'package:weblibre/features/geckoview/features/pwa/presentation/widgets/pwa_install_button.dart';
 import 'package:weblibre/features/web_search/domain/controllers/sandbox_capture_controller.dart';
 import 'package:weblibre/presentation/hooks/cached_future.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Actions on the page in front of the user.
 ///
@@ -151,7 +152,7 @@ class PageActionsSection extends HookConsumerWidget {
           final appName = target.appName;
           tiles[item] = ListTile(
             leading: const Icon(Icons.open_in_new),
-            title: Text(appName != null ? 'Open in $appName' : item.label),
+            title: Text(appName != null ? tr("Open in {0}", [appName]) : item.label),
             onTap: () async {
               final success = await _appLinksService.launchAppLink(appLinkUrl);
               if (success && context.mounted) Navigator.pop(context);

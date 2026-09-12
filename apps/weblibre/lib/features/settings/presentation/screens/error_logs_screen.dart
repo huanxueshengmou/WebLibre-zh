@@ -32,6 +32,7 @@ import 'package:weblibre/features/settings/domain/providers/log_filter.dart';
 import 'package:weblibre/features/settings/presentation/dialogs/log_details_dialog.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 IconData _levelIcon(Level level) {
   return switch (level) {
@@ -119,9 +120,9 @@ class ErrorLogsScreen extends HookConsumerWidget {
     );
 
     return SettingsCustomScrollScaffold(
-      title: 'Error Logs',
+      title: tr("Error Logs"),
       searchController: search.controller,
-      searchHintText: 'Search log messages',
+      searchHintText: tr("Search log messages"),
       actions: [
         MenuAnchor(
           builder: (context, controller, childAnchor) {
@@ -144,14 +145,14 @@ class ErrorLogsScreen extends HookConsumerWidget {
         IconButton(
           onPressed: () => _copyToClipboard(context),
           icon: const Icon(Icons.copy),
-          tooltip: 'Copy logs',
+          tooltip: tr("Copy logs"),
         ),
       ],
       slivers: [
         if (sortedLogs.isEmpty)
-          const SliverFillRemaining(
+          SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(child: Text('No logs available')),
+            child: Center(child: Text(tr("No logs available"))),
           )
         else
           SliverPadding(

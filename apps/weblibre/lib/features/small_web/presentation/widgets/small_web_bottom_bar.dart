@@ -26,6 +26,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/features/geckoview/features/bookmarks/domain/providers/bookmarks.dart';
 import 'package:weblibre/features/geckoview/features/bookmarks/domain/repositories/bookmarks.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 // What words does the wanderer whisper?
 const _incantations = [
@@ -249,7 +250,7 @@ class SmallWebBottomBar extends HookConsumerWidget {
           ),
           IconButton(
             icon: const Icon(Icons.close),
-            tooltip: 'Exit Small Web',
+            tooltip: tr("Exit Small Web"),
             onPressed: onExit,
           ),
         ],

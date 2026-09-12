@@ -39,6 +39,7 @@ import 'package:weblibre/features/sync/domain/repositories/sync.dart';
 import 'package:weblibre/features/web_search/domain/controllers/sandbox_capture_controller.dart';
 import 'package:weblibre/presentation/hooks/cached_future.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
+import 'package:weblibre/i18n/i18n.dart';
 
 class ShareMenuItemButton extends HookConsumerWidget {
   const ShareMenuItemButton({super.key, required this.selectedTabId});
@@ -62,7 +63,7 @@ class ShareMenuItemButton extends HookConsumerWidget {
           MenuController.maybeOf(context)?.close();
         }
       },
-      child: const Text('Share Link'),
+      child: Text(tr("Share Link")),
     );
   }
 }
@@ -89,7 +90,7 @@ class ShowQrCodeMenuItemButton extends HookConsumerWidget {
           MenuController.maybeOf(context)?.close();
         }
       },
-      child: const Text('Show QR Code'),
+      child: Text(tr("Show QR Code")),
     );
   }
 }
@@ -113,7 +114,7 @@ class SaveToPdfMenuItemButton extends HookConsumerWidget {
           MenuController.maybeOf(context)?.close();
         }
       },
-      child: const Text('Export as PDF'),
+      child: Text(tr("Export as PDF")),
     );
   }
 }
@@ -143,7 +144,7 @@ class PrintMenuItemButton extends HookConsumerWidget {
           MenuController.maybeOf(context)?.close();
         }
       },
-      child: const Text('Print'),
+      child: Text(tr("Print")),
     );
   }
 }
@@ -226,7 +227,7 @@ class ShareScreenshotMenuItemButton extends HookConsumerWidget {
     return MenuItemButton(
       leadingIcon: const Icon(Icons.mobile_screen_share),
       closeOnActivate: false,
-      child: const Text('Share Screenshot'),
+      child: Text(tr("Share Screenshot")),
       onPressed: () async {
         final screenshot = await ref
             .read(selectedTabSessionProvider)
@@ -267,7 +268,7 @@ class ExportScreenshotMenuItemButton extends HookConsumerWidget {
     return MenuItemButton(
       leadingIcon: const Icon(MdiIcons.fileImage),
       closeOnActivate: false,
-      child: const Text('Export as PNG'),
+      child: Text(tr("Export as PNG")),
       onPressed: () async {
         final screenshot = await ref
             .read(selectedTabSessionProvider)
@@ -323,7 +324,7 @@ class OpenInAppMenuItemButton extends HookConsumerWidget {
     return MenuItemButton(
       leadingIcon: const Icon(Icons.open_in_new),
       closeOnActivate: false,
-      child: Text(appName != null ? 'Open in $appName' : 'Open in App'),
+      child: Text(appName != null ? tr("Open in {0}", [appName]) : tr("Open in App")),
       onPressed: () async {
         if (url == null) return;
 
@@ -347,7 +348,7 @@ class CopyAddressMenuItemButton extends HookConsumerWidget {
     return MenuItemButton(
       leadingIcon: const Icon(MdiIcons.contentCopy),
       closeOnActivate: false,
-      child: const Text('Copy Address'),
+      child: Text(tr("Copy Address")),
       onPressed: () async {
         final tabState = ref.read(tabStateProvider(selectedTabId))!;
         final copyUrl =
@@ -393,7 +394,7 @@ class SendTabToDeviceMenuItemButton extends HookConsumerWidget {
                 .toList(growable: false);
 
             if (targets.isEmpty) {
-              return const [MenuItemButton(child: Text('No target devices'))];
+              return [MenuItemButton(child: Text(tr("No target devices")))];
             }
 
             return targets
@@ -448,17 +449,17 @@ class SendTabToDeviceMenuItemButton extends HookConsumerWidget {
                 })
                 .toList(growable: false);
           },
-          loading: () => const [
+          loading: () => [
             MenuItemButton(
               leadingIcon: Icon(Icons.devices_other),
-              child: Text('Loading devices...'),
+              child: Text(tr("Loading devices...")),
             ),
           ],
-          error: (_, _) => const [
-            MenuItemButton(child: Text('Failed to load devices')),
+          error: (_, _) => [
+            MenuItemButton(child: Text(tr("Failed to load devices"))),
           ],
         ),
-        child: const Text('Send To Device'),
+        child: Text(tr("Send To Device")),
       ),
     );
   }

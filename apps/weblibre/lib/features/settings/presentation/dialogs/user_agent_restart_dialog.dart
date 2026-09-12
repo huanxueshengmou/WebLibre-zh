@@ -19,15 +19,16 @@
  */
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 Future<bool?> showUserAgentRestartDialog(BuildContext context) {
   return showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
       icon: const Icon(Icons.warning),
-      title: const Text('User Agent Changed'),
-      content: const Text(
-        'The Browser needs to get restarted for the new user agent to take effect',
+      title: Text(tr("User Agent Changed")),
+      content: Text(
+        tr("The Browser needs to get restarted for the new user agent to take effect"),
       ),
       actions: [
         TextButton(
@@ -40,7 +41,7 @@ Future<bool?> showUserAgentRestartDialog(BuildContext context) {
           onPressed: () {
             context.pop(true);
           },
-          child: const Text('Restart Now'),
+          child: Text(tr("Restart Now")),
         ),
       ],
     ),

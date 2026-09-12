@@ -25,6 +25,7 @@ import 'package:weblibre/features/geckoview/domain/providers/tab_session.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/repositories/tracking_protection.dart';
 import 'package:weblibre/features/geckoview/features/browser/presentation/widgets/sheets/tracking_protection_provider.dart';
 import 'package:weblibre/utils/ui_helper.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Section widget displaying Enhanced Tracking Protection toggle
 class TrackingProtectionSection extends HookConsumerWidget {
@@ -56,7 +57,7 @@ class TrackingProtectionSection extends HookConsumerWidget {
         final colorScheme = Theme.of(context).colorScheme;
 
         return ListTile(
-          title: const Text('Failed to load tracking protection'),
+          title: Text(tr("Failed to load tracking protection")),
           leading: Icon(Icons.error_outline, color: colorScheme.error),
         );
       },
@@ -75,11 +76,11 @@ class _TrackingProtectionTile extends ConsumerWidget {
     return SwitchListTile.adaptive(
       value: isEnabled,
       onChanged: (enabled) => _toggleProtection(context, ref, enabled),
-      title: const Text('Enhanced Tracking Protection'),
+      title: Text(tr("Enhanced Tracking Protection")),
       subtitle: Text(
         isEnabled
-            ? 'Trackers on this site are being blocked'
-            : 'Trackers on this site are allowed',
+            ? tr("Trackers on this site are being blocked")
+            : tr("Trackers on this site are allowed"),
       ),
       secondary: Icon(
         isEnabled ? Icons.shield : Icons.shield_outlined,

@@ -47,7 +47,7 @@ Future<bool?> showDeleteProfileDialog(
 
       return AlertDialog(
         icon: Icon(Icons.delete_forever, color: theme.colorScheme.error),
-        title: Text('Delete "$profileName"?'),
+        title: Text(tr("Delete \"{0}\"?", [profileName])),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +78,7 @@ Future<bool?> showDeleteProfileDialog(
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: const Text('Delete and restart'),
+            child: Text(tr("Delete and restart")),
           ),
         ],
       );

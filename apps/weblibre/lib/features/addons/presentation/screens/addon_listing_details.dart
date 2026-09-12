@@ -91,9 +91,9 @@ class AddonListingDetailsScreen extends ConsumerWidget {
                   spacing: 8,
                   children: [
                     if (listing.promoted == AddonStorePromoted.recommended)
-                      const Chip(
+                      Chip(
                         avatar: Icon(Icons.verified, size: 16),
-                        label: Text('Recommended'),
+                        label: Text(tr("Recommended")),
                       ),
                     if (listing.ratingAverage != null)
                       Chip(
@@ -198,7 +198,7 @@ class _InstallButton extends ConsumerWidget {
       return FilledButton.icon(
         onPressed: null,
         icon: const Icon(Icons.check),
-        label: const Text('Installed'),
+        label: Text(tr("Installed")),
       );
     }
 
@@ -367,9 +367,9 @@ class _PermissionsSection extends StatelessWidget {
     final items = <Widget>[];
 
     final groups = <_PermissionGroup>[
-      (title: 'Required', perms: listing.permissions),
-      (title: 'Websites', perms: listing.hostPermissions),
-      (title: 'Optional', perms: listing.optionalPermissions),
+      (title: tr("Required"), perms: listing.permissions),
+      (title: tr("Websites"), perms: listing.hostPermissions),
+      (title: tr("Optional"), perms: listing.optionalPermissions),
       (title: tr("Data collection"), perms: listing.dataCollectionPermissions),
     ];
 
@@ -412,9 +412,9 @@ class _TechnicalPermissionsSection extends StatelessWidget {
     final items = <Widget>[];
 
     final groups = <_PermissionGroup>[
-      (title: 'Required', perms: listing.permissions),
-      (title: 'Websites', perms: listing.hostPermissions),
-      (title: 'Optional', perms: listing.optionalPermissions),
+      (title: tr("Required"), perms: listing.permissions),
+      (title: tr("Websites"), perms: listing.hostPermissions),
+      (title: tr("Optional"), perms: listing.optionalPermissions),
       (title: tr("Data collection"), perms: listing.dataCollectionPermissions),
     ];
 
@@ -490,7 +490,7 @@ class _MoreInformationSection extends StatelessWidget {
     rows.add(_InfoRow(label: tr("Version"), value: listing.latestVersion));
 
     if (listing.fileSize != null) {
-      rows.add(_InfoRow(label: 'Size', value: formatBytes(listing.fileSize!)));
+      rows.add(_InfoRow(label: tr("Size"), value: formatBytes(listing.fileSize!)));
     }
 
     if (listing.lastUpdated != null) {
@@ -504,14 +504,14 @@ class _MoreInformationSection extends StatelessWidget {
 
     if (listing.categories.isNotEmpty) {
       rows.add(
-        _InfoRow(label: 'Categories', value: listing.categories.join(', ')),
+        _InfoRow(label: tr("Categories"), value: listing.categories.join(', ')),
       );
     }
 
     if (listing.licenseName != null) {
       rows.add(
         _InfoRow(
-          label: 'License',
+          label: tr("License"),
           value: listing.licenseName!,
           url: listing.licenseUrl,
         ),
@@ -523,7 +523,7 @@ class _MoreInformationSection extends StatelessWidget {
       links.add(
         _LinkTile(
           icon: Icons.home_outlined,
-          label: 'Homepage',
+          label: tr("Homepage"),
           url: listing.homepageUrl!,
         ),
       );
@@ -557,7 +557,7 @@ class _MoreInformationSection extends StatelessWidget {
       links.add(
         _LinkTile(
           icon: Icons.reviews_outlined,
-          label: 'Reviews',
+          label: tr("Reviews"),
           url: listing.ratingUrl!,
         ),
       );

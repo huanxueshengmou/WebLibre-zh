@@ -64,7 +64,7 @@ class BookmarkEntryEditScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: (exisitingEntry != null)
             ? Text(tr("Edit Bookmark"))
-            : const Text('Create Bookmark'),
+            : Text(tr("Create Bookmark")),
         actions: [
           IconButton(
             onPressed: () async {
@@ -182,7 +182,7 @@ class BookmarkEntryEditScreen extends HookConsumerWidget {
                         foregroundColor: Theme.of(context).colorScheme.error,
                         iconColor: Theme.of(context).colorScheme.error,
                       ),
-                      label: const Text('Delete'),
+                      label: Text(tr("Delete")),
                       icon: const Icon(MdiIcons.bookmarkRemove),
                       onPressed: () async {
                         final result = await showDeleteBookmarkDialog(context);

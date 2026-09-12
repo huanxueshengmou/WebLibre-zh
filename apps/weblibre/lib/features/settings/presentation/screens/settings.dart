@@ -108,7 +108,7 @@ _CategoryGroups _buildCategories() {
       onTap: (context) => GeneralSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Browsing',
+      title: tr("Browsing"),
       subtitle: tr("Tabs, navigation, external links"),
       icon: MdiIcons.compassOutline,
       keywords: const ['tabs', 'small web', 'url cleaner', 'unshortener'],
@@ -160,7 +160,7 @@ _CategoryGroups _buildCategories() {
       onTap: (context) => WebContentSettingsRoute().push(context),
     ),
     _SettingsCategoryDefinition(
-      title: 'Notifications',
+      title: tr("Notifications"),
       subtitle: tr("Web push delivery, distributor, site subscriptions"),
       icon: MdiIcons.bellBadgeOutline,
       keywords: const ['push', 'unifiedpush', 'ntfy', 'distributor'],
@@ -249,7 +249,7 @@ List<SettingsSectionDefinition> _buildCategorySections(
 ) {
   return [
     SettingsSectionDefinition(
-      title: 'Browser',
+      title: tr("Browser"),
       entries: [
         for (final category in categories.browser)
           _buildCategoryEntry(category),
@@ -353,8 +353,8 @@ class _CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(category.title),
-      subtitle: Text(category.subtitle),
+      title: Text(tr(category.title)),
+      subtitle: Text(tr(category.subtitle)),
       contentPadding: const EdgeInsets.symmetric(
         vertical: 8.0,
         horizontal: 16.0,
@@ -389,11 +389,11 @@ class _SearchResultTile extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: Icon(icon),
-      title: Text(title),
+      title: Text(tr(title)),
       subtitle: Text(
         subtitle == null || subtitle!.isEmpty
-            ? '$category • $section'
-            : '$category • $section\n$subtitle',
+            ? '${tr(category)} • ${tr(section)}'
+            : '${tr(category)} • ${tr(section)}\n${trNullable(subtitle)}',
       ),
       isThreeLine: subtitle != null && subtitle!.isNotEmpty,
       contentPadding: const EdgeInsets.symmetric(
@@ -416,3 +416,5 @@ class _SearchResultTile extends HookConsumerWidget {
     );
   }
 }
+
+// [weblibre-zh-ui-v1] audited constant-data consumers

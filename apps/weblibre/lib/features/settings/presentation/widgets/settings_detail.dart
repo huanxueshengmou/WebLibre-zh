@@ -126,7 +126,7 @@ class SettingsDetailScaffold extends HookWidget {
               slivers: [
                 SliverAppBar.large(
                   centerTitle: false,
-                  title: Text(title),
+                  title: Text(tr(title)),
                   actions: actions,
                 ),
                 if (showSearch)
@@ -193,7 +193,7 @@ class SettingsCustomScrollScaffold extends StatelessWidget {
               slivers: [
                 SliverAppBar.large(
                   centerTitle: false,
-                  title: Text(title),
+                  title: Text(tr(title)),
                   actions: actions,
                 ),
                 if (searchController != null)
@@ -233,7 +233,7 @@ class SettingsSearchField extends StatelessWidget {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        hintText: hintText,
+        hintText: tr(hintText),
         prefixIcon: const Icon(Icons.search),
         suffixIcon: controller.text.isEmpty
             ? null
@@ -301,7 +301,7 @@ List<Widget> buildSettingsSectionWidgets(
     ) ...[
       if (sectionIndex > 0) const SizedBox(height: 24),
       Text(
-        sections[sectionIndex].title,
+        tr(sections[sectionIndex].title),
         style: theme.textTheme.titleSmall?.copyWith(
           color: colorScheme.primary,
           fontWeight: FontWeight.w700,
@@ -468,6 +468,8 @@ bool matchesSettingsSearch(String normalizedQuery, List<String> values) {
   final tokens = normalizedQuery
       .split(RegExp(r'\s+'))
       .where((token) => token.isNotEmpty);
-  final haystack = values.join(' ').toLowerCase();
+  final haystack = [...values, ...values.map(tr)].join(' ').toLowerCase();
   return tokens.every(haystack.contains);
 }
+
+// [weblibre-zh-ui-v1] audited constant-data consumers

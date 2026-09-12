@@ -28,19 +28,19 @@ import 'package:weblibre/features/web_push/domain/providers.dart';
 import 'package:weblibre/utils/ui_helper.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> webPushSettingsSections = [
+const List<SettingsSectionDefinition> webPushSettingsSections = [
   SettingsSectionDefinition(
     title: 'Delivery',
     entries: [
       SettingsEntryDefinition(
-        title: tr("UnifiedPush Distributor"),
-        subtitle: tr("The app that delivers website push notifications"),
+        title: 'UnifiedPush Distributor',
+        subtitle: 'The app that delivers website push notifications',
         keywords: ['notifications', 'push', 'unifiedpush', 'ntfy'],
         child: _DistributorTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Notification Permission"),
-        subtitle: tr("Required to display website notifications"),
+        title: 'Notification Permission',
+        subtitle: 'Required to display website notifications',
         keywords: ['notifications', 'permission'],
         child: _NotificationPermissionTile(),
       ),
@@ -50,8 +50,8 @@ List<SettingsSectionDefinition> webPushSettingsSections = [
     title: 'Subscriptions',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Site Subscriptions"),
-        subtitle: tr("Websites subscribed to push notifications"),
+        title: 'Site Subscriptions',
+        subtitle: 'Websites subscribed to push notifications',
         keywords: ['sites', 'subscriptions'],
         child: _SubscriptionList(),
       ),
@@ -65,7 +65,7 @@ class WebPushSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsDetailScaffold(
-      title: 'Notifications',
+      title: tr("Notifications"),
       subtitle: tr("Web push delivery, distributor, and site subscriptions."),
       icon: MdiIcons.bellBadgeOutline,
       sections: webPushSettingsSections,
@@ -113,7 +113,7 @@ class _DistributorTile extends HookConsumerWidget {
       loading: () => ListTile(
         leading: Icon(MdiIcons.bellBadgeOutline),
         title: Text(tr("UnifiedPush Distributor")),
-        subtitle: Text('Checking…'),
+        subtitle: Text(tr("Checking…")),
       ),
       error: (error, _) => ListTile(
         leading: const Icon(MdiIcons.alertCircleOutline),
@@ -297,7 +297,7 @@ class _NotificationPermissionTile extends HookConsumerWidget {
       loading: () => ListTile(
         leading: Icon(MdiIcons.bellBadgeOutline),
         title: Text(tr("Notification Permission")),
-        subtitle: Text('Checking…'),
+        subtitle: Text(tr("Checking…")),
       ),
       error: (error, _) => ListTile(
         leading: Icon(
@@ -312,7 +312,7 @@ class _NotificationPermissionTile extends HookConsumerWidget {
           return ListTile(
             leading: Icon(MdiIcons.bellCheckOutline),
             title: Text(tr("Notification Permission")),
-            subtitle: Text('Granted'),
+            subtitle: Text(tr("Granted")),
           );
         }
 
@@ -359,7 +359,7 @@ class _NotificationPermissionTile extends HookConsumerWidget {
                     dimension: 18,
                     child: CircularProgressIndicator.adaptive(strokeWidth: 2),
                   )
-                : const Text('Grant'),
+                : Text(tr("Grant")),
           ),
         );
       },
@@ -413,7 +413,7 @@ class _SubscriptionList extends HookConsumerWidget {
                 subtitle: Text(
                   subscription.hasEndpoint
                       ? distributorReady
-                            ? 'Active'
+                            ? tr("Active")
                             : 'Endpoint saved; delivery is paused until the distributor is ready'
                       : tr("Waiting for the distributor to assign an endpoint"),
                 ),

@@ -141,7 +141,7 @@ class AddonCollectionScreen extends HookConsumerWidget {
                     ],
                   ),
                   SettingsSectionDefinition(
-                    title: 'Actions',
+                    title: tr("Actions"),
                     entries: [
                       SettingsEntryDefinition(
                         title: tr("Save & Restart Browser"),

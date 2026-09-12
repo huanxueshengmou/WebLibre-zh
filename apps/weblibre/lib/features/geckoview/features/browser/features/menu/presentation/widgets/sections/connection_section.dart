@@ -448,7 +448,7 @@ class ConnectionSection extends ConsumerWidget {
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
           child: ExpansionTile(
             leading: Icon(headerIcon, color: headerColor),
-            title: const Text('Connection'),
+            title: Text(tr("Connection")),
             subtitle: Text(
               _routingSummary(routing),
               style:

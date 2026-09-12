@@ -164,7 +164,7 @@ class FeedArticleScreen extends HookConsumerWidget {
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: Row(
                                   children: [
-                                    const Text('Authors:'),
+                                    Text(tr("Authors:")),
                                     const SizedBox(width: 8),
                                     Expanded(
                                       child: AuthorsHorizontalList(
@@ -179,7 +179,7 @@ class FeedArticleScreen extends HookConsumerWidget {
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: Row(
                                   children: [
-                                    const Text('Tags:'),
+                                    Text(tr("Tags:")),
                                     const SizedBox(width: 8),
                                     Expanded(
                                       child: TagsHorizontalList(

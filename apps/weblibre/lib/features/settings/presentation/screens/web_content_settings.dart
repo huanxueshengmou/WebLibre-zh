@@ -29,73 +29,74 @@ import 'package:weblibre/features/user/domain/repositories/general_settings.dart
 import 'package:weblibre/presentation/hooks/keyed_state.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> webContentSettingsSections = [
+const List<SettingsSectionDefinition> webContentSettingsSections = [
   SettingsSectionDefinition(
     title: 'Display',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Web Fonts"),
-        subtitle: tr("Allow websites to use custom fonts"),
+        title: 'Web Fonts',
+        subtitle: 'Allow websites to use custom fonts',
         keywords: ['fonts'],
         child: _WebFontsEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Automatic Font Size"),
-        subtitle: tr("Adjust font size based on system settings"),
+        title: 'Automatic Font Size',
+        subtitle: 'Adjust font size based on system settings',
         keywords: ['text size'],
         child: _AutomaticFontSizeAdjustmentTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Font Size Factor"),
-        subtitle: tr("Scale web page text size"),
+        title: 'Font Size Factor',
+        subtitle: 'Scale web page text size',
         keywords: ['zoom', 'text'],
         child: _FontSizeFactorSlider(),
       ),
       SettingsEntryDefinition(
-        title: tr("Font Inflation"),
-        subtitle: tr("Enlarge text on pages without a mobile viewport"),
+        title: 'Font Inflation',
+        subtitle: 'Enlarge text on pages without a mobile viewport',
         keywords: ['readability'],
         child: _FontInflationTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Input Auto Zoom"),
-        subtitle: tr("Automatically zoom when focusing text inputs"),
+        title: 'Input Auto Zoom',
+        subtitle: 'Automatically zoom when focusing text inputs',
         keywords: ['forms'],
         child: _InputAutoZoomEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Zoom on All Websites"),
+        title: 'Zoom on All Websites',
         subtitle:
-            tr("Allow pinch and zoom, even on websites that prevent this gesture"),
+            'Allow pinch and zoom, even on websites that prevent this '
+            'gesture',
         keywords: ['pinch', 'accessibility'],
         child: _ForceUserScalableContentTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Content Features"),
+    title: 'Content Features',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Built-in PDF Viewer"),
-        subtitle: tr("Open PDF files directly in the browser"),
+        title: 'Built-in PDF Viewer',
+        subtitle: 'Open PDF files directly in the browser',
         keywords: ['pdf'],
         child: _PdfViewerTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Enable Reader Mode"),
-        subtitle: tr("Extract and simplify pages for readability"),
+        title: 'Enable Reader Mode',
+        subtitle: 'Extract and simplify pages for readability',
         keywords: ['reader', 'readability'],
         child: _EnableReaderModeTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Enforce Reader Mode"),
-        subtitle: tr("Always show Reader Mode capabilities"),
+        title: 'Enforce Reader Mode',
+        subtitle: 'Always show Reader Mode capabilities',
         keywords: ['reader'],
         child: _EnforceReaderModeTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("On Device AI"),
-        subtitle: tr("Local AI features including topic and tab suggestions"),
+        title: 'On Device AI',
+        subtitle: 'Local AI features including topic and tab suggestions',
         keywords: ['local ai', 'suggestions'],
         child: _OnDeviceAiTile(),
       ),

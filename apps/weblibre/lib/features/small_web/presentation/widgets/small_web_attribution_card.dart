@@ -105,13 +105,13 @@ class SmallWebAttributionData {
   factory SmallWebAttributionData._forWander() {
     return SmallWebAttributionData(
       icon: Icons.dns,
-      title: 'Wander',
+      title: tr("Wander"),
       description:
           tr("Wander is a network of personal websites connected through shared consoles that help people browse pages across the wider Wander community."),
       attributionLine: tr("By Susam Pal - open source under the MIT License."),
       actions: [
         SmallWebAttributionAction(
-          label: 'Project',
+          label: tr("Project"),
           icon: Icons.public,
           uri: Uri.https('codeberg.org', '/susam/wander'),
         ),

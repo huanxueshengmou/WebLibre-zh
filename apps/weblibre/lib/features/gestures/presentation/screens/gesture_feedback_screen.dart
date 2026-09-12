@@ -24,23 +24,23 @@ import 'package:weblibre/features/gestures/domain/repositories/gesture_settings.
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> _feedbackSections = [
+const List<SettingsSectionDefinition> _feedbackSections = [
   SettingsSectionDefinition(
     title: 'Overlay',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Live feedback"),
-        subtitle: tr("Show the stroke and its action while you draw"),
+        title: 'Live feedback',
+        subtitle: 'Show the stroke and its action while you draw',
         child: _LiveFeedbackTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Suggest next"),
-        subtitle: tr("Also show the other gestures you can complete"),
+        title: 'Suggest next',
+        subtitle: 'Also show the other gestures you can complete',
         child: _SuggestNextTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Suggest after"),
-        subtitle: tr("Number of strokes to draw before suggestions appear"),
+        title: 'Suggest after',
+        subtitle: 'Number of strokes to draw before suggestions appear',
         child: _SuggestAfterSection(),
       ),
     ],

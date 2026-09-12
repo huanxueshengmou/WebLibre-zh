@@ -86,8 +86,7 @@ final class WrongArchivePassword extends MaintenanceFailure {
 
   @override
   String get message =>
-      'The password did not open this backup file. Check it and try again. '
-      '$nothingChanged';
+      tr("The password did not open this backup file. Check it and try again. {0}", [nothingChanged]);
 }
 
 /// The archive would not open and the cause cannot be pinned down.
@@ -105,8 +104,7 @@ final class UnreadableArchive extends MaintenanceFailure {
 
   @override
   String get message =>
-      'The password did not open this backup file, or the file is damaged. '
-      'Check the password and try again. $nothingChanged';
+      tr("The password did not open this backup file, or the file is damaged. Check the password and try again. {0}", [nothingChanged]);
 }
 
 /// The archive authenticated and its contents still could not be read.

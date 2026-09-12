@@ -134,7 +134,7 @@ class _ContainerPickerSheet extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
-              'Select Container',
+              tr("Select Container"),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),

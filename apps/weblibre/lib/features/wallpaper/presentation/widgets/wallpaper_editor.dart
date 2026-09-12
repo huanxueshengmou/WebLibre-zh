@@ -157,7 +157,7 @@ class WallpaperEditor extends HookConsumerWidget {
         // explains what a wallpaper here can look like, and hiding them would
         // make the section jump in size on every pick.
         _TreatmentSlider(
-          label: 'Blur',
+          label: tr("Blur"),
           icon: MdiIcons.blur,
           travel: homeWallpaperBlurToSlider(blurValue.value),
           enabled: fileName != null,
@@ -167,7 +167,7 @@ class WallpaperEditor extends HookConsumerWidget {
               onBlurChanged(homeWallpaperBlurFromSlider(travel)),
         ),
         _TreatmentSlider(
-          label: 'Dim',
+          label: tr("Dim"),
           icon: MdiIcons.brightness6,
           travel: dimValue.value / maxHomeWallpaperDim,
           enabled: fileName != null,

@@ -38,6 +38,7 @@ import 'package:weblibre/features/proxy/presentation/controllers/ensure_proxy_st
 import 'package:weblibre/features/sync/domain/repositories/sync.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/presentation/widgets/single_finger_horizontal_drag.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Which of the two multitouch gestures a pointer sequence turned out to be.
 ///
@@ -492,7 +493,7 @@ class _SwipeTargetIndicator extends StatelessWidget {
               Icon(MdiIcons.folderHidden, size: 18, color: foregroundColor),
               const SizedBox(width: 8),
               Text(
-                'Unassigned',
+                tr("Unassigned"),
                 style: TextStyle(
                   color: foregroundColor,
                   fontWeight: FontWeight.w700,

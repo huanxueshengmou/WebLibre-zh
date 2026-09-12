@@ -138,7 +138,7 @@ class SubscriptionImportScreen extends HookConsumerWidget {
             icon: fetching.value
                 ? const ButtonSpinner()
                 : const Icon(Icons.cloud_download_outlined),
-            label: const Text('Fetch'),
+            label: Text(tr("Fetch")),
           ),
           if (fetchError.value != null) ...[
             const SizedBox(height: 12),
@@ -214,7 +214,7 @@ class _ResultsSection extends StatelessWidget {
             ),
             TextButton(
               onPressed: successCount == 0 ? null : selectAll,
-              child: const Text('Select all'),
+              child: Text(tr("Select all")),
             ),
             TextButton(
               onPressed: () => onSelectionChanged(const {}),

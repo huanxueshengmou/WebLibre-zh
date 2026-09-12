@@ -27,13 +27,13 @@ import 'package:weblibre/features/user/data/models/engine_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/engine_settings.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> customTrackingProtectionSections = [
+const List<SettingsSectionDefinition> customTrackingProtectionSections = [
   SettingsSectionDefinition(
-    title: tr("Allowlist Exceptions"),
+    title: 'Allowlist Exceptions',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Allowlist exceptions"),
-        subtitle: tr("Compatibility exceptions for major and minor website issues"),
+        title: 'Allowlist exceptions',
+        subtitle: 'Compatibility exceptions for major and minor website issues',
         child: _AllowlistSection(),
       ),
     ],
@@ -43,17 +43,17 @@ List<SettingsSectionDefinition> customTrackingProtectionSections = [
     entries: [
       SettingsEntryDefinition(
         title: 'Cookies',
-        subtitle: tr("Cookie blocking mode and policy selection"),
+        subtitle: 'Cookie blocking mode and policy selection',
         child: _CookiesSection(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Tracking Content"),
+    title: 'Tracking Content',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Tracking content"),
-        subtitle: tr("Tracking scripts and scope for blocking"),
+        title: 'Tracking content',
+        subtitle: 'Tracking scripts and scope for blocking',
         child: _TrackingContentSection(),
       ),
     ],
@@ -63,17 +63,17 @@ List<SettingsSectionDefinition> customTrackingProtectionSections = [
     entries: [
       SettingsEntryDefinition(
         title: 'Trackers',
-        subtitle: tr("Cryptominers, known fingerprinters, and redirect trackers"),
+        subtitle: 'Cryptominers, known fingerprinters, and redirect trackers',
         child: _TrackersSection(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Advanced Fingerprinting Protection"),
+    title: 'Advanced Fingerprinting Protection',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Advanced fingerprinting protection"),
-        subtitle: tr("Suspected fingerprinters and tab scope"),
+        title: 'Advanced fingerprinting protection',
+        subtitle: 'Suspected fingerprinters and tab scope',
         child: _AdvancedFingerprintingSection(),
       ),
     ],
@@ -324,7 +324,7 @@ class _TrackersSection extends HookConsumerWidget {
           },
         ),
         SwitchListTile.adaptive(
-          title: const Text('Cryptominers'),
+          title: Text(tr("Cryptominers")),
           subtitle: Text(
             tr("Block scripts that use your device to mine cryptocurrency"),
           ),

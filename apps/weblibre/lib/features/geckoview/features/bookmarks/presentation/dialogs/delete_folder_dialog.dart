@@ -34,18 +34,15 @@ Future<bool?> showDeleteFolderDialog(
     builder: (BuildContext context) {
       return AlertDialog(
         icon: const Icon(Icons.warning),
-        title: const Text('Delete Folder'),
+        title: Text(tr("Delete Folder")),
         content: Text(switch (bookmarkCount) {
           null =>
-            'Are you sure you want to delete this Folder including '
-                'all bookmarks?',
-          0 => 'Are you sure you want to delete this Folder?',
+            tr("Are you sure you want to delete this Folder including all bookmarks?"),
+          0 => tr("Are you sure you want to delete this Folder?"),
           1 =>
-            'Are you sure you want to delete this Folder and the '
-                '1 bookmark inside it?',
+            tr("Are you sure you want to delete this Folder and the 1 bookmark inside it?"),
           final count =>
-            'Are you sure you want to delete this Folder and the '
-                '$count bookmarks inside it?',
+            tr("Are you sure you want to delete this Folder and the {0} bookmarks inside it?", [count]),
         }),
         actions: <Widget>[
           TextButton(
@@ -58,7 +55,7 @@ Future<bool?> showDeleteFolderDialog(
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: const Text('Delete'),
+            child: Text(tr("Delete")),
           ),
         ],
       );

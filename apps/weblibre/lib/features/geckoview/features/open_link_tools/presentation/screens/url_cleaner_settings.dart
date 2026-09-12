@@ -32,13 +32,13 @@ import 'package:weblibre/features/user/domain/repositories/general_settings.dart
 import 'package:weblibre/utils/ui_helper.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> urlCleanerSettingsSections = [
+const List<SettingsSectionDefinition> urlCleanerSettingsSections = [
   SettingsSectionDefinition(
     title: 'Overview',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Description"),
-        subtitle: tr("Tracking parameter removal and offline redirect cleanup"),
+        title: 'Description',
+        subtitle: 'Tracking parameter removal and offline redirect cleanup',
         keywords: ['tracking parameters', 'redirects'],
         child: _UrlCleanerDescriptionTile(),
       ),
@@ -48,20 +48,20 @@ List<SettingsSectionDefinition> urlCleanerSettingsSections = [
     title: 'Behavior',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Enable URL Cleaner"),
-        subtitle: tr("Remove tracking parameters from URLs"),
+        title: 'Enable URL Cleaner',
+        subtitle: 'Remove tracking parameters from URLs',
         keywords: ['clean urls'],
         child: _UrlCleanerEnabledTile(),
       ),
       SettingsEntryDefinition(
         title: 'Auto-apply',
-        subtitle: tr("Automatically replace URL with cleaned version"),
+        subtitle: 'Automatically replace URL with cleaned version',
         keywords: ['auto apply'],
         child: _UrlCleanerAutoApplyTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Allow referral marketing"),
-        subtitle: tr("Keep referral and affiliate tracking parameters"),
+        title: 'Allow referral marketing',
+        subtitle: 'Keep referral and affiliate tracking parameters',
         keywords: ['affiliate', 'referral'],
         child: _UrlCleanerAllowReferralTile(),
       ),
@@ -77,12 +77,12 @@ List<SettingsSectionDefinition> urlCleanerSettingsSections = [
       ),
       SettingsEntryDefinition(
         title: 'Update catalog',
-        subtitle: tr("Fetch the latest URL cleaner rules"),
+        subtitle: 'Fetch the latest URL cleaner rules',
         child: _UrlCleanerUpdateButton(),
       ),
       SettingsEntryDefinition(
-        title: tr("Restore defaults"),
-        subtitle: tr("Reset to bundled catalog and default settings"),
+        title: 'Restore defaults',
+        subtitle: 'Reset to bundled catalog and default settings',
         child: _UrlCleanerRestoreDefaultsButton(),
       ),
     ],
@@ -92,7 +92,7 @@ List<SettingsSectionDefinition> urlCleanerSettingsSections = [
     entries: [
       SettingsEntryDefinition(
         title: 'Attribution',
-        subtitle: tr("Credits and source links"),
+        subtitle: 'Credits and source links',
         child: _UrlCleanerAttributionTile(),
       ),
     ],
@@ -212,8 +212,8 @@ class _UrlCleanerAutoUpdateTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Auto-update catalog'),
-      subtitle: const Text('Check for rule updates weekly'),
+      title: Text(tr("Auto-update catalog")),
+      subtitle: Text(tr("Check for rule updates weekly")),
       secondary: const Icon(MdiIcons.update),
       value: autoUpdate,
       onChanged: (value) async {
@@ -268,7 +268,7 @@ class _UrlCleanerUpdateButton extends HookConsumerWidget {
     }
 
     return ListTile(
-      title: const Text('Update catalog'),
+      title: Text(tr("Update catalog")),
       subtitle: Text(subtitle.toString()),
       leading: const Icon(MdiIcons.cloudDownload),
       trailing: isUpdating.value

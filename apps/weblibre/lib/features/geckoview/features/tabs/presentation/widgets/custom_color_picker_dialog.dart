@@ -80,8 +80,8 @@ class CustomColorPickerDialog extends HookWidget {
             const SizedBox(height: 16),
             TextField(
               controller: hexController,
-              decoration: const InputDecoration(
-                labelText: 'Hex',
+              decoration: InputDecoration(
+                labelText: tr("Hex"),
                 prefixText: '#',
                 isDense: true,
                 border: OutlineInputBorder(),
@@ -98,7 +98,7 @@ class CustomColorPickerDialog extends HookWidget {
             ),
             const SizedBox(height: 12),
             _GradientSlider(
-              label: 'Hue',
+              label: tr("Hue"),
               value: hsl.value.hue,
               max: 360,
               gradient: const LinearGradient(
@@ -115,7 +115,7 @@ class CustomColorPickerDialog extends HookWidget {
               onChanged: (v) => updateHsl(hsl.value.withHue(v)),
             ),
             _GradientSlider(
-              label: 'Saturation',
+              label: tr("Saturation"),
               value: hsl.value.saturation,
               max: 1,
               gradient: LinearGradient(
@@ -137,7 +137,7 @@ class CustomColorPickerDialog extends HookWidget {
               onChanged: (v) => updateHsl(hsl.value.withSaturation(v)),
             ),
             _GradientSlider(
-              label: 'Lightness',
+              label: tr("Lightness"),
               value: hsl.value.lightness,
               max: 1,
               gradient: LinearGradient(
@@ -164,7 +164,7 @@ class CustomColorPickerDialog extends HookWidget {
         ),
         TextButton(
           onPressed: () => Navigator.pop<Color?>(context, color),
-          child: const Text('Select'),
+          child: Text(tr("Select")),
         ),
       ],
     );

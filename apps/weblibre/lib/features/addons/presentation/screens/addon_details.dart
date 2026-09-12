@@ -48,7 +48,7 @@ class AddonDetailsScreen extends ConsumerWidget {
 
     if (addon == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Extension')),
+        appBar: AppBar(title: Text(tr("Extension"))),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -116,7 +116,7 @@ class _AddonDetailsBody extends ConsumerWidget {
           ),
         ],
         const SizedBox(height: 16),
-        Text('Details', style: theme.textTheme.titleMedium),
+        Text(tr("Details"), style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         _DetailsCard(addon: addon),
         const SizedBox(height: 16),
@@ -197,7 +197,7 @@ class _AddonHeader extends StatelessWidget {
                             label: Text(
                               addon.isInstalled
                                   ? (addon.isEnabled ? 'Installed' : 'Disabled')
-                                  : 'Available',
+                                  : tr("Available"),
                             ),
                           ),
                           if (addon.isAllowedInPrivateBrowsing)
@@ -262,7 +262,7 @@ class _ManagementSection extends ConsumerWidget {
     )) {
       (_, _, false) => tr("Global automatic updates are disabled."),
       (true, _, true) =>
-        'Run a manual update once and restart the app before automatic updates can be enabled.',
+        tr("Run a manual update once and restart the app before automatic updates can be enabled."),
       (false, true, true) =>
         tr("Allow this extension to receive background updates."),
       (false, false, true) =>
@@ -272,7 +272,7 @@ class _ManagementSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Management', style: theme.textTheme.titleMedium),
+        Text(tr("Management"), style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         Card(
           color: Theme.of(context).colorScheme.surfaceContainerHigh,
@@ -451,7 +451,7 @@ class _UpdatesSection extends ConsumerWidget {
                 const SizedBox(height: 8),
                 if (hasAvailableUpdate) ...[
                   Text(
-                    'Update available: ${addon.installedVersion} \u2192 $availableVersion',
+                    tr("Update available: {0} → {1}", [addon.installedVersion, availableVersion]),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.primary,
                       fontWeight: FontWeight.w500,
@@ -461,7 +461,7 @@ class _UpdatesSection extends ConsumerWidget {
                 ],
                 Text(
                   updateAttempt == null
-                      ? 'No recent update attempt information is available yet.'
+                      ? tr("No recent update attempt information is available yet.")
                       : 'Last checked: ${formatUpdateAttemptDate(updateAttempt)}',
                   style: theme.textTheme.bodySmall,
                 ),
@@ -478,7 +478,7 @@ class _UpdatesSection extends ConsumerWidget {
                         )
                       : const Icon(Icons.system_update_alt),
                   label: Text(
-                    checking ? tr("Checking for Updates") : 'Check for Updates',
+                    checking ? tr("Checking for Updates") : tr("Check for Updates"),
                   ),
                 ),
               ],
@@ -542,10 +542,9 @@ Future<bool?> _confirmUpdateDialog(
   return showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Update available'),
+      title: Text(tr("Update available")),
       content: Text(
-        'Update ${addon.displayName} from '
-        '${addon.installedVersion} to $availableVersion?',
+        tr("Update {0} from {1} to {2}?", [addon.displayName, addon.installedVersion, availableVersion]),
       ),
       actions: [
         TextButton(
@@ -554,7 +553,7 @@ Future<bool?> _confirmUpdateDialog(
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Update'),
+          child: Text(tr("Update")),
         ),
       ],
     ),
@@ -636,7 +635,7 @@ class _DetailsCard extends StatelessWidget {
           if ((addon.authorName ?? '').isNotEmpty)
             ListTile(
               leading: const Icon(Icons.person_outline),
-              title: const Text('Author'),
+              title: Text(tr("Author")),
               subtitle: Text(addon.authorName!),
               onTap: (addon.authorUrl ?? '').isEmpty
                   ? null
@@ -655,7 +654,7 @@ class _DetailsCard extends StatelessWidget {
           if (addon.homepageUrl.isNotEmpty)
             ListTile(
               leading: const Icon(Icons.public),
-              title: const Text('Homepage'),
+              title: Text(tr("Homepage")),
               subtitle: Text(addon.homepageUrl),
               trailing: const Icon(Icons.open_in_new),
               onTap: () => launchUrl(Uri.parse(addon.homepageUrl)),

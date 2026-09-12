@@ -137,8 +137,8 @@ class _SectionFields extends StatelessWidget {
               revealedMinLines: field.key == 'private_key' ? 4 : null,
               revealedMaxLines: field.key == 'private_key' ? 8 : 1,
               decoration: InputDecoration(
-                labelText: field.required ? '${field.label} *' : field.label,
-                helperText: field.helperText ?? 'Stored in secure storage.',
+                labelText: field.required ? '${tr(field.label)} *' : tr(field.label),
+                helperText: tr(field.helperText ?? 'Stored in secure storage.'),
                 border: const OutlineInputBorder(),
               ),
               onChanged: (value) => onChanged(field.key, value),
@@ -159,8 +159,8 @@ class _SectionFields extends StatelessWidget {
               minLines: field.isStringList ? 2 : 1,
               maxLines: field.isStringList ? 4 : 1,
               decoration: InputDecoration(
-                labelText: field.required ? '${field.label} *' : field.label,
-                helperText: field.helperText,
+                labelText: field.required ? '${tr(field.label)} *' : tr(field.label),
+                helperText: trNullable(field.helperText),
                 border: const OutlineInputBorder(),
               ),
               onChanged: (value) => onChanged(field.key, value),
@@ -264,8 +264,8 @@ class _BooleanField extends HookWidget {
 
     return InputDecorator(
       decoration: InputDecoration(
-        labelText: field.required ? '${field.label} *' : field.label,
-        helperText: field.helperText,
+        labelText: field.required ? '${tr(field.label)} *' : tr(field.label),
+        helperText: trNullable(field.helperText),
         helperMaxLines: 3,
         border: const OutlineInputBorder(),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -325,8 +325,8 @@ class _ChoiceField extends HookWidget {
     return DropdownButtonFormField<String>(
       initialValue: value,
       decoration: InputDecoration(
-        labelText: field.required ? '${field.label} *' : field.label,
-        helperText: field.helperText,
+        labelText: field.required ? '${tr(field.label)} *' : tr(field.label),
+        helperText: trNullable(field.helperText),
         helperMaxLines: 3,
         border: const OutlineInputBorder(),
       ),
@@ -343,3 +343,5 @@ class _ChoiceField extends HookWidget {
     );
   }
 }
+
+// [weblibre-zh-ui-v1] audited constant-data consumers

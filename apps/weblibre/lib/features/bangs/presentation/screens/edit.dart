@@ -199,7 +199,7 @@ class EditBangScreen extends HookConsumerWidget {
                 TextFormField(
                   controller: triggerTextController,
                   decoration: InputDecoration(
-                    label: Text('Trigger'),
+                    label: Text(tr("Trigger")),
                     helper: Text(
                       tr("The specific trigger word or phrase used to invoke the bang."),
                     ),
@@ -249,7 +249,7 @@ class EditBangScreen extends HookConsumerWidget {
                   key: ValueKey(EquatableValue([category.value, categories])),
                   enableFilter: true,
                   requestFocusOnTap: true,
-                  label: const Text('Category'),
+                  label: Text(tr("Category")),
                   expandedInsets: EdgeInsets.zero,
                   initialSelection: category.value,
                   dropdownMenuEntries: [
@@ -286,7 +286,7 @@ class EditBangScreen extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 16),
-                Text('Flags', style: Theme.of(context).textTheme.labelMedium),
+                Text(tr("Flags"), style: Theme.of(context).textTheme.labelMedium),
                 const SizedBox(height: 4),
                 CheckboxListTile(
                   contentPadding: EdgeInsets.zero,
@@ -342,7 +342,7 @@ class EditBangScreen extends HookConsumerWidget {
                         foregroundColor: Theme.of(context).colorScheme.error,
                         iconColor: Theme.of(context).colorScheme.error,
                       ),
-                      label: const Text('Delete'),
+                      label: Text(tr("Delete")),
                       icon: const Icon(Icons.delete),
                       onPressed: () async {
                         final result = await showDeleteBangDialog(context);

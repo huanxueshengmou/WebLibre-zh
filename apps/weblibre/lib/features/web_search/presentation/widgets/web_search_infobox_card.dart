@@ -459,7 +459,7 @@ class _Factsheet extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Factsheet',
+                    tr("Factsheet"),
                     style: textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),

@@ -100,7 +100,7 @@ class SearchCreditsSection extends HookConsumerWidget {
             creditsError ? tr("Could not load credits") : tr("Search credits"),
           ),
           subtitle: creditsError
-              ? const Text('Check your connection and tap refresh to retry.')
+              ? Text(tr("Check your connection and tap refresh to retry."))
               : isEmpty
               ? Text(tr("Buy a search pack to get started"))
               : Text(

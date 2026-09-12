@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mozilla_components/flutter_mozilla_components.dart';
 import 'package:weblibre/utils/number_format.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class AddonListingIcon extends StatelessWidget {
   final String? iconUrl;
@@ -107,9 +108,9 @@ class AddonListingCard extends StatelessWidget {
                       spacing: 8,
                       children: [
                         if (listing.promoted == AddonStorePromoted.recommended)
-                          const Chip(
+                          Chip(
                             avatar: Icon(Icons.verified, size: 16),
-                            label: Text('Recommended'),
+                            label: Text(tr("Recommended")),
                           ),
                         if (listing.ratingAverage != null)
                           Chip(
@@ -126,9 +127,9 @@ class AddonListingCard extends StatelessWidget {
                             ),
                           ),
                         if (isInstalled)
-                          const Chip(
+                          Chip(
                             avatar: Icon(Icons.check, size: 16),
-                            label: Text('Installed'),
+                            label: Text(tr("Installed")),
                           ),
                       ],
                     ),

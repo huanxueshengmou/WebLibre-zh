@@ -577,7 +577,7 @@ class _DiscoverButton extends ConsumerWidget {
                 child: CircularProgressIndicator(strokeWidth: 2),
               )
             : const Icon(Icons.explore, size: 20),
-        label: const Text('Discover'),
+        label: Text(tr("Discover")),
       ),
     );
   }

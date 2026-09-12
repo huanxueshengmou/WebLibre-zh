@@ -64,7 +64,7 @@ class CustomOutboundProfileForm extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ProfileEditorSection(
-          title: 'Outbound',
+          title: tr("Outbound"),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
@@ -84,7 +84,7 @@ class CustomOutboundProfileForm extends HookConsumerWidget {
         ),
         const SizedBox(height: 24),
         ProfileEditorSection(
-          title: 'Secrets',
+          title: tr("Secrets"),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: ObscurableTextField(

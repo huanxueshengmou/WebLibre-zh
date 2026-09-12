@@ -50,7 +50,7 @@ class ContainerSelectionScreen extends HookConsumerWidget {
     Widget buildList(List<ContainerDataWithCount> containers) {
       return CustomScrollView(
         slivers: [
-          const SliverAppBar.large(title: Text('Select Container')),
+          SliverAppBar.large(title: Text(tr("Select Container"))),
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
             sliver: SliverList(
@@ -185,7 +185,7 @@ class _UnassignedSelectionCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Unassigned',
+                        tr("Unassigned"),
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               color: colorScheme.onSurface,
@@ -209,7 +209,7 @@ class _UnassignedSelectionCard extends StatelessWidget {
                       size: 16,
                       color: palette.onContainerColor,
                     ),
-                    label: const Text('Active'),
+                    label: Text(tr("Active")),
                     side: BorderSide.none,
                     visualDensity: VisualDensity.compact,
                     backgroundColor: palette.containerColor,
@@ -351,7 +351,7 @@ class _SelectionContainerCard extends ConsumerWidget {
                           size: 16,
                           color: palette.onContainerColor,
                         ),
-                        label: const Text('Active'),
+                        label: Text(tr("Active")),
                         side: BorderSide.none,
                         visualDensity: VisualDensity.compact,
                         backgroundColor: palette.containerColor,

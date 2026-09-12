@@ -346,7 +346,7 @@ class _DocumentTile extends StatelessWidget {
             ),
             onPressed: onDelete,
             child: Text(
-              'Delete',
+              tr("Delete"),
               style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           ),

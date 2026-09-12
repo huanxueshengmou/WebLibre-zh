@@ -31,7 +31,7 @@ Future<bool?> showResetBangDialog(
     context: context,
     builder: (context) => AlertDialog(
       title: Text(tr("Reset usage frequency of {0}?", [triggerName])),
-      content: const Text('This will remove the Bang from quick select.'),
+      content: Text(tr("This will remove the Bang from quick select.")),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context, false),

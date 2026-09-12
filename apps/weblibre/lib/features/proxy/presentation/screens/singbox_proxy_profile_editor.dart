@@ -111,7 +111,7 @@ class _Editor extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            label: Text(draft.isEditing ? tr("Save Changes") : 'Create Profile'),
+            label: Text(draft.isEditing ? tr("Save Changes") : tr("Create Profile")),
           ),
         ),
       ),
@@ -235,7 +235,7 @@ class _GeneralSection extends HookConsumerWidget {
           // create a new profile.
           InputDecorator(
             decoration: InputDecoration(
-              labelText: 'Protocol',
+              labelText: tr("Protocol"),
               border: OutlineInputBorder(),
               helperText: tr("Protocol is fixed once a profile is created."),
             ),
@@ -245,8 +245,8 @@ class _GeneralSection extends HookConsumerWidget {
           DropdownButtonFormField<SingboxProxyProfileType>(
             key: ValueKey(draft.type),
             initialValue: draft.type,
-            decoration: const InputDecoration(
-              labelText: 'Protocol',
+            decoration: InputDecoration(
+              labelText: tr("Protocol"),
               border: OutlineInputBorder(),
             ),
             items: [

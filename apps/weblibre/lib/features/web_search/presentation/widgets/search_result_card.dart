@@ -11,6 +11,7 @@ import 'package:weblibre/features/web_search/domain/entities/fetch_method.dart';
 import 'package:weblibre/features/web_search/presentation/widgets/search_result_metadata_chips.dart';
 import 'package:weblibre/presentation/widgets/uri_breadcrumb.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class WebSearchResultCard extends HookConsumerWidget {
   final CompactSearchResult result;
@@ -238,7 +239,7 @@ class _Header extends ConsumerWidget {
                   onPressed: () => onFetch(result.url),
                   icon: const Icon(Icons.download_rounded, size: 16),
                   visualDensity: VisualDensity.compact,
-                  tooltip: 'Fetch',
+                  tooltip: tr("Fetch"),
                 ),
               ],
             ),

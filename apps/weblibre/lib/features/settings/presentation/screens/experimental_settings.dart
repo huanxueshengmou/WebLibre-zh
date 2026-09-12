@@ -28,19 +28,19 @@ import 'package:weblibre/features/user/domain/repositories/engine_settings.dart'
 import 'package:weblibre/utils/exit_app.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> experimentalSettingsSections = [
+const List<SettingsSectionDefinition> experimentalSettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Runtime & Startup"),
+    title: 'Runtime & Startup',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Isolated Content Process"),
-        subtitle: tr("Run web content in an isolated process"),
+        title: 'Isolated Content Process',
+        subtitle: 'Run web content in an isolated process',
         keywords: ['restart'],
         child: _IsolatedProcessEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("App Zygote Process"),
-        subtitle: tr("Preload the content service for faster isolated startup"),
+        title: 'App Zygote Process',
+        subtitle: 'Preload the content service for faster isolated startup',
         keywords: ['restart', 'android 10'],
         child: _AppZygoteProcessEnabledTile(),
       ),
@@ -54,7 +54,7 @@ class ExperimentalSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsDetailScaffold(
-      title: 'Experimental',
+      title: tr("Experimental"),
       subtitle: tr("Runtime isolation and startup behavior."),
       icon: MdiIcons.flaskOutline,
       sections: experimentalSettingsSections,

@@ -323,7 +323,7 @@ class MetaSearchController extends _$MetaSearchController {
           );
       state = state.copyWith(
         status: WebSearchStatus.error,
-        errorMessage: 'Could not check search credits. Please try again.',
+        errorMessage: tr("Could not check search credits. Please try again."),
         hasOpenSession: false,
       );
       return;

@@ -139,12 +139,12 @@ String formatUpdateAttemptStatus(AddonUpdateAttemptInfo? attempt) {
       attempt?.message?.isNotEmpty == true
           ? attempt!.message!
           : 'Updated successfully',
-    AddonUpdateStatus.noUpdateAvailable => 'No update available',
+    AddonUpdateStatus.noUpdateAvailable => tr("No update available"),
     AddonUpdateStatus.notInstalled => tr("Extension not installed"),
     AddonUpdateStatus.error =>
       attempt?.message?.isNotEmpty == true
           ? 'Update failed: ${attempt!.message}'
           : 'Update failed',
-    null => 'No update checks recorded yet',
+    null => tr("No update checks recorded yet"),
   };
 }

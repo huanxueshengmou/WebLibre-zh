@@ -290,7 +290,7 @@ class _InstallConfigSheet extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
               child: Text(
-                'Storage',
+                tr("Storage"),
                 style: textTheme.labelLarge?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),

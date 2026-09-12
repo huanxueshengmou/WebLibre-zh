@@ -145,7 +145,7 @@ class ProfileEditScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: (profile != null)
             ? Text(tr("Edit Profile"))
-            : const Text('Create Profile'),
+            : Text(tr("Create Profile")),
         actions: [
           IconButton(
             onPressed: () async {
@@ -313,7 +313,7 @@ class _ProfileActionsSection extends ConsumerWidget {
         SizedBox(
           width: double.infinity,
           child: OutlinedButton.icon(
-            label: const Text('Backup'),
+            label: Text(tr("Backup")),
             icon: const Icon(MdiIcons.safe),
             onPressed: () async {
               await BackupProfileRoute(
@@ -353,7 +353,7 @@ class _ProfileActionsSection extends ConsumerWidget {
                 foregroundColor: Theme.of(context).colorScheme.error,
                 iconColor: Theme.of(context).colorScheme.error,
               ),
-              label: const Text('Delete'),
+              label: Text(tr("Delete")),
               icon: const Icon(Icons.delete),
               onPressed: () async {
                 // Read before the dialog opens, not inside it: counts that

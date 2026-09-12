@@ -65,7 +65,7 @@ class AddonBrowseView extends HookConsumerWidget {
           child: SizedBox(
             width: double.infinity,
             child: SegmentedButton<AddonStoreApp>(
-              segments: const [
+              segments: [
                 ButtonSegment(
                   value: AddonStoreApp.android,
                   icon: Icon(Icons.phone_android),
@@ -74,7 +74,7 @@ class AddonBrowseView extends HookConsumerWidget {
                 ButtonSegment(
                   value: AddonStoreApp.firefox,
                   icon: Icon(Icons.desktop_windows),
-                  label: Text('Desktop'),
+                  label: Text(tr("Desktop")),
                 ),
               ],
               selected: {app},

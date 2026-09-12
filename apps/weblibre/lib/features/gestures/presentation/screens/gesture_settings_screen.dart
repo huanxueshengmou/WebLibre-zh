@@ -102,7 +102,7 @@ class GestureSettingsScreen extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: buildSettingsSectionWidgets(context, [
                   SettingsSectionDefinition(
-                    title: 'Configuration',
+                    title: tr("Configuration"),
                     entries: [
                       SettingsEntryDefinition(
                         title: tr("Gesture bindings"),

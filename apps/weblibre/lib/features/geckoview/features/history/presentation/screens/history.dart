@@ -151,9 +151,9 @@ class Section extends MultiSliver {
                                tr("Permanent Redirect"),
                              ),
                              VisitType.download => Text(tr("Download")),
-                             VisitType.framedLink => const Text('Frame'),
+                             VisitType.framedLink => Text(tr("Frame")),
                              VisitType.reload => Text(tr("Page Reload")),
-                             VisitType.bookmark => const Text('Bookmark'),
+                             VisitType.bookmark => Text(tr("Bookmark")),
                            },
                          ),
                          Chip(
@@ -275,9 +275,7 @@ class HistoryScreen extends HookConsumerWidget {
           icon: const Icon(Icons.warning),
           title: Text(tr("Clear Container History")),
           content: Text(
-            'Delete all browsing history recorded for '
-            '"${container.name ?? 'Container'}"? The visits are removed from '
-            'history.',
+            tr("Delete all browsing history recorded for \"{0}\"? The visits are removed from history.", [container.name ?? 'Container']),
           ),
           actions: [
             TextButton(
@@ -476,7 +474,7 @@ class HistoryScreen extends HookConsumerWidget {
                           tr("Permanent Redirects"),
                         ),
                         VisitType.download => Text(tr("Downloads")),
-                        VisitType.framedLink => const Text('Frames'),
+                        VisitType.framedLink => Text(tr("Frames")),
                         VisitType.reload => Text(tr("Page Reloads")),
                         VisitType.bookmark => Text(tr("Bookmarks")),
                       },

@@ -75,7 +75,7 @@ Future<String?> showStoreLabelDialog(BuildContext context) {
         controller: controller,
         decoration: InputDecoration(
           labelText: tr("Label (optional)"),
-          hintText: 'e.g. "Before update", "Home setup"',
+          hintText: tr("e.g. \"Before update\", \"Home setup\""),
           border: OutlineInputBorder(),
         ),
         autofocus: true,
@@ -91,7 +91,7 @@ Future<String?> showStoreLabelDialog(BuildContext context) {
             final label = controller.text.trim();
             Navigator.of(context).pop(label.isEmpty ? '' : label);
           },
-          child: const Text('Store'),
+          child: Text(tr("Store")),
         ),
       ],
     ),
@@ -110,8 +110,8 @@ Future<String?> showEditLabelDialog(
       title: Text(tr("Edit Label")),
       content: TextField(
         controller: controller,
-        decoration: const InputDecoration(
-          labelText: 'Label',
+        decoration: InputDecoration(
+          labelText: tr("Label"),
           border: OutlineInputBorder(),
         ),
         autofocus: true,
@@ -149,9 +149,9 @@ Future<bool?> showRestoreConfirmation(
           Text(tr("This will overwrite your current local settings.")),
           const SizedBox(height: 16),
           if (metadata.label != null && metadata.label!.isNotEmpty)
-            MetadataRow(label: 'Label', value: metadata.label!),
+            MetadataRow(label: tr("Label"), value: metadata.label!),
           MetadataRow(
-            label: 'Stored',
+            label: tr("Stored"),
             value: formatDateTime(metadata.updatedAt),
           ),
           if (metadata.sourceAppVersion != null)
@@ -160,7 +160,7 @@ Future<bool?> showRestoreConfirmation(
               value: metadata.sourceAppVersion!,
             ),
           if (metadata.sourceDeviceId != null)
-            MetadataRow(label: 'Device', value: metadata.sourceDeviceId!),
+            MetadataRow(label: tr("Device"), value: metadata.sourceDeviceId!),
         ],
       ),
       actions: [
@@ -188,8 +188,8 @@ Future<bool?> showDeleteConfirmation(
   return showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Delete Snapshot'),
-      content: Text('Are you sure you want to delete $label?'),
+      title: Text(tr("Delete Snapshot")),
+      content: Text(tr("Are you sure you want to delete {0}?", [label])),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
@@ -200,7 +200,7 @@ Future<bool?> showDeleteConfirmation(
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Delete'),
+          child: Text(tr("Delete")),
         ),
       ],
     ),

@@ -26,16 +26,15 @@ Future<bool?> showImportBookmarksDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(tr("Import Bookmarks")),
-        content: const Text(
-          'Do you want to erase all existing bookmarks before importing?\n\n'
-          'Choose "Replace" to delete existing bookmarks, or "Merge" to keep them.',
+        content: Text(
+          tr("Do you want to erase all existing bookmarks before importing?\n\nChoose \"Replace\" to delete existing bookmarks, or \"Merge\" to keep them."),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: const Text('Merge'),
+            child: Text(tr("Merge")),
           ),
           TextButton(
             onPressed: () {

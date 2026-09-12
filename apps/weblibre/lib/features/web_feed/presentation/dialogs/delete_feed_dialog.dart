@@ -26,9 +26,9 @@ Future<bool?> showDeleteFeedDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         icon: const Icon(Icons.warning),
-        title: const Text('Delete Feed'),
-        content: const Text(
-          'Are you sure you want to delete this feed and delete all related articles?',
+        title: Text(tr("Delete Feed")),
+        content: Text(
+          tr("Are you sure you want to delete this feed and delete all related articles?"),
         ),
         actions: <Widget>[
           TextButton(
@@ -41,7 +41,7 @@ Future<bool?> showDeleteFeedDialog(BuildContext context) {
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: const Text('Delete'),
+            child: Text(tr("Delete")),
           ),
         ],
       );

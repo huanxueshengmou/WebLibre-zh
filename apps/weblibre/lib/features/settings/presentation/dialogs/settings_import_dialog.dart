@@ -105,7 +105,7 @@ class _SettingsImportDialog extends HookWidget {
             ],
             const SizedBox(height: 16),
             if (document.exportedAt case final exportedAt?)
-              MetadataRow(label: 'Exported', value: formatDateTime(exportedAt)),
+              MetadataRow(label: tr("Exported"), value: formatDateTime(exportedAt)),
             if (document.appVersion case final appVersion?)
               MetadataRow(label: tr("App version"), value: appVersion),
             if (selected.value.contains(SettingsTransferSection.settings)) ...[

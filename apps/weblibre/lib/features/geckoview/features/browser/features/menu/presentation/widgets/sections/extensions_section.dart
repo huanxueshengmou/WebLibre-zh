@@ -84,7 +84,7 @@ class ExtensionsSection extends HookConsumerWidget {
                     contentPadding: const EdgeInsets.only(left: 56, right: 16),
                     leading: ExtensionBadgeIcon(extension),
                     title: Text(
-                      extension.title ?? 'Extension',
+                      extension.title ?? tr("Extension"),
                       style: const TextStyle(fontSize: 14),
                     ),
                     dense: true,
@@ -119,7 +119,7 @@ class ExtensionsSection extends HookConsumerWidget {
                     contentPadding: const EdgeInsets.only(left: 56, right: 16),
                     leading: ExtensionBadgeIcon(extension),
                     title: Text(
-                      extension.title ?? 'Extension',
+                      extension.title ?? tr("Extension"),
                       style: const TextStyle(fontSize: 14),
                     ),
                     dense: true,

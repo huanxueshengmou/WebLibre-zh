@@ -162,7 +162,7 @@ class TranslationBottomSheet extends HookConsumerWidget {
 
             // From language dropdown
             _LanguageDropdown(
-              label: 'From',
+              label: tr("From"),
               languages: fromLanguages,
               selectedCode: selectedFrom.value,
               onChanged: effectiveProcessing
@@ -257,7 +257,7 @@ class TranslationBottomSheet extends HookConsumerWidget {
                             }
                           }
                         : null,
-                    child: Text(isTranslated ? 'Retranslate' : 'Translate'),
+                    child: Text(isTranslated ? tr("Retranslate") : tr("Translate")),
                   ),
                 ),
               ],

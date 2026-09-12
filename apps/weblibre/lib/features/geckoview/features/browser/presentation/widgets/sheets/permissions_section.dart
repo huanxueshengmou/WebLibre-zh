@@ -221,7 +221,7 @@ class _PermissionTile extends StatelessWidget {
         items: [
           DropdownMenuItem(
             value: SitePermissionStatus.noDecision,
-            child: Text('Ask'),
+            child: Text(tr("Ask")),
           ),
           DropdownMenuItem(
             value: SitePermissionStatus.allowed,
@@ -260,7 +260,7 @@ class _AutoplayTile extends StatelessWidget {
 
     return ListTile(
       leading: const Icon(Icons.play_circle),
-      title: const Text('Autoplay'),
+      title: Text(tr("Autoplay")),
       trailing: DropdownButton<_AutoplayCombined>(
         value: combinedStatus,
         underline: const SizedBox(),

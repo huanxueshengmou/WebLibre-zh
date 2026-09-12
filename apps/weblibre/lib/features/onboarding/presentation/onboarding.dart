@@ -157,7 +157,7 @@ class OnboardingScreen extends HookConsumerWidget {
                           }
                         },
                         icon: const Icon(Icons.chevron_left),
-                        label: const Text('Previous'),
+                        label: Text(tr("Previous")),
                       ),
                     ),
                   ),

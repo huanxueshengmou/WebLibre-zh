@@ -35,7 +35,7 @@ Future<bool?> showUserAgentRestartDialog(BuildContext context) {
           onPressed: () {
             context.pop(false);
           },
-          child: const Text('Later'),
+          child: Text(tr("Later")),
         ),
         TextButton(
           onPressed: () {

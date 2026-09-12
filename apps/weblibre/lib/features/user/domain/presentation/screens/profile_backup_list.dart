@@ -73,7 +73,7 @@ class ProfileBackupListScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Backups'),
+        title: Text(tr("Backups")),
         actions: [
           IconButton(
             icon: const Icon(MdiIcons.folderCog),

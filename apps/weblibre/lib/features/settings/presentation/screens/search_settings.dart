@@ -33,91 +33,91 @@ import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> searchSettingsSections = [
+const List<SettingsSectionDefinition> searchSettingsSections = [
   SettingsSectionDefinition(
     title: 'Providers',
     keywords: ['engines'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Default Search Provider"),
-        subtitle: tr("Choose the default engine for searches"),
+        title: 'Default Search Provider',
+        subtitle: 'Choose the default engine for searches',
         keywords: ['search engine'],
         child: _DefaultSearchProviderSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Default Autocomplete Provider"),
-        subtitle: tr("Choose the provider for search suggestions"),
+        title: 'Default Autocomplete Provider',
+        subtitle: 'Choose the provider for search suggestions',
         keywords: ['suggestions'],
         child: _AutocompleteProviderSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Custom Search Engines"),
-        subtitle: tr("Add and manage your own search providers"),
+        title: 'Custom Search Engines',
+        subtitle: 'Add and manage your own search providers',
         keywords: ['user bangs', 'providers'],
         child: _CustomSearchEnginesTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Bang Shortcuts"),
+    title: 'Bang Shortcuts',
     keywords: ['bangs'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Bang Settings"),
-        subtitle: tr("Manage bang repositories and usage data"),
+        title: 'Bang Settings',
+        subtitle: 'Manage bang repositories and usage data',
         keywords: ['shortcuts', 'bangs'],
         child: _BangsTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("History & Suggestions"),
+    title: 'History & Suggestions',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Search History Limit"),
-        subtitle: tr("Maximum number of recent searches to remember"),
+        title: 'Search History Limit',
+        subtitle: 'Maximum number of recent searches to remember',
         keywords: ['history', 'entries'],
         child: _MaxSearchHistoryEntriesSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Allow clipboard access for suggestions"),
-        subtitle: tr("Browser can read clipboard to suggest URLs"),
+        title: 'Allow clipboard access for suggestions',
+        subtitle: 'Browser can read clipboard to suggest URLs',
         keywords: ['clipboard'],
         child: _AllowClipboardAccessTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Autocomplete on enter"),
-        subtitle: tr("Accept the inline suggestion when pressing enter"),
+        title: 'Autocomplete on enter',
+        subtitle: 'Accept the inline suggestion when pressing enter',
         keywords: ['submit', 'keyboard', 'suggestions'],
         child: _AcceptSuggestionOnSubmitTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Popular site suggestions"),
-        subtitle: tr("Complete typed text with well-known domains"),
+        title: 'Popular site suggestions',
+        subtitle: 'Complete typed text with well-known domains',
         keywords: ['popular sites', 'domains', 'ghost text', 'autocomplete'],
         child: _PopularSitesAutocompleteTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Local Search Index"),
+    title: 'Local Search Index',
     keywords: ['on device search', 'index'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Enable local search index"),
-        subtitle: tr("Index visited pages locally for content search"),
+        title: 'Enable local search index',
+        subtitle: 'Index visited pages locally for content search',
         keywords: ['page text', 'history'],
         child: _LocalIndexEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Index private tabs"),
-        subtitle: tr("Include private tabs in the local index"),
+        title: 'Index private tabs',
+        subtitle: 'Include private tabs in the local index',
         keywords: ['incognito'],
         child: _IndexPrivateTabsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Indexed pages"),
-        subtitle: tr("View and clear the local index"),
+        title: 'Indexed pages',
+        subtitle: 'View and clear the local index',
         keywords: ['clear index', 'stats'],
         child: _LocalIndexStatsTile(),
       ),
@@ -525,7 +525,7 @@ class _LocalIndexStatsTile extends HookConsumerWidget {
     return ListTile(
       leading: const Icon(MdiIcons.databaseOutline),
       title: Text(tr("Indexed pages")),
-      subtitle: Text(count.mapNotNull((c) => tr("{0} pages indexed", [c])) ?? 'Loading…'),
+      subtitle: Text(count.mapNotNull((c) => tr("{0} pages indexed", [c])) ?? tr("Loading…")),
       trailing: TextButton.icon(
         icon: const Icon(MdiIcons.deleteOutline),
         label: Text(tr("Clear")),

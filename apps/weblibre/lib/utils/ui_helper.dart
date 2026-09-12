@@ -227,7 +227,7 @@ void showTabSwitchMessage(
   final snackBar = _createFloatingSnackBar(
     content: Text(message),
     action: onSwitch.mapNotNull(
-      (onPressed) => SnackBarAction(label: 'Switch', onPressed: onPressed),
+      (onPressed) => SnackBarAction(label: tr("Switch"), onPressed: onPressed),
     ),
     duration: duration,
     persist: persist,
@@ -323,7 +323,7 @@ void showDismissOverrideMessage(
 
   final snackBar = _createFloatingSnackBar(
     content: Text(tr("Hiding disabled by site")),
-    action: SnackBarAction(label: 'Dismiss', onPressed: onDismiss),
+    action: SnackBarAction(label: tr("Dismiss"), onPressed: onDismiss),
     duration: duration,
     persist: persist,
   );

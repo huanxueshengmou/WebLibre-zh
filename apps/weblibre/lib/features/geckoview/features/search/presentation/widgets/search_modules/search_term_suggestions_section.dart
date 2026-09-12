@@ -25,6 +25,7 @@ import 'package:weblibre/features/geckoview/features/search/domain/providers/sea
 import 'package:weblibre/features/geckoview/features/search/presentation/widgets/search_modules/search_module_section.dart';
 import 'package:weblibre/features/geckoview/features/search/presentation/widgets/search_modules/search_query_chips.dart';
 import 'package:weblibre/presentation/hooks/on_listenable_change_selector.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class SearchTermSuggestionsSection extends HookConsumerWidget {
   final TextEditingController searchTextController;
@@ -65,7 +66,7 @@ class SearchTermSuggestionsSection extends HookConsumerWidget {
     ];
 
     return SearchModuleSection(
-      title: 'Suggestions',
+      title: tr("Suggestions"),
       moduleType: SearchModuleType.searchSuggestions,
       totalCount: queries.length,
       contentSliverBuilder:

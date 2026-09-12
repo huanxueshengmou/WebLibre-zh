@@ -47,7 +47,7 @@ class AutostartChip extends StatelessWidget {
             ),
             const SizedBox(width: 4),
             Text(
-              'Autostart',
+              tr("Autostart"),
               style: Theme.of(
                 context,
               ).textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant),

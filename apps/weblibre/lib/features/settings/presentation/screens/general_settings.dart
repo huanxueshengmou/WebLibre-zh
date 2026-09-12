@@ -36,44 +36,45 @@ import 'package:weblibre/presentation/hooks/cached_future.dart';
 import 'package:weblibre/presentation/hooks/keyed_state.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> generalSettingsSections = [
+const List<SettingsSectionDefinition> generalSettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Default Browser"),
+    title: 'Default Browser',
     keywords: ['browser defaults'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Default Browser"),
-        subtitle: tr("Set WebLibre as your default browser"),
+        title: 'Default Browser',
+        subtitle: 'Set WebLibre as your default browser',
         keywords: ['system browser'],
         child: _DefaultBrowserTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Appearance"),
+    title: 'Appearance',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Theme"),
-        subtitle: tr("Choose system, light, or dark mode"),
+        title: 'Theme',
+        subtitle: 'Choose system, light, or dark mode',
         keywords: ['light', 'dark', 'theme mode'],
         child: _ThemeSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Pure Black (OLED)"),
+        title: 'Pure Black (OLED)',
         subtitle:
-            tr("Use true-black surfaces in dark mode to save power on OLED screens"),
+            'Use true-black surfaces in dark mode to save power on OLED '
+            'screens',
         keywords: ['oled', 'amoled', 'high contrast', 'black', 'dark'],
         child: _PureBlackTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("User Interface Zoom"),
-        subtitle: tr("Make the user interface smaller or larger"),
+        title: 'User Interface Zoom',
+        subtitle: 'Make the user interface smaller or larger',
         keywords: ['ui scale', 'zoom'],
         child: _UiZoomSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Refresh Rate"),
-        subtitle: tr("Request a high or low display refresh rate (Android)"),
+        title: 'Refresh Rate',
+        subtitle: 'Request a high or low display refresh rate (Android)',
         keywords: [
           'fps',
           'hz',
@@ -90,21 +91,22 @@ List<SettingsSectionDefinition> generalSettingsSections = [
         child: _RefreshRateSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Disable Animations"),
-        subtitle: tr("Reduce motion and turn off app animations"),
+        title: 'Disable Animations',
+        subtitle: 'Reduce motion and turn off app animations',
         keywords: ['motion'],
         child: _DisableAnimationsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Show Modal Barrier"),
-        subtitle: tr("Dim the background behind dialogs and bottom sheets"),
+        title: 'Show Modal Barrier',
+        subtitle: 'Dim the background behind dialogs and bottom sheets',
         keywords: ['dialogs', 'bottom sheets', 'overlay'],
         child: _ShowModalBarrierTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Show Close Button"),
+        title: 'Show Close Button',
         subtitle:
-            tr("Add a button to dismiss the search / new-tab page without a back gesture"),
+            'Add a button to dismiss the search / new-tab page without '
+            'a back gesture',
         keywords: [
           'back',
           'close',
@@ -123,8 +125,8 @@ List<SettingsSectionDefinition> generalSettingsSections = [
     keywords: ['user', 'profile'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Back up this profile"),
-        subtitle: tr("Write an encrypted backup file of the profile you are using"),
+        title: 'Back up this profile',
+        subtitle: 'Write an encrypted backup file of the profile you are using',
         keywords: [
           'backup',
           'archive',
@@ -136,8 +138,8 @@ List<SettingsSectionDefinition> generalSettingsSections = [
         child: _BackupProfileTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Export & Import Settings"),
-        subtitle: tr("Move settings to another profile, device, or a bug report"),
+        title: 'Export & Import Settings',
+        subtitle: 'Move settings to another profile, device, or a bug report',
         keywords: [
           'export',
           'import',
@@ -154,11 +156,11 @@ List<SettingsSectionDefinition> generalSettingsSections = [
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Downloads"),
+    title: 'Downloads',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Use external download manager"),
-        subtitle: tr("Manage downloads with another app"),
+        title: 'Use external download manager',
+        subtitle: 'Manage downloads with another app',
         keywords: ['downloads'],
         child: _ExternalDownloadManagerTile(),
       ),
@@ -279,7 +281,7 @@ class _DefaultBrowserTile extends HookConsumerWidget {
                 defaultBrowserRefreshKey.value++;
               },
         icon: Icon(isCurrentDefaultBrowser ? Icons.check : Icons.open_in_new),
-        label: Text(isCurrentDefaultBrowser ? tr("Default") : 'Set'),
+        label: Text(isCurrentDefaultBrowser ? tr("Default") : tr("Set")),
       ),
     );
   }
@@ -499,21 +501,21 @@ class _ThemeSection extends HookConsumerWidget {
           ),
           Center(
             child: SegmentedButton<ThemeMode>(
-              segments: const [
+              segments: [
                 ButtonSegment(
                   value: ThemeMode.system,
                   icon: Icon(Icons.brightness_auto),
-                  label: Text('System'),
+                  label: Text(tr("System")),
                 ),
                 ButtonSegment(
                   value: ThemeMode.light,
                   icon: Icon(Icons.light_mode),
-                  label: Text('Light'),
+                  label: Text(tr("Light")),
                 ),
                 ButtonSegment(
                   value: ThemeMode.dark,
                   icon: Icon(Icons.dark_mode),
-                  label: Text('Dark'),
+                  label: Text(tr("Dark")),
                 ),
               ],
               selected: {themeMode},
@@ -558,21 +560,21 @@ class _RefreshRateSection extends HookConsumerWidget {
           ),
           Center(
             child: SegmentedButton<RefreshRateMode>(
-              segments: const [
+              segments: [
                 ButtonSegment(
                   value: RefreshRateMode.system,
                   icon: Icon(Icons.smartphone),
-                  label: Text('System'),
+                  label: Text(tr("System")),
                 ),
                 ButtonSegment(
                   value: RefreshRateMode.high,
                   icon: Icon(Icons.bolt),
-                  label: Text('High'),
+                  label: Text(tr("High")),
                 ),
                 ButtonSegment(
                   value: RefreshRateMode.low,
                   icon: Icon(Icons.battery_saver),
-                  label: Text('Low'),
+                  label: Text(tr("Low")),
                 ),
               ],
               selected: {refreshRateMode},

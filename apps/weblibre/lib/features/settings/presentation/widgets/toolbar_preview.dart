@@ -142,7 +142,7 @@ class TabBarPreviewCard extends HookWidget {
       QuickTabSwitcherItem(
         id: 'regular-preview-tab',
         isActive: true,
-        title: 'News',
+        title: tr("News"),
         tabMode: TabMode.regular,
         isHistory: false,
         isPinned:
@@ -168,7 +168,7 @@ class TabBarPreviewCard extends HookWidget {
         QuickTabSwitcherItem(
           id: 'isolated-preview-tab',
           isActive: false,
-          title: 'Bank',
+          title: tr("Bank"),
           tabMode: TabMode.isolated('preview-isolated-context'),
           isHistory: false,
           isPinned: false,

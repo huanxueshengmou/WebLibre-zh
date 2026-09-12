@@ -521,7 +521,7 @@ class TabMenu extends HookConsumerWidget {
                 child: Text(tr("Move down")),
               ),
             ],
-            child: const Text('Reorder'),
+            child: Text(tr("Reorder")),
           ),
         if (enableShare)
           SubmenuButton(
@@ -719,7 +719,7 @@ class _TabHierarchySubmenu extends ConsumerWidget {
           child: Text(tr("Detach from parent")),
         ),
       ],
-      child: const Text('Hierarchy'),
+      child: Text(tr("Hierarchy")),
     );
   }
 }
@@ -767,7 +767,7 @@ class _TranslatePageMenuItem extends ConsumerWidget {
           );
         }
       },
-      child: Text(isTranslated ? 'Translated' : tr("Translate Page")),
+      child: Text(isTranslated ? tr("Translated") : tr("Translate Page")),
     );
   }
 }

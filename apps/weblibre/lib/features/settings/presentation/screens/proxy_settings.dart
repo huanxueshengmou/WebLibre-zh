@@ -26,13 +26,13 @@ import 'package:weblibre/features/user/data/models/proxy_diagnostics_settings.da
 import 'package:weblibre/features/user/domain/repositories/proxy_diagnostics_settings.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> proxySettingsSections = [
+const List<SettingsSectionDefinition> proxySettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Proxy"),
+    title: 'Proxy',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Proxy Connections"),
-        subtitle: tr("Manage proxy profiles and connections"),
+        title: 'Proxy Connections',
+        subtitle: 'Manage proxy profiles and connections',
         keywords: [
           'sing-box',
           'socks',
@@ -47,14 +47,14 @@ List<SettingsSectionDefinition> proxySettingsSections = [
         child: _ProxyConnectionsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Proxy Routing"),
-        subtitle: tr("Choose which proxy carries regular and private tabs"),
+        title: 'Proxy Routing',
+        subtitle: 'Choose which proxy carries regular and private tabs',
         keywords: ['routing', 'container'],
         child: _ProxyRoutingTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Proxy Logs"),
-        subtitle: tr("Read the proxy log and set how much it records"),
+        title: 'Proxy Logs',
+        subtitle: 'Read the proxy log and set how much it records',
         keywords: [
           'log',
           'logging',

@@ -71,7 +71,7 @@ class UserBangs extends HookConsumerWidget {
                         context,
                       ).colorScheme.onErrorContainer,
                       icon: Icons.delete,
-                      label: 'Delete',
+                      label: tr("Delete"),
                     ),
                   ],
                 ),

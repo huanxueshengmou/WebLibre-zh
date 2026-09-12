@@ -110,7 +110,7 @@ class MenuNavigationRow extends HookConsumerWidget {
           direction: HistoryMenuDirection.forward,
           child: _buildNavIcon(
             icon: Icons.arrow_forward,
-            label: 'Forward',
+            label: tr("Forward"),
             disabled: !history.canGoForward,
             onTap: () async {
               await ref

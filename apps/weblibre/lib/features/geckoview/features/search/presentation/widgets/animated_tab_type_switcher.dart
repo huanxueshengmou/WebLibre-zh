@@ -70,7 +70,7 @@ class AnimatedTabTypeSwitcher extends StatelessWidget {
                 _Segment(
                   tabType: TabType.child,
                   icon: MdiIcons.fileTree,
-                  label: 'Child',
+                  label: tr("Child"),
                   isSelected: selected == TabType.child,
                   selectedBackgroundColor: selectedBackgroundColor,
                   onTap: () => onChanged(TabType.child),

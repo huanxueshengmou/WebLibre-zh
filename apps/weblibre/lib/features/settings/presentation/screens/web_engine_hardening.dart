@@ -132,7 +132,7 @@ class WebEngineHardeningScreen extends HookConsumerWidget {
                 final sections = <SettingsSectionDefinition>[
                   if (overviewMatches)
                     SettingsSectionDefinition(
-                      title: 'Overview',
+                      title: tr("Overview"),
                       entries: [
                         SettingsEntryDefinition(
                           title: tr("Complete Hardening"),

@@ -44,7 +44,7 @@ Future<bool?> showQuitBrowserDialog(BuildContext context) {
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: const Text('Quit'),
+            child: Text(tr("Quit")),
           ),
         ],
       );

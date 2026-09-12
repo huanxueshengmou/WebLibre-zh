@@ -399,7 +399,7 @@ class ContainerMenu extends HookConsumerWidget {
                     await confirmAndDeleteContainer(context, ref, container);
                   }
                 : null,
-            child: const Text('Delete Container'),
+            child: Text(tr("Delete Container")),
           ),
         ],
       ],

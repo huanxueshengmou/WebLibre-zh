@@ -121,7 +121,7 @@ class _InstallLocalAddonSheet extends HookConsumerWidget {
             OutlinedButton.icon(
               onPressed: isInstalling.value ? null : pickFile,
               icon: const Icon(Icons.folder_open),
-              label: const Text('Select XPI File'),
+              label: Text(tr("Select XPI File")),
             ),
             const SizedBox(height: 8),
             Container(
@@ -155,7 +155,7 @@ class _InstallLocalAddonSheet extends HookConsumerWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'Extensions installed from a local XPI stay pinned to that version and will not update automatically.',
+              tr("Extensions installed from a local XPI stay pinned to that version and will not update automatically."),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             if (errorMessage.value != null) ...[

@@ -37,7 +37,7 @@ class FeedListScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Feeds'),
+        title: Text(tr("Feeds")),
         actions: [
           HookBuilder(
             builder: (context) {

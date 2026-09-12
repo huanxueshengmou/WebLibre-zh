@@ -28,59 +28,59 @@ import 'package:weblibre/features/user/domain/repositories/general_settings.dart
 import 'package:weblibre/presentation/hooks/keyed_state.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> toolbarLayoutSettingsSections = [
+const List<SettingsSectionDefinition> toolbarLayoutSettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Tab Bar"),
+    title: 'Tab Bar',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Tab Bar Position"),
-        subtitle: tr("Choose whether the tab bar stays at the top or bottom"),
+        title: 'Tab Bar Position',
+        subtitle: 'Choose whether the tab bar stays at the top or bottom',
         keywords: ['top', 'bottom'],
         child: _TabBarPositionSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Tab Bar Style"),
-        subtitle: tr("Choose between title and compact layouts"),
+        title: 'Tab Bar Style',
+        subtitle: 'Choose between title and compact layouts',
         keywords: ['layout', 'compact'],
         child: _TabBarLayoutModeSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Auto Hide Tab Bar"),
-        subtitle: tr("Hide the tab bar when scrolling"),
+        title: 'Auto Hide Tab Bar',
+        subtitle: 'Hide the tab bar when scrolling',
         keywords: ['scroll'],
         child: _AutoHideTabBarTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Long Press URL to Copy"),
-        subtitle: tr("Copy the current URL from the tab bar"),
+        title: 'Long Press URL to Copy',
+        subtitle: 'Copy the current URL from the tab bar',
         keywords: ['copy url'],
         child: _TabBarLongPressUrlCopyTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Contextual Toolbar"),
+    title: 'Contextual Toolbar',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Show Contextual Toolbar"),
-        subtitle: tr("Show an additional toolbar for navigation and actions"),
+        title: 'Show Contextual Toolbar',
+        subtitle: 'Show an additional toolbar for navigation and actions',
         keywords: ['bottom toolbar'],
         child: _ShowContextualTabBarTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Customize Toolbar Buttons"),
-        subtitle: tr("Choose which actions appear in the contextual toolbar"),
+        title: 'Customize Toolbar Buttons',
+        subtitle: 'Choose which actions appear in the contextual toolbar',
         keywords: ['buttons'],
         child: _CustomizeToolbarButtonsTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Quick Tab Switcher"),
+    title: 'Quick Tab Switcher',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Tab Stacking"),
-        subtitle: tr("Choose how the quick tab switcher bar arranges tabs"),
+        title: 'Tab Stacking',
+        subtitle: 'Choose how the quick tab switcher bar arranges tabs',
         keywords: [
           'recent tabs',
           'recently used',
@@ -94,55 +94,55 @@ List<SettingsSectionDefinition> toolbarLayoutSettingsSections = [
         child: _TabBarStackingModeSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Customize Switcher Buttons"),
-        subtitle: tr("Choose which action buttons appear at the end of the bar"),
+        title: 'Customize Switcher Buttons',
+        subtitle: 'Choose which action buttons appear at the end of the bar',
         keywords: ['buttons', 'new tab', 'actions', 'trailing'],
         child: _CustomizeQuickSwitcherButtonsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Close Buttons on Tab Chips"),
-        subtitle: tr("Which switcher chips show a close button"),
+        title: 'Close Buttons on Tab Chips',
+        subtitle: 'Which switcher chips show a close button',
         keywords: ['close', 'x button', 'active tab'],
         child: _QuickTabSwitcherCloseButtonsSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("History Fallback in Quick Tab Switcher"),
-        subtitle: tr("Use history suggestions when there are no matching tabs"),
+        title: 'History Fallback in Quick Tab Switcher',
+        subtitle: 'Use history suggestions when there are no matching tabs',
         keywords: ['suggestions'],
         child: _QuickTabSwitcherHistorySuggestionsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Show Titles in Quick Tab Switcher"),
-        subtitle: tr("Display page titles in the switcher list"),
+        title: 'Show Titles in Quick Tab Switcher',
+        subtitle: 'Display page titles in the switcher list',
         keywords: ['page titles'],
         child: _QuickTabSwitcherShowTitlesTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Title Width in Quick Tab Switcher"),
-        subtitle: tr("Maximum width of tab titles on switcher chips"),
+        title: 'Title Width in Quick Tab Switcher',
+        subtitle: 'Maximum width of tab titles on switcher chips',
         keywords: ['width', 'title', 'chip', 'length'],
         child: _QuickTabSwitcherTitleWidthTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Hierarchy Depth in Quick Tab Switcher"),
-        subtitle: tr("How many nesting chevrons to show on switcher chips"),
+        title: 'Hierarchy Depth in Quick Tab Switcher',
+        subtitle: 'How many nesting chevrons to show on switcher chips',
         keywords: ['hierarchy', 'nesting', 'depth', 'tree', 'chevrons'],
         child: _QuickTabSwitcherHierarchyGlyphsTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Tab View"),
+    title: 'Tab View',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Bottom Sheet Tab View"),
-        subtitle: tr("Open the tab switcher as a bottom sheet"),
+        title: 'Bottom Sheet Tab View',
+        subtitle: 'Open the tab switcher as a bottom sheet',
         keywords: ['sheet'],
         child: _BottomSheetTabViewTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Show Favicons in List View"),
-        subtitle: tr("Display site icons in the tab list"),
+        title: 'Show Favicons in List View',
+        subtitle: 'Display site icons in the tab list',
         keywords: ['icons'],
         child: _TabListShowFaviconsTile(),
       ),
@@ -158,15 +158,15 @@ List<SettingsSectionDefinition> toolbarLayoutSettingsSections = [
 /// the same filtering — a row rendered beside the filtered list would survive a
 /// query that empties the list, leaving a match sitting above "No settings
 /// match".
-List<SettingsSectionDefinition> menuLayoutSettingsSections = [
+const List<SettingsSectionDefinition> menuLayoutSettingsSections = [
   SettingsSectionDefinition(
     title: 'Menu',
     keywords: ['three dot', 'overflow'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Customize Menu"),
+        title: 'Customize Menu',
         subtitle:
-            tr("Choose and order the sections and rows of the three-dot menu"),
+            'Choose and order the sections and rows of the three-dot menu',
         keywords: ['sections', 'rows', 'reorder'],
         child: _CustomizeMenuTile(),
       ),
@@ -252,22 +252,22 @@ class _TabBarPositionSection extends HookConsumerWidget {
               children: [
                 RadioListTile.adaptive(
                   value: TabBarPosition.top,
-                  title: Text('Top'),
+                  title: Text(tr("Top")),
                   subtitle: Text(tr("Persistent tab bar without auto-hide")),
                 ),
                 RadioListTile.adaptive(
                   value: TabBarPosition.bottom,
-                  title: Text('Bottom'),
+                  title: Text(tr("Bottom")),
                   subtitle: Text(tr("Tab bar with auto-hide support")),
                 ),
                 RadioListTile.adaptive(
                   value: TabBarPosition.left,
-                  title: Text('Left'),
+                  title: Text(tr("Left")),
                   subtitle: Text(tr("Vertical side rail, swipe to hide")),
                 ),
                 RadioListTile.adaptive(
                   value: TabBarPosition.right,
-                  title: Text('Right'),
+                  title: Text(tr("Right")),
                   subtitle: Text(tr("Vertical side rail, swipe to hide")),
                 ),
               ],
@@ -320,7 +320,7 @@ class _TabBarLayoutModeSection extends HookConsumerWidget {
                 ),
                 RadioListTile.adaptive(
                   value: TabBarLayout.compact,
-                  title: Text('Compact'),
+                  title: Text(tr("Compact")),
                   subtitle: Text(tr("Centered URL pill without page title")),
                 ),
               ],
@@ -458,7 +458,7 @@ class _TabBarStackingModeSection extends HookConsumerWidget {
                   ),
                   RadioListTile.adaptive(
                     value: TabBarStackingMode.accordion,
-                    title: Text('Accordion'),
+                    title: Text(tr("Accordion")),
                     subtitle: Text(
                       tr("All containers as chips, with the selected container's tabs expanded inline"),
                     ),

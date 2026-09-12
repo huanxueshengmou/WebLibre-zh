@@ -52,14 +52,13 @@ class _DeleteContainerDialog extends HookWidget {
 
     return AlertDialog(
       icon: const Icon(Icons.warning),
-      title: const Text('Delete Container'),
+      title: Text(tr("Delete Container")),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Are you sure you want to delete this container and close all '
-            'attached tabs?',
+          Text(
+            tr("Are you sure you want to delete this container and close all attached tabs?"),
           ),
           const SizedBox(height: 8),
           CheckboxListTile(
@@ -69,7 +68,7 @@ class _DeleteContainerDialog extends HookWidget {
             onChanged: (value) {
               wipeHistory.value = value ?? false;
             },
-            title: const Text("Also delete this container's history"),
+            title: Text(tr("Also delete this container's history")),
             subtitle: Text(
               tr("Otherwise it is kept and shown as uncontained"),
             ),
@@ -90,7 +89,7 @@ class _DeleteContainerDialog extends HookWidget {
               DeleteContainerDecision(wipeHistory: wipeHistory.value),
             );
           },
-          child: const Text('Delete'),
+          child: Text(tr("Delete")),
         ),
       ],
     );

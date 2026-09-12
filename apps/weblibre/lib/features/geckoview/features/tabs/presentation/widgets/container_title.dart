@@ -69,7 +69,7 @@ class ContainerTitle extends HookConsumerWidget {
             ),
           ) ??
           Text(
-            containerHasTabs ? 'Untitled' : tr("Empty"),
+            containerHasTabs ? tr("Untitled") : tr("Empty"),
             style: const TextStyle(fontStyle: FontStyle.italic),
           ),
       error: (error, stackTrace) {
@@ -79,9 +79,9 @@ class ContainerTitle extends HookConsumerWidget {
           stackTrace: stackTrace,
         );
 
-        return const Text('Untitled');
+        return Text(tr("Untitled"));
       },
-      loading: () => Skeletonizer(child: Text(topicAsync.value ?? 'container')),
+      loading: () => Skeletonizer(child: Text(topicAsync.value ?? tr("container"))),
     );
   }
 }

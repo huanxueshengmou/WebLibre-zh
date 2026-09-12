@@ -58,7 +58,7 @@ class BookmarkFolderEditScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: (folder != null)
             ? Text(tr("Edit Folder"))
-            : const Text('Create Folder'),
+            : Text(tr("Create Folder")),
         actions: [
           IconButton(
             onPressed: () async {
@@ -146,7 +146,7 @@ class BookmarkFolderEditScreen extends HookConsumerWidget {
                         foregroundColor: Theme.of(context).colorScheme.error,
                         iconColor: Theme.of(context).colorScheme.error,
                       ),
-                      label: const Text('Delete'),
+                      label: Text(tr("Delete")),
                       icon: const Icon(Icons.delete),
                       onPressed: () async {
                         final result = await showDeleteFolderDialog(context);

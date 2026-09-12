@@ -31,13 +31,13 @@ import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> unshortenerSettingsSections = [
+const List<SettingsSectionDefinition> unshortenerSettingsSections = [
   SettingsSectionDefinition(
     title: 'Overview',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Description"),
-        subtitle: tr("Resolve shortened URLs using the unshorten.me service"),
+        title: 'Description',
+        subtitle: 'Resolve shortened URLs using the unshorten.me service',
         keywords: ['short links', 'redirects'],
         child: _UnshortenerDescriptionTile(),
       ),
@@ -47,14 +47,14 @@ List<SettingsSectionDefinition> unshortenerSettingsSections = [
     title: 'Behavior',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Enable Unshortener"),
-        subtitle: tr("Resolve shortened URLs to their destination"),
+        title: 'Enable Unshortener',
+        subtitle: 'Resolve shortened URLs to their destination',
         keywords: ['short links'],
         child: _UnshortenerEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("API Token"),
-        subtitle: tr("Optional token for higher request limits"),
+        title: 'API Token',
+        subtitle: 'Optional token for higher request limits',
         keywords: ['token'],
         child: _UnshortenerTokenField(),
       ),
@@ -64,8 +64,8 @@ List<SettingsSectionDefinition> unshortenerSettingsSections = [
     title: 'Attribution',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Service attribution"),
-        subtitle: tr("Rate limits, service homepage, and privacy policy"),
+        title: 'Service attribution',
+        subtitle: 'Rate limits, service homepage, and privacy policy',
         keywords: ['privacy policy', 'rate limit'],
         child: _UnshortenerAttributionTile(),
       ),
@@ -79,7 +79,7 @@ class UnshortenerSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsDetailScaffold(
-      title: 'Unshortener',
+      title: tr("Unshortener"),
       subtitle:
           tr("Short-link resolution behavior, token configuration, and attribution."),
       icon: MdiIcons.linkVariant,
@@ -144,8 +144,8 @@ class _UnshortenerAttributionTile extends StatelessWidget {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 12),
-            const _AttributionLinkRow(
-              label: 'Service',
+            _AttributionLinkRow(
+              label: tr("Service"),
               url: 'https://unshorten.me/',
             ),
             const SizedBox(height: 8),

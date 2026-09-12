@@ -37,44 +37,44 @@ import 'package:weblibre/features/user/domain/repositories/general_settings.dart
 import 'package:weblibre/utils/exit_app.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> privacySecuritySettingsSections = [
+const List<SettingsSectionDefinition> privacySecuritySettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Tracking Protection"),
+    title: 'Tracking Protection',
     keywords: ['privacy'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Enhanced Tracking Protection"),
-        subtitle: tr("Choose how aggressively trackers are blocked"),
+        title: 'Enhanced Tracking Protection',
+        subtitle: 'Choose how aggressively trackers are blocked',
         keywords: ['etp', 'standard', 'strict', 'custom'],
         child: _EnhancedTrackingProtectionSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Content Blocking Database"),
-        subtitle: tr("Use GeckoView blocker lists for ETP categories"),
+        title: 'Content Blocking Database',
+        subtitle: 'Use GeckoView blocker lists for ETP categories',
         keywords: ['ads', 'trackers', 'content blocking'],
         child: _ContentBlockingDatabaseTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Bounce Tracking Protection"),
-        subtitle: tr("Remove tracking state left by redirect-based trackers"),
+        title: 'Bounce Tracking Protection',
+        subtitle: 'Remove tracking state left by redirect-based trackers',
         keywords: ['redirect trackers'],
         child: _BounceTrackingProtectionTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Query Parameter Stripping"),
-        subtitle: tr("Remove tracking parameters from URLs"),
+        title: 'Query Parameter Stripping',
+        subtitle: 'Remove tracking parameters from URLs',
         keywords: ['utm'],
         child: _QueryParameterStrippingSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Tracking Protection Exceptions"),
-        subtitle: tr("Sites where tracking protection is disabled"),
+        title: 'Tracking Protection Exceptions',
+        subtitle: 'Sites where tracking protection is disabled',
         keywords: ['exceptions'],
         child: _TrackingProtectionExceptionsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("uBlock Filter Lists & Hardenings"),
-        subtitle: tr("Manage filter lists and apply WebLibre hardenings"),
+        title: 'uBlock Filter Lists & Hardenings',
+        subtitle: 'Manage filter lists and apply WebLibre hardenings',
         keywords: ['ublock', 'filters'],
         child: _UBlockFilterListsTile(),
       ),
@@ -84,163 +84,163 @@ List<SettingsSectionDefinition> privacySecuritySettingsSections = [
     title: 'Fingerprinting',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Browser Languages"),
-        subtitle: tr("Choose which languages websites can see"),
+        title: 'Browser Languages',
+        subtitle: 'Choose which languages websites can see',
         keywords: ['locale'],
         child: _BrowserLanguagesTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Fingerprint Protection"),
-        subtitle: tr("Granular control over browser fingerprinting"),
+        title: 'Fingerprint Protection',
+        subtitle: 'Granular control over browser fingerprinting',
         keywords: ['privacy'],
         child: _FingerprintProtectionTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Resist Fingerprinting"),
-        subtitle: tr("Advanced fingerprinting protection hardening"),
+        title: 'Resist Fingerprinting',
+        subtitle: 'Advanced fingerprinting protection hardening',
         keywords: ['rfp'],
         child: _ResistFingerprintingTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Connection Security"),
+    title: 'Connection Security',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Block insecure HTTP connections"),
-        subtitle: tr("Prefer HTTPS and block insecure connections"),
+        title: 'Block insecure HTTP connections',
+        subtitle: 'Prefer HTTPS and block insecure connections',
         keywords: ['https only'],
         child: _HttpsOnlyModeSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("DNS over HTTPS"),
-        subtitle: tr("Encrypt DNS lookups"),
+        title: 'DNS over HTTPS',
+        subtitle: 'Encrypt DNS lookups',
         keywords: ['doh'],
         child: _DnsTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Network Protection"),
+    title: 'Network Protection',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Local Network Access"),
-        subtitle: tr("Enable local network and device access blocking"),
+        title: 'Local Network Access',
+        subtitle: 'Enable local network and device access blocking',
         keywords: ['lan'],
         child: _LnaEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Block Local Network Requests"),
-        subtitle: tr("Block requests to local network devices and services"),
+        title: 'Block Local Network Requests',
+        subtitle: 'Block requests to local network devices and services',
         keywords: ['lan'],
         child: _LnaBlockingTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Block Local Network Trackers"),
-        subtitle: tr("Block tracker-like local network requests"),
+        title: 'Block Local Network Trackers',
+        subtitle: 'Block tracker-like local network requests',
         keywords: ['lan'],
         child: _LnaBlockTrackersTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Privacy Signals & Modes"),
+    title: 'Privacy Signals & Modes',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Incognito Mode"),
+        title: 'Incognito Mode',
         subtitle: 'Delete selected browsing data on app restart',
         keywords: ['private mode'],
         child: _IncognitoModeSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Screenshot protection"),
-        subtitle: tr("Prevent app content from appearing in screenshots"),
+        title: 'Screenshot protection',
+        subtitle: 'Prevent app content from appearing in screenshots',
         keywords: ['screenshots'],
         child: _ScreenshotProtectionTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Allow screenshots in private tabs"),
-        subtitle: tr("Let the system capture private tabs"),
+        title: 'Allow screenshots in private tabs',
+        subtitle: 'Let the system capture private tabs',
         keywords: ['screenshots', 'incognito', 'private'],
         child: _AllowPrivateTabScreenshotsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Global Privacy Control (GPC)"),
-        subtitle: tr("Send a privacy preference signal to websites"),
+        title: 'Global Privacy Control (GPC)',
+        subtitle: 'Send a privacy preference signal to websites',
         keywords: ['gpc'],
         child: _GlobalPrivacyControlTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("App-Opening Protection"),
+    title: 'App-Opening Protection',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Block apps from opening your browser"),
-        subtitle: tr("Control which apps may launch WebLibre directly"),
+        title: 'Block apps from opening your browser',
+        subtitle: 'Control which apps may launch WebLibre directly',
         keywords: ['intent gatekeeper', 'external apps'],
         child: _AppOpeningProtectionSection(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Data Management"),
+    title: 'Data Management',
     entries: [
       SettingsEntryDefinition(
         title: 'Delete Browsing Data',
-        subtitle: tr("Clear history, cookies, and other browsing data"),
+        subtitle: 'Clear history, cookies, and other browsing data',
         keywords: ['clear data'],
         child: _DeleteBrowsingDataTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Auto-Clear History"),
-        subtitle: tr("Automatically clear history after a chosen duration"),
+        title: 'Auto-Clear History',
+        subtitle: 'Automatically clear history after a chosen duration',
         keywords: ['history retention'],
         child: _AutoClearHistorySection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Auto-Clear Unassigned Tabs"),
-        subtitle: tr("Automatically close tabs not assigned to a container"),
+        title: 'Auto-Clear Unassigned Tabs',
+        subtitle: 'Automatically close tabs not assigned to a container',
         keywords: ['cleanup tabs'],
         child: _AutoClearUnassignedTabsSection(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Google Safe Browsing"),
+    title: 'Google Safe Browsing',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Safe Browsing Malware Protection"),
-        subtitle: tr("Warn about malware and harmful downloads"),
+        title: 'Safe Browsing Malware Protection',
+        subtitle: 'Warn about malware and harmful downloads',
         keywords: ['google safe browsing'],
         child: _SafeBrowsingMalwareTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Safe Browsing Phishing Protection"),
-        subtitle: tr("Warn about deceptive websites and login pages"),
+        title: 'Safe Browsing Phishing Protection',
+        subtitle: 'Warn about deceptive websites and login pages',
         keywords: ['google safe browsing'],
         child: _SafeBrowsingPhishingTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Advanced Security"),
+    title: 'Advanced Security',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Web Engine Hardening"),
-        subtitle: tr("Harden browser engine behavior and defaults"),
+        title: 'Web Engine Hardening',
+        subtitle: 'Harden browser engine behavior and defaults',
         keywords: ['hardening'],
         child: _WebEngineHardeningTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Fission (Site Isolation)"),
-        subtitle: tr("Use stronger site isolation between origins"),
+        title: 'Fission (Site Isolation)',
+        subtitle: 'Use stronger site isolation between origins',
         keywords: ['site isolation'],
         child: _FissionEnabledTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Extensions Web API"),
-        subtitle: tr("Allow extensions to expose web APIs to pages"),
+        title: 'Extensions Web API',
+        subtitle: 'Allow extensions to expose web APIs to pages',
         keywords: ['extension api'],
         child: _ExtensionsWebAPIEnabledTile(),
       ),
@@ -372,7 +372,7 @@ class _DeleteBrowsingDataTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text('Delete Browsing Data'),
+      title: Text(tr("Delete Browsing Data")),
       contentPadding: const EdgeInsets.symmetric(
         vertical: 8.0,
         horizontal: 16.0,
@@ -406,7 +406,7 @@ class _AutoClearHistorySection extends HookConsumerWidget {
           ListTile(
             title: Text(tr("Auto-Clear History")),
             subtitle: Text(
-              'Automatically delete browsing history older than the selected time period',
+              tr("Automatically delete browsing history older than the selected time period"),
             ),
             leading: Icon(MdiIcons.deleteClock),
             contentPadding: EdgeInsets.zero,
@@ -736,7 +736,7 @@ class _EnhancedTrackingProtectionSection extends HookConsumerWidget {
                 ),
                 RadioListTile<TrackingProtectionPolicy>.adaptive(
                   value: TrackingProtectionPolicy.recommended,
-                  title: Text('Standard'),
+                  title: Text(tr("Standard")),
                   subtitle: Text(
                     tr("Balances protection and compatibility by blocking fewer tracker categories."),
                   ),

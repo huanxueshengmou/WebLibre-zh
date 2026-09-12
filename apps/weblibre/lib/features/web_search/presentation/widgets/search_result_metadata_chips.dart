@@ -440,7 +440,7 @@ class SearchResultSnippetsToggle extends StatelessWidget {
         child: const Icon(Icons.expand_more, size: 16),
       ),
       visualDensity: VisualDensity.compact,
-      tooltip: 'Snippets',
+      tooltip: tr("Snippets"),
     );
   }
 }

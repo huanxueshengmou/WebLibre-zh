@@ -172,13 +172,13 @@ class _TabDropActionSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            title: Text('Drop tab onto tab'),
+            title: Text(tr("Drop tab onto tab")),
             subtitle: Text(tr("Choose how these tabs should be related.")),
           ),
           ListTile(
             leading: const Icon(MdiIcons.folderPlus),
-            title: const Text('Create container'),
-            subtitle: const Text('Create a new container with both tabs.'),
+            title: Text(tr("Create container")),
+            subtitle: Text(tr("Create a new container with both tabs.")),
             onTap: () =>
                 Navigator.of(context).pop(_TabDropAction.createContainer),
           ),

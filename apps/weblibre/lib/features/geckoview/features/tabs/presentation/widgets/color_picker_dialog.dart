@@ -62,7 +62,7 @@ class ColorPickerDialog extends HookWidget {
         horizontal: 20.0,
         vertical: 24.0,
       ),
-      title: const Text('Select Color'),
+      title: Text(tr("Select Color")),
       content: _ContainerColorGrid(
         selectedColor: selectedColor.value,
         useCustomColor: useCustom.value,
@@ -82,7 +82,7 @@ class ColorPickerDialog extends HookWidget {
             color: selectedColor.value,
             useCustomColor: useCustom.value,
           )),
-          child: const Text('Select'),
+          child: Text(tr("Select")),
         ),
       ],
     );

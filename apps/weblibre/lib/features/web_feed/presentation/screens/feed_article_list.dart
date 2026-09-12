@@ -80,7 +80,7 @@ class FeedArticleListScreen extends HookConsumerWidget {
           return [
             SliverAppBar(
               floating: true,
-              title: Text(feedTitle ?? 'Articles'),
+              title: Text(feedTitle ?? tr("Articles")),
               bottom: PreferredSize(
                 preferredSize: Size(double.infinity, bottomHeight),
                 child: Padding(

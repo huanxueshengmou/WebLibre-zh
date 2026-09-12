@@ -76,7 +76,7 @@ class ProfileBackupScreen extends HookConsumerWidget {
         backupState.connectionState == ConnectionState.waiting;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Backup')),
+      appBar: AppBar(title: Text(tr("Create Backup"))),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -115,7 +115,7 @@ class ProfileBackupScreen extends HookConsumerWidget {
                         integrityVerification.value = value;
                       },
                 title: Text(tr("Verify backup integrity")),
-                subtitle: const Text('Check that the backup can be restored'),
+                subtitle: Text(tr("Check that the backup can be restored")),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -214,7 +214,7 @@ class ProfileBackupScreen extends HookConsumerWidget {
                       integrityCheck: integrityVerification.value,
                     );
                   },
-                  label: const Text('Backup'),
+                  label: Text(tr("Backup")),
                 ),
             ],
           ),

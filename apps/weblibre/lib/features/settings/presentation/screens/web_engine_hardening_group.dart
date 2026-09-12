@@ -221,7 +221,7 @@ class _HardeningSettingTile extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            'Optional',
+                            tr("Optional"),
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w500,

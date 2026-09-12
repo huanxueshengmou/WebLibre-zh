@@ -32,32 +32,32 @@ import 'package:weblibre/features/user/domain/repositories/general_settings.dart
 import 'package:weblibre/utils/uri_parser.dart' as uri_parser;
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> homeSettingsSections = [
+const List<SettingsSectionDefinition> homeSettingsSections = [
   SettingsSectionDefinition(
     title: 'Startup',
     keywords: ['startup', 'home', 'resume', 'last tab', 'custom url'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("When there is no tab to show"),
-        subtitle: tr("On startup, and after closing the last tab"),
+        title: 'When there is no tab to show',
+        subtitle: 'On startup, and after closing the last tab',
         keywords: ['startup', 'resume', 'last tab', 'custom url', 'homepage'],
         child: _HomeTargetTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Apply when the last tab closes"),
-        subtitle: tr("Otherwise a tab from another container is opened instead"),
+        title: 'Apply when the last tab closes',
+        subtitle: 'Otherwise a tab from another container is opened instead',
         keywords: ['close', 'last tab', 'container'],
         child: _HomeTargetOnLastTabClosedTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Appearance"),
+    title: 'Appearance',
     keywords: ['home', 'wallpaper', 'background', 'image', 'blur', 'dim'],
     entries: [
       SettingsEntryDefinition(
         title: 'Wallpaper',
-        subtitle: tr("A background image for the home page"),
+        subtitle: 'A background image for the home page',
         keywords: [
           'wallpaper',
           'background',
@@ -77,8 +77,8 @@ List<SettingsSectionDefinition> homeSettingsSections = [
     keywords: ['home', 'new tab', 'sections', 'modules', 'layout'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Search bar position"),
-        subtitle: tr("Where the home page offers its search field"),
+        title: 'Search bar position',
+        subtitle: 'Where the home page offers its search field',
         keywords: [
           'search',
           'bar',
@@ -93,8 +93,8 @@ List<SettingsSectionDefinition> homeSettingsSections = [
         child: _HomeSearchBarPlacementTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Customize home sections"),
-        subtitle: tr("Choose and order what the home page shows"),
+        title: 'Customize home sections',
+        subtitle: 'Choose and order what the home page shows',
         keywords: [
           'home',
           'sections',
@@ -106,8 +106,8 @@ List<SettingsSectionDefinition> homeSettingsSections = [
         child: _CustomizeHomeSectionsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Customize new tab sections"),
-        subtitle: tr("Choose and order what the new tab page shows"),
+        title: 'Customize new tab sections',
+        subtitle: 'Choose and order what the new tab page shows',
         keywords: ['new tab', 'sections', 'shortcuts', 'reorder'],
         child: _CustomizeNewTabSectionsTile(),
       ),
@@ -189,8 +189,8 @@ class _HomeTargetTile extends HookConsumerWidget {
                 controller: urlController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 keyboardType: TextInputType.url,
-                decoration: const InputDecoration(
-                  labelText: 'Address',
+                decoration: InputDecoration(
+                  labelText: tr("Address"),
                   hintText: 'https://example.com',
                   border: OutlineInputBorder(),
                 ),
@@ -297,7 +297,7 @@ class _WallpaperTile extends ConsumerWidget {
 
     return ListTile(
       leading: const Icon(MdiIcons.imageOutline),
-      title: const Text('Wallpaper'),
+      title: Text(tr("Wallpaper")),
       subtitle: Text(
         hasWallpaper
             ? tr("A background image is set for the home page")

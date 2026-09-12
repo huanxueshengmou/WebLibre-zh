@@ -51,9 +51,7 @@ dependencies:
   hooks_riverpod: ^3.4.2
   html: ^0.15.6
   http: ^1.6.0
-  # [weblibre-zh] widened: flutter_localizations pins intl to the SDK version
-  # [weblibre-zh] original: intl: ^0.20.3
-  intl: any
+  intl: ^0.20.3
   json_annotation: ^4.12.0
   lexo_rank:
     git:

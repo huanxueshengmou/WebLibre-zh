@@ -46,7 +46,7 @@ class TagField extends HookWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Tags', style: Theme.of(context).textTheme.labelMedium),
+        Text(tr("Tags"), style: Theme.of(context).textTheme.labelMedium),
         const SizedBox(height: 4),
         Wrap(
           spacing: 8.0,

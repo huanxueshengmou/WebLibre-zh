@@ -1,0 +1,97 @@
+{
+  "_comment": [
+    "Escape hatch for the string scanner. Everything here is applied on top of",
+    "the heuristics in scan_strings.py, so a mistake found in a translation",
+    "review can be pinned without editing code. CI reads this file on every run.",
+    "",
+    "exclude_files        : regexes matched against the path relative to lib/",
+    "exclude_strings      : exact English strings to never translate",
+    "include_strings      : exact English strings to always translate, even when",
+    "                       the context heuristics would have skipped them",
+    "extra_named_args     : named arguments to treat as UI text",
+    "extra_callees        : constructors whose positional arg is UI text",
+    "banned_named_args    : named arguments to never treat as UI text"
+  ],
+
+  "exclude_files": [
+    "features/geckoview/features/top_sites/domain/"
+  ],
+
+  "exclude_strings": [
+    "Internet Archive: Digital Library of Free & Borrowable Texts, Movies, Music & Wayback Machine",
+    "maintenanceBackup",
+    "maintenanceDelete",
+    "maintenanceRestore",
+    "profileSwitch",
+    "en-US",
+    "WebLibre",
+    "GitHub",
+    "Github",
+    "Android",
+    "obfs4",
+    "Snowflake",
+    "about:blank",
+    "about:blank#",
+    "e.g.",
+    "i.e."
+  ],
+
+  "include_strings": [],
+
+  "extra_named_args": [],
+
+    "extra_callees": [],
+
+    "banned_getters": [
+      "moduleAndArgs",
+      "debugDescription",
+      "dontWriteConstraints"
+    ],
+
+    "banned_named_args": [
+    "name",
+    "value",
+    "key",
+    "id",
+    "path",
+    "url",
+    "mime",
+    "mimeType",
+    "charset",
+    "scheme",
+    "host",
+    "fileName",
+    "assetPath",
+    "entityName",
+    "functionName",
+    "moduleAndArgs",
+    "constructor",
+    "createViewStmt",
+    "sqlite",
+    "outboundType",
+    "source",
+    "verb",
+    "noun",
+    "activity",
+    "type",
+    "variant",
+    "viewType",
+    "defaultValue",
+    "orderKey",
+    "fontFamily",
+    "heroTag",
+    "debugLabel",
+    "debugName",
+    "icon",
+    "password",
+    "username",
+    "issuer",
+    "customSecretJson",
+    "remote",
+    "bundled",
+    "inArchive",
+    "localizedTitle",
+    "logMessage",
+    "aliasName"
+  ]
+}

@@ -52,7 +52,7 @@ class _SelectFolderSheet extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Select folder',
+              tr("Select folder"),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
@@ -84,7 +84,7 @@ class _SelectFolderSheet extends HookConsumerWidget {
                 const SizedBox(width: 8),
                 FilledButton(
                   onPressed: () => context.pop(selectedFolderGuid.value),
-                  child: const Text('Select'),
+                  child: Text(tr("Select")),
                 ),
               ],
             ),

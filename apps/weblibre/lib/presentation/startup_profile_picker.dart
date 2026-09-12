@@ -115,7 +115,7 @@ class StartupProfilePicker extends StatelessWidget {
                     subtitle: switch ((isCandidate, isLocked)) {
                       (true, true) => Text(tr("Opens by default · Locked")),
                       (true, false) => Text(tr("Opens by default")),
-                      (false, true) => const Text('Locked'),
+                      (false, true) => Text(tr("Locked")),
                       (false, false) => null,
                     },
                     // Said before the choice rather than discovered after it:

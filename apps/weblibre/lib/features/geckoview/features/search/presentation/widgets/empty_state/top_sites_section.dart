@@ -145,7 +145,7 @@ class TopSitesSection extends HookConsumerWidget {
         : _topSitesPreviewLimit;
 
     return SearchModuleSection(
-      title: 'Shortcuts',
+      title: tr("Shortcuts"),
       moduleType: SearchModuleType.topSites,
       totalCount: topSites.length,
       previewLimit: previewLimit,

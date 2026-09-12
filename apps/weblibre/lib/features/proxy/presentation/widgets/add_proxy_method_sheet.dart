@@ -143,7 +143,7 @@ class AddProxyMethodSheet extends ConsumerWidget {
               children: [
                 _MethodCard(
                   icon: Icons.content_paste,
-                  title: 'Clipboard',
+                  title: tr("Clipboard"),
                   subtitle: tr("Paste share link or URI"),
                   onTap: pasteClipboard,
                   isPrimary: true,

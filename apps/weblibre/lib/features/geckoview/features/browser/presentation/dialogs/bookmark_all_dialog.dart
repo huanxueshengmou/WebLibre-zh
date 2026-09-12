@@ -33,7 +33,7 @@ Future<BookmarkAllChoice?> showBookmarkAllDialog(BuildContext context) {
       children: [
         ListTile(
           leading: const Icon(MdiIcons.fastForward),
-          title: const Text('Fast'),
+          title: Text(tr("Fast")),
           subtitle: Text(
             tr("Automatically add all tabs to a selected folder"),
           ),
@@ -43,7 +43,7 @@ Future<BookmarkAllChoice?> showBookmarkAllDialog(BuildContext context) {
         ),
         ListTile(
           leading: const Icon(MdiIcons.stepForward),
-          title: const Text('Detailed'),
+          title: Text(tr("Detailed")),
           subtitle: Text(tr("Review and edit each bookmark individually")),
           onTap: () {
             Navigator.of(context).pop(BookmarkAllChoice.detailed);

@@ -51,19 +51,19 @@ class _LatencyStatusChip extends StatelessWidget {
   const _LatencyStatusChip.loading()
     : this(
         label: 'Testing...',
-        tooltip: tr("Latency test running"),
+        tooltip: 'Latency test running',
         isError: false,
       );
 
   _LatencyStatusChip.error(Object error)
-    : this(label: 'Failed', tooltip: error.toString(), isError: true);
+    : this(label: tr("Failed"), tooltip: error.toString(), isError: true);
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return _LatencyChipContainer(
-      label: label,
-      tooltip: tooltip,
+      label: tr(label),
+      tooltip: isError ? tooltip : tr(tooltip),
       backgroundColor: isError
           ? scheme.errorContainer
           : scheme.surfaceContainerHighest,
@@ -135,3 +135,5 @@ class _LatencyChipContainer extends StatelessWidget {
     );
   }
 }
+
+// [weblibre-zh-ui-v1] audited constant-data consumers

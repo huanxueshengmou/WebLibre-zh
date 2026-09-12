@@ -28,30 +28,30 @@ import 'package:weblibre/features/geckoview/features/browser/domain/services/bro
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> extensionsSettingsSections = [
+const List<SettingsSectionDefinition> extensionsSettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Extensions"),
+    title: 'Extensions',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Manage Extensions"),
+        title: 'Manage Extensions',
         subtitle:
-            tr("Browse installed, disabled, available, and unsupported extensions"),
+            'Browse installed, disabled, available, and unsupported extensions',
         keywords: ['addons', 'browser extensions'],
         child: _ManageExtensionsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Custom Collection"),
-        subtitle: tr("Use a custom Mozilla addon collection"),
+        title: 'Custom Collection',
+        subtitle: 'Use a custom Mozilla addon collection',
         keywords: ['addons'],
         child: _AddonCollectionTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Updates"),
+    title: 'Updates',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Automatic updates"),
+        title: 'Automatic updates',
         subtitle:
             'Automatically check for and install extension updates every 12 hours',
         keywords: ['addons'],
@@ -60,11 +60,11 @@ List<SettingsSectionDefinition> extensionsSettingsSections = [
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Security"),
+    title: 'Security',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Allow unsigned extensions"),
-        subtitle: tr("Unsigned extensions have not been verified by Mozilla"),
+        title: 'Allow unsigned extensions',
+        subtitle: 'Unsigned extensions have not been verified by Mozilla',
         keywords: ['addons'],
         child: _AllowUnsignedExtensionsTile(),
       ),
@@ -79,7 +79,7 @@ class ExtensionsSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SettingsDetailScaffold(
       title: tr("Extensions"),
-      subtitle: 'Manage add-ons, update behavior, and extension security.',
+      subtitle: tr("Manage add-ons, update behavior, and extension security."),
       icon: MdiIcons.puzzleOutline,
       sections: extensionsSettingsSections,
     );
@@ -138,8 +138,8 @@ class _AutoUpdateTile extends ConsumerWidget {
     return autoUpdate.when(
       data: (enabled) => SwitchListTile.adaptive(
         title: Text(tr("Automatic updates")),
-        subtitle: const Text(
-          'Automatically check for and install extension updates every 12 hours',
+        subtitle: Text(
+          tr("Automatically check for and install extension updates every 12 hours"),
         ),
         secondary: const Icon(Icons.system_update_alt),
         value: enabled,
@@ -152,7 +152,7 @@ class _AutoUpdateTile extends ConsumerWidget {
       loading: () => SwitchListTile.adaptive(
         title: Text(tr("Automatic updates")),
         subtitle: Text(
-          'Automatically check for and install extension updates every 12 hours',
+          tr("Automatically check for and install extension updates every 12 hours"),
         ),
         secondary: Icon(Icons.system_update_alt),
         value: true,

@@ -90,7 +90,7 @@ class _EditTopSiteDialogState extends State<_EditTopSiteDialog> {
           children: [
             TextFormField(
               controller: _titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
+              decoration: InputDecoration(labelText: tr("Title")),
               autofocus: true,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {

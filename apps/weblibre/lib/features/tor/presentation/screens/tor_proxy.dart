@@ -37,26 +37,26 @@ import 'package:weblibre/presentation/icons/tor_icons.dart';
 import 'package:weblibre/utils/ui_helper.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> torProxySettingsSections = [
+const List<SettingsSectionDefinition> torProxySettingsSections = [
   SettingsSectionDefinition(
     title: 'Service',
     keywords: ['power', 'start', 'stop'],
     entries: [
       SettingsEntryDefinition(
         title: torServiceLabel,
-        subtitle: tr("Start or stop the {0} service", [torBrand]),
+        subtitle: 'Start or stop the $torBrand service',
         keywords: ['enable', 'connect'],
         child: _TorServiceTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Start Automatically"),
-        subtitle: tr("Connect the {0} service when WebLibre starts", [torBrand]),
+        title: 'Start Automatically',
+        subtitle: 'Connect the $torBrand service when WebLibre starts',
         keywords: ['autostart', 'launch', 'startup', 'boot'],
         child: _TorAutostartTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Request New Identity"),
-        subtitle: tr("Use a fresh circuit for new connections"),
+        title: 'Request New Identity',
+        subtitle: 'Use a fresh circuit for new connections',
         keywords: ['circuit'],
         child: _RequestNewIdentityTile(),
       ),
@@ -67,41 +67,41 @@ List<SettingsSectionDefinition> torProxySettingsSections = [
     keywords: ['bridges', 'transport', 'obfs4', 'snowflake'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Auto Configure Transport"),
+        title: 'Auto Configure Transport',
         subtitle:
-            tr("Pick the right pluggable transport for your network automatically"),
+            'Pick the right pluggable transport for your network automatically',
         keywords: ['auto'],
         child: _AutoConfigureTransportTile(),
       ),
       SettingsEntryDefinition(
         title: 'Transport',
         subtitle:
-            tr("Choose how to reach the {0} when not auto-configured", [torNetworkLabel]),
+            'Choose how to reach the $torNetworkLabel when not auto-configured',
         keywords: ['direct', 'obfs4', 'snowflake'],
         child: _TransportSection(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Country Restrictions"),
+    title: 'Country Restrictions',
     keywords: ['entry', 'exit', 'country'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Entry Country"),
-        subtitle: tr("Choose the country of the entry guard"),
+        title: 'Entry Country',
+        subtitle: 'Choose the country of the entry guard',
         keywords: ['guard'],
         child: _CountryPickerTile(role: _NodeRole.entry),
       ),
       SettingsEntryDefinition(
-        title: tr("Exit Country"),
-        subtitle: tr("Choose the country of the exit node"),
+        title: 'Exit Country',
+        subtitle: 'Choose the country of the exit node',
         keywords: ['exit'],
         child: _CountryPickerTile(role: _NodeRole.exit),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("About"),
+    title: 'About',
     keywords: ['trademark', 'legal'],
     entries: [
       SettingsEntryDefinition(
@@ -447,7 +447,7 @@ class _CountryPickerTile extends ConsumerWidget {
           ) ??
           const Icon(Icons.public),
       title: Text(role.title),
-      subtitle: Text(country ?? 'Automatic'),
+      subtitle: Text(country ?? tr("Automatic")),
       trailing: const Icon(Icons.chevron_right),
       onTap: () async {
         final result = await TorCountryPickerRoute(

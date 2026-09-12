@@ -111,9 +111,9 @@ class ProfileTile extends ConsumerWidget {
                 value: ProfileAction.share,
                 child: MenuRow(icon: Icons.share_outlined, label: tr("Share")),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: ProfileAction.delete,
-                child: MenuRow(icon: Icons.delete_outline, label: 'Delete'),
+                child: MenuRow(icon: Icons.delete_outline, label: tr("Delete")),
               ),
             ],
           ),
@@ -207,11 +207,11 @@ class ProfileTile extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Profile?'),
+        title: Text(tr("Delete Profile?")),
         content: Text(
           isRunning
-              ? 'Stop ${profile.name}, then delete it and its stored secrets? Tabs and containers assigned to this profile will be blocked until you choose another proxy or clear the assignment.'
-              : 'Delete ${profile.name} and its stored secrets? Tabs and containers assigned to this profile will be blocked until you choose another proxy or clear the assignment.',
+              ? tr("Stop {0}, then delete it and its stored secrets? Tabs and containers assigned to this profile will be blocked until you choose another proxy or clear the assignment.", [profile.name])
+              : tr("Delete {0} and its stored secrets? Tabs and containers assigned to this profile will be blocked until you choose another proxy or clear the assignment.", [profile.name]),
         ),
         actions: [
           TextButton(
@@ -220,7 +220,7 @@ class ProfileTile extends ConsumerWidget {
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text(isRunning ? 'Stop and Delete' : 'Delete'),
+            child: Text(isRunning ? tr("Stop and Delete") : tr("Delete")),
           ),
         ],
       ),

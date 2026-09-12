@@ -69,7 +69,7 @@ class FolderTreePicker extends HookConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Folder', style: Theme.of(context).textTheme.labelMedium),
+        Text(tr("Folder"), style: Theme.of(context).textTheme.labelMedium),
         rootFolder.when(
           skipLoadingOnReload: true,
           data: (folder) {

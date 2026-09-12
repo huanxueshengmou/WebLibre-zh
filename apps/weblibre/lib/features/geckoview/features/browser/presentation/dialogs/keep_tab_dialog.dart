@@ -32,11 +32,11 @@ Future<bool?> showKeepTabDialog(BuildContext context) {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Discard'),
+          child: Text(tr("Discard")),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Keep'),
+          child: Text(tr("Keep")),
         ),
       ],
     ),

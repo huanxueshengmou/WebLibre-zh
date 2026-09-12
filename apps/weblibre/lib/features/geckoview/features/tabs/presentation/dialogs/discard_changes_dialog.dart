@@ -44,7 +44,7 @@ Future<DiscardChangesChoice?> showDiscardChangesDialog(BuildContext context) {
             onPressed: () {
               Navigator.pop(context, DiscardChangesChoice.discard);
             },
-            child: const Text('Discard'),
+            child: Text(tr("Discard")),
           ),
           TextButton(
             onPressed: () {

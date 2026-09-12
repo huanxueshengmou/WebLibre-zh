@@ -98,7 +98,7 @@ class _SelectBookmarkFolderSheet extends HookConsumerWidget {
                 const SizedBox(width: 8),
                 FilledButton(
                   onPressed: () => context.pop(selectedGuid.value),
-                  child: const Text('Move'),
+                  child: Text(tr("Move")),
                 ),
               ],
             ),

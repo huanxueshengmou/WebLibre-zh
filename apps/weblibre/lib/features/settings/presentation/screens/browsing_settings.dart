@@ -31,55 +31,55 @@ import 'package:weblibre/features/user/data/models/general_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> browsingSettingsSections = [
+const List<SettingsSectionDefinition> browsingSettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Tabs"),
+    title: 'Tabs',
     entries: [
       SettingsEntryDefinition(
-        title: tr("New Tab Default"),
-        subtitle: tr("Choose the default type for manually created tabs"),
+        title: 'New Tab Default',
+        subtitle: 'Choose the default type for manually created tabs',
         keywords: ['regular', 'private', 'isolated'],
         child: _NewTabDefaultSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Small Web Tab Default"),
-        subtitle: tr("Choose the tab type used when entering Small Web"),
+        title: 'Small Web Tab Default',
+        subtitle: 'Choose the tab type used when entering Small Web',
         keywords: ['regular', 'private', 'isolated'],
         child: _SmallWebTabDefaultSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Tab List Direction"),
-        subtitle: tr("Choose how tabs are ordered in the list view"),
+        title: 'Tab List Direction',
+        subtitle: 'Choose how tabs are ordered in the list view',
         keywords: ['sorting', 'order'],
         child: _TabListDirectionSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Tab Bar Direction"),
-        subtitle: tr("Choose how tabs are ordered in the tab bar"),
+        title: 'Tab Bar Direction',
+        subtitle: 'Choose how tabs are ordered in the tab bar',
         keywords: ['sorting', 'order'],
         child: _TabBarDirectionSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Show Container UI"),
-        subtitle: tr("Show container selectors, menus, and management"),
+        title: 'Show Container UI',
+        subtitle: 'Show container selectors, menus, and management',
         keywords: ['containers'],
         child: _ShowContainerUiTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Show Isolated Tab UI"),
-        subtitle: tr("Show isolated-tab creation options in the UI"),
+        title: 'Show Isolated Tab UI',
+        subtitle: 'Show isolated-tab creation options in the UI',
         keywords: ['isolated tabs'],
         child: _ShowIsolatedTabUiTile(),
       ),
       SettingsEntryDefinition(
         title: 'Create Child Tabs',
-        subtitle: tr("Open links from tabs in the same container context"),
+        subtitle: 'Open links from tabs in the same container context',
         keywords: ['child tabs'],
         child: _CreateChildTabsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Background Tab Behavior"),
-        subtitle: tr("Choose what happens after a tab opens in the background"),
+        title: 'Background Tab Behavior',
+        subtitle: 'Choose what happens after a tab opens in the background',
         keywords: ['switch', 'background', 'new tab', 'snackbar', 'prompt'],
         child: _BackgroundTabOpenSection(),
       ),
@@ -89,26 +89,26 @@ List<SettingsSectionDefinition> browsingSettingsSections = [
     title: 'Navigation',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Pull to Refresh"),
-        subtitle: tr("Swipe down on pages to reload them"),
+        title: 'Pull to Refresh',
+        subtitle: 'Swipe down on pages to reload them',
         keywords: ['reload'],
         child: _PullToRefreshTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Double Back to Close Tab"),
-        subtitle: tr("Require double back press before closing the current tab"),
+        title: 'Double Back to Close Tab',
+        subtitle: 'Require double back press before closing the current tab',
         keywords: ['back button'],
         child: _DoubleBackCloseTabTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Tab Bar Swipe Behavior"),
-        subtitle: tr("Choose what horizontal swipes on the tab bar do"),
+        title: 'Tab Bar Swipe Behavior',
+        subtitle: 'Choose what horizontal swipes on the tab bar do',
         keywords: ['gestures', 'swipe'],
         child: _TabBarSwipeBehaviorSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Sequential Tab Navigation"),
-        subtitle: tr("Choose where stepping through tabs in order ends"),
+        title: 'Sequential Tab Navigation',
+        subtitle: 'Choose where stepping through tabs in order ends',
         keywords: [
           'gestures',
           'swipe',
@@ -121,54 +121,55 @@ List<SettingsSectionDefinition> browsingSettingsSections = [
         child: _SequentialTabNavigationSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Open Links in Apps"),
-        subtitle: tr("Choose how external app links open"),
+        title: 'Open Links in Apps',
+        subtitle: 'Choose how external app links open',
         keywords: ['app links', 'external apps'],
         child: _AppLinksModeSection(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Desktop Mode"),
+    title: 'Desktop Mode',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Always Request Desktop Site"),
-        subtitle: tr("Open new tabs in desktop mode by default"),
+        title: 'Always Request Desktop Site',
+        subtitle: 'Open new tabs in desktop mode by default',
         keywords: ['desktop mode', 'user agent', 'mobile site', 'tablet'],
         child: _GlobalDesktopModeTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Desktop Mode Sites"),
-        subtitle: tr("Sites that always load in desktop mode"),
+        title: 'Desktop Mode Sites',
+        subtitle: 'Sites that always load in desktop mode',
         keywords: ['desktop mode', 'per-site', 'user agent', 'exceptions'],
         child: _DesktopModeSitesTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Home Screen"),
+    title: 'Home Screen',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Install Sites as Apps"),
-        subtitle: tr("Allow websites without a manifest to be installed as apps"),
+        title: 'Install Sites as Apps',
+        subtitle: 'Allow websites without a manifest to be installed as apps',
         keywords: ['pwa', 'web apps'],
         child: _AllowNonManifestPwaInstallTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("External Links"),
+    title: 'External Links',
     entries: [
       SettingsEntryDefinition(
-        title: tr("External Link Handling"),
-        subtitle: tr("Choose how external links open in WebLibre"),
+        title: 'External Link Handling',
+        subtitle: 'Choose how external links open in WebLibre',
         keywords: ['intents'],
         child: _ExternalLinkHandlingSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Custom Tabs"),
+        title: 'Custom Tabs',
         subtitle:
-            tr("Let other apps open links in a lightweight in-app tab, instead of the main browser"),
+            'Let other apps open links in a lightweight in-app tab, instead '
+            'of the main browser',
         keywords: [
           'custom tabs',
           'in-app browser',
@@ -179,25 +180,25 @@ List<SettingsSectionDefinition> browsingSettingsSections = [
         child: _CustomTabsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("URL Cleaner"),
-        subtitle: tr("Tracking removal rules and catalog updates"),
+        title: 'URL Cleaner',
+        subtitle: 'Tracking removal rules and catalog updates',
         keywords: ['utm', 'tracking parameters'],
         child: _UrlCleanerSettingsTile(),
       ),
       SettingsEntryDefinition(
         title: 'Unshortener',
-        subtitle: tr("Short link resolver and API token"),
+        subtitle: 'Short link resolver and API token',
         keywords: ['short links', 'redirects'],
         child: _UnshortenerSettingsTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Bookmarks"),
+    title: 'Bookmarks',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Bookmark Open Behavior"),
-        subtitle: tr("Choose how tapping a bookmark opens it"),
+        title: 'Bookmark Open Behavior',
+        subtitle: 'Choose how tapping a bookmark opens it',
         keywords: ['bookmarks', 'open', 'custom tab', 'isolated'],
         child: _BookmarkOpenBehaviorSection(),
       ),
@@ -211,7 +212,7 @@ class BrowsingSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SettingsDetailScaffold(
-      title: 'Browsing',
+      title: tr("Browsing"),
       subtitle: tr("Tabs, navigation, app links, and Small Web behavior."),
       icon: MdiIcons.compassOutline,
       sections: browsingSettingsSections,
@@ -413,7 +414,7 @@ class _ExternalLinkHandlingSection extends HookConsumerWidget {
               children: [
                 RadioListTile.adaptive(
                   value: TabIntentOpenSetting.ask,
-                  title: Text('Prompt'),
+                  title: Text(tr("Prompt")),
                   subtitle: Text(tr("Ask how external links should open")),
                   secondary: Icon(MdiIcons.messageQuestion),
                 ),
@@ -489,7 +490,7 @@ class _BookmarkOpenBehaviorSection extends HookConsumerWidget {
               children: [
                 RadioListTile.adaptive(
                   value: BookmarkOpenSetting.ask,
-                  title: Text('Prompt'),
+                  title: Text(tr("Prompt")),
                   subtitle: Text(tr("Ask how the bookmark should open")),
                   secondary: Icon(MdiIcons.messageQuestion),
                 ),
@@ -659,9 +660,9 @@ class _CreateChildTabsTile extends HookConsumerWidget {
     );
 
     return SwitchListTile.adaptive(
-      title: const Text('Create Child Tabs'),
-      subtitle: const Text(
-        'Display a button to create a child tab under the current tab (tree view only)',
+      title: Text(tr("Create Child Tabs")),
+      subtitle: Text(
+        tr("Display a button to create a child tab under the current tab (tree view only)"),
       ),
       secondary: const Icon(MdiIcons.fileTree),
       value: createChildTabsOption,
@@ -1340,7 +1341,7 @@ class _UnshortenerSettingsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(MdiIcons.linkVariant),
-      title: const Text('Unshortener'),
+      title: Text(tr("Unshortener")),
       subtitle: Text(tr("Short link resolver and API token")),
       trailing: const Icon(Icons.chevron_right),
       onTap: () async {

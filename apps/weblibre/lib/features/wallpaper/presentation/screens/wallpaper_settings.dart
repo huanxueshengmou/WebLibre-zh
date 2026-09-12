@@ -46,7 +46,7 @@ class WallpaperSettingsScreen extends ConsumerWidget {
     }
 
     return SettingsCustomScrollScaffold(
-      title: 'Wallpaper',
+      title: tr("Wallpaper"),
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),

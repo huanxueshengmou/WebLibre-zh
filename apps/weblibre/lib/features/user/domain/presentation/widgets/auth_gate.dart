@@ -138,7 +138,7 @@ class LockScreen extends HookConsumerWidget {
               FilledButton.icon(
                 style: FilledButton.styleFrom(minimumSize: const Size(160, 40)),
                 icon: const Icon(MdiIcons.fingerprint),
-                label: Text(isAuthenticating.value ? 'Unlocking...' : tr("Unlock")),
+                label: Text(isAuthenticating.value ? tr("Unlocking...") : tr("Unlock")),
                 onPressed: isAuthenticating.value || isSwitching.value
                     ? null
                     : authenticate,
@@ -153,7 +153,7 @@ class LockScreen extends HookConsumerWidget {
                   icon: const Icon(MdiIcons.accountSwitch),
                   label: Text(
                     isSwitching.value
-                        ? 'Restarting…'
+                        ? tr("Restarting…")
                         : tr("Choose another profile"),
                   ),
                   onPressed: isAuthenticating.value || isSwitching.value

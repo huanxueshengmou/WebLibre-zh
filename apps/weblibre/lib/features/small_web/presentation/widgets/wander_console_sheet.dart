@@ -85,7 +85,7 @@ class _WanderConsoleSheet extends HookConsumerWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Select Console',
+                    tr("Select Console"),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const Spacer(),
@@ -104,7 +104,7 @@ class _WanderConsoleSheet extends HookConsumerWidget {
                             await notifier.discover(forceNewConsole: true);
                           },
                     icon: const Icon(Icons.shuffle, size: 18),
-                    label: const Text('Random'),
+                    label: Text(tr("Random")),
                   ),
                 ],
               ),

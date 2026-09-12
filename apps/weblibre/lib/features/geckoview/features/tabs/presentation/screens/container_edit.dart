@@ -403,7 +403,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 28),
                   Text(
-                    'Display',
+                    tr("Display"),
                     style: theme.textTheme.titleSmall?.copyWith(
                       color: colorScheme.primary,
                       fontWeight: FontWeight.w700,
@@ -435,7 +435,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                           shape: const Border(),
                           collapsedShape: const Border(),
                           leading: const Icon(MdiIcons.imageOutline),
-                          title: const Text('Wallpaper'),
+                          title: Text(tr("Wallpaper")),
                           subtitle: Text(
                             wallpaper.value != null
                                 ? tr("Shown on home while this container is selected")
@@ -641,10 +641,8 @@ class ContainerEditScreen extends HookConsumerWidget {
                         SwitchListTile.adaptive(
                           value: excludeFromHistory.value,
                           title: Text(tr("Exclude from History")),
-                          subtitle: const Text(
-                            "Don't record new visits from this container's "
-                            'tabs, and drop its pages from local search. '
-                            'Existing browsing history is kept.',
+                          subtitle: Text(
+                            tr("Don't record new visits from this container's tabs, and drop its pages from local search. Existing browsing history is kept."),
                           ),
                           secondary: const Icon(MdiIcons.incognito),
                           onChanged: (value) {
@@ -656,7 +654,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Assignments',
+                    tr("Assignments"),
                     style: theme.textTheme.titleSmall?.copyWith(
                       color: colorScheme.primary,
                       fontWeight: FontWeight.w700,
@@ -801,7 +799,7 @@ class ContainerEditScreen extends HookConsumerWidget {
                     child: FilledButton.tonalIcon(
                       onPressed: deleteContainer,
                       icon: const Icon(Icons.delete_outline),
-                      label: const Text('Delete Container'),
+                      label: Text(tr("Delete Container")),
                       style: FilledButton.styleFrom(
                         backgroundColor: colorScheme.errorContainer,
                         foregroundColor: colorScheme.onErrorContainer,

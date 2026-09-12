@@ -40,7 +40,7 @@ class ProfileListScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profiles'),
+        title: Text(tr("Profiles")),
         actions: [
           IconButton(
             onPressed: () async {
@@ -78,7 +78,7 @@ class ProfileListScreen extends HookConsumerWidget {
                 return ListTile(
                   leading: const Icon(Icons.person),
                   title: Text(labelOfProfile(profile, labels)),
-                  subtitle: isSelected ? const Text('Active') : null,
+                  subtitle: isSelected ? Text(tr("Active")) : null,
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () async {
                     await EditProfileRoute(

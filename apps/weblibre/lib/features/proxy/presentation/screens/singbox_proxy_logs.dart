@@ -175,7 +175,7 @@ class _RecordingLevelBanner extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () => showProxyLogLevelSheet(context),
-            child: const Text('Change'),
+            child: Text(tr("Change")),
           ),
         ],
       ),
@@ -330,7 +330,7 @@ class _ProxyLogList extends HookConsumerWidget {
                     curve: Curves.easeOutCubic,
                   ),
                   icon: const Icon(Icons.arrow_downward),
-                  label: const Text('Latest'),
+                  label: Text(tr("Latest")),
                 ),
               ),
             ),

@@ -27,7 +27,7 @@ Future<bool?> showDeleteAllExceptionsDialog(BuildContext context) {
   return showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Delete All Exceptions?'),
+      title: Text(tr("Delete All Exceptions?")),
       content: Text(
         tr("This will re-enable tracking protection for all exception sites."),
       ),
@@ -38,7 +38,7 @@ Future<bool?> showDeleteAllExceptionsDialog(BuildContext context) {
         ),
         TextButton(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Delete'),
+          child: Text(tr("Delete")),
         ),
       ],
     ),

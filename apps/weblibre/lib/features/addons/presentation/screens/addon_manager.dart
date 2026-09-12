@@ -123,7 +123,7 @@ class _AddonManagerOverflowMenu extends ConsumerWidget {
                   );
                 }
               : null,
-          child: const Text('Check for updates'),
+          child: Text(tr("Check for updates")),
         ),
         MenuItemButton(
           leadingIcon: const Icon(Icons.file_open),
@@ -174,7 +174,7 @@ class _AddonList extends StatelessWidget {
             ],
             if (unsupported.isNotEmpty) ...[
               const SizedBox(height: 16),
-              const _Section(title: 'Unsupported'),
+              _Section(title: tr("Unsupported")),
               for (final addon in unsupported)
                 _AddonCard(
                   addon: addon,

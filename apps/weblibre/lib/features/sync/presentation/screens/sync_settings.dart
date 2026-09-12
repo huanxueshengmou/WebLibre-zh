@@ -204,9 +204,9 @@ class SyncSettingsScreen extends HookConsumerWidget {
                     subtitle: ref
                         .watch(syncDeviceNameProvider)
                         .when(
-                          data: (name) => Text(name ?? 'Unknown'),
-                          loading: () => const Text('Loading...'),
-                          error: (_, _) => const Text('Unknown'),
+                          data: (name) => Text(name ?? tr("Unknown")),
+                          loading: () => Text(tr("Loading...")),
+                          error: (_, _) => Text(tr("Unknown")),
                         ),
                     trailing: const Icon(Icons.edit_outlined),
                     onTap: isSyncing
@@ -237,7 +237,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
         ],
       ),
       SettingsSectionDefinition(
-        title: 'Synchronization',
+        title: tr("Synchronization"),
         entries: [
           SettingsEntryDefinition(
             title: tr("Sync Now"),

@@ -119,10 +119,7 @@ class _LanguageFingerprintWarning extends ConsumerWidget {
                 const TextSpan(text: '• '),
                 TextSpan(
                   text:
-                      'Your browser has ${configuredLocales.length} languages '
-                      'configured (${configuredLocales.join(', ')}). '
-                      'Websites can use your unique language combination to '
-                      'fingerprint and track you across the web.\n\n',
+                      tr("Your browser has {0} languages configured ({1}). Websites can use your unique language combination to fingerprint and track you across the web.\n\n", [configuredLocales.length, configuredLocales.join(', ')]),
                 ),
                 const TextSpan(text: '• '),
                 TextSpan(

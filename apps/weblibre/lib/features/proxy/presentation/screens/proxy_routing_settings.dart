@@ -27,32 +27,32 @@ import 'package:weblibre/features/user/data/models/proxy_routing_settings.dart';
 import 'package:weblibre/features/user/domain/repositories/proxy_routing_settings.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> proxyRoutingSettingsSections = [
+const List<SettingsSectionDefinition> proxyRoutingSettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Regular Tabs"),
+    title: 'Regular Tabs',
     keywords: ['routing'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Regular Tabs Routing Mode"),
-        subtitle: tr("Choose how regular tabs are routed through proxies"),
+        title: 'Regular Tabs Routing Mode',
+        subtitle: 'Choose how regular tabs are routed through proxies',
         keywords: ['container', 'global'],
         child: _RegularTabsModeSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Proxy for global routing"),
-        subtitle: tr("Selected proxy when global routing is enabled"),
+        title: 'Proxy for global routing',
+        subtitle: 'Selected proxy when global routing is enabled',
         keywords: ['proxy'],
         child: _GlobalRoutingProxySection(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Private Tabs"),
+    title: 'Private Tabs',
     keywords: ['private', 'incognito'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Proxy for private tabs"),
-        subtitle: tr("Selected proxy that carries private-tab traffic"),
+        title: 'Proxy for private tabs',
+        subtitle: 'Selected proxy that carries private-tab traffic',
         keywords: ['proxy'],
         child: _PrivateTabsProxySection(),
       ),

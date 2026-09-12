@@ -419,8 +419,7 @@ class MaintenanceRunner {
           RestoreRecoveryResult.rolledBack =>
             tr("An interrupted restore was undone. The profile was left as it was."),
           RestoreRecoveryResult.indeterminate =>
-            'An interrupted restore was reconciled. Check the profile to see '
-                'whether the backup was applied.',
+            tr("An interrupted restore was reconciled. Check the profile to see whether the backup was applied."),
         };
         await _retireRecoveredTask(journal.taskId, summary);
         return summary;

@@ -132,7 +132,7 @@ class _AdoptAccountTile extends ConsumerWidget {
             if (adoption.hasError) ...[
               const SizedBox(height: 12),
               Text(
-                'That did not work. Check your connection and try again.',
+                tr("That did not work. Check your connection and try again."),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.error,
                   fontWeight: FontWeight.bold,

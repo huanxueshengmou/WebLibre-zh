@@ -108,7 +108,7 @@ class _SubscriptionErrorTile extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.error_outline, color: scheme.error),
       title: Text(tr("Could not load subscription")),
-      subtitle: const Text('Check your connection and try again.'),
+      subtitle: Text(tr("Check your connection and try again.")),
       trailing: IconButton(
         icon: const Icon(Icons.refresh),
         tooltip: tr("Retry"),
@@ -170,10 +170,9 @@ _SubscriptionPresentation _resolvePresentation(
       badgeColor: scheme.errorContainer,
       badgeTextColor: scheme.onErrorContainer,
       note:
-          'Payment failed. Update your payment method to keep your '
-          'subscription active.',
+          tr("Payment failed. Update your payment method to keep your subscription active."),
       noteColor: scheme.error,
-      manageLabel: 'Update Payment Method',
+      manageLabel: tr("Update Payment Method"),
     );
   }
   if (status.isWindingDown) {

@@ -193,7 +193,7 @@ class _TranslatePageTile extends ConsumerWidget {
         color: isTranslated ? Theme.of(context).colorScheme.primary : null,
       ),
       title: Text(
-        isTranslated ? 'Translated' : MenuItemType.translatePage.label,
+        isTranslated ? tr("Translated") : MenuItemType.translatePage.label,
       ),
       onTap: () async {
         Navigator.pop(context);

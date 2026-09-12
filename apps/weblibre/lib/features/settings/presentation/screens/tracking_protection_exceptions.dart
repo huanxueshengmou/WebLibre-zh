@@ -65,7 +65,7 @@ class TrackingProtectionExceptionsScreen extends HookConsumerWidget {
                     MenuItemButton(
                       leadingIcon: const Icon(Icons.delete_sweep),
                       onPressed: () => _showDeleteAllDialog(context, ref),
-                      child: const Text('Delete All'),
+                      child: Text(tr("Delete All")),
                     ),
                   ],
                 )

@@ -43,26 +43,26 @@ import 'package:weblibre/utils/exit_app.dart';
 import 'package:weblibre/utils/ui_helper.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> advancedSettingsSections = [
+const List<SettingsSectionDefinition> advancedSettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Content & Identity"),
+    title: 'Content & Identity',
     keywords: ['engine'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Enable JavaScript"),
-        subtitle: tr("Turn website scripting on or off"),
+        title: 'Enable JavaScript',
+        subtitle: 'Turn website scripting on or off',
         keywords: ['javascript'],
         child: _JavaScriptTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Custom User Agent"),
-        subtitle: tr("Override the browser user agent string"),
+        title: 'Custom User Agent',
+        subtitle: 'Override the browser user agent string',
         keywords: ['ua'],
         child: _UserAgentTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Use third party CA certificates"),
-        subtitle: tr("Allow Android CA store certificates"),
+        title: 'Use third party CA certificates',
+        subtitle: 'Allow Android CA store certificates',
         keywords: ['certificates', 'enterprise roots', 'ca'],
         child: _EnterpriseRootsTile(),
       ),
@@ -72,51 +72,52 @@ List<SettingsSectionDefinition> advancedSettingsSections = [
     title: 'Experimental',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Experimental Features"),
-        subtitle: tr("Low-level runtime features and startup behavior"),
+        title: 'Experimental Features',
+        subtitle: 'Low-level runtime features and startup behavior',
         keywords: ['runtime', 'startup'],
         child: _ExperimentalSettingsTile(),
       ),
     ],
   ),
   SettingsSectionDefinition(
-    title: tr("Developer Tools"),
+    title: 'Developer Tools',
     keywords: ['debug'],
     entries: [
       SettingsEntryDefinition(
-        title: tr("Unmount Engine Off-Screen"),
+        title: 'Unmount Engine Off-Screen',
         subtitle:
-            tr("Rebuild the web engine after an overlay, instead of keeping it warm"),
+            'Rebuild the web engine after an overlay, instead of '
+            'keeping it warm',
         keywords: ['geckoview', 'memory', 'performance', 'suspend'],
         child: _UnmountGeckoViewOffRouteTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Icon Cache"),
-        subtitle: tr("Stored favicons"),
+        title: 'Icon Cache',
+        subtitle: 'Stored favicons',
         keywords: ['favicons', 'cache'],
         child: _IconCacheTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("ML Downloads"),
-        subtitle: tr("Downloaded AI models and runtime files"),
+        title: 'ML Downloads',
+        subtitle: 'Downloaded AI models and runtime files',
         keywords: ['ai', 'ml', 'models', 'onnx', 'cache'],
         child: _MlCacheTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Error Logs"),
-        subtitle: tr("View and copy logs for issue reporting"),
+        title: 'Error Logs',
+        subtitle: 'View and copy logs for issue reporting',
         keywords: ['logs'],
         child: _ErrorLogsTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Dart VM"),
-        subtitle: tr("Copy Dart VM service URL"),
+        title: 'Dart VM',
+        subtitle: 'Copy Dart VM service URL',
         keywords: ['service url'],
         child: _DartVmTile(),
       ),
       SettingsEntryDefinition(
-        title: tr("Reset UI"),
-        subtitle: tr("Rebuild the entire browser UI"),
+        title: 'Reset UI',
+        subtitle: 'Rebuild the entire browser UI',
         keywords: ['refresh ui'],
         child: _ResetUITile(),
       ),
@@ -322,7 +323,7 @@ class _IconCacheTile extends HookConsumerWidget {
             children: [
               TableRow(
                 children: [
-                  const Text('Size'),
+                  Text(tr("Size")),
                   Text(tr("{0} MB", [size?.toStringAsFixed(2) ?? 0])),
                 ],
               ),
@@ -420,7 +421,7 @@ class _MlCacheTile extends HookWidget {
                 child: CircularProgressIndicator(strokeWidth: 2),
               )
             : const Icon(Icons.delete),
-        label: Text(isClearing.value ? 'Clearing' : tr("Clear")),
+        label: Text(isClearing.value ? tr("Clearing") : tr("Clear")),
       ),
     );
   }

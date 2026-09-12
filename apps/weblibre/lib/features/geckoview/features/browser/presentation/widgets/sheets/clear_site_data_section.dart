@@ -78,7 +78,7 @@ class ClearSiteDataSection extends HookConsumerWidget {
           title: Text(tr("Clear Site Data")),
           subtitle: Text(
             isExpanded.value
-                ? 'Select data types to clear'
+                ? tr("Select data types to clear")
                 : tr("Cookies, cache, and site data"),
           ),
           trailing: Icon(
@@ -110,7 +110,7 @@ class ClearSiteDataSection extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: _DataTypeCheckbox(
-              label: 'Cookies',
+              label: tr("Cookies"),
               subtitle: tr("Login tokens, preferences, tracking data"),
               type: ClearDataType.onlyCookies,
               isSelected:
@@ -168,7 +168,7 @@ class ClearSiteDataSection extends HookConsumerWidget {
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : const Icon(Icons.delete),
-                label: Text(isClearing.value ? 'Clearing...' : tr("Clear Now")),
+                label: Text(isClearing.value ? tr("Clearing...") : tr("Clear Now")),
               ),
             ),
           ),

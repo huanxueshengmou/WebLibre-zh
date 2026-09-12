@@ -180,7 +180,7 @@ class UBlockFilterListsScreen extends HookConsumerWidget {
           sliver: SliverToBoxAdapter(
             child: Column(
               children: [
-                const _SectionHeader(label: 'Management'),
+                _SectionHeader(label: tr("Management")),
                 _ManagementCard(
                   settings: settings,
                   registryReady: registryReady,
@@ -456,7 +456,7 @@ class _ManagementCard extends StatelessWidget {
               ),
             ),
             SwitchListTile.adaptive(
-              title: const Text('Auto-select languages'),
+              title: Text(tr("Auto-select languages")),
               subtitle: Text(
                 tr("Enable regional filter lists matching your device languages."),
               ),

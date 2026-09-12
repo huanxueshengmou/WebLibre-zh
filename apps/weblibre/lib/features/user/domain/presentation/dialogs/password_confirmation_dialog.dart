@@ -38,8 +38,8 @@ Future<String?> showPasswordConfirmationDialog(BuildContext context) {
           enableIMEPersonalizedLearning: false,
           keyboardType: TextInputType.visiblePassword,
           obscureText: true,
-          decoration: const InputDecoration(
-            labelText: 'Password',
+          decoration: InputDecoration(
+            labelText: tr("Password"),
             floatingLabelBehavior: FloatingLabelBehavior.always,
           ),
         ),
@@ -54,7 +54,7 @@ Future<String?> showPasswordConfirmationDialog(BuildContext context) {
             onPressed: () {
               Navigator.of(context).pop(controller.text);
             },
-            child: const Text('Confirm'),
+            child: Text(tr("Confirm")),
           ),
         ],
       );

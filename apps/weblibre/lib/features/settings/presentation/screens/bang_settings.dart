@@ -27,13 +27,13 @@ import 'package:weblibre/features/settings/presentation/widgets/custom_list_tile
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> bangSettingsSections = [
+const List<SettingsSectionDefinition> bangSettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Usage Data"),
+    title: 'Usage Data',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Bang Frequencies"),
-        subtitle: tr("Tracked usage for bang recommendations"),
+        title: 'Bang Frequencies',
+        subtitle: 'Tracked usage for bang recommendations',
         keywords: ['usage', 'recommendations'],
         child: _BangFrequenciesTile(),
       ),
@@ -43,23 +43,23 @@ List<SettingsSectionDefinition> bangSettingsSections = [
     title: 'Repositories',
     entries: [
       SettingsEntryDefinition(
-        title: tr("General Bangs"),
-        subtitle: tr("Sync on demand from GitHub"),
+        title: 'General Bangs',
+        subtitle: 'Sync on demand from GitHub',
         keywords: ['repository'],
         child: BangGroupListTile(
           group: BangGroup.general,
-          title: tr("General Bangs"),
-          subtitle: tr("Sync on demand from GitHub"),
+          title: 'General Bangs',
+          subtitle: 'Sync on demand from GitHub',
         ),
       ),
       SettingsEntryDefinition(
-        title: tr("Kagi Bangs"),
-        subtitle: tr("Sync on demand from GitHub"),
+        title: 'Kagi Bangs',
+        subtitle: 'Sync on demand from GitHub',
         keywords: ['repository'],
         child: BangGroupListTile(
           group: BangGroup.kagi,
-          title: tr("Kagi Bangs"),
-          subtitle: tr("Sync on-demand from GitHub"),
+          title: 'Kagi Bangs',
+          subtitle: 'Sync on-demand from GitHub',
         ),
       ),
     ],

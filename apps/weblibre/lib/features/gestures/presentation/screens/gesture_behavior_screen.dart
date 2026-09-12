@@ -25,13 +25,13 @@ import 'package:weblibre/features/gestures/domain/repositories/gesture_settings.
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> _behaviorSections = [
+const List<SettingsSectionDefinition> _behaviorSections = [
   SettingsSectionDefinition(
     title: 'Strokes',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Minimum stroke length"),
-        subtitle: tr("Minimum swipe length recognised as a direction"),
+        title: 'Minimum stroke length',
+        subtitle: 'Minimum swipe length recognised as a direction',
         keywords: ['size', 'length', 'sensitivity'],
         child: _StrokeLengthSection(),
       ),
@@ -41,20 +41,20 @@ List<SettingsSectionDefinition> _behaviorSections = [
     title: 'Timing',
     entries: [
       SettingsEntryDefinition(
-        title: tr("Timeout"),
+        title: 'Timeout',
         subtitle: 'Drop a stroke if no new direction is drawn',
         keywords: ['delay'],
         child: _TimeoutSection(),
       ),
       SettingsEntryDefinition(
         title: 'Cooldown',
-        subtitle: tr("Minimum delay between two gestures firing"),
+        subtitle: 'Minimum delay between two gestures firing',
         keywords: ['interval'],
         child: _CooldownSection(),
       ),
       SettingsEntryDefinition(
-        title: tr("Stroke interval"),
-        subtitle: tr("Reject a gesture when direction changes come too fast"),
+        title: 'Stroke interval',
+        subtitle: 'Reject a gesture when direction changes come too fast',
         keywords: ['debounce', 'jitter', 'accidental'],
         child: _StrokeIntervalSection(),
       ),
@@ -211,7 +211,7 @@ class _CooldownSection extends HookConsumerWidget {
       children: [
         ListTile(
           leading: const Icon(Icons.timer_outlined),
-          title: const Text('Cooldown'),
+          title: Text(tr("Cooldown")),
           subtitle: Slider.adaptive(
             min: minGestureIntervalMs.toDouble(),
             max: maxGestureIntervalMs.toDouble(),

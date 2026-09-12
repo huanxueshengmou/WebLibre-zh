@@ -38,7 +38,7 @@ class SyncDetailsTable extends StatelessWidget {
         columnWidths: const {0: FixedColumnWidth(100)},
         children: [
           TableRow(
-            children: [const Text('Entries'), Text(count?.toString() ?? 'N/A')],
+            children: [Text(tr("Entries")), Text(count?.toString() ?? 'N/A')],
           ),
           TableRow(
             children: [

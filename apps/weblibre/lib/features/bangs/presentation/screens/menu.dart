@@ -29,7 +29,7 @@ class BangMenuScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Bangs')),
+      appBar: AppBar(title: Text(tr("Bangs"))),
       body: SafeArea(
         child: ListView(
           children: [

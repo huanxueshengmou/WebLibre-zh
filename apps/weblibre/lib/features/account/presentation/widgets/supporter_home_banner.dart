@@ -268,7 +268,7 @@ class _DismissButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      tooltip: 'Dismiss',
+      tooltip: tr("Dismiss"),
       onPressed: onPressed,
       visualDensity: VisualDensity.compact,
       iconSize: 18,

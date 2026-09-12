@@ -23,14 +23,14 @@ import 'package:weblibre/features/settings/presentation/widgets/doh_settings_con
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
-List<SettingsSectionDefinition> dohSettingsSections = [
+const List<SettingsSectionDefinition> dohSettingsSections = [
   SettingsSectionDefinition(
-    title: tr("Resolver Settings"),
+    title: 'Resolver Settings',
     entries: [
       SettingsEntryDefinition(
-        title: tr("DNS over HTTPS"),
+        title: 'DNS over HTTPS',
         subtitle:
-            tr("Protection level, provider choice, and saved custom resolvers"),
+            'Protection level, provider choice, and saved custom resolvers',
         keywords: ['doh', 'resolver', 'dns provider', 'custom resolver'],
         child: DohSettingsContent(),
       ),

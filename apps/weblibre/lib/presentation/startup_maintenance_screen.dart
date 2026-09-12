@@ -1017,7 +1017,7 @@ _ActionCopy _copyFor(MaintenanceTask task) => switch (task.action) {
     verb: 'Delete now',
     icon: Icons.delete_outline,
     noun: 'deletion',
-    describe: 'Delete "${task.profileName}"',
+    describe: tr("Delete \"{0}\"", [task.profileName]),
     consequence:
         tr("Removes this profile and its {0}. {1}", [profileDataDescription, cannotBeUndone]),
     activity: 'Deleting "${task.profileName}"…',

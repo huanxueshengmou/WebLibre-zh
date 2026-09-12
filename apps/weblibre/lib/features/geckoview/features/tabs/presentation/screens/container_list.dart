@@ -310,7 +310,7 @@ class _ContainerCard extends HookConsumerWidget {
                           size: 16,
                           color: palette.onContainerColor,
                         ),
-                        label: const Text('Active'),
+                        label: Text(tr("Active")),
                         side: BorderSide.none,
                         visualDensity: VisualDensity.compact,
                         backgroundColor: palette.containerColor,
@@ -322,7 +322,7 @@ class _ContainerCard extends HookConsumerWidget {
                     FilledButton.tonalIcon(
                       onPressed: onSelect,
                       icon: Icon(isSelected ? Icons.close : Icons.check),
-                      label: Text(isSelected ? tr("Unselect") : 'Select'),
+                      label: Text(isSelected ? tr("Unselect") : tr("Select")),
                     ),
                   ],
                 ),

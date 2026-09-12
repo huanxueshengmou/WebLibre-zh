@@ -41,7 +41,7 @@ Future<DeleteDecision?> showDeleteFileDialog(
 
           return AlertDialog(
             icon: const Icon(Icons.warning),
-            title: const Text('Delete Downloaded File?'),
+            title: Text(tr("Delete Downloaded File?")),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +50,7 @@ Future<DeleteDecision?> showDeleteFileDialog(
                   text: TextSpan(
                     style: Theme.of(context).textTheme.bodyMedium,
                     children: [
-                      const TextSpan(text: 'Would you like to delete '),
+                      TextSpan(text: tr("Would you like to delete ")),
                       TextSpan(
                         text: fileName,
                         style: const TextStyle(fontWeight: FontWeight.w600),
@@ -101,7 +101,7 @@ Future<DeleteDecision?> showDeleteFileDialog(
                   backgroundColor: Theme.of(context).colorScheme.error,
                   foregroundColor: Theme.of(context).colorScheme.onError,
                 ),
-                child: const Text('Delete'),
+                child: Text(tr("Delete")),
               ),
             ],
           );

@@ -154,7 +154,7 @@ class ContainerDraftSuggestionsScreen extends HookConsumerWidget {
             },
             error: (error, stackTrace) {
               return FailureWidget(
-                title: 'Failed to create suggestions',
+                title: tr("Failed to create suggestions"),
                 onRetry: () {
                   ref.invalidate(suggestClustersProvider);
                 },
@@ -241,7 +241,7 @@ class _SuggestedContainerLabel extends HookConsumerWidget {
 
     return topic.when(
       skipLoadingOnReload: true,
-      data: (topic) => Text(topic ?? 'Untitled'),
+      data: (topic) => Text(topic ?? tr("Untitled")),
       error: (error, stackTrace) {
         logger.e(
           'Failed predicting selected tabs topic',
@@ -249,9 +249,9 @@ class _SuggestedContainerLabel extends HookConsumerWidget {
           stackTrace: stackTrace,
         );
 
-        return Text(container.topic ?? 'Untitled');
+        return Text(container.topic ?? tr("Untitled"));
       },
-      loading: () => const Skeletonizer(child: Text('Untitled')),
+      loading: () => Skeletonizer(child: Text(tr("Untitled"))),
     );
   }
 }

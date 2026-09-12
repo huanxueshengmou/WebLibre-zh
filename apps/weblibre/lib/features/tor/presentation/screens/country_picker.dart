@@ -112,7 +112,7 @@ class CountryPickerScreen extends HookWidget {
                   height: 24,
                   child: Center(child: Icon(Icons.public)),
                 ),
-                title: const Text('Automatic'),
+                title: Text(tr("Automatic")),
                 trailing: isSelected ? const Icon(Icons.check) : null,
                 onTap: () => context.pop(automaticCountry),
               );

@@ -72,7 +72,7 @@ class AddFeedDialog extends HookConsumerWidget {
                   .ignore(initialUri!);
               context.pop();
             },
-            child: const Text('Ignore'),
+            child: Text(tr("Ignore")),
           ),
         TextButton(
           onPressed: () {

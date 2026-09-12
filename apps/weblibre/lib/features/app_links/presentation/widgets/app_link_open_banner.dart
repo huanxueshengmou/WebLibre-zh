@@ -86,7 +86,7 @@ class AppLinkOpenBanner extends HookConsumerWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
-                  tooltip: 'Dismiss',
+                  tooltip: tr("Dismiss"),
                   // A back/swipe/cancel resolves as dismiss (§2.6).
                   onPressed: () => resolve(AppLinkDecision.dismiss),
                 ),

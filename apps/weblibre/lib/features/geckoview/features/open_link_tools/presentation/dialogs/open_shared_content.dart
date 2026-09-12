@@ -395,7 +395,7 @@ class OpenSharedContent extends HookConsumerWidget {
                     },
                   ),
                 _OpenActionTile(
-                  title: 'Unshorten',
+                  title: tr("Unshorten"),
                   subtitle: tr("Resolve shortened URL"),
                   icon: MdiIcons.linkVariant,
                   showTrailingDivider: false,

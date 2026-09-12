@@ -268,7 +268,7 @@ class _ProfileListBody extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
           child: Text(
-            'Profiles',
+            tr("Profiles"),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               color: scheme.primary,
               fontWeight: FontWeight.w700,

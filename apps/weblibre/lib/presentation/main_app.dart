@@ -100,12 +100,8 @@ class MainApp extends HookConsumerWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [Locale('en'), Locale('zh')],
-          localeResolutionCallback: (locale, supported) {
-            for (final l in supported) {
-              if (l.languageCode == locale?.languageCode) return l;
-            }
-            return supported.first;
-          },
+          localeListResolutionCallback: (locales, supported) =>
+              resolveAppLocale(locales),
           debugShowCheckedModeBanner: false,
           theme: theme,
           darkTheme: darkTheme,

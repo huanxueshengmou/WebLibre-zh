@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class ProfileEditorSection extends StatelessWidget {
   final String title;
@@ -36,7 +37,7 @@ class ProfileEditorSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          tr(title),
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
             color: scheme.primary,
             fontWeight: FontWeight.w700,
@@ -53,3 +54,5 @@ class ProfileEditorSection extends StatelessWidget {
     );
   }
 }
+
+// [weblibre-zh-ui-v1] audited constant-data consumers

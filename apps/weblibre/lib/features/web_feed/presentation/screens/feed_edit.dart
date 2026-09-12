@@ -210,7 +210,7 @@ class _FeedEditContent extends HookConsumerWidget {
                                   initialFeed.url.base,
                             ], iconSize: 24.0),
                           ),
-                          label: const Text('Title'),
+                          label: Text(tr("Title")),
                         ),
                         controller: titleTextController,
                       ),
@@ -303,7 +303,7 @@ class _FeedEditContent extends HookConsumerWidget {
                       foregroundColor: Theme.of(context).colorScheme.error,
                       iconColor: Theme.of(context).colorScheme.error,
                     ),
-                    label: const Text('Delete'),
+                    label: Text(tr("Delete")),
                     icon: const Icon(Icons.delete),
                     onPressed: () async {
                       final result = await showDeleteFeedDialog(context);

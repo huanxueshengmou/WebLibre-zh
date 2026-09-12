@@ -249,7 +249,7 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                     // the field.
                     onChanged: (_) => passwordRejected.value = false,
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText: tr("Password"),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       // On the control that can change the answer, not only in a
                       // snackbar that is gone by the time the user looks back.
@@ -275,7 +275,7 @@ class ProfileRestoreScreen extends HookConsumerWidget {
                         RadioListTile(
                           enabled: !disableInteraction,
                           value: RestoreTarget.createNew,
-                          title: const Text('Create a new profile'),
+                          title: Text(tr("Create a new profile")),
                           subtitle: Text(
                             tr("Keep your existing profiles and add this backup"),
                           ),

@@ -161,9 +161,7 @@ class _UpdateNotice extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'This update includes significant changes that require '
-                'you to review your settings. Please walk through the '
-                'following pages to revalidate your configuration.',
+                tr("This update includes significant changes that require you to review your settings. Please walk through the following pages to revalidate your configuration."),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
@@ -180,8 +178,7 @@ class _UpdateNotice extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Please re-check your extensions after this update '
-                      'due to known migration issues.',
+                      tr("Please re-check your extensions after this update due to known migration issues."),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
@@ -341,7 +338,7 @@ class _EulaCheckbox extends StatelessWidget {
             ),
           ),
           Text(
-            ' and ',
+            tr(" and "),
             style: theme.textTheme.bodySmall?.copyWith(
               color: colorScheme.onSurfaceVariant,
             ),

@@ -1,246 +1,4212 @@
 {
- "files_changed": 297,
- "replacements": 2604,
- "const_removed": 1105,
- "imports_added": 296,
+ "files_changed": 302,
+ "replacements": 2539,
+ "const_removed": 1231,
+ "imports_added": 297,
  "skipped": [
   {
    "file": "core/maintenance/backup_manifest.dart",
    "value": "Gecko cache, regenerated on first run",
-   "reason": "const-var-decl"
+   "template": "Gecko cache, regenerated on first run",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 81
   },
   {
    "file": "core/maintenance/backup_manifest.dart",
    "value": "Read-only asset database, reseeded from the bundled asset",
-   "reason": "const-var-decl"
+   "template": "Read-only asset database, reseeded from the bundled asset",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 86
+  },
+  {
+   "file": "core/maintenance/backup_manifest.dart",
+   "value": "Read-only asset database, reseeded from the bundled asset",
+   "template": "Read-only asset database, reseeded from the bundled asset",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 91
   },
   {
    "file": "core/maintenance/backup_manifest.dart",
    "value": "Install stamp for an excluded asset database",
-   "reason": "const-var-decl"
+   "template": "Install stamp for an excluded asset database",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 100
+  },
+  {
+   "file": "core/maintenance/backup_manifest.dart",
+   "value": "Install stamp for an excluded asset database",
+   "template": "Install stamp for an excluded asset database",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 105
   },
   {
    "file": "core/startup/maintenance_scanner.dart",
    "value": "no maintenance evidence",
-   "reason": "const-var-decl"
+   "template": "no maintenance evidence",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 216
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Overview",
+   "template": "Overview",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 36
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Description",
+   "template": "Description",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 39
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Resolve shortened URLs using the unshorten.me service",
+   "template": "Resolve shortened URLs using the unshorten.me service",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 40
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Behavior",
+   "template": "Behavior",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 47
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Enable Unshortener",
+   "template": "Enable Unshortener",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 50
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Resolve shortened URLs to their destination",
+   "template": "Resolve shortened URLs to their destination",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 51
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "API Token",
+   "template": "API Token",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 56
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Optional token for higher request limits",
+   "template": "Optional token for higher request limits",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 57
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Attribution",
+   "template": "Attribution",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 64
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Service attribution",
+   "template": "Service attribution",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 67
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+   "value": "Rate limits, service homepage, and privacy policy",
+   "template": "Rate limits, service homepage, and privacy policy",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 68
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Overview",
+   "template": "Overview",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 37
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Description",
+   "template": "Description",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 40
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Tracking parameter removal and offline redirect cleanup",
+   "template": "Tracking parameter removal and offline redirect cleanup",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 41
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Behavior",
+   "template": "Behavior",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 48
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Enable URL Cleaner",
+   "template": "Enable URL Cleaner",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 51
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Remove tracking parameters from URLs",
+   "template": "Remove tracking parameters from URLs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 52
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Automatically replace URL with cleaned version",
+   "template": "Automatically replace URL with cleaned version",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 58
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Allow referral marketing",
+   "template": "Allow referral marketing",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 63
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Keep referral and affiliate tracking parameters",
+   "template": "Keep referral and affiliate tracking parameters",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 64
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Catalog",
+   "template": "Catalog",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 71
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Auto-update catalog",
+   "template": "Auto-update catalog",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 74
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Check for rule updates weekly",
+   "template": "Check for rule updates weekly",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 75
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Update catalog",
+   "template": "Update catalog",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 79
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Fetch the latest URL cleaner rules",
+   "template": "Fetch the latest URL cleaner rules",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 80
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Restore defaults",
+   "template": "Restore defaults",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 84
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Reset to bundled catalog and default settings",
+   "template": "Reset to bundled catalog and default settings",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 85
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Attribution",
+   "template": "Attribution",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 91
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Attribution",
+   "template": "Attribution",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 94
+  },
+  {
+   "file": "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+   "value": "Credits and source links",
+   "template": "Credits and source links",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 95
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "New Tab",
-   "reason": "enum-const-arg"
+   "template": "New Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 78
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Open a new tab",
-   "reason": "enum-const-arg"
+   "template": "Open a new tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 79
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Close Tab",
-   "reason": "enum-const-arg"
+   "template": "Close Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 84
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Close the current tab",
-   "reason": "enum-const-arg"
+   "template": "Close the current tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 85
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Duplicate Tab",
-   "reason": "enum-const-arg"
+   "template": "Duplicate Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 90
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Open a copy of the current tab",
-   "reason": "enum-const-arg"
+   "template": "Open a copy of the current tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 91
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Next Tab",
-   "reason": "enum-const-arg"
+   "template": "Next Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 96
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Switch to the next tab",
-   "reason": "enum-const-arg"
+   "template": "Switch to the next tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 97
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Previous Tab",
-   "reason": "enum-const-arg"
+   "template": "Previous Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 102
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Switch to the previous tab",
-   "reason": "enum-const-arg"
+   "template": "Switch to the previous tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 103
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Last Used Tab",
-   "reason": "enum-const-arg"
+   "template": "Last Used Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 108
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Switch to the previously used tab",
-   "reason": "enum-const-arg"
+   "template": "Switch to the previously used tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 109
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Pin / Unpin Tab",
-   "reason": "enum-const-arg"
+   "template": "Pin / Unpin Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 114
   },
   {
    "file": "features/gestures/data/models/gesture_action.dart",
    "value": "Toggle the pinned state of the current tab",
-   "reason": "enum-const-arg"
+   "template": "Toggle the pinned state of the current tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 115
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Strokes",
+   "template": "Strokes",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 30
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Minimum stroke length",
+   "template": "Minimum stroke length",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 33
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Minimum swipe length recognised as a direction",
+   "template": "Minimum swipe length recognised as a direction",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 34
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Timing",
+   "template": "Timing",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 41
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Timeout",
+   "template": "Timeout",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 44
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Drop a stroke if no new direction is drawn",
+   "template": "Drop a stroke if no new direction is drawn",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 45
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Cooldown",
+   "template": "Cooldown",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 50
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Minimum delay between two gestures firing",
+   "template": "Minimum delay between two gestures firing",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 51
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Stroke interval",
+   "template": "Stroke interval",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 56
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+   "value": "Reject a gesture when direction changes come too fast",
+   "template": "Reject a gesture when direction changes come too fast",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 57
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_feedback_screen.dart",
+   "value": "Overlay",
+   "template": "Overlay",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 29
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_feedback_screen.dart",
+   "value": "Live feedback",
+   "template": "Live feedback",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 32
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_feedback_screen.dart",
+   "value": "Show the stroke and its action while you draw",
+   "template": "Show the stroke and its action while you draw",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 33
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_feedback_screen.dart",
+   "value": "Suggest next",
+   "template": "Suggest next",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 37
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_feedback_screen.dart",
+   "value": "Also show the other gestures you can complete",
+   "template": "Also show the other gestures you can complete",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 38
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_feedback_screen.dart",
+   "value": "Suggest after",
+   "template": "Suggest after",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/gestures/presentation/screens/gesture_feedback_screen.dart",
+   "value": "Number of strokes to draw before suggestions appear",
+   "template": "Number of strokes to draw before suggestions appear",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 43
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Server Address",
-   "reason": "const-var-decl"
+   "template": "Server Address",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 26
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Server Port",
-   "reason": "const-var-decl"
+   "template": "Server Port",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 31
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Username",
+   "template": "Username",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 37
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Password",
+   "template": "Password",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Password",
+   "template": "Password",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 48
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "TLS Enabled",
-   "reason": "const-var-decl"
+   "template": "TLS Enabled",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 60
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "true or false.",
-   "reason": "const-var-decl"
+   "template": "true or false.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 61
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "TLS Server Name",
-   "reason": "const-var-decl"
+   "template": "TLS Server Name",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 64
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Allow Invalid TLS Certificates",
-   "reason": "const-var-decl"
+   "template": "Allow Invalid TLS Certificates",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 67
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "true or false.",
+   "template": "true or false.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 68
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "TLS ALPN",
-   "reason": "const-var-decl"
+   "template": "TLS ALPN",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 73
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Comma-separated or one value per line.",
-   "reason": "const-var-decl"
+   "template": "Comma-separated or one value per line.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 74
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Transport Type",
-   "reason": "const-var-decl"
+   "template": "Transport Type",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 81
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "For example ws, http, grpc, or quic.",
-   "reason": "const-var-decl"
+   "template": "For example ws, http, grpc, or quic.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 82
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Transport Path",
-   "reason": "const-var-decl"
+   "template": "Transport Path",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 84
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "gRPC Service Name",
-   "reason": "const-var-decl"
+   "template": "gRPC Service Name",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 87
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Multiplex Enabled",
-   "reason": "const-var-decl"
+   "template": "Multiplex Enabled",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 93
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "true or false.",
+   "template": "true or false.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 94
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Multiplex Protocol",
-   "reason": "const-var-decl"
+   "template": "Multiplex Protocol",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 97
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Multiplex Max Connections",
-   "reason": "const-var-decl"
+   "template": "Multiplex Max Connections",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 100
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Dial Detour",
-   "reason": "const-var-decl"
+   "template": "Dial Detour",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 105
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Bind Interface",
-   "reason": "const-var-decl"
+   "template": "Bind Interface",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 106
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Routing Mark",
-   "reason": "const-var-decl"
+   "template": "Routing Mark",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 109
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Domain Strategy",
-   "reason": "const-var-decl"
+   "template": "Domain Strategy",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 114
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "For example prefer_ipv4 or prefer_ipv6.",
-   "reason": "const-var-decl"
+   "template": "For example prefer_ipv4 or prefer_ipv6.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 115
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "Connect Timeout",
-   "reason": "const-var-decl"
+   "template": "Connect Timeout",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 119
   },
   {
    "file": "features/proxy/data/forms/singbox_form_specs.dart",
    "value": "For example 5s.",
-   "reason": "const-var-decl"
+   "template": "For example 5s.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 120
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "SOCKS Version",
+   "template": "SOCKS Version",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 140
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Method",
+   "template": "Method",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 171
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Security",
+   "template": "Security",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 188
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Alter ID",
+   "template": "Alter ID",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 193
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Flow",
+   "template": "Flow",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 206
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Auth String",
+   "template": "Auth String",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 240
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Upload Bandwidth",
+   "template": "Upload Bandwidth",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 243
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Download Bandwidth",
+   "template": "Download Bandwidth",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 244
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Obfuscation",
+   "template": "Obfuscation",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 247
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Receive Window Conn",
+   "template": "Receive Window Conn",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 252
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Receive Window",
+   "template": "Receive Window",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 257
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Disable MTU Discovery",
+   "template": "Disable MTU Discovery",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 262
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "true or false.",
+   "template": "true or false.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 263
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Upload Mbps",
+   "template": "Upload Mbps",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 279
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Download Mbps",
+   "template": "Download Mbps",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 284
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Obfuscation Type",
+   "template": "Obfuscation Type",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 287
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Obfuscation Password",
+   "template": "Obfuscation Password",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 290
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Congestion Control",
+   "template": "Congestion Control",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 307
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "UDP Relay Mode",
+   "template": "UDP Relay Mode",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 312
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Zero RTT Handshake",
+   "template": "Zero RTT Handshake",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 317
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "true or false.",
+   "template": "true or false.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 318
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "User",
+   "template": "User",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 331
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Private Key",
+   "template": "Private Key",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 335
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Private Key Passphrase",
+   "template": "Private Key Passphrase",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 340
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Local Address",
+   "template": "Local Address",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 354
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "The address this device has inside the tunnel, one per line — for example 10.0.0.2/32. A bare address is read as a single one (/32, or /128 for IPv6).",
+   "template": "The address this device has inside the tunnel, one per line — for example 10.0.0.2/32. A bare address is read as a single one (/32, or /128 for IPv6).",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 356
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Peer Public Key",
+   "template": "Peer Public Key",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 364
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Private Key",
+   "template": "Private Key",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 369
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Stored in secure storage, not profile JSON.",
+   "template": "Stored in secure storage, not profile JSON.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 370
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Pre-shared Key",
+   "template": "Pre-shared Key",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 376
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Optional. Stored in secure storage.",
+   "template": "Optional. Stored in secure storage.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 377
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Lower this if the tunnel connects but pages never load: packets larger than the path allows are dropped outright. 1280 is safe almost everywhere, around 1200 when already on another VPN.",
+   "template": "Lower this if the tunnel connects but pages never load: packets larger than the path allows are dropped outright. 1280 is safe almost everywhere, around 1200 when already on another VPN.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 384
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Persistent Keepalive",
+   "template": "Persistent Keepalive",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 392
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Seconds between keepalive packets. A phone sits behind NAT, and without these the mapping expires while idle: the peer can no longer reach us, so connections stall until the next handshake. 0 disables.",
+   "template": "Seconds between keepalive packets. A phone sits behind NAT, and without these the mapping expires while idle: the peer can no longer reach us, so connections stall until the next handshake. 0 disables.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 394
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Reserved Bytes",
+   "template": "Reserved Bytes",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 404
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Optional. Three comma-separated numbers, e.g. 0,0,0.",
+   "template": "Optional. Three comma-separated numbers, e.g. 0,0,0.",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 405
+  },
+  {
+   "file": "features/proxy/data/forms/singbox_form_specs.dart",
+   "value": "Version",
+   "template": "Version",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 421
+  },
+  {
+   "file": "features/proxy/presentation/screens/proxy_routing_settings.dart",
+   "value": "Regular Tabs",
+   "template": "Regular Tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 32
+  },
+  {
+   "file": "features/proxy/presentation/screens/proxy_routing_settings.dart",
+   "value": "Regular Tabs Routing Mode",
+   "template": "Regular Tabs Routing Mode",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 36
+  },
+  {
+   "file": "features/proxy/presentation/screens/proxy_routing_settings.dart",
+   "value": "Choose how regular tabs are routed through proxies",
+   "template": "Choose how regular tabs are routed through proxies",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 37
+  },
+  {
+   "file": "features/proxy/presentation/screens/proxy_routing_settings.dart",
+   "value": "Proxy for global routing",
+   "template": "Proxy for global routing",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/proxy/presentation/screens/proxy_routing_settings.dart",
+   "value": "Selected proxy when global routing is enabled",
+   "template": "Selected proxy when global routing is enabled",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 43
+  },
+  {
+   "file": "features/proxy/presentation/screens/proxy_routing_settings.dart",
+   "value": "Private Tabs",
+   "template": "Private Tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 50
+  },
+  {
+   "file": "features/proxy/presentation/screens/proxy_routing_settings.dart",
+   "value": "Proxy for private tabs",
+   "template": "Proxy for private tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 54
+  },
+  {
+   "file": "features/proxy/presentation/screens/proxy_routing_settings.dart",
+   "value": "Selected proxy that carries private-tab traffic",
+   "template": "Selected proxy that carries private-tab traffic",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 55
+  },
+  {
+   "file": "features/proxy/presentation/widgets/profile_list/latency_chip.dart",
+   "value": "Testing...",
+   "template": "Testing...",
+   "interpolated": false,
+   "reason": "const-ctor-decl",
+   "line": 53
+  },
+  {
+   "file": "features/proxy/presentation/widgets/profile_list/latency_chip.dart",
+   "value": "Latency test running",
+   "template": "Latency test running",
+   "interpolated": false,
+   "reason": "const-ctor-decl",
+   "line": 54
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Content & Identity",
+   "template": "Content & Identity",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 48
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Enable JavaScript",
+   "template": "Enable JavaScript",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 52
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Turn website scripting on or off",
+   "template": "Turn website scripting on or off",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 53
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Custom User Agent",
+   "template": "Custom User Agent",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 58
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Override the browser user agent string",
+   "template": "Override the browser user agent string",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 59
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Use third party CA certificates",
+   "template": "Use third party CA certificates",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 64
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Allow Android CA store certificates",
+   "template": "Allow Android CA store certificates",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 65
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Experimental",
+   "template": "Experimental",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 72
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Experimental Features",
+   "template": "Experimental Features",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 75
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Low-level runtime features and startup behavior",
+   "template": "Low-level runtime features and startup behavior",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 76
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Developer Tools",
+   "template": "Developer Tools",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 83
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Unmount Engine Off-Screen",
+   "template": "Unmount Engine Off-Screen",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 87
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Rebuild the web engine after an overlay, instead of keeping it warm",
+   "template": "Rebuild the web engine after an overlay, instead of keeping it warm",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 89
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Icon Cache",
+   "template": "Icon Cache",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 95
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Stored favicons",
+   "template": "Stored favicons",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 96
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "ML Downloads",
+   "template": "ML Downloads",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 101
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Downloaded AI models and runtime files",
+   "template": "Downloaded AI models and runtime files",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 102
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Error Logs",
+   "template": "Error Logs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 107
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "View and copy logs for issue reporting",
+   "template": "View and copy logs for issue reporting",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 108
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Dart VM",
+   "template": "Dart VM",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 113
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Copy Dart VM service URL",
+   "template": "Copy Dart VM service URL",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 114
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Reset UI",
+   "template": "Reset UI",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 119
+  },
+  {
+   "file": "features/settings/presentation/screens/advanced_settings.dart",
+   "value": "Rebuild the entire browser UI",
+   "template": "Rebuild the entire browser UI",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 120
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Usage Data",
+   "template": "Usage Data",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 32
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Bang Frequencies",
+   "template": "Bang Frequencies",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 35
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Tracked usage for bang recommendations",
+   "template": "Tracked usage for bang recommendations",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 36
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Repositories",
+   "template": "Repositories",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 43
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "General Bangs",
+   "template": "General Bangs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 46
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Sync on demand from GitHub",
+   "template": "Sync on demand from GitHub",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 47
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "General Bangs",
+   "template": "General Bangs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 51
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Sync on demand from GitHub",
+   "template": "Sync on demand from GitHub",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 52
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Kagi Bangs",
+   "template": "Kagi Bangs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 56
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Sync on demand from GitHub",
+   "template": "Sync on demand from GitHub",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 57
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Kagi Bangs",
+   "template": "Kagi Bangs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 61
+  },
+  {
+   "file": "features/settings/presentation/screens/bang_settings.dart",
+   "value": "Sync on-demand from GitHub",
+   "template": "Sync on-demand from GitHub",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 62
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Tabs",
+   "template": "Tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 36
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "New Tab Default",
+   "template": "New Tab Default",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 39
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose the default type for manually created tabs",
+   "template": "Choose the default type for manually created tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 40
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Small Web Tab Default",
+   "template": "Small Web Tab Default",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 45
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose the tab type used when entering Small Web",
+   "template": "Choose the tab type used when entering Small Web",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 46
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Tab List Direction",
+   "template": "Tab List Direction",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 51
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose how tabs are ordered in the list view",
+   "template": "Choose how tabs are ordered in the list view",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 52
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Tab Bar Direction",
+   "template": "Tab Bar Direction",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 57
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose how tabs are ordered in the tab bar",
+   "template": "Choose how tabs are ordered in the tab bar",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 58
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Show Container UI",
+   "template": "Show Container UI",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 63
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Show container selectors, menus, and management",
+   "template": "Show container selectors, menus, and management",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 64
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Show Isolated Tab UI",
+   "template": "Show Isolated Tab UI",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 69
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Show isolated-tab creation options in the UI",
+   "template": "Show isolated-tab creation options in the UI",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 70
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Create Child Tabs",
+   "template": "Create Child Tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 75
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Open links from tabs in the same container context",
+   "template": "Open links from tabs in the same container context",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 76
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Background Tab Behavior",
+   "template": "Background Tab Behavior",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 81
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose what happens after a tab opens in the background",
+   "template": "Choose what happens after a tab opens in the background",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 82
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Navigation",
+   "template": "Navigation",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 89
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Pull to Refresh",
+   "template": "Pull to Refresh",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 92
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Swipe down on pages to reload them",
+   "template": "Swipe down on pages to reload them",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 93
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Double Back to Close Tab",
+   "template": "Double Back to Close Tab",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 98
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Require double back press before closing the current tab",
+   "template": "Require double back press before closing the current tab",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 99
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Tab Bar Swipe Behavior",
+   "template": "Tab Bar Swipe Behavior",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 104
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose what horizontal swipes on the tab bar do",
+   "template": "Choose what horizontal swipes on the tab bar do",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 105
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Sequential Tab Navigation",
+   "template": "Sequential Tab Navigation",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 110
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose where stepping through tabs in order ends",
+   "template": "Choose where stepping through tabs in order ends",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 111
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Open Links in Apps",
+   "template": "Open Links in Apps",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 124
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose how external app links open",
+   "template": "Choose how external app links open",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 125
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Desktop Mode",
+   "template": "Desktop Mode",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 132
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Always Request Desktop Site",
+   "template": "Always Request Desktop Site",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 135
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Open new tabs in desktop mode by default",
+   "template": "Open new tabs in desktop mode by default",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 136
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Desktop Mode Sites",
+   "template": "Desktop Mode Sites",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 141
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Sites that always load in desktop mode",
+   "template": "Sites that always load in desktop mode",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 142
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Home Screen",
+   "template": "Home Screen",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 149
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Install Sites as Apps",
+   "template": "Install Sites as Apps",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 152
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Allow websites without a manifest to be installed as apps",
+   "template": "Allow websites without a manifest to be installed as apps",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 153
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "External Links",
+   "template": "External Links",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 160
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "External Link Handling",
+   "template": "External Link Handling",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 163
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose how external links open in WebLibre",
+   "template": "Choose how external links open in WebLibre",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 164
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Custom Tabs",
+   "template": "Custom Tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 169
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Let other apps open links in a lightweight in-app tab, instead of the main browser",
+   "template": "Let other apps open links in a lightweight in-app tab, instead of the main browser",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 171
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "URL Cleaner",
+   "template": "URL Cleaner",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 183
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Tracking removal rules and catalog updates",
+   "template": "Tracking removal rules and catalog updates",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 184
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Unshortener",
+   "template": "Unshortener",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 189
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Short link resolver and API token",
+   "template": "Short link resolver and API token",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 190
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Bookmarks",
+   "template": "Bookmarks",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 197
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Bookmark Open Behavior",
+   "template": "Bookmark Open Behavior",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 200
+  },
+  {
+   "file": "features/settings/presentation/screens/browsing_settings.dart",
+   "value": "Choose how tapping a bookmark opens it",
+   "template": "Choose how tapping a bookmark opens it",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 201
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Allowlist Exceptions",
+   "template": "Allowlist Exceptions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 32
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Allowlist exceptions",
+   "template": "Allowlist exceptions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 35
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Compatibility exceptions for major and minor website issues",
+   "template": "Compatibility exceptions for major and minor website issues",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 36
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Cookies",
+   "template": "Cookies",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Cookies",
+   "template": "Cookies",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 45
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Cookie blocking mode and policy selection",
+   "template": "Cookie blocking mode and policy selection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 46
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Tracking Content",
+   "template": "Tracking Content",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 52
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Tracking content",
+   "template": "Tracking content",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 55
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Tracking scripts and scope for blocking",
+   "template": "Tracking scripts and scope for blocking",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 56
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Trackers",
+   "template": "Trackers",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 62
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Trackers",
+   "template": "Trackers",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 65
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Cryptominers, known fingerprinters, and redirect trackers",
+   "template": "Cryptominers, known fingerprinters, and redirect trackers",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 66
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Advanced Fingerprinting Protection",
+   "template": "Advanced Fingerprinting Protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 72
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Advanced fingerprinting protection",
+   "template": "Advanced fingerprinting protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 75
+  },
+  {
+   "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
+   "value": "Suspected fingerprinters and tab scope",
+   "template": "Suspected fingerprinters and tab scope",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 76
+  },
+  {
+   "file": "features/settings/presentation/screens/doh_settings.dart",
+   "value": "Resolver Settings",
+   "template": "Resolver Settings",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 28
+  },
+  {
+   "file": "features/settings/presentation/screens/doh_settings.dart",
+   "value": "DNS over HTTPS",
+   "template": "DNS over HTTPS",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 31
+  },
+  {
+   "file": "features/settings/presentation/screens/doh_settings.dart",
+   "value": "Protection level, provider choice, and saved custom resolvers",
+   "template": "Protection level, provider choice, and saved custom resolvers",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 33
+  },
+  {
+   "file": "features/settings/presentation/screens/experimental_settings.dart",
+   "value": "Runtime & Startup",
+   "template": "Runtime & Startup",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 33
+  },
+  {
+   "file": "features/settings/presentation/screens/experimental_settings.dart",
+   "value": "Isolated Content Process",
+   "template": "Isolated Content Process",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 36
+  },
+  {
+   "file": "features/settings/presentation/screens/experimental_settings.dart",
+   "value": "Run web content in an isolated process",
+   "template": "Run web content in an isolated process",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 37
+  },
+  {
+   "file": "features/settings/presentation/screens/experimental_settings.dart",
+   "value": "App Zygote Process",
+   "template": "App Zygote Process",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/settings/presentation/screens/experimental_settings.dart",
+   "value": "Preload the content service for faster isolated startup",
+   "template": "Preload the content service for faster isolated startup",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 43
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Extensions",
+   "template": "Extensions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 33
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Manage Extensions",
+   "template": "Manage Extensions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 36
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Browse installed, disabled, available, and unsupported extensions",
+   "template": "Browse installed, disabled, available, and unsupported extensions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 38
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Custom Collection",
+   "template": "Custom Collection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 43
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Use a custom Mozilla addon collection",
+   "template": "Use a custom Mozilla addon collection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 44
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Updates",
+   "template": "Updates",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 51
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Automatic updates",
+   "template": "Automatic updates",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 54
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Automatically check for and install extension updates every 12 hours",
+   "template": "Automatically check for and install extension updates every 12 hours",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 56
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Security",
+   "template": "Security",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 63
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Allow unsigned extensions",
+   "template": "Allow unsigned extensions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 66
+  },
+  {
+   "file": "features/settings/presentation/screens/extensions_settings.dart",
+   "value": "Unsigned extensions have not been verified by Mozilla",
+   "template": "Unsigned extensions have not been verified by Mozilla",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 67
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Default Browser",
+   "template": "Default Browser",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 41
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Default Browser",
+   "template": "Default Browser",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 45
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Set WebLibre as your default browser",
+   "template": "Set WebLibre as your default browser",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 46
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Appearance",
+   "template": "Appearance",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 53
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Theme",
+   "template": "Theme",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 56
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Choose system, light, or dark mode",
+   "template": "Choose system, light, or dark mode",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 57
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Pure Black (OLED)",
+   "template": "Pure Black (OLED)",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 62
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Use true-black surfaces in dark mode to save power on OLED screens",
+   "template": "Use true-black surfaces in dark mode to save power on OLED screens",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 64
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "User Interface Zoom",
+   "template": "User Interface Zoom",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 70
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Make the user interface smaller or larger",
+   "template": "Make the user interface smaller or larger",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 71
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Refresh Rate",
+   "template": "Refresh Rate",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 76
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Request a high or low display refresh rate (Android)",
+   "template": "Request a high or low display refresh rate (Android)",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 77
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Disable Animations",
+   "template": "Disable Animations",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 94
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Reduce motion and turn off app animations",
+   "template": "Reduce motion and turn off app animations",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 95
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Show Modal Barrier",
+   "template": "Show Modal Barrier",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 100
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Dim the background behind dialogs and bottom sheets",
+   "template": "Dim the background behind dialogs and bottom sheets",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 101
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Show Close Button",
+   "template": "Show Close Button",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 106
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Add a button to dismiss the search / new-tab page without a back gesture",
+   "template": "Add a button to dismiss the search / new-tab page without a back gesture",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 108
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Back up this profile",
+   "template": "Back up this profile",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 128
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Write an encrypted backup file of the profile you are using",
+   "template": "Write an encrypted backup file of the profile you are using",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 129
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Export & Import Settings",
+   "template": "Export & Import Settings",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 141
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Move settings to another profile, device, or a bug report",
+   "template": "Move settings to another profile, device, or a bug report",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 142
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Downloads",
+   "template": "Downloads",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 159
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Use external download manager",
+   "template": "Use external download manager",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 162
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Manage downloads with another app",
+   "template": "Manage downloads with another app",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 163
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Startup",
+   "template": "Startup",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 37
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "When there is no tab to show",
+   "template": "When there is no tab to show",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 41
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "On startup, and after closing the last tab",
+   "template": "On startup, and after closing the last tab",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Apply when the last tab closes",
+   "template": "Apply when the last tab closes",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 47
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Otherwise a tab from another container is opened instead",
+   "template": "Otherwise a tab from another container is opened instead",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 48
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Appearance",
+   "template": "Appearance",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 55
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Wallpaper",
+   "template": "Wallpaper",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 59
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "A background image for the home page",
+   "template": "A background image for the home page",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 60
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Layout",
+   "template": "Layout",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 76
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Search bar position",
+   "template": "Search bar position",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 80
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Where the home page offers its search field",
+   "template": "Where the home page offers its search field",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 81
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Customize home sections",
+   "template": "Customize home sections",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 96
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Choose and order what the home page shows",
+   "template": "Choose and order what the home page shows",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 97
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Customize new tab sections",
+   "template": "Customize new tab sections",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 109
+  },
+  {
+   "file": "features/settings/presentation/screens/home_settings.dart",
+   "value": "Choose and order what the new tab page shows",
+   "template": "Choose and order what the new tab page shows",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 110
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Tracking Protection",
+   "template": "Tracking Protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Enhanced Tracking Protection",
+   "template": "Enhanced Tracking Protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 46
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Choose how aggressively trackers are blocked",
+   "template": "Choose how aggressively trackers are blocked",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 47
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Content Blocking Database",
+   "template": "Content Blocking Database",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 52
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Use GeckoView blocker lists for ETP categories",
+   "template": "Use GeckoView blocker lists for ETP categories",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 53
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Bounce Tracking Protection",
+   "template": "Bounce Tracking Protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 58
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Remove tracking state left by redirect-based trackers",
+   "template": "Remove tracking state left by redirect-based trackers",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 59
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Query Parameter Stripping",
+   "template": "Query Parameter Stripping",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 64
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Remove tracking parameters from URLs",
+   "template": "Remove tracking parameters from URLs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 65
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Tracking Protection Exceptions",
+   "template": "Tracking Protection Exceptions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 70
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Sites where tracking protection is disabled",
+   "template": "Sites where tracking protection is disabled",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 71
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "uBlock Filter Lists & Hardenings",
+   "template": "uBlock Filter Lists & Hardenings",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 76
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Manage filter lists and apply WebLibre hardenings",
+   "template": "Manage filter lists and apply WebLibre hardenings",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 77
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Fingerprinting",
+   "template": "Fingerprinting",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 84
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Browser Languages",
+   "template": "Browser Languages",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 87
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Choose which languages websites can see",
+   "template": "Choose which languages websites can see",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 88
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Fingerprint Protection",
+   "template": "Fingerprint Protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 93
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Granular control over browser fingerprinting",
+   "template": "Granular control over browser fingerprinting",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 94
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Resist Fingerprinting",
+   "template": "Resist Fingerprinting",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 99
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Advanced fingerprinting protection hardening",
+   "template": "Advanced fingerprinting protection hardening",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 100
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Connection Security",
+   "template": "Connection Security",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 107
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Block insecure HTTP connections",
+   "template": "Block insecure HTTP connections",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 110
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Prefer HTTPS and block insecure connections",
+   "template": "Prefer HTTPS and block insecure connections",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 111
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "DNS over HTTPS",
+   "template": "DNS over HTTPS",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 116
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Encrypt DNS lookups",
+   "template": "Encrypt DNS lookups",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 117
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Network Protection",
+   "template": "Network Protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 124
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Local Network Access",
+   "template": "Local Network Access",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 127
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Enable local network and device access blocking",
+   "template": "Enable local network and device access blocking",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 128
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Block Local Network Requests",
+   "template": "Block Local Network Requests",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 133
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Block requests to local network devices and services",
+   "template": "Block requests to local network devices and services",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 134
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Block Local Network Trackers",
+   "template": "Block Local Network Trackers",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 139
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Block tracker-like local network requests",
+   "template": "Block tracker-like local network requests",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 140
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Privacy Signals & Modes",
+   "template": "Privacy Signals & Modes",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 147
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Incognito Mode",
+   "template": "Incognito Mode",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 150
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Delete selected browsing data on app restart",
+   "template": "Delete selected browsing data on app restart",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 151
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Screenshot protection",
+   "template": "Screenshot protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 156
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Prevent app content from appearing in screenshots",
+   "template": "Prevent app content from appearing in screenshots",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 157
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Allow screenshots in private tabs",
+   "template": "Allow screenshots in private tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 162
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Let the system capture private tabs",
+   "template": "Let the system capture private tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 163
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Global Privacy Control (GPC)",
+   "template": "Global Privacy Control (GPC)",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 168
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Send a privacy preference signal to websites",
+   "template": "Send a privacy preference signal to websites",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 169
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "App-Opening Protection",
+   "template": "App-Opening Protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 176
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Block apps from opening your browser",
+   "template": "Block apps from opening your browser",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 179
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Control which apps may launch WebLibre directly",
+   "template": "Control which apps may launch WebLibre directly",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 180
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Data Management",
+   "template": "Data Management",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 187
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Delete Browsing Data",
+   "template": "Delete Browsing Data",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 190
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Clear history, cookies, and other browsing data",
+   "template": "Clear history, cookies, and other browsing data",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 191
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Auto-Clear History",
+   "template": "Auto-Clear History",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 196
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Automatically clear history after a chosen duration",
+   "template": "Automatically clear history after a chosen duration",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 197
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Auto-Clear Unassigned Tabs",
+   "template": "Auto-Clear Unassigned Tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 202
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Automatically close tabs not assigned to a container",
+   "template": "Automatically close tabs not assigned to a container",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 203
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Google Safe Browsing",
+   "template": "Google Safe Browsing",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 210
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Safe Browsing Malware Protection",
+   "template": "Safe Browsing Malware Protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 213
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Warn about malware and harmful downloads",
+   "template": "Warn about malware and harmful downloads",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 214
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Safe Browsing Phishing Protection",
+   "template": "Safe Browsing Phishing Protection",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 219
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Warn about deceptive websites and login pages",
+   "template": "Warn about deceptive websites and login pages",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 220
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Advanced Security",
+   "template": "Advanced Security",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 227
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Web Engine Hardening",
+   "template": "Web Engine Hardening",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 230
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Harden browser engine behavior and defaults",
+   "template": "Harden browser engine behavior and defaults",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 231
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Fission (Site Isolation)",
+   "template": "Fission (Site Isolation)",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 236
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Use stronger site isolation between origins",
+   "template": "Use stronger site isolation between origins",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 237
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Extensions Web API",
+   "template": "Extensions Web API",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 242
+  },
+  {
+   "file": "features/settings/presentation/screens/privacy_security_settings.dart",
+   "value": "Allow extensions to expose web APIs to pages",
+   "template": "Allow extensions to expose web APIs to pages",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 243
+  },
+  {
+   "file": "features/settings/presentation/screens/proxy_settings.dart",
+   "value": "Proxy",
+   "template": "Proxy",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 31
+  },
+  {
+   "file": "features/settings/presentation/screens/proxy_settings.dart",
+   "value": "Proxy Connections",
+   "template": "Proxy Connections",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 34
+  },
+  {
+   "file": "features/settings/presentation/screens/proxy_settings.dart",
+   "value": "Manage proxy profiles and connections",
+   "template": "Manage proxy profiles and connections",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 35
+  },
+  {
+   "file": "features/settings/presentation/screens/proxy_settings.dart",
+   "value": "Proxy Routing",
+   "template": "Proxy Routing",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 50
+  },
+  {
+   "file": "features/settings/presentation/screens/proxy_settings.dart",
+   "value": "Choose which proxy carries regular and private tabs",
+   "template": "Choose which proxy carries regular and private tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 51
+  },
+  {
+   "file": "features/settings/presentation/screens/proxy_settings.dart",
+   "value": "Proxy Logs",
+   "template": "Proxy Logs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 56
+  },
+  {
+   "file": "features/settings/presentation/screens/proxy_settings.dart",
+   "value": "Read the proxy log and set how much it records",
+   "template": "Read the proxy log and set how much it records",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 57
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Providers",
+   "template": "Providers",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 38
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Default Search Provider",
+   "template": "Default Search Provider",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Choose the default engine for searches",
+   "template": "Choose the default engine for searches",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 43
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Default Autocomplete Provider",
+   "template": "Default Autocomplete Provider",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 48
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Choose the provider for search suggestions",
+   "template": "Choose the provider for search suggestions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 49
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Custom Search Engines",
+   "template": "Custom Search Engines",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 54
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Add and manage your own search providers",
+   "template": "Add and manage your own search providers",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 55
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Bang Shortcuts",
+   "template": "Bang Shortcuts",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 62
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Bang Settings",
+   "template": "Bang Settings",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 66
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Manage bang repositories and usage data",
+   "template": "Manage bang repositories and usage data",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 67
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "History & Suggestions",
+   "template": "History & Suggestions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 74
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Search History Limit",
+   "template": "Search History Limit",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 77
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Maximum number of recent searches to remember",
+   "template": "Maximum number of recent searches to remember",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 78
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Allow clipboard access for suggestions",
+   "template": "Allow clipboard access for suggestions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 83
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Browser can read clipboard to suggest URLs",
+   "template": "Browser can read clipboard to suggest URLs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 84
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Autocomplete on enter",
+   "template": "Autocomplete on enter",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 89
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Accept the inline suggestion when pressing enter",
+   "template": "Accept the inline suggestion when pressing enter",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 90
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Popular site suggestions",
+   "template": "Popular site suggestions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 95
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Complete typed text with well-known domains",
+   "template": "Complete typed text with well-known domains",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 96
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Local Search Index",
+   "template": "Local Search Index",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 103
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Enable local search index",
+   "template": "Enable local search index",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 107
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Index visited pages locally for content search",
+   "template": "Index visited pages locally for content search",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 108
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Index private tabs",
+   "template": "Index private tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 113
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Include private tabs in the local index",
+   "template": "Include private tabs in the local index",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 114
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "Indexed pages",
+   "template": "Indexed pages",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 119
+  },
+  {
+   "file": "features/settings/presentation/screens/search_settings.dart",
+   "value": "View and clear the local index",
+   "template": "View and clear the local index",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 120
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Display",
+   "template": "Display",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 34
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Web Fonts",
+   "template": "Web Fonts",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 37
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Allow websites to use custom fonts",
+   "template": "Allow websites to use custom fonts",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 38
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Automatic Font Size",
+   "template": "Automatic Font Size",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 43
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Adjust font size based on system settings",
+   "template": "Adjust font size based on system settings",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 44
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Font Size Factor",
+   "template": "Font Size Factor",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 49
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Scale web page text size",
+   "template": "Scale web page text size",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 50
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Font Inflation",
+   "template": "Font Inflation",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 55
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Enlarge text on pages without a mobile viewport",
+   "template": "Enlarge text on pages without a mobile viewport",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 56
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Input Auto Zoom",
+   "template": "Input Auto Zoom",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 61
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Automatically zoom when focusing text inputs",
+   "template": "Automatically zoom when focusing text inputs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 62
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Zoom on All Websites",
+   "template": "Zoom on All Websites",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 67
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Allow pinch and zoom, even on websites that prevent this gesture",
+   "template": "Allow pinch and zoom, even on websites that prevent this gesture",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 69
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Content Features",
+   "template": "Content Features",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 77
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Built-in PDF Viewer",
+   "template": "Built-in PDF Viewer",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 80
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Open PDF files directly in the browser",
+   "template": "Open PDF files directly in the browser",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 81
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Enable Reader Mode",
+   "template": "Enable Reader Mode",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 86
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Extract and simplify pages for readability",
+   "template": "Extract and simplify pages for readability",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 87
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Enforce Reader Mode",
+   "template": "Enforce Reader Mode",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 92
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Always show Reader Mode capabilities",
+   "template": "Always show Reader Mode capabilities",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 93
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "On Device AI",
+   "template": "On Device AI",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 98
+  },
+  {
+   "file": "features/settings/presentation/screens/web_content_settings.dart",
+   "value": "Local AI features including topic and tab suggestions",
+   "template": "Local AI features including topic and tab suggestions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 99
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Tab Bar",
+   "template": "Tab Bar",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 33
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Tab Bar Position",
+   "template": "Tab Bar Position",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 36
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Choose whether the tab bar stays at the top or bottom",
+   "template": "Choose whether the tab bar stays at the top or bottom",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 37
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Tab Bar Style",
+   "template": "Tab Bar Style",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Choose between title and compact layouts",
+   "template": "Choose between title and compact layouts",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 43
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Auto Hide Tab Bar",
+   "template": "Auto Hide Tab Bar",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 48
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Hide the tab bar when scrolling",
+   "template": "Hide the tab bar when scrolling",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 49
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Long Press URL to Copy",
+   "template": "Long Press URL to Copy",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 54
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Copy the current URL from the tab bar",
+   "template": "Copy the current URL from the tab bar",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 55
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Contextual Toolbar",
+   "template": "Contextual Toolbar",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 62
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Show Contextual Toolbar",
+   "template": "Show Contextual Toolbar",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 65
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Show an additional toolbar for navigation and actions",
+   "template": "Show an additional toolbar for navigation and actions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 66
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Customize Toolbar Buttons",
+   "template": "Customize Toolbar Buttons",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 71
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Choose which actions appear in the contextual toolbar",
+   "template": "Choose which actions appear in the contextual toolbar",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 72
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Quick Tab Switcher",
+   "template": "Quick Tab Switcher",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 79
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Tab Stacking",
+   "template": "Tab Stacking",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 82
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Choose how the quick tab switcher bar arranges tabs",
+   "template": "Choose how the quick tab switcher bar arranges tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 83
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Customize Switcher Buttons",
+   "template": "Customize Switcher Buttons",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 97
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Choose which action buttons appear at the end of the bar",
+   "template": "Choose which action buttons appear at the end of the bar",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 98
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Close Buttons on Tab Chips",
+   "template": "Close Buttons on Tab Chips",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 103
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Which switcher chips show a close button",
+   "template": "Which switcher chips show a close button",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 104
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "History Fallback in Quick Tab Switcher",
+   "template": "History Fallback in Quick Tab Switcher",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 109
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Use history suggestions when there are no matching tabs",
+   "template": "Use history suggestions when there are no matching tabs",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 110
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Show Titles in Quick Tab Switcher",
+   "template": "Show Titles in Quick Tab Switcher",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 115
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Display page titles in the switcher list",
+   "template": "Display page titles in the switcher list",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 116
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Title Width in Quick Tab Switcher",
+   "template": "Title Width in Quick Tab Switcher",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 121
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Maximum width of tab titles on switcher chips",
+   "template": "Maximum width of tab titles on switcher chips",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 122
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Hierarchy Depth in Quick Tab Switcher",
+   "template": "Hierarchy Depth in Quick Tab Switcher",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 127
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "How many nesting chevrons to show on switcher chips",
+   "template": "How many nesting chevrons to show on switcher chips",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 128
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Tab View",
+   "template": "Tab View",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 135
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Bottom Sheet Tab View",
+   "template": "Bottom Sheet Tab View",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 138
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Open the tab switcher as a bottom sheet",
+   "template": "Open the tab switcher as a bottom sheet",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 139
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Show Favicons in List View",
+   "template": "Show Favicons in List View",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 144
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Display site icons in the tab list",
+   "template": "Display site icons in the tab list",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 145
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Menu",
+   "template": "Menu",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 163
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Customize Menu",
+   "template": "Customize Menu",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 167
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Choose and order the sections and rows of the three-dot menu",
+   "template": "Choose and order the sections and rows of the three-dot menu",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 169
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Service",
+   "template": "Service",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Start or stop the $torBrand service",
+   "template": "Start or stop the {0} service",
+   "interpolated": true,
+   "reason": "const-var-decl",
+   "line": 47
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Start Automatically",
+   "template": "Start Automatically",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 52
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Connect the $torBrand service when WebLibre starts",
+   "template": "Connect the {0} service when WebLibre starts",
+   "interpolated": true,
+   "reason": "const-var-decl",
+   "line": 53
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Request New Identity",
+   "template": "Request New Identity",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 58
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Use a fresh circuit for new connections",
+   "template": "Use a fresh circuit for new connections",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 59
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Circumvention",
+   "template": "Circumvention",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 66
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Auto Configure Transport",
+   "template": "Auto Configure Transport",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 70
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Pick the right pluggable transport for your network automatically",
+   "template": "Pick the right pluggable transport for your network automatically",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 72
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Transport",
+   "template": "Transport",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 77
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Choose how to reach the $torNetworkLabel when not auto-configured",
+   "template": "Choose how to reach the {0} when not auto-configured",
+   "interpolated": true,
+   "reason": "const-var-decl",
+   "line": 79
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Country Restrictions",
+   "template": "Country Restrictions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 86
   },
   {
    "file": "features/tor/presentation/screens/tor_proxy.dart",
    "value": "Entry Country",
-   "reason": "enum-const-arg"
+   "template": "Entry Country",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 90
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Choose the country of the entry guard",
+   "template": "Choose the country of the entry guard",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 91
   },
   {
    "file": "features/tor/presentation/screens/tor_proxy.dart",
    "value": "Exit Country",
-   "reason": "enum-const-arg"
+   "template": "Exit Country",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 96
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Choose the country of the exit node",
+   "template": "Choose the country of the exit node",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 97
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "About",
+   "template": "About",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 104
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Trademark",
+   "template": "Trademark",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 108
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Trademark",
+   "template": "Trademark",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 112
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Entry Country",
+   "template": "Entry Country",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 415
+  },
+  {
+   "file": "features/tor/presentation/screens/tor_proxy.dart",
+   "value": "Exit Country",
+   "template": "Exit Country",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 416
   },
   {
    "file": "features/user/domain/presentation/screens/profile_edit.dart",
    "value": "1 minute",
-   "reason": "const-var-decl"
+   "template": "1 minute",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 51
   },
   {
    "file": "features/user/domain/presentation/screens/profile_edit.dart",
    "value": "5 minutes",
-   "reason": "const-var-decl"
+   "template": "5 minutes",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 52
   },
   {
    "file": "features/user/domain/presentation/screens/profile_edit.dart",
    "value": "15 minutes",
-   "reason": "const-var-decl"
+   "template": "15 minutes",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 53
   },
   {
    "file": "features/user/domain/presentation/screens/profile_edit.dart",
    "value": "1 hour",
-   "reason": "const-var-decl"
+   "template": "1 hour",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 54
+  },
+  {
+   "file": "features/web_push/presentation/screens/web_push_settings.dart",
+   "value": "Delivery",
+   "template": "Delivery",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 33
+  },
+  {
+   "file": "features/web_push/presentation/screens/web_push_settings.dart",
+   "value": "UnifiedPush Distributor",
+   "template": "UnifiedPush Distributor",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 36
+  },
+  {
+   "file": "features/web_push/presentation/screens/web_push_settings.dart",
+   "value": "The app that delivers website push notifications",
+   "template": "The app that delivers website push notifications",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 37
+  },
+  {
+   "file": "features/web_push/presentation/screens/web_push_settings.dart",
+   "value": "Notification Permission",
+   "template": "Notification Permission",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 42
+  },
+  {
+   "file": "features/web_push/presentation/screens/web_push_settings.dart",
+   "value": "Required to display website notifications",
+   "template": "Required to display website notifications",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 43
+  },
+  {
+   "file": "features/web_push/presentation/screens/web_push_settings.dart",
+   "value": "Subscriptions",
+   "template": "Subscriptions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 50
+  },
+  {
+   "file": "features/web_push/presentation/screens/web_push_settings.dart",
+   "value": "Site Subscriptions",
+   "template": "Site Subscriptions",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 53
+  },
+  {
+   "file": "features/web_push/presentation/screens/web_push_settings.dart",
+   "value": "Websites subscribed to push notifications",
+   "template": "Websites subscribed to push notifications",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 54
   }
  ],
  "skip_reasons": {
-  "const-var-decl": 102,
-  "enum-const-arg": 48
+  "const-var-decl": 468,
+  "enum-const-arg": 16,
+  "const-ctor-decl": 2
  },
  "import_targets": [
   "core/routing/routes.dart"
  ],
- "passes": 3
+ "passes": 3,
+ "safety_engine": "dart-analyzer",
+ "changed_files": [
+  "core/http_error_handler.dart",
+  "core/maintenance/maintenance_outcome.dart",
+  "core/maintenance/maintenance_runner.dart",
+  "core/routing/routes.dart",
+  "core/routing/routes.settings.dart",
+  "core/startup/maintenance_evidence.dart",
+  "core/startup/maintenance_scanner.dart",
+  "core/startup/startup_bootstrap.dart",
+  "features/about/presentation/screens/about.dart",
+  "features/account/presentation/screens/account_settings.dart",
+  "features/account/presentation/widgets/account_auth_status_card.dart",
+  "features/account/presentation/widgets/subscription_card.dart",
+  "features/account/presentation/widgets/supporter_home_banner.dart",
+  "features/account/presentation/widgets/sync_document_dialogs.dart",
+  "features/account/presentation/widgets/sync_document_list_section.dart",
+  "features/account/presentation/widgets/sync_setup_card.dart",
+  "features/addons/extensions/addon_info.dart",
+  "features/addons/presentation/screens/addon_browse.dart",
+  "features/addons/presentation/screens/addon_details.dart",
+  "features/addons/presentation/screens/addon_internal_settings.dart",
+  "features/addons/presentation/screens/addon_listing_details.dart",
+  "features/addons/presentation/screens/addon_manager.dart",
+  "features/addons/presentation/screens/addon_permissions.dart",
+  "features/addons/presentation/widgets/addon_listing_card.dart",
+  "features/addons/presentation/widgets/addon_ui.dart",
+  "features/addons/utils/permissions.dart",
+  "features/app_links/presentation/widgets/app_link_open_banner.dart",
+  "features/app_links/presentation/widgets/app_link_prompt_dialog.dart",
+  "features/app_links/presentation/widgets/container_app_link_settings_dialog.dart",
+  "features/bangs/domain/repositories/sync.dart",
+  "features/bangs/presentation/dialogs/delete_bang_dialog.dart",
+  "features/bangs/presentation/screens/categories.dart",
+  "features/bangs/presentation/screens/category.dart",
+  "features/bangs/presentation/screens/edit.dart",
+  "features/bangs/presentation/screens/menu.dart",
+  "features/bangs/presentation/screens/search.dart",
+  "features/bangs/presentation/screens/user.dart",
+  "features/bangs/presentation/widgets/bang_details.dart",
+  "features/geckoview/features/bookmarks/presentation/dialogs/delete_bookmark_dialog.dart",
+  "features/geckoview/features/bookmarks/presentation/dialogs/delete_folder_dialog.dart",
+  "features/geckoview/features/bookmarks/presentation/dialogs/import_bookmarks_dialog.dart",
+  "features/geckoview/features/bookmarks/presentation/dialogs/import_progress_dialog.dart",
+  "features/geckoview/features/bookmarks/presentation/dialogs/select_bookmark_folder_dialog.dart",
+  "features/geckoview/features/bookmarks/presentation/screens/bookmark_entry_edit.dart",
+  "features/geckoview/features/bookmarks/presentation/screens/bookmark_folder_edit.dart",
+  "features/geckoview/features/bookmarks/presentation/screens/bookmark_list.dart",
+  "features/geckoview/features/bookmarks/presentation/widgets/folder_tree_picker.dart",
+  "features/geckoview/features/browser/domain/entities/home_target.dart",
+  "features/geckoview/features/browser/features/contextual_toolbar/presentation/toolbar_button_registry.dart",
+  "features/geckoview/features/browser/features/contextual_toolbar/presentation/widgets/contextual_bar_buttons.dart",
+  "features/geckoview/features/browser/features/menu/domain/entities/menu_layout.dart",
+  "features/geckoview/features/browser/features/menu/presentation/widgets/browser_menu_sheet.dart",
+  "features/geckoview/features/browser/features/menu/presentation/widgets/menu_reorder_view.dart",
+  "features/geckoview/features/browser/features/menu/presentation/widgets/navigation_row.dart",
+  "features/geckoview/features/browser/features/menu/presentation/widgets/sections/connection_section.dart",
+  "features/geckoview/features/browser/features/menu/presentation/widgets/sections/extensions_section.dart",
+  "features/geckoview/features/browser/features/menu/presentation/widgets/sections/page_actions_section.dart",
+  "features/geckoview/features/browser/features/menu/presentation/widgets/sections/profile_section.dart",
+  "features/geckoview/features/browser/features/menu/presentation/widgets/sections/tab_actions_section.dart",
+  "features/geckoview/features/browser/presentation/dialogs/bookmark_all_dialog.dart",
+  "features/geckoview/features/browser/presentation/dialogs/clear_site_data_dialog.dart",
+  "features/geckoview/features/browser/presentation/dialogs/content_selection_dialog.dart",
+  "features/geckoview/features/browser/presentation/dialogs/delete_data.dart",
+  "features/geckoview/features/browser/presentation/dialogs/install_local_addon_dialog.dart",
+  "features/geckoview/features/browser/presentation/dialogs/keep_tab_dialog.dart",
+  "features/geckoview/features/browser/presentation/dialogs/qr_code.dart",
+  "features/geckoview/features/browser/presentation/dialogs/select_folder_dialog.dart",
+  "features/geckoview/features/browser/presentation/widgets/browser_home.dart",
+  "features/geckoview/features/browser/presentation/widgets/browser_modules/app_bar_title.dart",
+  "features/geckoview/features/browser/presentation/widgets/certificate_tile.dart",
+  "features/geckoview/features/browser/presentation/widgets/container_menu.dart",
+  "features/geckoview/features/browser/presentation/widgets/extension_shortcut_menu.dart",
+  "features/geckoview/features/browser/presentation/widgets/font_size_bottom_sheet.dart",
+  "features/geckoview/features/browser/presentation/widgets/history_menu.dart",
+  "features/geckoview/features/browser/presentation/widgets/home/home_search_pill.dart",
+  "features/geckoview/features/browser/presentation/widgets/menu_item_buttons.dart",
+  "features/geckoview/features/browser/presentation/widgets/share_bottom_sheet.dart",
+  "features/geckoview/features/browser/presentation/widgets/sheets/app_link_section.dart",
+  "features/geckoview/features/browser/presentation/widgets/sheets/clear_site_data_section.dart",
+  "features/geckoview/features/browser/presentation/widgets/sheets/desktop_mode_section.dart",
+  "features/geckoview/features/browser/presentation/widgets/sheets/gesture_exclusion_section.dart",
+  "features/geckoview/features/browser/presentation/widgets/sheets/permissions_section.dart",
+  "features/geckoview/features/browser/presentation/widgets/sheets/tracking_protection_section.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_creation_menu.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_menu.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/dialogs/clear_container_data_dialog.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/dialogs/close_all_private_tabs_dialog.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/dialogs/close_all_tabs_dialog.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/dialogs/enable_ai_tab_suggestions_dialog.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/dialogs/tab_parent_picker.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/tab_drop_target.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/tab_list_view.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/tab_preview.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/tab_tray_gestures.dart",
+  "features/geckoview/features/browser/presentation/widgets/tab_view/tab_view_header.dart",
+  "features/geckoview/features/browser/presentation/widgets/translation_bottom_sheet.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/copy_email.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/copy_image.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/copy_image_location.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/copy_link.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/copy_link_text.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/launch_external.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/open_image_new_tab.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/open_in_container.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/open_new_tab.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/save_file.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/save_image.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/share_email.dart",
+  "features/geckoview/features/contextmenu/presentation/candidates/share_image.dart",
+  "features/geckoview/features/find_in_page/presentation/widgets/find_in_page.dart",
+  "features/geckoview/features/history/presentation/dialogs/delete_file.dart",
+  "features/geckoview/features/history/presentation/screens/history.dart",
+  "features/geckoview/features/open_link_tools/presentation/dialogs/open_shared_content.dart",
+  "features/geckoview/features/open_link_tools/presentation/dialogs/tracking_details_dialog.dart",
+  "features/geckoview/features/open_link_tools/presentation/dialogs/url_cleaner_restore_defaults_dialog.dart",
+  "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
+  "features/geckoview/features/open_link_tools/presentation/screens/url_cleaner_settings.dart",
+  "features/geckoview/features/open_link_tools/presentation/widgets/url_cleaner_tile.dart",
+  "features/geckoview/features/pwa/presentation/dialogs/pwa_install_dialog.dart",
+  "features/geckoview/features/pwa/presentation/widgets/pwa_install_button.dart",
+  "features/geckoview/features/search/domain/providers/search_modules_view.dart",
+  "features/geckoview/features/search/presentation/dialogs/edit_top_site_dialog.dart",
+  "features/geckoview/features/search/presentation/dialogs/reset_bang_dialog.dart",
+  "features/geckoview/features/search/presentation/screens/search.dart",
+  "features/geckoview/features/search/presentation/widgets/animated_tab_type_switcher.dart",
+  "features/geckoview/features/search/presentation/widgets/bang_chip_menu.dart",
+  "features/geckoview/features/search/presentation/widgets/clipboard_fill.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/containers_section.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/frequent_bangs_section.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/history_highlights_section.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/quick_actions_section.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/quote_section.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/recent_feed_articles_section.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/recent_history_section.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/recent_searches_section.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/recent_tabs_section.dart",
+  "features/geckoview/features/search/presentation/widgets/empty_state/top_sites_section.dart",
+  "features/geckoview/features/search/presentation/widgets/module_surface_slivers.dart",
+  "features/geckoview/features/search/presentation/widgets/search_module_reorder_view.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/bookmark_search.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/combined_history_suggestions.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/feed_search.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/history_suggestions.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/local_history_suggestions.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/popular_sites_suggestions.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/search_module_header.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/search_providers_section.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/search_term_suggestions_section.dart",
+  "features/geckoview/features/search/presentation/widgets/search_modules/tab_search.dart",
+  "features/geckoview/features/search/presentation/widgets/smart_bang_selector.dart",
+  "features/geckoview/features/tabs/domain/repositories/gecko_inference.dart",
+  "features/geckoview/features/tabs/presentation/dialogs/delete_container_dialog.dart",
+  "features/geckoview/features/tabs/presentation/dialogs/discard_changes_dialog.dart",
+  "features/geckoview/features/tabs/presentation/screens/container_draft_suggestions.dart",
+  "features/geckoview/features/tabs/presentation/screens/container_edit.dart",
+  "features/geckoview/features/tabs/presentation/screens/container_list.dart",
+  "features/geckoview/features/tabs/presentation/screens/container_selection.dart",
+  "features/geckoview/features/tabs/presentation/screens/container_sites.dart",
+  "features/geckoview/features/tabs/presentation/widgets/color_picker_dialog.dart",
+  "features/geckoview/features/tabs/presentation/widgets/compact_container_selector.dart",
+  "features/geckoview/features/tabs/presentation/widgets/container_icon_picker_sheet.dart",
+  "features/geckoview/features/tabs/presentation/widgets/container_title.dart",
+  "features/geckoview/features/tabs/presentation/widgets/custom_color_picker_dialog.dart",
+  "features/gestures/presentation/screens/gesture_behavior_screen.dart",
+  "features/gestures/presentation/screens/gesture_bindings_screen.dart",
+  "features/gestures/presentation/screens/gesture_excluded_sites_screen.dart",
+  "features/gestures/presentation/screens/gesture_feedback_screen.dart",
+  "features/gestures/presentation/screens/gesture_settings_screen.dart",
+  "features/gestures/presentation/widgets/gesture_action_picker.dart",
+  "features/gestures/presentation/widgets/gesture_binding_editor.dart",
+  "features/intent_gatekeeper/presentation/widgets/intent_gatekeeper_dialog.dart",
+  "features/onboarding/presentation/onboarding.dart",
+  "features/onboarding/presentation/pages/ai_configuration.dart",
+  "features/onboarding/presentation/pages/default_search.dart",
+  "features/onboarding/presentation/pages/doh_settings.dart",
+  "features/onboarding/presentation/pages/permissions.dart",
+  "features/onboarding/presentation/pages/privacy_hardening.dart",
+  "features/onboarding/presentation/pages/toolbar_layout.dart",
+  "features/onboarding/presentation/pages/ublock_opt_in.dart",
+  "features/onboarding/presentation/pages/welcome.dart",
+  "features/proxy/data/models/proxy_log_message.dart",
+  "features/proxy/data/models/wireguard_config_import.dart",
+  "features/proxy/data/parsers/singbox_proxy_uri.dart",
+  "features/proxy/domain/extensions/singbox_proxy_profile_type_x.dart",
+  "features/proxy/domain/providers/proxy_connection_options.dart",
+  "features/proxy/presentation/controllers/ensure_proxy_started.dart",
+  "features/proxy/presentation/screens/proxy_routing_settings.dart",
+  "features/proxy/presentation/screens/singbox_proxy_logs.dart",
+  "features/proxy/presentation/screens/singbox_proxy_profile_editor.dart",
+  "features/proxy/presentation/screens/singbox_proxy_profiles.dart",
+  "features/proxy/presentation/screens/subscription_import.dart",
+  "features/proxy/presentation/widgets/add_proxy_method_sheet.dart",
+  "features/proxy/presentation/widgets/profile_editor/custom_outbound_profile_form.dart",
+  "features/proxy/presentation/widgets/profile_editor/profile_dns_override_section.dart",
+  "features/proxy/presentation/widgets/profile_editor/structured_profile_form.dart",
+  "features/proxy/presentation/widgets/profile_list/autostart_chip.dart",
+  "features/proxy/presentation/widgets/profile_list/ip_chip.dart",
+  "features/proxy/presentation/widgets/profile_list/latency_chip.dart",
+  "features/proxy/presentation/widgets/profile_list/profile_tile.dart",
+  "features/proxy/presentation/widgets/profile_list/share_profile_dialog.dart",
+  "features/proxy/presentation/widgets/profile_list/status_header.dart",
+  "features/proxy/presentation/widgets/profile_list/tor_tile.dart",
+  "features/proxy/presentation/widgets/proxy_connection_picker_sheet.dart",
+  "features/proxy/presentation/widgets/proxy_log_level_sheet.dart",
+  "features/qr_scanner/presentation/dialogs/qr_scanner_dialog.dart",
+  "features/search_credits/presentation/widgets/search_credits_section.dart",
+  "features/settings/presentation/dialogs/delete_all_exceptions_dialog.dart",
+  "features/settings/presentation/dialogs/log_details_dialog.dart",
+  "features/settings/presentation/dialogs/settings_import_dialog.dart",
+  "features/settings/presentation/dialogs/user_agent_restart_dialog.dart",
+  "features/settings/presentation/screens/addon_collection.dart",
+  "features/settings/presentation/screens/advanced_settings.dart",
+  "features/settings/presentation/screens/bang_settings.dart",
+  "features/settings/presentation/screens/browsing_settings.dart",
+  "features/settings/presentation/screens/contextual_toolbar_settings.dart",
+  "features/settings/presentation/screens/custom_tracking_protection.dart",
+  "features/settings/presentation/screens/desktop_mode_sites_screen.dart",
+  "features/settings/presentation/screens/doh_settings.dart",
+  "features/settings/presentation/screens/error_logs_screen.dart",
+  "features/settings/presentation/screens/experimental_settings.dart",
+  "features/settings/presentation/screens/extensions_settings.dart",
+  "features/settings/presentation/screens/fingerprint_settings.dart",
+  "features/settings/presentation/screens/general_settings.dart",
+  "features/settings/presentation/screens/home_settings.dart",
+  "features/settings/presentation/screens/locale_settings.dart",
+  "features/settings/presentation/screens/menu_layout_settings.dart",
+  "features/settings/presentation/screens/module_surface_settings.dart",
+  "features/settings/presentation/screens/privacy_security_settings.dart",
+  "features/settings/presentation/screens/proxy_settings.dart",
+  "features/settings/presentation/screens/search_settings.dart",
+  "features/settings/presentation/screens/settings.dart",
+  "features/settings/presentation/screens/settings_transfer.dart",
+  "features/settings/presentation/screens/toolbar_layout_settings.dart",
+  "features/settings/presentation/screens/tracking_protection_exceptions.dart",
+  "features/settings/presentation/screens/ublock_filter_lists.dart",
+  "features/settings/presentation/screens/web_content_settings.dart",
+  "features/settings/presentation/screens/web_engine_hardening.dart",
+  "features/settings/presentation/screens/web_engine_hardening_group.dart",
+  "features/settings/presentation/widgets/bang_group_list_tile.dart",
+  "features/settings/presentation/widgets/default_search_selector.dart",
+  "features/settings/presentation/widgets/doh_settings_content.dart",
+  "features/settings/presentation/widgets/settings_detail.dart",
+  "features/settings/presentation/widgets/string_list_editor.dart",
+  "features/settings/presentation/widgets/sync_details_table.dart",
+  "features/settings/presentation/widgets/toolbar_layout_content.dart",
+  "features/settings/presentation/widgets/toolbar_preview.dart",
+  "features/small_web/presentation/widgets/small_web_attribution_card.dart",
+  "features/small_web/presentation/widgets/small_web_bottom_bar.dart",
+  "features/small_web/presentation/widgets/small_web_history_list.dart",
+  "features/small_web/presentation/widgets/small_web_menu_sheet.dart",
+  "features/small_web/presentation/widgets/wander_console_sheet.dart",
+  "features/sync/presentation/screens/sync_settings.dart",
+  "features/tor/presentation/screens/country_picker.dart",
+  "features/tor/presentation/screens/tor_proxy.dart",
+  "features/tor/presentation/widgets/tor_dialog.dart",
+  "features/tor/presentation/widgets/tor_notification.dart",
+  "features/user/data/models/general_settings.dart",
+  "features/user/data/models/proxy_diagnostics_settings.dart",
+  "features/user/data/models/ublock_asset.dart",
+  "features/user/data/models/ublock_filter_list_settings.dart",
+  "features/user/domain/entities/fingerprint_overrides.dart",
+  "features/user/domain/presentation/dialogs/password_confirmation_dialog.dart",
+  "features/user/domain/presentation/dialogs/profile_maintenance_dialogs.dart",
+  "features/user/domain/presentation/dialogs/quit_browser_dialog.dart",
+  "features/user/domain/presentation/dialogs/select_profile.dart",
+  "features/user/domain/presentation/dialogs/switch_profile_dialog.dart",
+  "features/user/domain/presentation/screens/profile_backup.dart",
+  "features/user/domain/presentation/screens/profile_backup_list.dart",
+  "features/user/domain/presentation/screens/profile_edit.dart",
+  "features/user/domain/presentation/screens/profile_list.dart",
+  "features/user/domain/presentation/screens/profile_restore.dart",
+  "features/user/domain/presentation/widgets/auth_gate.dart",
+  "features/wallpaper/presentation/screens/wallpaper_settings.dart",
+  "features/wallpaper/presentation/widgets/wallpaper_editor.dart",
+  "features/web_feed/presentation/add_feed_dialog.dart",
+  "features/web_feed/presentation/dialogs/delete_feed_dialog.dart",
+  "features/web_feed/presentation/screens/feed_article.dart",
+  "features/web_feed/presentation/screens/feed_article_list.dart",
+  "features/web_feed/presentation/screens/feed_edit.dart",
+  "features/web_feed/presentation/screens/feed_list.dart",
+  "features/web_feed/presentation/select_feed_dialog.dart",
+  "features/web_feed/presentation/widgets/tag_field.dart",
+  "features/web_push/presentation/screens/web_push_settings.dart",
+  "features/web_search/domain/controllers/search_controller.dart",
+  "features/web_search/domain/entities/fetch_method.dart",
+  "features/web_search/presentation/dialogs/fetch_method_dialog.dart",
+  "features/web_search/presentation/screens/page_preview.dart",
+  "features/web_search/presentation/widgets/route_through_tor_toggle.dart",
+  "features/web_search/presentation/widgets/search_filter_chips.dart",
+  "features/web_search/presentation/widgets/search_mode_selector.dart",
+  "features/web_search/presentation/widgets/search_result_card.dart",
+  "features/web_search/presentation/widgets/search_result_metadata_chips.dart",
+  "features/web_search/presentation/widgets/web_search_infobox_card.dart",
+  "features/web_search/presentation/widgets/web_search_results_section.dart",
+  "presentation/main_app.dart",
+  "presentation/startup_maintenance_screen.dart",
+  "presentation/startup_phase_host.dart",
+  "presentation/startup_profile_picker.dart",
+  "presentation/widgets/failure_widget.dart",
+  "presentation/widgets/share_tile.dart",
+  "presentation/widgets/website_feed_menu_button.dart",
+  "utils/ui_helper.dart"
+ ],
+ "deferred_occurrences": 486,
+ "deferred_unique_keys": 459
 }

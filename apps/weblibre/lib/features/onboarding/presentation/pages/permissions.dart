@@ -75,7 +75,7 @@ class PermissionsPage extends HookConsumerWidget implements IFormPage {
                   builder: (field) => SwitchListTile(
                     contentPadding: EdgeInsets.zero,
                     value: field.value ?? true,
-                    title: const Text('Notifications'),
+                    title: Text(tr("Notifications")),
                     subtitle: Text(
                       tr("Required to inform about download status"),
                     ),

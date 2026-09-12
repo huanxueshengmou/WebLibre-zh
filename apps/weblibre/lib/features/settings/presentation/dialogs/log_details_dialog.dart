@@ -135,7 +135,7 @@ class LogDetailsDialog extends StatelessWidget {
                 children: [
                   if (message.isNotEmpty) ...[
                     Text(
-                      'Message:',
+                      tr("Message:"),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.primary,
@@ -150,7 +150,7 @@ class LogDetailsDialog extends StatelessWidget {
                   ],
                   if (error != null) ...[
                     Text(
-                      'Error:',
+                      tr("Error:"),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: _levelColor(level),

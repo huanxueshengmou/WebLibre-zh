@@ -47,7 +47,7 @@ class SelectProfileDialog extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Select profile',
+              tr("Select profile"),
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),

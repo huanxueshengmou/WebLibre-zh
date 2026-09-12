@@ -342,7 +342,7 @@ class SafeSearchSelector extends ConsumerWidget {
                 .setSafeSearch(SafeSearch.moderate);
           },
           child: _MenuRow(
-            label: 'Moderate',
+            label: tr("Moderate"),
             isSelected: selected == SafeSearch.moderate,
           ),
         ),

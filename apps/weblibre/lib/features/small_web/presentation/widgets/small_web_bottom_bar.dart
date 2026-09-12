@@ -192,7 +192,7 @@ class SmallWebBottomBar extends HookConsumerWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.menu),
-            tooltip: 'Menu',
+            tooltip: tr("Menu"),
             onPressed: onMenuTap,
           ),
           Expanded(

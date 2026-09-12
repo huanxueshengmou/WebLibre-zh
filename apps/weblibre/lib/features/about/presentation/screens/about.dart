@@ -82,7 +82,7 @@ class AboutDialogScreen extends HookConsumerWidget {
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: const Icon(MdiIcons.handHeart),
-          title: const Text('Donate'),
+          title: Text(tr("Donate")),
           onTap: () async {
             await ref
                 .read(tabRepositoryProvider.notifier)
@@ -101,7 +101,7 @@ class AboutDialogScreen extends HookConsumerWidget {
           contentPadding: EdgeInsets.zero,
           // ignore: deprecated_member_use
           leading: const Icon(Icons.book),
-          title: const Text('Documentation'),
+          title: Text(tr("Documentation")),
           onTap: () async {
             await ref
                 .read(tabRepositoryProvider.notifier)

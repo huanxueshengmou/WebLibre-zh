@@ -72,7 +72,7 @@ class FeedSearch extends HookConsumerWidget {
     }
 
     return SearchModuleSection(
-      title: 'Articles',
+      title: tr("Articles"),
       moduleType: SearchModuleType.articles,
       totalCount: totalResults,
       contentSliverBuilder:

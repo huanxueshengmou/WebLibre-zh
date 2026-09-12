@@ -362,7 +362,7 @@ class BookmarkListScreen extends HookConsumerWidget {
         ),
         IconButton(
           icon: const Icon(MdiIcons.delete),
-          tooltip: 'Delete selected',
+          tooltip: tr("Delete selected"),
           onPressed: count > 0
               ? () => _bulkDelete(context, ref, uiState, uiStateNotifier, rows)
               : null,
@@ -481,7 +481,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                   ),
                 ),
               ],
-              child: const Text('Visibility'),
+              child: Text(tr("Visibility")),
             ),
             SubmenuButton(
               leadingIcon: const Icon(MdiIcons.sort),
@@ -662,7 +662,7 @@ class BookmarkListScreen extends HookConsumerWidget {
             ),
             MenuItemButton(
               leadingIcon: const Icon(MdiIcons.folderMove),
-              child: const Text('Move'),
+              child: Text(tr("Move")),
               onPressed: () async {
                 final targetGuid = await showSelectBookmarkFolderDialog(
                   context,
@@ -689,7 +689,7 @@ class BookmarkListScreen extends HookConsumerWidget {
             ),
             MenuItemButton(
               leadingIcon: const Icon(MdiIcons.bookmarkRemove),
-              child: const Text('Delete'),
+              child: Text(tr("Delete")),
               onPressed: () async {
                 final result = await showDeleteBookmarkDialog(context);
                 if (result == true) {
@@ -781,7 +781,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                 if (!isRoot) ...[
                   MenuItemButton(
                     leadingIcon: const Icon(MdiIcons.folderMove),
-                    child: const Text('Move'),
+                    child: Text(tr("Move")),
                     onPressed: () async {
                       final repo = ref.read(
                         bookmarksRepositoryProvider.notifier,
@@ -806,7 +806,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                   if (canFlattenFolder(folder))
                     MenuItemButton(
                       leadingIcon: const Icon(MdiIcons.folderRemove),
-                      child: const Text('Flatten'),
+                      child: Text(tr("Flatten")),
                       onPressed: () async {
                         await ref
                             .read(bookmarksRepositoryProvider.notifier)
@@ -824,7 +824,7 @@ class BookmarkListScreen extends HookConsumerWidget {
                   ),
                   MenuItemButton(
                     leadingIcon: const Icon(Icons.delete),
-                    child: const Text('Delete'),
+                    child: Text(tr("Delete")),
                     onPressed: () async {
                       final result = await showDeleteFolderDialog(context);
                       if (result == true) {

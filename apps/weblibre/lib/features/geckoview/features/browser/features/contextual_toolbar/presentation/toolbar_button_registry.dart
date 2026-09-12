@@ -163,7 +163,7 @@ final List<ToolbarButtonDefinition> toolbarButtonRegistry = [
   ),
   ToolbarButtonDefinition(
     spec: forwardToolbarButtonSpec,
-    label: 'Forward',
+    label: tr("Forward"),
     icon: Icons.arrow_forward,
     isPrimaryAvailable: (scope, ref) => scope.historyState.canGoForward,
     longPressActions: [tr("History Menu (Forward pages)")],
@@ -180,11 +180,11 @@ final List<ToolbarButtonDefinition> toolbarButtonRegistry = [
   ),
   ToolbarButtonDefinition(
     spec: homeToolbarButtonSpec,
-    label: 'Home',
+    label: tr("Home"),
     icon: Icons.home_outlined,
     builder: (scope, context, ref) {
       return IconButton(
-        tooltip: 'Home',
+        tooltip: tr("Home"),
         onPressed: scope.isPreview
             ? () {}
             : () {
@@ -218,7 +218,7 @@ final List<ToolbarButtonDefinition> toolbarButtonRegistry = [
   ),
   ToolbarButtonDefinition(
     spec: bookmarkToggleToolbarButtonSpec,
-    label: 'Bookmark',
+    label: tr("Bookmark"),
     icon: Icons.bookmark_border,
     longPressActions: [tr("Open Bookmarks")],
     builder: (scope, context, ref) =>
@@ -279,7 +279,7 @@ final List<ToolbarButtonDefinition> toolbarButtonRegistry = [
   ),
   ToolbarButtonDefinition(
     spec: navigationMenuToolbarButtonSpec,
-    label: 'Menu',
+    label: tr("Menu"),
     icon: Icons.more_vert,
     longPressActions: [tr("Open Settings")],
     builder: (scope, context, ref) => scope.isPreview
@@ -342,7 +342,7 @@ final List<ToolbarButtonDefinition> toolbarButtonRegistry = [
   ),
   ToolbarButtonDefinition(
     spec: translationToolbarButtonSpec,
-    label: 'Translate',
+    label: tr("Translate"),
     icon: Icons.translate,
     longPressActions: [tr("Show Translation Options")],
     isPrimaryAvailable: (scope, ref) {
@@ -497,7 +497,7 @@ final List<ToolbarButtonDefinition> toolbarButtonRegistry = [
   ),
   ToolbarButtonDefinition(
     spec: moveToBackgroundToolbarButtonSpec,
-    label: 'Background',
+    label: tr("Background"),
     icon: MdiIcons.arrowCollapseDown,
     builder: (scope, context, ref) {
       return IconButton(
@@ -655,7 +655,7 @@ final List<ToolbarButtonDefinition> toolbarButtonRegistry = [
   ),
   ToolbarButtonDefinition(
     spec: quitToolbarButtonSpec,
-    label: 'Quit',
+    label: tr("Quit"),
     icon: MdiIcons.power,
     longPressActions: [tr("Quit without confirmation")],
     builder: (scope, context, ref) {

@@ -127,7 +127,7 @@ class _GestureBindingEditor extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(initialStroke == null ? 'Create gesture' : tr("Edit gesture")),
+        title: Text(initialStroke == null ? tr("Create gesture") : tr("Edit gesture")),
       ),
       body: Column(
         children: [
@@ -189,7 +189,7 @@ class _GestureBindingEditor extends HookWidget {
 
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Fingers'),
+                    title: Text(tr("Fingers")),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [

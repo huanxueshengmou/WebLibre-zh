@@ -29,8 +29,8 @@ Future<bool?> showDeleteBangDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         icon: const Icon(Icons.warning),
-        title: const Text('Delete Bang'),
-        content: const Text('Are you sure you want to delete this Bang?'),
+        title: Text(tr("Delete Bang")),
+        content: Text(tr("Are you sure you want to delete this Bang?")),
         actions: <Widget>[
           TextButton(
             onPressed: () {
@@ -42,7 +42,7 @@ Future<bool?> showDeleteBangDialog(BuildContext context) {
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: const Text('Delete'),
+            child: Text(tr("Delete")),
           ),
         ],
       );

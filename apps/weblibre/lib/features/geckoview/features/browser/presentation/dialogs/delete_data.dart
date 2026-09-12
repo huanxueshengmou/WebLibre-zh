@@ -24,6 +24,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nullability/nullability.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/services/browser_data.dart';
 import 'package:weblibre/features/user/data/models/general_settings.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows a bottom sheet to select and delete browsing data.
 Future<void> showDeleteDataDialog(
@@ -54,7 +55,7 @@ class _DeleteDataSheet extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Delete Browsing Data',
+              tr("Delete Browsing Data"),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
@@ -91,7 +92,7 @@ class _DeleteDataSheet extends HookConsumerWidget {
                 backgroundColor: Theme.of(context).colorScheme.error,
                 foregroundColor: Theme.of(context).colorScheme.onError,
               ),
-              label: const Text('Delete'),
+              label: Text(tr("Delete")),
               icon: const Icon(Icons.delete_forever),
             ),
           ],

@@ -35,8 +35,11 @@ on:
       - ".github/workflows/i18n.yml"
 
 concurrency:
+  # Only the newest run matters: the zh branch is regenerated from scratch and
+  # the release is a rolling one. Without this, a burst of pushes queues up
+  # several 40-minute builds that all produce the same thing.
   group: chinese-build
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -161,24 +164,45 @@ jobs:
           fi
 
       - name: Persist the translation cache
+        # Never fail the job here. The cache is an optimisation - losing it
+        # costs a retranslation, while failing the job would skip the entire
+        # build. Run #1 of this workflow failed exactly this way: a manual push
+        # to main landed mid-run, so `git push` was rejected as non-fast-forward
+        # and the APK build was skipped as a result.
+        continue-on-error: true
         run: |
-          set -euo pipefail
+          set -uo pipefail
           # The cache is what makes a daily run cheap: only genuinely new
           # strings get machine translated. It belongs on main, not on zh,
           # because zh is disposable and regenerated from scratch each time.
           mkdir -p i18n
           for f in zh.json strings.json translation-report.json transform-report.json; do
-            [[ -f "../zh/i18n/$f" ]] && cp "../zh/i18n/$f" "i18n/$f"
+            if [[ -f "../zh/i18n/$f" ]]; then cp "../zh/i18n/$f" "i18n/$f"; fi
           done
+
           git config user.name  "weblibre-zh bot"
           git config user.email "weblibre-zh@users.noreply.github.com"
           git add i18n
           if git diff --cached --quiet; then
             echo "Translation cache unchanged."
-          else
-            git commit -m "i18n: update translation cache [skip ci]"
-            git push origin main
+            exit 0
           fi
+          git commit -m "i18n: update translation cache [skip ci]"
+
+          # main can move while this run is working, so rebase onto the current
+          # tip and retry rather than assuming a fast-forward.
+          for attempt in 1 2 3; do
+            git fetch --no-tags origin main
+            if git rebase origin/main && git push origin main; then
+              echo "Translation cache persisted (attempt ${attempt})."
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "attempt ${attempt} failed; retrying"
+            sleep 5
+          done
+
+          echo "::warning title=Cache not persisted::Could not push the translation cache to main. The next run will retranslate anything missing; the build is unaffected."
 
       - name: Job summary
         if: always()

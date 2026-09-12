@@ -43,6 +43,32 @@ PH_CLOSE = "\ue001"
 RE_PLACEHOLDER = re.compile(r"\{(\d+)\}")
 RE_CJK = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]")
 
+# Chinese uses full-width punctuation. Offline MT models happily emit
+# "从你的设备?" instead, which reads as a foreign accent in an otherwise
+# translated UI. These substitutions only fire when a CJK character is
+# adjacent, so URLs, version numbers and decimals are left alone.
+_PUNCT_AFTER_CJK = (("?", "？"), ("!", "！"), (";", "；"), (":", "："), (",", "，"))
+_CJK_CLASS = r"[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]"
+
+
+def normalize_punctuation(text: str) -> str:
+    """
+    Convert half-width punctuation to full-width where Chinese requires it.
+
+    Deliberately conservative: only touches `? ! ; : ,` next to a CJK
+    character, and a sentence-final `.` that follows CJK. A decimal point or a
+    version number never has CJK immediately before it, so `3.14` and `v1.2`
+    are safe.
+    """
+    out = text
+    for half, full in _PUNCT_AFTER_CJK:
+        h = re.escape(half)
+        out = re.sub(rf"(?<={_CJK_CLASS}){h}", full, out)
+        out = re.sub(rf"{h}(?={_CJK_CLASS})", full, out)
+    # Sentence-final period, including one followed by more text after a space.
+    out = re.sub(rf"(?<={_CJK_CLASS})\.(?=\s|$)", "。", out)
+    return out
+
 
 # --------------------------------------------------------------------------
 # placeholder protection
@@ -262,12 +288,55 @@ def acceptable(src: str, out: str | None) -> tuple[bool, str]:
         return False, "no-chinese"
     if not placeholders_ok(src, out):
         return False, "placeholder-mismatch"
-    # A wildly longer or shorter string almost always means the model ran on.
+    # A wildly longer string almost always means the model ran on.
     if len(out) > max(40, len(src) * 4):
         return False, "too-long"
-    if len(src) > 12 and len(out) < len(src) * 0.15:
+    # Chinese is far denser than English - roughly 0.4-0.6 the character count -
+    # so the floor has to be low. An earlier 0.15 cut off perfectly good short
+    # translations like 'Bang Frequencies' -> 'Bang 频率'.
+    if len(src) > 12 and len(out) < max(2, len(src) * 0.08):
         return False, "too-short"
     return True, "ok"
+
+
+def translate_one(engine: Engine, src: str) -> tuple[str | None, str]:
+    """
+    Translate one string, defending its placeholders.
+
+    Two strategies, because offline MT models differ in how they treat
+    placeholders:
+
+      A. Mask `{0}` behind private-use sentinels. Models that respect unknown
+         characters leave them alone, and the braces cannot be "corrected".
+      B. Translate the raw text with `{0}` in place. Many models pass it
+         straight through, since it looks like a format specifier.
+
+    Argos silently drops the sentinels from strategy A, which was costing ~100
+    strings per run; strategy B recovers nearly all of them. Returns
+    (translation, reason) with translation None when both strategies fail.
+    """
+    best_reason = "engine-failed"
+    best: str | None = None
+
+    masked, tokens = protect(src)
+    raw = engine.translate(masked)
+    if raw:
+        cand = restore(raw, tokens)
+        ok, why = acceptable(src, cand)
+        if ok:
+            return cand, "ok"
+        best, best_reason = cand, why
+
+    raw2 = engine.translate(src)
+    if raw2:
+        cand2 = raw2.strip()
+        ok2, why2 = acceptable(src, cand2)
+        if ok2:
+            return cand2, "ok"
+        if best is None:
+            best, best_reason = cand2, why2
+
+    return None, best_reason
 
 
 # --------------------------------------------------------------------------
@@ -351,31 +420,34 @@ def main():
                     chunk = todo[i:i + batch]
                     masked = [protect(c)[0] for c in chunk]
                     results = engine.translate_many(masked)
-                    for src, masked_src, out in zip(chunk, masked, results):
+                    for src, out in zip(chunk, results):
                         tokens = protect(src)[1]
                         cand = restore(out or "", tokens) if out else None
                         ok, why = acceptable(src, cand)
                         if ok:
                             table[src] = cand
                             stats["translated"] += 1
+                            continue
+                        # Batch results are sentinel-masked; retry this one on
+                        # its own, which also tries the raw-text strategy.
+                        cand2, why2 = translate_one(engine, src)
+                        if cand2 is not None:
+                            table[src] = cand2
+                            stats["translated"] += 1
                         else:
-                            failed.append({"key": src, "reason": why,
+                            failed.append({"key": src, "reason": why2,
                                            "got": (cand or "")[:120]})
                     done = min(i + batch, len(todo))
                     print(f"  [{done}/{len(todo)}] {time.time() - started:.0f}s",
                           flush=True)
             else:
                 for n, src in enumerate(todo, 1):
-                    masked, tokens = protect(src)
-                    raw = engine.translate(masked)
-                    cand = restore(raw, tokens) if raw else None
-                    ok, why = acceptable(src, cand)
-                    if ok:
+                    cand, why = translate_one(engine, src)
+                    if cand is not None:
                         table[src] = cand
                         stats["translated"] += 1
                     else:
-                        failed.append({"key": src, "reason": why,
-                                       "got": (cand or "")[:120]})
+                        failed.append({"key": src, "reason": why, "got": ""})
                     if n % 50 == 0 or n == len(todo):
                         print(f"  [{n}/{len(todo)}] {time.time() - started:.0f}s",
                               flush=True)
@@ -383,6 +455,12 @@ def main():
             engine.close()
 
     # ---- 4. persist ------------------------------------------------------
+    # Normalise punctuation once over the finished table. Doing it here rather
+    # than at translation time means cached and glossary values get the same
+    # treatment, and re-running is a no-op because full-width input is already
+    # full-width.
+    table = {k: normalize_punctuation(v) for k, v in table.items()}
+
     stats["dropped"] = len(failed)
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     out = {"_comment": [

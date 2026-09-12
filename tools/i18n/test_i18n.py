@@ -315,6 +315,86 @@ def test_patch_app_roundtrip() -> None:
               "return MaterialApp.router(" in main_app2, True)
 
 
+def test_punctuation_normalization() -> None:
+    section("Chinese punctuation normalisation")
+
+    from translate import normalize_punctuation as norm
+
+    check("question mark after CJK", norm("从你的设备?"), "从你的设备？")
+    check("question mark before CJK", norm("清除?吗"), "清除？吗")
+    check("exclamation mark", norm("变了很多!"), "变了很多！")
+    check("colon after CJK", norm("遵循默认值:先询问"), "遵循默认值：先询问")
+    check("comma after CJK", norm("容器,标签页"), "容器，标签页")
+    check("semicolon after CJK", norm("第一项;第二项"), "第一项；第二项")
+    check("sentence-final period", norm('"{0}"被删除.'), '"{0}"被删除。')
+    check("period before more text",
+          norm("无法确定. 你想继续吗"), "无法确定。 你想继续吗")
+    # Must not touch numbers, versions or URLs.
+    check("decimal point untouched", norm("版本 3.14 发布"), "版本 3.14 发布")
+    check("version untouched", norm("v1.2 已发布"), "v1.2 已发布")
+    check("url untouched", norm("访问 https://a.b/c?d=1"), "访问 https://a.b/c?d=1")
+    check("file extension untouched", norm("打开 config.json"), "打开 config.json")
+    # Idempotent, and a no-op for text that is already correct.
+    check("already full width", norm("确定？"), "确定？")
+    check("normalising twice is stable", norm(norm("从你的设备?")), "从你的设备？")
+    check("english untouched", norm("Cancel?"), "Cancel?")
+
+
+def test_translate_fallback() -> None:
+    """
+    Argos drops the private-use sentinels that protect {0}, which was silently
+    costing ~100 strings per run. translate_one must notice and retry with the
+    placeholder left in place.
+    """
+    section("placeholder fallback strategies")
+
+    import re
+
+    from translate import Engine, translate_one
+
+    class DroppingSentinels(Engine):
+        """Mimics Argos: strips sentinels, and loses the placeholder with them."""
+        name = "fake"
+        calls: list[str] = []
+
+        def translate(self, text: str) -> str:
+            type(self).calls.append(text)
+            cleaned = re.sub(r"[\ue000-\ue0ff]", "", text)
+            if "{0}" in cleaned:
+                return "从这里移除 {0}？"
+            return "从这里移除？"
+
+    DroppingSentinels.calls = []
+    cand, why = translate_one(DroppingSentinels(), "Remove {0} from here?")
+    check("recovers via the raw-text strategy", cand, "从这里移除 {0}？")
+    check("reported as ok", why, "ok")
+    check("engine was called twice", len(DroppingSentinels.calls), 2)
+    check("first call was sentinel-masked",
+          "\ue000" in DroppingSentinels.calls[0], True)
+    check("second call kept the braces",
+          "{0}" in DroppingSentinels.calls[1], True)
+
+    class AlwaysEmpty(Engine):
+        name = "empty"
+
+        def translate(self, text: str) -> str:
+            return ""
+
+    cand2, why2 = translate_one(AlwaysEmpty(), "Remove {0} from here?")
+    check("both strategies failing yields None", cand2, None)
+    check("failure reason surfaced", why2, "engine-failed")
+
+    class KeepsEverything(Engine):
+        name = "good"
+
+        def translate(self, text: str) -> str:
+            return "从这里移除 {0}？"
+
+    cand3, why3 = translate_one(KeepsEverything(), "Remove {0} from here?")
+    check("first strategy wins when it works", cand3, "从这里移除 {0}？")
+    check("no unnecessary retry", why3, "ok")
+
+
 def main() -> int:
     test_placeholders()
     test_quality_gate()
@@ -324,6 +404,8 @@ def main() -> int:
     test_context_classification()
     test_bracket_resolution()
     test_rejects()
+    test_punctuation_normalization()
+    test_translate_fallback()
     test_patch_app_roundtrip()
 
     print()

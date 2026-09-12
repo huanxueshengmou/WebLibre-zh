@@ -1,181 +1,69 @@
 <p align="center">
-  <img width="250" src="apps/weblibre/assets/icon/icon.png" alt="WebLibre logo">
+  <img width="220" src="apps/weblibre/assets/icon/icon.png" alt="WebLibre 图标">
 </p>
 
-# WebLibre
+# WebLibre 中文版
 
-<p align="center"><strong>A privacy-focused Android browser with powerful browsing separation, local-first tools, and deep customization.</strong></p>
+这是面向中文用户维护的 WebLibre 非官方中文版本。
 
-<p align="center">
-  <a href="https://github.com/FaFre/WebLibre/releases">
-    <img alt="Latest GitHub release" src="https://img.shields.io/github/v/release/FaFre/WebLibre">
-  </a>
-  <a href="https://f-droid.org/en/packages/eu.weblibre.gecko/">
-    <img alt="F-Droid version" src="https://img.shields.io/f-droid/v/eu.weblibre.gecko">
-  </a>
-  <a href="COPYING">
-    <img alt="License: AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-blue">
-  </a>
-  <a href="https://liberapay.com/FaFre/donate">
-    <img alt="Liberapay patrons" src="https://img.shields.io/liberapay/patrons/FaFre">
-  </a>
-</p>
+它的作用很简单：在尽量保持 WebLibre 原有功能不变的前提下，把软件界面翻译成简体中文，并在官方代码更新后自动重新汉化、检查和构建 Android 安装包。
 
-WebLibre is an independent browser for Android devices, built on [Mozilla's Gecko engine](https://wiki.mozilla.org/Gecko) and [Mozilla Android Components](https://mozac.org/). It combines strong privacy defaults with containers, isolated tabs, built-in Tor and proxy routing, Firefox-compatible extensions, on-device search, and flexible tab management.
+> 本项目不是 WebLibre 官方中文版，也不代表原作者立场。
 
-WebLibre is not a Firefox fork. It is its own browser experience, designed for people who want familiar everyday browsing without giving up control over how sites, identities, and network connections are separated.
+## 这个项目有什么用
 
-**Coming from Firefox for Android, Fennec, or IronFox?** Websites and extensions behave the same because WebLibre uses the same Gecko engine. On top of that, WebLibre adds features that Firefox and its hardened forks do not offer: isolated tabs, containers with per-container cookie isolation and Tor/proxy routing, a built-in multi-protocol proxy client, tree-style tab management, and on-device local search across tabs, history, and feeds.
+- **中文界面**：常用按钮、设置、提示和对话框会显示简体中文。
+- **自动跟进官方更新**：每天检查 WebLibre 官方最新代码；发现新界面文字后自动翻译。
+- **保留原版能力**：容器、多账号隔离、隐私保护、扩展、Tor、代理、标签页管理和本地搜索等功能仍来自原版 WebLibre。
+- **自动生成安装包**：翻译和检查通过后，自动构建三个常见处理器版本的 APK。
+- **英文安全回退**：遇到暂未翻译的文字时显示原文，不用乱码或错误文字代替。
 
-> [!IMPORTANT]
-> **Early Access** - WebLibre is under active development. Many people already use it every day, but features and settings can change. Some updates may cause problems or change how features work.
+## 下载
 
-## Install WebLibre
+构建成功后，请前往：
 
-WebLibre requires Android 8.0 or newer. Android 13 or newer is recommended. On Android 12 and older, you may see visual problems.
+**[下载 WebLibre 中文测试版](https://github.com/huanxueshengmou/WebLibre-zh/releases/tag/zh-latest)**
 
-<p align="center">
-  <a href="https://github.com/FaFre/WebLibre/releases">
-    <img height="90" alt="Get WebLibre from GitHub" src="https://docs.weblibre.eu/weblibre/_images/badges/github.png">
-  </a>
-  <a href="https://f-droid.org/en/packages/eu.weblibre.gecko/">
-    <img height="90" alt="Get WebLibre on F-Droid" src="https://docs.weblibre.eu/weblibre/_images/badges/fdroid.png">
-  </a>
-  <a href="https://play.google.com/store/apps/details?id=eu.weblibre.gecko">
-    <img height="90" alt="Get WebLibre on Google Play" src="https://docs.weblibre.eu/weblibre/_images/badges/google_play.png">
-  </a>
-</p>
+大多数较新的 Android 手机请选择文件名中带有 `arm64-v8a` 的 APK。
 
-- **[GitHub Releases](https://github.com/FaFre/WebLibre/releases)** - Direct downloads; [Obtainium](https://obtainium.imranr.dev/) can manage updates. Most current devices use the `arm64-v8a` APK; `armeabi-v7a` is for older 32-bit devices, and `x86_64` is for emulators, ChromeOS and x86 tablets.
-- **[Google Play](https://play.google.com/store/apps/details?id=eu.weblibre.gecko)** - Automatic updates through Google Play.
-- **[F-Droid](https://f-droid.org/en/packages/eu.weblibre.gecko/)** - F-Droid creates and signs its own builds. New versions may arrive considerably later than on GitHub or Google Play because of the complex build process and manual review by the F-Droid team.
+如果下载页暂时没有 APK，表示最新版本仍在构建，或者检查没有通过；项目不会把已知有问题的安装包当成成功版本发布。
 
-> [!WARNING]
-> You cannot switch directly between an F-Droid build and a GitHub or Google Play build because they use different signing keys - you must uninstall the current build first, which deletes your data.
->
-> Before you uninstall, create an encrypted [profile backup](https://docs.weblibre.eu/weblibre/profiles.html#_back_up_a_profile). Use **Change Backup Directory** to save the backup outside WebLibre's app storage, then verify the backup.
+## 界面语言
 
-### Verify your download
+软件会按照手机的语言优先顺序选择界面语言：
 
-You can verify that an APK is an official build with `apksigner verify --print-certs`. The SHA-256 certificate fingerprints are:
+- 中文排在英语前面：显示简体中文。
+- 英语排在中文前面：显示英语。
+- 两种语言都没有：使用英语。
 
-- **GitHub Releases / Google Play:**
+这里改变的是 WebLibre 软件界面，不会擅自修改网站语言、账号、Cookie、代理或其他个人设置。
 
-  ```text
-  8F:52:6E:1E:53:D6:BD:4D:FB:F4:F4:B9:3C:2A:91:EC:B5:CB:8D:A5:E1:4A:D9:4C:25:70:E1:E3:C7:13:52:7F
-  ```
+## 自动更新方式
 
-- **F-Droid** (signed by F-Droid with their own key):
+项目每天会自动执行一次以下流程：
 
-  ```text
-  BB:2A:97:F5:61:53:35:C9:E5:7C:86:6F:1C:30:ED:4F:D7:D7:BD:DC:BC:BC:06:68:FE:93:A5:79:17:3D:3D:2D
-  ```
+1. 获取 WebLibre 官方最新代码。
+2. 找出新增或修改的界面文字。
+3. 优先使用人工词典和已有翻译，再自动翻译新文字。
+4. 检查生成的代码、手机语言选择和中文界面。
+5. 构建并验证 APK 签名。
+6. 检查全部通过后更新下载页。
 
-## Start Here
+如果官方增加了全新的界面写法或改变了构建方式，自动流程会停止并报告问题，而不是静默发布损坏的软件。这种情况需要维护者适配后才能继续自动更新。
 
-On first launch, choose the setup that fits you:
+## 安装与升级提醒
 
-- **Quick Start** applies the recommended defaults and installs uBlock Origin automatically.
-- **Custom Setup** lets you choose search, DNS over HTTPS, layout, hardening, on-device AI, and extension options.
-- **Restore from Backup** imports an existing encrypted WebLibre profile before setup.
+- 这是预发布测试版，使用前建议先备份重要资料。
+- 本项目的签名与官方版本可能不同，因此通常不能直接覆盖安装官方版或其他签名版本。
+- 没有配置长期签名密钥时，项目会使用测试签名；测试签名发生变化后，旧版本可能需要卸载才能安装新版。
+- 卸载应用会删除应用内数据。操作前请先在 WebLibre 中创建备份，并把备份保存到应用目录以外的位置。
 
-After installation, these guides provide the fastest introduction:
+## 与原项目的关系
 
-- **[First Launch Guide](https://docs.weblibre.eu/weblibre/getting-started.html)** - Understand what each first-launch option (Quick Start, Custom Setup, Restore from Backup) does.
-- **[Privacy Check-Up](https://docs.weblibre.eu/weblibre/quick-start.html)** - Review the most important privacy settings after setup.
-- **[Switching from Another Browser](https://docs.weblibre.eu/weblibre/migration.html)** - Move bookmarks and browsing habits in stages.
-- **[Common Workflows](https://docs.weblibre.eu/weblibre/workflows.html)** - Learn everyday tasks and power-user flows.
+本项目基于 Fabian Freund 维护的开源项目 [WebLibre](https://github.com/FaFre/WebLibre)。浏览器本体、核心功能、图标及原始代码的著作权归原项目作者和各贡献者所有。
 
-## What Makes WebLibre Different
+本仓库只维护中文化工具、中文词典、自动构建流程以及由这些工具生成的中文版本。发现浏览器本身的问题时，请先确认问题是否也存在于原版；中文翻译问题可以在本仓库反馈。
 
-### Privacy controls that you can tune
+## 开源许可
 
-New installations start with strict tracking protection. WebLibre also includes DNS over HTTPS, HTTPS-only protection, removal of tracking information from URLs, Global Privacy Control, fingerprinting defenses, site isolation, an Intent Gatekeeper for links opened by other apps, and optional screenshot protection.
-
-You can change each privacy setting. Stronger protection can break some websites, so you can add an exception for a site or use a less strict mode.
-
-**Learn more:** [Privacy overview](https://docs.weblibre.eu/weblibre/privacy/overview.html) | [Threat model](https://docs.weblibre.eu/weblibre/threat-model.html)
-
-### Tabs, containers, and profiles
-
-- Open **Regular**, **Private**, or **Isolated** tabs. Each isolated tab has a separate session from every other tab. Unlike private tabs, isolated tabs remain open after you quit and reopen WebLibre.
-- Organize tabs in list, grid, or tree views, with parent-child relationships, stacking, filtering, pinning, bulk actions, and a quick switcher.
-- Use **Containers** for different activities and assign sites to them automatically.
-- Enable **Cookie Isolation** on a container to give it separate cookies, logins, and site data, then optionally add clear-on-exit rules or per-container Tor/proxy routing.
-- Create separate **Profiles** for independent tabs, bookmarks, history, logins, extensions, feeds, and settings. Profiles can be backed up and protected using compatible Android device authentication.
-
-**Learn more:** [Tab management](https://docs.weblibre.eu/weblibre/tabs/tab-management.html) | [Containers](https://docs.weblibre.eu/weblibre/tabs/containers.html) | [Profiles](https://docs.weblibre.eu/weblibre/profiles.html)
-
-### Built-in Tor and proxy routing
-
-WebLibre includes Tor without requiring a separate Tor app. Route regular browsing, private tabs, or selected cookie-isolated containers through Tor, with bridge options such as obfs4 and Snowflake when needed.
-
-The built-in proxy client supports SOCKS, HTTP, WireGuard, Shadowsocks, and [a dozen more protocols](https://docs.weblibre.eu/weblibre/proxy.html). Connections can be created manually or imported from subscriptions, QR codes, WireGuard files, and sing-box JSON.
-
-**Learn more:** [Tor integration](https://docs.weblibre.eu/weblibre/tor.html) | [Proxy connections](https://docs.weblibre.eu/weblibre/proxy.html)
-
-### Firefox-compatible extensions
-
-Install uBlock Origin during onboarding, discover add-ons in WebLibre's in-app store, use a custom collection, or install a local `.xpi` file. Installed extensions can be updated, configured, and pinned to the toolbar from inside the browser.
-
-Not every desktop Firefox extension works well on Android. Add-ons that depend on desktop-only interfaces may be limited, and unsigned extensions should only be installed from sources you trust.
-
-**Learn more:** [Extensions](https://docs.weblibre.eu/weblibre/extensions.html)
-
-### Search locally before searching the web
-
-The address bar can search open tabs, bookmarks, saved feed articles, history, and popular sites before sending a query to a web provider. The local search index can also index the text of pages you visit on your device, with controls for private tabs, individual containers, and index deletion.
-
-Bang providers and custom search engines let you send a query directly to a specific website. Local results stay on your device. If web autocomplete is enabled, partial text is sent to your selected suggestion provider; submitting a web search sends the full query to your selected search engine.
-
-**Learn more:** [Personal Local Search](https://docs.weblibre.eu/weblibre/search/local-search.html) | [Bang providers](https://docs.weblibre.eu/weblibre/search/bangs.html)
-
-### Reading and organization tools
-
-- **On-Device AI** can suggest draft containers and names from open tab titles. It is optional, requires confirmation before changing anything, and may download a model to your phone.
-- **Page Translation** translates supported languages on-device after any required language-model download.
-- **Reader Mode**, PDF/Markdown/full-page export, a QR scanner, and installable web apps are built in.
-- **RSS/Atom feeds** and Small Web discovery help you follow and find independent sites.
-- **Firefox Sync** can synchronize tabs, bookmarks, and history with your other devices.
-
-**Learn more:** [On-Device AI](https://docs.weblibre.eu/weblibre/on-device-ai.html) | [Content tools](https://docs.weblibre.eu/weblibre/reader-mode.html) | [Full documentation](https://docs.weblibre.eu/weblibre/index.html)
-
-## Documentation and Community
-
-Full user documentation is available at **[docs.weblibre.eu](https://docs.weblibre.eu/weblibre/index.html)**.
-
-- **[Troubleshooting](https://docs.weblibre.eu/weblibre/troubleshooting.html)** - Fix common problems and learn what to include in a bug report.
-- **[Feedback Platform](https://feedback.weblibre.eu/)** - Suggest and vote on features.
-- **[Matrix Chat](https://matrix.to/#/#weblibre:unredacted.org)** - Ask questions and talk with the community.
-- **[GitHub Issues](https://github.com/FaFre/WebLibre/issues)** - Report reproducible bugs and follow development.
-
-## Support the Project
-
-- **[WebLibre Supporter](https://docs.weblibre.eu/weblibre/supporter-subscription.html)** - Fund development and get access to WebLibre Search and encrypted sync for WebLibre settings. The browser and its built-in privacy controls remain free.
-- **[GitHub Sponsors](https://github.com/sponsors/FaFre)** - Sponsor development through GitHub.
-- **[Liberapay](https://liberapay.com/FaFre/donate)** - Make a recurring donation.
-- **[Ko-fi](https://ko-fi.com/FaFre)** - Make a one-time donation.
-
-<p align="center">
-  <a href="https://liberapay.com/FaFre/donate"><img alt="Donate with Liberapay" src="https://docs.weblibre.eu/weblibre/_images/badges/liberapay.svg"></a>
-  <a href="https://ko-fi.com/FaFre"><img alt="Donate with Ko-fi" src="https://docs.weblibre.eu/weblibre/_images/badges/kofi.svg"></a>
-  <a href="https://github.com/sponsors/FaFre"><img alt="Donate with GitHub Sponsors" src="https://docs.weblibre.eu/weblibre/_images/badges/github_sponsors.svg"></a>
-  <a href="#monero"><img alt="Donate with Monero" src="https://docs.weblibre.eu/weblibre/_images/badges/monero.svg"></a>
-  <a href="#litecoin"><img alt="Donate with Litecoin" src="https://docs.weblibre.eu/weblibre/_images/badges/litecoin.svg"></a>
-</p>
-
-### Monero
-
-```text
-89rpdkq1XJYJYUshjF23YZhJdNEpghrQTXnz7vxnrLVHGrrqXTZ6BdKbqgyQnNZCkxTDA4RfhDsUcF6eHAAqco4WDQR2cZF
-```
-
-### Litecoin
-
-```text
-ltc1q0dtutc9zgkvffevwsz7s87379puk37hwn4un94
-```
-
-## License
-
-WebLibre is free software licensed under the [GNU Affero General Public License v3.0](COPYING).
+WebLibre 使用 [GNU Affero General Public License v3.0](COPYING) 发布，本项目及其修改继续遵守相同许可。软件按现状提供，不附带任何明示或暗示的担保。

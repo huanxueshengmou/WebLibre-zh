@@ -1,12 +1,12 @@
 {
  "keys": 1860,
- "translated_total": 1854,
- "coverage": 99.7,
+ "translated_total": 1858,
+ "coverage": 99.9,
  "by_source": {
-  "glossary": 223,
+  "glossary": 228,
   "cache": 0,
-  "translated": 1631,
-  "dropped": 6
+  "translated": 1630,
+  "dropped": 2
  },
  "failed": [
   {
@@ -16,26 +16,6 @@
   },
   {
    "key": "This backup file was created by a newer version of WebLibre and cannot be read here. {0}",
-   "reason": "placeholder-mismatch",
-   "got": ""
-  },
-  {
-   "key": "{0} linked consoles · {1} pages",
-   "reason": "no-chinese",
-   "got": ""
-  },
-  {
-   "key": "{0} ms",
-   "reason": "placeholder-mismatch",
-   "got": ""
-  },
-  {
-   "key": "{0} off",
-   "reason": "placeholder-mismatch",
-   "got": ""
-  },
-  {
-   "key": "{0} on",
    "reason": "placeholder-mismatch",
    "got": ""
   }

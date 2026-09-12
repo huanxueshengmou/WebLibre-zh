@@ -12,59 +12,71 @@
 ///   * a translation can be added or fixed without touching Dart source
 ///   * upstream updates never conflict, because the key is upstream's own text
 ///
-/// The language is chosen from the device on first use, so a phone set to
-/// Chinese gets Chinese with no configuration. [setLanguageOverride] lets the
-/// user force a language regardless of the device.
+/// 每次翻译读取当前系统语言偏好；[setLanguageOverride] 可指定语言。
+/// 系统变化会在下一次调用时生效，但不会主动触发现有 UI 重绘。
 library;
 
 import 'dart:ui' as ui;
 
+import 'package:flutter/widgets.dart' show WidgetsBinding;
+
+import 'locale_policy.dart';
 import 'zh_table.dart';
 
-/// Languages we actually ship a translation table for.
+export 'locale_policy.dart' show resolveLanguageCodes;
+
+/// 已提供翻译表的语言；英语为原文，由语言策略一起参与偏好匹配。
 const Set<String> kShippedLanguages = {'zh'};
 
-String _deviceLanguage = 'en';
 String? _override;
-bool _ready = false;
 
-/// The language [tr] is currently resolving against.
-String get activeLanguage => _override ?? _deviceLanguage;
+/// 未指定覆盖时，每次读取当前系统偏好，不缓存设备语言。
+String get activeLanguage => _override ?? _detectLanguage();
 
 /// True when [tr] will actually translate rather than fall back to English.
 bool get isTranslated => kShippedLanguages.contains(activeLanguage);
 
-/// Read the device language. Safe to call before `runApp`; also safe to skip,
-/// because [tr] initialises lazily on first use.
+/// 设置初始覆盖；可在 runApp 前调用，也可省略，默认跟随系统。
+/// null、空白及不支持的语言均取消覆盖。
 void initI18n({String? override}) {
-  _override = (override == null || override.isEmpty) ? null : override;
-  _deviceLanguage = _detectLanguage();
-  _ready = true;
+  _override = normalizeLanguageOverride(override);
 }
 
-/// Force a language, or pass null to go back to following the device.
+/// 指定语言；null、空白及不支持的语言均恢复跟随系统。
 void setLanguageOverride(String? code) {
-  _override = (code == null || code.isEmpty) ? null : code;
-  _ready = true;
+  _override = normalizeLanguageOverride(code);
 }
 
 String _detectLanguage() {
   try {
-    // The full preference list is ordered best-first, so honour it before
-    // falling back to the single primary locale.
-    for (final locale in ui.PlatformDispatcher.instance.locales) {
-      final code = locale.languageCode.toLowerCase();
-      if (kShippedLanguages.contains(code)) return code;
-    }
-    final primary =
-        ui.PlatformDispatcher.instance.locale.languageCode.toLowerCase();
-    if (kShippedLanguages.contains(primary)) return primary;
+    // Respect Flutter's dispatcher abstraction (including test locale overrides).
+    final dispatcher = WidgetsBinding.instance.platformDispatcher;
+    final locales = dispatcher.locales;
+    return resolveLanguageCodes(
+      locales.isEmpty
+          ? [dispatcher.locale.toLanguageTag()]
+          : locales.map((locale) => locale.toLanguageTag()),
+    );
   } catch (_) {
-    // PlatformDispatcher is not ready yet; English is a safe answer and the
-    // next call will pick the real language up.
+    // 平台尚未就绪时回落英语，下一次调用仍会重新检测。
+    return 'en';
   }
-  return 'en';
 }
+
+/// Flutter's built-in widgets use exactly the same ordered language policy.
+ui.Locale resolveAppLocale(List<ui.Locale>? locales) {
+  final language =
+      _override ??
+      (locales == null || locales.isEmpty
+          ? _detectLanguage()
+          : resolveLanguageCodes(
+              locales.map((locale) => locale.toLanguageTag()),
+            ));
+  return ui.Locale(language);
+}
+
+/// Translate an optional, audited UI field without turning null into text.
+String? trNullable(String? en) => en == null ? null : tr(en);
 
 /// The table for the active language. Empty means "show English".
 Map<String, String> get _table {
@@ -76,26 +88,10 @@ Map<String, String> get _table {
   }
 }
 
-/// Translate [en], substituting `{0}`, `{1}` ... from [args].
-///
-/// Returns [en] unchanged when the active language is English or has no
-/// translation for this key.
+/// 查找译文后，单遍替换 [args] 对应的 `{0}`、`{1}` 等占位符。
+/// 英语或缺少译文时使用 [en]，仍执行参数插值；null 输出为 'null'。
 String tr(String en, [List<Object?>? args]) {
-  if (!_ready) initI18n();
-
-  var out = en;
-  if (activeLanguage != 'en') {
-    out = _table[en] ?? en;
-  }
-
-  if (args != null && args.isNotEmpty) {
-    for (var i = 0; i < args.length; i++) {
-      final value = args[i];
-      if (value == null) continue;
-      out = out.replaceAll('{$i}', '$value');
-    }
-  }
-  return out;
+  return formatTranslatedText(_table[en] ?? en, args);
 }
 
 /// Convenience for the rare place that wants the translation of a string that

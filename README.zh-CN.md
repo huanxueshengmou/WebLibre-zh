@@ -1,243 +1,106 @@
-# WebLibre 中文版
+# WebLibre 中文测试版
 
-把 [WebLibre](https://github.com/FaFre/WebLibre)（一个基于 Gecko 引擎的独立隐私浏览器）
-自动汉化，并自动打包成可以直接安装的 APK。
+为 [WebLibre](https://github.com/FaFre/WebLibre) 增加简体中文界面，并自动跟进上游、翻译新增文案、构建 Android 安装包。本仓库不是官方发布渠道。
 
-原版 WebLibre 的界面**只有英文**，而且它的源码里没有任何多语言框架
-（没有 `.arb` 文件，没有 `app_localizations`），所以不存在「切成中文」这个开关。
-这个仓库做的是：**在每次构建时，从上游最新代码自动生成一套中文界面。**
+## 下载与使用
 
----
+成功构建后，安装包会放在 [zh-latest 发布页](https://github.com/huanxueshengmou/WebLibre-zh/releases/tag/zh-latest)。发布页还会列出源代码版本、安装包版本号和 SHA-256 校验值；如果没有 APK，说明尚未发布成功。
 
-## 它是怎么工作的
+- 大多数较新的 Android 手机选择文件名含 `arm64-v8a` 的 APK；另外提供 `armeabi-v7a` 和 `x86_64`。
+- 手机语言偏好列表中，中文排在英语前面时显示简体中文，英语排在中文前面时显示英语。两种语言都没有时回落英语。
+- 软件界面语言与「网站能看到的浏览器语言」是不同设置，不会为了汉化修改网站语言、账号、Cookie 或网络配置。
+- 改变手机语言后重新打开应用最稳妥；运行时会重新读取语言，但不承诺每个已经打开的页面立即重绘。
 
-关键设计：**中文版的 Dart 源码不存在这个仓库里**，而是每次运行时重新生成的。
+### 安装与升级注意
 
-```
-upstream/main  ──►  ① 改写：把英文字符串包成 tr("...")
-                    ② 打补丁：接上语言检测
-                    ③ 翻译：查词典 + 机器翻译
-                    ④ 生成：中文查找表
-                    ⑤ 校验：结构检查
-                        │
-                        ▼
-                     zh 分支  ──►  ⑥ 编译 APK  ──►  Release
-```
+构建保留上游 alpha 包名。自签名版本不能直接覆盖异签名的官方 alpha 版；稳定版是否可共存取决于上游的包名配置。**不要为了安装而直接卸载有重要账号资料的旧版，先在应用内备份。**
 
-这样做的好处是：**上游怎么重构都不会产生冲突**。因为不是「合并」，
-而是「拿一份干净的上游代码重新加工一遍」。这个仓库真正需要维护的只有三样东西：
-工具、词典、翻译缓存。
+未配置正式签名时，使用缓存的 Android 测试签名并标为预发布版。缓存失效可能使签名改变，届时无法覆盖升级。需要长期使用时，请为仓库配置并妥善备份固定签名：
 
-分支分工：
-
-| 分支 | 内容 | 能不能手改 |
-|---|---|---|
-| `main` | 上游代码镜像 + 工具 + 翻译缓存 | ✅ 要改就改这里 |
-| `zh` | 生成出来的中文版源码（自动覆盖） | ❌ 改了下次会被冲掉 |
-
-### 六个步骤分别在做什么
-
-1. **改写**（`tools/i18n/codemod.py`）
-   扫描全部 1400 多个 Dart 文件，找出用户能看到的英文字符串，替换成 `tr("原文")`。
-   原文**保留下来当查询键**，所以没翻译的字符串会自然地显示英文，而不是报错或显示乱码。
-
-   这一步最难的地方是 `const`。约 63% 的字符串位于 `const` 表达式里
-   （例如 `const Text('Cancel')`），而函数调用不能是编译期常量，所以必须把 `const` 去掉。
-   绝大多数情况去掉是安全的，但有五种地方 Dart 强制要求编译期常量，
-   去掉会让代码编译不过——这些地方会被识别出来并**跳过**，而不是硬改：
-
-   | 场景 | 例子 |
-   |---|---|
-   | 参数默认值 | `void f({String s = 'x'})` |
-   | 变量初始化 | `const kName = 'x';` |
-   | 注解参数 | `@Foo('x')` |
-   | switch case 标签 | `case 'x':` |
-   | 枚举常量参数 | `enum E { a('x') }` |
-
-   跳过的一共约 150 处，全部记录在 `i18n/transform-report.json` 里，不靠猜。
-
-2. **打补丁**（`tools/i18n/patch_app.py`）
-   加 `flutter_localizations`、在启动时读取手机语言、给 `MaterialApp` 声明支持的语言。
-   没有这一步，软件自己的文字是中文，但 Flutter 自带的日期选择器、
-   文本选择菜单还是英文，看起来很割裂。
-
-   这一步同时踩到上游的两个约束，都做了处理：
-
-   | 约束 | 问题 | 处理 |
-   |---|---|---|
-   | `melos` 用 `enforceLockfile: true` 引导 | 新增依赖必然使 lockfile 与 pubspec 不一致，引导直接失败 | 改为 `false` 并注明原因 |
-   | `flutter_localizations` 把 `intl` 钉在 SDK 版本上 | app 声明的是 `intl: ^0.20.3`，两者无法同时满足 | app 的约束放宽为 `intl: any`，原始值记在注释里 |
-
-   **框架级汉化是可选项。** 因为没有 Flutter SDK 就无法验证依赖解析，
-   所以如果 `melos bootstrap` 仍然失败，工作流会自动执行
-   `patch_app.py --revert-l10n`，只摘掉 `flutter_localizations` 和它的委托
-   （并把 `intl` 约束还原），`tr()` 翻译完全不受影响，构建继续。
-   代价只是 Flutter 自带的那几十条文字保持英文——好过整个构建失败。
-
-3. **翻译**（`tools/i18n/translate.py`）
-   三个来源，优先级从高到低：
-   - `tools/i18n/glossary.json` —— **手工词典**，永远优先。界面用词高度重复，
-     几百条就能覆盖用户最常看到的部分，所以这部分质量比翻译引擎重要得多。
-   - `i18n/zh.json` —— **缓存**，已经翻过的直接用。因为缓存提交在仓库里，
-     所以日常定时任务只需要翻译真正新增的那几条。
-   - **机器翻译** —— 长尾部分。默认用 **Argos Translate**：
-     纯 Python、完全离线、不需要 API Key、不需要账号，是能在 CI 里跑起来的最简单的开源方案。
-
-   任何翻译结果都会过一道质检：占位符 `{0}` 有没有丢、有没有真的翻成中文、
-   有没有原样返回。不合格的**宁可不写入**，让它显示英文，并记录到报告里。
-
-4. **生成**（`tools/i18n/gen_table.py`）
-   把 `i18n/zh.json` 变成 `lib/i18n/zh_table.dart` 里的一张 `const` 表。
-   必须是 Dart 源码而不是 JSON 资源，因为 `tr()` 要在 `build()` 里同步调用，
-   没法等异步加载。
-
-5. **校验**（`tools/i18n/verify.py`）
-   本地没有 Dart SDK，所以用自己写的词法分析器检查六类已知的破坏方式：
-   括号不平衡、`tr("...")` 后面还跟着字符串字面量（拼接没合并）、
-   还有 `const` 管着 `tr()`、默认值位置出现 `tr()`、枚举常量参数里出现 `tr()`、
-   注解参数里出现 `tr()`。
-
-6. **编译**（`.github/workflows/i18n.yml`）
-   完全复用上游自己的构建流程：Flutter 3.47.0、Go 1.25、NDK、melos 脚本。
-
----
-
-## 自动运行
-
-| 触发方式 | 说明 |
+| Repository secret | 内容 |
 |---|---|
-| 每天 03:17 UTC | 自动拉上游最新代码、翻译、推送、打包 |
-| 手动 `Run workflow` | 可以勾选「强制全部重翻」 |
-
-推送 `zh` 分支时用 `--force`，因为它是生成物，没有保留历史的价值。
-
----
-
-## 怎么装
-
-到 [Releases](../../releases) 下载 `zh-latest` 里的 APK。
-APK 按 CPU 架构分开了，现在的手机基本都是 `arm64-v8a`。
-
-**签名说明**：如果没有配置签名密钥，构建会退回用 debug 密钥签名，
-这样 APK 能正常安装，但**无法覆盖安装官方版或之前用别的密钥签的版本**。
-要正常升级，需要自己生成一个 keystore 并配置下面三个 Secret。
-
----
-
-## 翻译错了怎么办
-
-**改词典，不要改 `i18n/zh.json`。**
-
-在 `tools/i18n/glossary.json` 里加上或修正对应条目：
-
-```json
-{
-  "Container": "容器",
-  "Cookie Isolation": "Cookie 隔离"
-}
-```
-
-词典的优先级高于机器翻译，所以改完永久生效，下次重翻也不会被覆盖。
-键名必须和 `i18n/strings.json` 里的英文**完全一致**（包括大小写和空格）。
-
-改完提交到 `main`，工作流会自动重新跑一遍。
-
-### 发现某个字符串没被翻译
-
-先看 `i18n/transform-report.json` 里的 `skipped` 列表——
-如果在那里，说明它落在上面说的五种「不能改」的场景里。
-
-如果**根本不在**翻译范围内，可能是扫描器没识别出它。两个办法：
-
-- `tools/i18n/overrides.json` 里的 `include_strings`：直接指定这个字符串必须翻译。
-- `extra_named_args` / `extra_callees`：如果是一整类参数名没被识别，
-  把参数名加进去。
-
-### 翻译完全没生效
-
-看 `i18n/translation-report.json` 的覆盖率。
-如果覆盖率很低，多半是 Argos 模型没下载成功——检查构建日志里
-`[argos] installing en->zh model` 那一行。
-
----
-
-## 想加别的语言
-
-1. `tools/i18n/runtime/i18n.dart` 里 `kShippedLanguages` 加上语言代码，
-   并在 `_table` 的 `switch` 里加一个分支。
-2. `translate.py` 里给 `ArgosEngine` 传不同的 `to_code`。
-3. `gen_table.py` 加一个 `--out` 目标。
-4. `patch_app.py` 里 `supportedLocales` 加上该语言。
-
----
-
-## 本地跑一遍
-
-不需要 Flutter，工具链是纯 Python：
-
-```bash
-python -m pip install argostranslate
-
-# 拿一份干净的上游代码
-git clone --depth 1 https://github.com/FaFre/WebLibre.git /tmp/upstream
-
-# 跑完整流程
-python tools/i18n/test_i18n.py                 # 单元测试
-python tools/i18n/codemod.py      /tmp/upstream
-python tools/i18n/patch_app.py    /tmp/upstream
-python tools/i18n/translate.py --repo /tmp/upstream
-python tools/i18n/gen_table.py   --repo /tmp/upstream
-python tools/i18n/verify.py      /tmp/upstream --baseline /tmp/upstream-orig
-```
-
-想只看结构、不装翻译引擎（很快，但只有词典部分生效）：
-
-```bash
-python tools/i18n/translate.py --repo /tmp/upstream --engine none
-```
-
----
-
-## 可选配置
-
-### 用大模型翻译（质量更好）
-
-设置 Secret `I18N_LLM_API_KEY`，可选 `I18N_LLM_BASE_URL`（默认 OpenAI）
-和 `I18N_LLM_MODEL`。设了之后自动切换成大模型翻译，不用改代码。
-
-### 正式签名
-
-| Secret | 说明 |
-|---|---|
-| `KEY_JKS` | keystore 的 base64（`base64 -w0 your.jks`） |
-| `KEY_PASSWORD` | keystore 密码 |
+| `KEY_JKS` | 自有 keystore 文件的 base64 内容 |
+| `KEY_PASSWORD` | 密钥库及密钥的密码 |
 | `KEY_ALIAS` | 密钥别名 |
 
----
+私钥不会进入 Git 或 APK 附件。测试签名缓存仅适合试用，不能代替正式私钥管理。
 
-## 目录结构
+## 自动更新
 
+工作流 `.github/workflows/i18n.yml` 会在北京时间每天 **11:17** 运行，也可在 Actions 中手动运行。推送工具、词典或工作流修改到 `main` 也会触发。
+
+手动运行时可关闭 APK 构建，或开启「忽略缓存、重新翻译」。自动事件仍会构建，确保上次失败后能重试。
+
+### 分支分工
+
+| 分支 | 用途 |
+|---|---|
+| `main` | 上游参考代码、汉化工具、人工词典和翻译缓存；人工修改这里 |
+| `zh` | 从干净上游重新生成的中文源码；不要手工修改 |
+
+生成内容不是把数百处中文修改合并进上游，而是每次重新加工，因此避免了翻译源码合并冲突。上游若改变重要界面或构建接口，补丁会明确报错，仍需要维护，不能保证永远自动适配。
+
+每次生成与远端 `zh` 的实际文件树比较。有变化则追加生成提交，没有变化则复用原提交；构建使用不可变的 `generated_sha`，不会误用运行过程中移动的分支。只有滚动标签 `zh-latest` 会在发布时移动。
+
+## 为什么这次使用官方 Dart 解析
+
+Dart 常量初始化器不能调用运行时翻译函数。单靠逗号、括号和关键字猜测作用范围，容易把泛型参数中的逗号、三元表达式、构造函数初始化列表判断错。
+
+现在扫描器只判断哪些文字可能属于界面；**Dart 官方 analyzer 的语法树负责决定能否改写**：
+
+- 普通显示表达式：`const Text('Cancel')` → `Text(tr("Cancel"))`。
+- 常量变量、常量构造函数、参数默认值、注解、枚举和常量模式保持合法，不盲目删除 `const`。
+- 常量数据中的文字仍进入翻译清单。设置分类、搜索结果、代理表单、延迟提示等已确认的显示入口，在显示时取译文；内部标识符、表单实际值和用户内容不翻译。
+- `include_strings` 只能补充识别，不能绕过语法安全限制。
+- 每轮处理直到不再变化；再跑一遍必须保持源码及词条清单字节相同。
+
+## 检查顺序
+
+1. Python 工具回归、官方 Dart 语法检查、真实 Dart kernel 编译与运行。
+2. 手机语言优先级及占位符测试；工作流 YAML 和 Bash 语法测试。
+3. 在干净上游执行显示入口补丁、源码改写、语言接入、翻译、查找表生成。
+4. 重新解析生成源码，检查常量上下文；验证重复执行无变化。
+5. 在固定 Flutter SDK 下解析项目依赖、分析整份应用源码、执行真实界面冒烟测试。
+6. 前面全部通过后才编译 NDK/Go 原生组件与 APK。
+7. 检查三个架构的 APK 均存在并通过签名验证，生成校验值，再发布。
+
+失败日志会提取为 Actions annotation；不会因为依赖失败就悄悄删除框架级中文。缓存保存失败只警告，不阻断本轮安装包构建。
+
+## 翻译来源与统计口径
+
+优先级：**人工词典 → 已有缓存 → Argos Translate**。Argos 是开源离线翻译引擎，不要求账号或 API Key；首次运行需要下载模型。有兼容接口时可配置 `I18N_LLM_API_KEY` Secret，以及 `I18N_LLM_BASE_URL`、`I18N_LLM_MODEL` Repository variables。
+
+修改翻译请编辑 `tools/i18n/glossary.json`，不要修改生成分支。词典会覆盖机器翻译，并保留 `{0}`、`{1}` 等动态参数。
+
+报告中的 `coverage` 是**进入清单的词条翻译率，不是全应用汉化率，也不是翻译质量评分**。即使达到 100%，也不能据此认定所有页面、网页内容、原生组件或上游新增界面都已汉化。未翻译的内容保留英文，不虚构译文。
+
+`i18n/transform-report.json` 记录改写数量及不能直接改写的常量位置；这些位置是否有显示入口翻译需要单独审查。不能为提高数字而从统计中隐藏它们。
+
+## 本地验证
+
+需要 Python、Dart 3.13.3；整项目检查另需 Flutter 3.47.0。Dart AST 依赖固定在 `tools/i18n/dart_ast/pubspec.lock`。Windows 可设置 `DART` 为 `dart.exe` 的绝对路径。不要把 `.dart_tool`、SDK、虚拟环境或签名私钥提交进仓库。
+
+```bash
+# 在 tools/i18n/dart_ast 目录运行一次
+# dart pub get
+
+python tools/i18n/test_i18n.py
+dart tools/i18n/test_locale_policy.dart
+python tools/i18n/test_ci.py
+
+# TARGET 必须是一份独立的、干净的上游 checkout
+python tools/i18n/patch_ui.py "$TARGET"
+python tools/i18n/codemod.py "$TARGET"
+python tools/i18n/patch_app.py "$TARGET"
+# 把 main 的 i18n/zh.json 复制到 TARGET/i18n/zh.json 后再翻译
+python tools/i18n/translate.py --repo "$TARGET"
+python tools/i18n/gen_table.py --repo "$TARGET"
+python tools/i18n/verify.py "$TARGET"
+python tools/i18n/ci_checks.py idempotency "$TARGET"
 ```
-tools/i18n/
-  dart_lexer.py       Dart 词法分析（只做定位，不做完整解析）
-  scan_strings.py     找出用户可见的英文字符串
-  codemod.py          改写成 tr()，并处理 const
-  patch_app.py        接上语言检测和 flutter_localizations
-  translate.py        词典 + 缓存 + 机器翻译
-  gen_table.py        生成 Dart 查找表
-  verify.py           检查生成的代码结构是否正确
-  test_i18n.py        单元测试
-  glossary.json       手工词典（要改翻译改这里）
-  overrides.json      扫描器的例外名单
-  runtime/i18n.dart   运行时 tr() 实现
 
-i18n/
-  zh.json             翻译缓存（自动维护）
-  strings.json        所有待翻译字符串清单（自动维护）
-```
-
----
+只验证已有词典和缓存时，可给翻译命令加 `--engine none`；此时缺失词条不会自动补译。安装 Python 翻译依赖时请使用隔离虚拟环境。
 
 ## 授权
 
-上游 WebLibre 使用 AGPL-3.0，本仓库的改动沿用同一协议。
+保留上游版权和 AGPL-3.0 授权。本仓库改动沿用相同协议。构建对应的 `zh` 提交包含可获取的完整源代码和本轮汉化工具。

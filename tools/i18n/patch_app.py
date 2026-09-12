@@ -6,7 +6,7 @@ The codemod handles every string the app itself prints. This script handles the
 rest of the plumbing:
 
   pubspec.yaml (root)                 relax melos `enforceLockfile`
-  apps/weblibre/pubspec.yaml          add flutter_localizations, widen intl
+  apps/weblibre/pubspec.yaml          add flutter_localizations, preserve intl
   lib/main.dart                       call initI18n() before the first frame
   lib/presentation/main_app.dart      declare supportedLocales + delegates
   android/app/build.gradle            fall back to debug signing
@@ -15,21 +15,12 @@ Without the delegates the app's own strings would be Chinese while Flutter's
 built-in widgets - the date picker, the text selection menu, the accessibility
 labels - stayed English, which looks broken.
 
-Two upstream constraints make this delicate, so both are handled explicitly:
-
-  * `melos bootstrap` runs with `enforceLockfile: true`, which fails as soon as
-    pubspec.yaml no longer matches pubspec.lock. Adding a dependency
-    invalidates the lockfile by definition, so that check has to be relaxed.
-
-  * `flutter_localizations` pins `intl` to whatever version the Flutter SDK
-    ships, and the app asks for a specific older range. Those two cannot both
-    be satisfied, so the app's constraint is widened to `any` - the version is
-    then decided by the SDK, which is the point of using the SDK's delegates.
-
-Because dependency resolution cannot be verified without a Flutter SDK, the
-workflow treats the framework-level part as optional: if `melos bootstrap`
-still fails, it re-runs this script with --revert-l10n, which removes only the
-flutter_localizations wiring and leaves the tr() translation fully in place.
+Adding a direct SDK dependency may require updating the lockfile, so bootstrap
+is allowed to resolve it. Upstream's intl version range is preserved: conflicts
+must be demonstrated by the pinned Flutter SDK, never guessed from versions.
+CI now bootstraps, analyzes and smoke-tests Flutter before NDK/Go compilation;
+any failure stops the build rather than silently removing framework Chinese.
+The explicit --revert-l10n command remains for a maintainer's manual rollback.
 
 Every edit is anchored on a distinctive piece of upstream source and tagged with
 a marker comment. Anchors that no longer match raise an error instead of
@@ -67,12 +58,8 @@ MATERIAL_APP_BLOCK = f"""          {MARK} framework-level localisation so Flutte
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [Locale('en'), Locale('zh')],
-          localeResolutionCallback: (locale, supported) {{
-            for (final l in supported) {{
-              if (l.languageCode == locale?.languageCode) return l;
-            }}
-            return supported.first;
-          }},
+          localeListResolutionCallback: (locales, supported) =>
+              resolveAppLocale(locales),
 """
 
 
@@ -140,21 +127,9 @@ def patch_pubspec(path: Path) -> bool:
         raise PatchError(f"{path}: could not find the `flutter:` dependency block")
     src = src[:anchor.end()] + FL_DEP_BLOCK + src[anchor.end():]
 
-    # Widen the app's intl constraint. flutter_localizations pins intl to the
-    # version bundled with the Flutter SDK; a narrower app constraint would make
-    # the two unsatisfiable together. The original line is recorded in a comment
-    # so --revert-l10n can put it back - leaving `intl: any` behind would let pub
-    # upgrade intl past the range the app was written against.
-    def widen(m: re.Match) -> str:
-        return (
-            f"  {YAML_MARK} widened: flutter_localizations pins intl to the SDK version\n"
-            f"  {YAML_MARK} original: {m.group(0).strip()}\n"
-            f"  intl: any"
-        )
-
-    src, n = re.subn(r"^  intl: \^[0-9][^\n]*$", widen, src, count=1, flags=re.M)
-    if n == 0:
-        raise PatchError(f"{path}: could not find the `intl:` constraint")
+    # Preserve upstream's intl range. Its lockfile already includes the SDK
+    # localisation dependency; do not assume a conflict or silently widen all
+    # dependency resolution. The real Flutter bootstrap is the authority.
 
     path.write_text(src, encoding="utf-8")
     return True
@@ -214,6 +189,7 @@ def patch_main_app(path: Path) -> bool:
             f"changed; update the anchor in patch_app.py")
     out = src[:m.end()] + MATERIAL_APP_BLOCK + src[m.end():]
     out = add_import(out, FL_IMPORT)
+    out = add_import(out, I18N_IMPORT)
     path.write_text(out, encoding="utf-8")
     return True
 
@@ -303,8 +279,8 @@ def main():
     for name, rel, fn, marker in APPLY:
         path = repo / rel
         if not path.exists():
-            print(f"WARN: missing {path} - skipping {name}", file=sys.stderr)
-            continue
+            print(f"ERROR: missing required {path}; refusing a partial patch", file=sys.stderr)
+            return 1
         if args.dry_run:
             src = path.read_text(encoding="utf-8")
             print(f"{name:<16} {'already patched' if marker in src else 'would patch'}")

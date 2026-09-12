@@ -187,6 +187,12 @@ def test_rejects() -> None:
     check("real sentence", rej("Always open links in their native apps"), False)
     check("single UI word", rej("Cancel"), False)
     check("preferences is not SQL", rej("Reset all preferences"), False)
+    check("delete button is not SQL", rej("Delete"), False)
+    check("update prompt is not SQL", rej("Check for updates"), False)
+    check("single-word section is UI",
+          is_rejected("Overview", arg_name="title", callee=None), None)
+    check("loading label is UI",
+          is_rejected("Testing...", arg_name="label", callee=None), None)
 
 
 def test_patch_app_roundtrip() -> None:
@@ -284,15 +290,15 @@ def test_patch_app_roundtrip() -> None:
 
         check("melos lockfile enforcement relaxed", "enforceLockfile: false" in root, True)
         check("flutter_localizations added", "flutter_localizations:" in app, True)
-        check("intl widened", "intl: any" in app, True)
-        check("original intl recorded",
-              "original: intl: ^0.20.3" in app, True)
+        check("upstream intl range preserved", "  intl: ^0.20.3" in app, True)
+        check("no speculative dependency widening", "intl: any" in app, False)
         check("initI18n called", "initI18n();" in main_dart, True)
         check("i18n import added to main.dart",
               "package:weblibre/i18n/i18n.dart" in main_dart, True)
         check("supportedLocales declared", "supportedLocales:" in main_app, True)
         check("delegates declared", "localizationsDelegates:" in main_app, True)
-        check("locale resolution callback", "localeResolutionCallback:" in main_app, True)
+        check("ordered locale list callback", "localeListResolutionCallback:" in main_app, True)
+        check("shared language policy", "resolveAppLocale(locales)" in main_app, True)
         check("signing falls back to debug", "signingConfigs.debug" in gradle, True)
         # Testing the env var alone is not enough: KEY_PATH can be exported
         # while the keystore was never written, and a storeFile pointing at a
@@ -422,6 +428,58 @@ def test_translate_fallback() -> None:
     check("no unnecessary retry", why3, "ok")
 
 
+def test_const_declarations_are_left_alone() -> None:
+    """
+    End-to-end: the two patterns that actually broke the build, run through the
+    real codemod. Both must leave their strings English rather than emitting a
+    tr() call into a position where Dart demands a compile-time constant.
+    """
+    section("const declarations stay const")
+
+    import contextlib
+    import io
+    import tempfile
+
+    from codemod import _one_pass
+    import scan_strings as SS
+
+    SRC = (
+        "import 'package:flutter/material.dart';\n"
+        "\n"
+        "const singboxProxyFormSpecs = <String, String>{\n"
+        "  'a': 'SOCKS Version',\n"
+        "  'b': 'Connect Timeout',\n"
+        "};\n"
+        "\n"
+        "class _Chip extends StatelessWidget {\n"
+        "  const _Chip.loading()\n"
+        "    : this(\n"
+        "        label: 'Testing...',\n"
+        "        tooltip: 'Latency test running',\n"
+        "      );\n"
+        "}\n"
+    )
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        (root / "lib").mkdir()
+        target = root / "lib" / "spec.dart"
+        target.write_text(SRC, encoding="utf-8")
+
+        with contextlib.redirect_stdout(io.StringIO()):
+            rep, _man, _r = _one_pass(root, SS.load_overrides(Path("nope.json")))
+
+        out = target.read_text(encoding="utf-8")
+
+    check("no tr() emitted into a const declaration", "tr(" in out, False)
+    check("map declaration keeps its const", "const singboxProxyFormSpecs" in out, True)
+    check("constructor declaration keeps its const", "const _Chip.loading()" in out, True)
+    check("nothing was replaced", rep["replacements"], 0)
+    check("strings are still present and English",
+          all(s in out for s in ("SOCKS Version", "Connect Timeout",
+                                 "Latency test running")), True)
+
+
 def main() -> int:
     test_placeholders()
     test_quality_gate()
@@ -433,7 +491,10 @@ def main() -> int:
     test_rejects()
     test_punctuation_normalization()
     test_translate_fallback()
+    test_const_declarations_are_left_alone()
     test_patch_app_roundtrip()
+    from test_ast_regressions import run_tests
+    run_tests()
 
     print()
     if FAILURES:

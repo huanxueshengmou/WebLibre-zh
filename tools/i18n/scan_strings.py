@@ -131,8 +131,11 @@ RE_DATE_FMT = re.compile(r"^[yMdHhmsSaAzZETDGkKjJwWnNlLqQcCxXoOpP:.\-/\s]+$")
 RE_ONLY_SYMBOLS = re.compile(r"^[^0-9A-Za-z\u4e00-\u9fff]+$")
 RE_HTTP_HEADER = re.compile(r"^[A-Z][A-Za-z0-9\-]{2,}$")
 RE_SQL = re.compile(
-    r"\b(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP|ALTER|PRAGMA|"
-    r"CHECK|PRIMARY\s+KEY|FOREIGN\s+KEY|UNIQUE|CONSTRAINT|REFERENCES)\b",
+    r"(?:\bSELECT\b[\s\S]*\bFROM\b|\bINSERT\s+(?:OR\s+\w+\s+)?INTO\b|"
+    r"\bUPDATE\s+[\w\"`]+\s+SET\b|\bDELETE\s+FROM\b|"
+    r"\b(?:CREATE|DROP|ALTER)\s+(?:TABLE|VIEW|INDEX|TRIGGER)\b|"
+    r"^PRAGMA\s+|\bCHECK\s*\(|\b(?:PRIMARY|FOREIGN)\s+KEY\s*\(|"
+    r"\bUNIQUE\s*\(|\bREFERENCES\s+\w+\s*\()",
     re.I,
 )
 # Column definitions such as 'TEXT NOT NULL' or 'INTEGER PRIMARY KEY'
@@ -255,7 +258,13 @@ def is_rejected(s: str, *, arg_name: str | None, callee: str | None) -> str | No
         return "dart-tostring"
     if len(t) > 400:
         return "too-long"
-    if " " not in t and not t.isupper() and t not in SHORT_OK:
+    # Single words are accepted only at known display boundaries. Generic
+    # fields such as reason/message also carry machine IDs (profileSwitch).
+    explicit_ui = arg_name in {
+        "title", "subtitle", "label", "labelText", "hintText", "helperText",
+        "errorText", "tooltip", "header", "caption", "searchHintText",
+    } or callee in {"Text", "TextSpan", "SelectableText", "RichText"}
+    if " " not in t and not t.isupper() and t not in SHORT_OK and not explicit_ui:
         return "not-prose"
     if arg_name in ("message", "text", "content", "description", "value", "name") \
             and LOG_HINTS.search(t) and " " not in t:
@@ -490,6 +499,8 @@ def load_overrides(path: Path) -> dict:
 
 def iter_dart_files(root: Path):
     for p in sorted(root.rglob("*.dart")):
+        if p.relative_to(root).parts[0] == "i18n":
+            continue  # never rewrite the translation runtime or generated table
         posix = p.as_posix()
         if any(part in posix for part in SKIP_PATH_PARTS):
             continue
@@ -534,6 +545,11 @@ def scan(root: Path, overrides: dict | None = None) -> tuple[list[dict], Counter
             interpolated = any(toks[k].interpolated for k in run)
 
             arg, callee, how = classify(toks, run[0])
+            # Translation keys must remain literals even if include_strings
+            # selects their text. Otherwise a forced key nests tr(tr(...)) on
+            # every pass and convergence is impossible.
+            if how == "positional" and callee in {"tr", "trText", "trNullable"}:
+                continue
 
             forced = value in hard_include
             if how == "other" and not forced:

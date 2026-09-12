@@ -1,21 +1,9 @@
 name: Chinese build
 
-# Pulls the latest upstream WebLibre, re-applies the Chinese localisation,
-# commits the result to the `zh` branch and builds installable APKs.
-#
-# The important design decision: the translated Dart sources are NOT stored in
-# this repository. They are regenerated from a pristine upstream checkout on
-# every run, because the codemod is deterministic and idempotent. That means
-# upstream can refactor freely - there are no merge conflicts to resolve, ever -
-# and the only things this repo has to maintain are the tooling, the glossary
-# and the translation cache.
-#
-#   main  = upstream mirror + tools/i18n + i18n cache   (this is what you edit)
-#   zh    = generated: upstream + tr() wrapping + zh table (never edit by hand)
-
+# main 保存工具和翻译缓存；zh 的内容每轮从干净上游重新生成。
+# 比较远端 zh 的 tree，构建和滚动发布始终使用同一个不可变 generated_sha。
 on:
   schedule:
-    # 03:17 UTC daily - a few minutes past the hour to avoid the busiest slot
     - cron: "17 3 * * *"
   workflow_dispatch:
     inputs:
@@ -35,9 +23,6 @@ on:
       - ".github/workflows/i18n.yml"
 
 concurrency:
-  # Only the newest run matters: the zh branch is regenerated from scratch and
-  # the release is a rolling one. Without this, a burst of pushes queues up
-  # several 40-minute builds that all produce the same thing.
   group: chinese-build
   cancel-in-progress: true
 
@@ -52,25 +37,22 @@ env:
   MELOS_VERSION: "7.8.1"
   GO_VERSION: "1.25.x"
   NODE_VERSION: "20"
-  # Below this, the run is flagged but still builds: a partly translated app is
-  # more useful than no app.
   MIN_COVERAGE: "50"
+  PYTHONDONTWRITEBYTECODE: "1"
 
 jobs:
-  # ------------------------------------------------------------------
-  # 1. Regenerate the Chinese tree and push it
-  # ------------------------------------------------------------------
   translate:
     runs-on: ubuntu-latest
     outputs:
       upstream_sha: ${{ steps.upstream.outputs.sha }}
+      generated_sha: ${{ steps.push_zh.outputs.generated_sha }}
       changed: ${{ steps.push_zh.outputs.changed }}
       coverage: ${{ steps.translate.outputs.coverage }}
     steps:
-      - name: Checkout tooling branch
+      - name: Checkout tooling snapshot
         uses: actions/checkout@v4
         with:
-          ref: main
+          # 默认检出触发本次 CI 的提交，不追随运行期间移动的 main。
           fetch-depth: 0
 
       - name: Fetch upstream
@@ -83,27 +65,46 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "Upstream ${UPSTREAM_REPO}@${UPSTREAM_BRANCH} is ${sha:0:12}"
 
-      - name: Create a pristine upstream worktree
+      - name: Create a pristine upstream worktree and restore translation cache
         run: |
           set -euo pipefail
-          # A separate worktree keeps the tooling checkout clean, so the cache
-          # can be committed back to main at the end of the run.
-          git worktree add -B "${OUTPUT_BRANCH}" ../zh "upstream/${UPSTREAM_BRANCH}"
+          git worktree add --detach ../zh "upstream/${UPSTREAM_BRANCH}"
+          mkdir -p ../zh/i18n
+          # 只从 main 读取词条缓存；manifest 和报告必须由本轮上游重新生成。
+          if git cat-file -e origin/main:i18n/zh.json 2>/dev/null; then
+            git show origin/main:i18n/zh.json > ../zh/i18n/zh.json
+          fi
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.13.3"
+
+      - name: Install official Dart AST dependencies
+        working-directory: tools/i18n/dart_ast
+        run: dart pub get --enforce-lockfile
+
       - name: Install translation engine
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
-          # Argos Translate: offline neural MT, no API key, no account. This is
-          # the whole dependency list for translating ~1900 strings.
-          python -m pip install argostranslate
+          # 固定已使用的稳定版，避免每日任务因上游依赖漂移突然失效。
+          python -m pip install "argostranslate==1.11.0"
 
-      - name: Run toolchain tests
+      - name: Run toolchain tests including Dart kernel compilation
         run: python tools/i18n/test_i18n.py
+
+      - name: Test the locale policy with pure Dart
+        run: dart tools/i18n/test_locale_policy.dart
+
+      - name: Validate workflow syntax and preflight order
+        run: python tools/i18n/test_ci.py
+
+      - name: Patch UI consumers of constant data
+        run: python tools/i18n/patch_ui.py ../zh
 
       - name: Apply the codemod
         run: python tools/i18n/codemod.py ../zh
@@ -114,7 +115,6 @@ jobs:
       - name: Translate
         id: translate
         env:
-          # Optional. When set, translations come from an LLM instead of Argos.
           I18N_LLM_API_KEY: ${{ secrets.I18N_LLM_API_KEY }}
           I18N_LLM_BASE_URL: ${{ vars.I18N_LLM_BASE_URL }}
           I18N_LLM_MODEL: ${{ vars.I18N_LLM_MODEL }}
@@ -130,105 +130,127 @@ jobs:
           echo "coverage=$coverage" >> "$GITHUB_OUTPUT"
 
           if python -c "import sys;sys.exit(0 if float('$coverage') >= float('$MIN_COVERAGE') else 1)"; then
-            echo "Coverage ${coverage}% is healthy."
+            echo "词条翻译率 ${coverage}%。"
           else
-            echo "::warning title=Low translation coverage::Only ${coverage}% of strings are translated. Check the Argos model download and i18n/translation-report.json."
+            echo "::warning title=词条翻译率偏低::当前 ${coverage}%，并非全界面覆盖率；请检查机翻模型和 translation-report.json。"
           fi
 
       - name: Generate the Dart lookup table
         run: python tools/i18n/gen_table.py --repo ../zh
 
-      - name: Verify the generated Dart
+      - name: Verify the generated Dart with the official AST
+        run: python tools/i18n/verify.py ../zh --app-lib apps/weblibre/lib
+
+      - name: Require a byte-identical no-op codemod
+        run: python tools/i18n/ci_checks.py idempotency ../zh
+
+      - name: Copy this run's tooling into the generated tree
         run: |
           set -euo pipefail
-          # Catches the ways this transform can break compilation. A real
-          # `dart analyze` would be better but needs the whole toolchain, so
-          # this runs early and the build job is the final arbiter.
-          python tools/i18n/verify.py ../zh --baseline . --app-lib apps/weblibre/lib
+          mkdir -p ../zh/tools/i18n
+          # 同步源码和 pubspec.lock；绝不复制 SDK、AST 编译缓存或临时测试脚本。
+          rsync -a --delete --delete-excluded \
+            --exclude='__pycache__/' --exclude='.dart_tool/' \
+            --exclude='_t_const.py' --exclude='*.pyc' \
+            tools/i18n/ ../zh/tools/i18n/
 
       - name: Push the generated branch
         id: push_zh
+        env:
+          UPSTREAM_SHA: ${{ steps.upstream.outputs.sha }}
         run: |
           set -euo pipefail
           cd ../zh
-          git config user.name  "weblibre-zh bot"
+          git config user.name "weblibre-zh bot"
           git config user.email "weblibre-zh@users.noreply.github.com"
           git add -A
-          if git diff --cached --quiet; then
+          generated_tree="$(git write-tree)"
+          remote_ref="$(git ls-remote --heads origin "refs/heads/${OUTPUT_BRANCH}")"
+          previous_sha="${remote_ref%%[[:space:]]*}"
+          previous_tree=""
+          if [[ -n "$previous_sha" ]]; then
+            git fetch --no-tags origin "$previous_sha"
+            previous_tree="$(git rev-parse "${previous_sha}^{tree}")"
+          fi
+          if [[ "$generated_tree" == "$previous_tree" ]]; then
+            generated_sha="$previous_sha"
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "Nothing changed since the last run."
+            echo "生成树与远端 ${OUTPUT_BRANCH} 完全一致，复用 $generated_sha。"
           else
-            git commit -m "zh: localise ${UPSTREAM_REPO}@$(echo "${{ steps.upstream.outputs.sha }}" | cut -c1-12)"
-            git push --force origin "HEAD:${OUTPUT_BRANCH}"
+            # 内容来自干净上游，父提交沿用远端 zh；无需强推任何分支。
+            generated_sha="$(git commit-tree "$generated_tree" \
+              -p "${previous_sha:-$UPSTREAM_SHA}" \
+              -m "zh: localise ${UPSTREAM_REPO}@${UPSTREAM_SHA:0:12}")"
+            git push origin "${generated_sha}:refs/heads/${OUTPUT_BRANCH}"
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+          echo "generated_sha=$generated_sha" >> "$GITHUB_OUTPUT"
 
       - name: Persist the translation cache
-        # Never fail the job here. The cache is an optimisation - losing it
-        # costs a retranslation, while failing the job would skip the entire
-        # build. Run #1 of this workflow failed exactly this way: a manual push
-        # to main landed mid-run, so `git push` was rejected as non-fast-forward
-        # and the APK build was skipped as a result.
+        # 缓存只是优化；失败不能阻断本次构建。非 main 手动运行不回写 main。
+        if: github.ref == 'refs/heads/main'
         continue-on-error: true
         run: |
           set -uo pipefail
-          # The cache is what makes a daily run cheap: only genuinely new
-          # strings get machine translated. It belongs on main, not on zh,
-          # because zh is disposable and regenerated from scratch each time.
-          mkdir -p i18n
-          for f in zh.json strings.json translation-report.json transform-report.json; do
-            if [[ -f "../zh/i18n/$f" ]]; then cp "../zh/i18n/$f" "i18n/$f"; fi
-          done
-
-          git config user.name  "weblibre-zh bot"
+          if ! mkdir -p i18n || ! cp ../zh/i18n/zh.json i18n/zh.json; then
+            echo "::warning title=缓存未保存::无法复制词条缓存，本次构建不受影响。"
+            exit 0
+          fi
+          git config user.name "weblibre-zh bot"
           git config user.email "weblibre-zh@users.noreply.github.com"
-          git add i18n
+          if ! git add -- i18n/zh.json; then
+            echo "::warning title=缓存未保存::无法暂存词条缓存，本次构建不受影响。"
+            exit 0
+          fi
           if git diff --cached --quiet; then
             echo "Translation cache unchanged."
             exit 0
           fi
-          git commit -m "i18n: update translation cache [skip ci]"
-
-          # main can move while this run is working, so rebase onto the current
-          # tip and retry rather than assuming a fast-forward.
+          if ! git commit -m "i18n: update translation cache [skip ci]"; then
+            echo "::warning title=缓存未保存::缓存提交失败，本次构建不受影响。"
+            exit 0
+          fi
+          # checkout 可处于 detached HEAD，因此必须显式推送 HEAD:main。
           for attempt in 1 2 3; do
-            git fetch --no-tags origin main
-            if git rebase origin/main && git push origin main; then
+            if git fetch --no-tags origin main && git rebase origin/main && git push origin HEAD:refs/heads/main; then
               echo "Translation cache persisted (attempt ${attempt})."
               exit 0
             fi
             git rebase --abort 2>/dev/null || true
             echo "attempt ${attempt} failed; retrying"
-            sleep 5
           done
-
-          echo "::warning title=Cache not persisted::Could not push the translation cache to main. The next run will retranslate anything missing; the build is unaffected."
+          echo "::warning title=缓存未保存::无法将缓存推送至 main，下轮可能重新翻译，本次构建不受影响。"
+          exit 0
 
       - name: Job summary
         if: always()
+        env:
+          UPSTREAM_SHA: ${{ steps.upstream.outputs.sha }}
+          GENERATED_SHA: ${{ steps.push_zh.outputs.generated_sha }}
+          CHANGED: ${{ steps.push_zh.outputs.changed }}
+          COVERAGE: ${{ steps.translate.outputs.coverage }}
         run: |
           {
             echo "## WebLibre 中文版"
             echo ""
-            echo "| | |"
+            echo "| 项目 | 结果 |"
             echo "|---|---|"
-            echo "| 上游版本 | \`${UPSTREAM_REPO}@${{ steps.upstream.outputs.sha }}\` |"
-            echo "| zh 分支有更新 | ${{ steps.push_zh.outputs.changed }} |"
-            echo "| 翻译覆盖率 | ${{ steps.translate.outputs.coverage }}% |"
+            echo "| 上游版本 | \`${UPSTREAM_REPO}@${UPSTREAM_SHA}\` |"
+            echo "| 生成提交 | \`${GENERATED_SHA}\` |"
+            echo "| zh 分支有更新 | ${CHANGED} |"
+            echo "| 词条翻译率（非全界面率） | ${COVERAGE}% |"
             echo ""
-            if [[ -f i18n/translation-report.json ]]; then
+            if [[ -f ../zh/i18n/translation-report.json ]]; then
               echo '```json'
-              python -c "import json;d=json.load(open('i18n/translation-report.json'));print(json.dumps({k:v for k,v in d.items() if k!='failed'},indent=1,ensure_ascii=False))"
+              python -c "import json;d=json.load(open('../zh/i18n/translation-report.json'));print(json.dumps({k:v for k,v in d.items() if k!='failed'},indent=1,ensure_ascii=False))"
               echo '```'
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 
-  # ------------------------------------------------------------------
-  # 2. Build APKs from the generated branch
-  # ------------------------------------------------------------------
   build:
     needs: translate
-    if: ${{ needs.translate.outputs.changed == 'true' || inputs.build_apk }}
+    # 自动事件总是构建，确保无发布或上轮失败时能重试；手动 false 必须生效。
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.build_apk }}
     runs-on: ubuntu-latest
     steps:
       - name: Free disk space
@@ -244,7 +266,7 @@ jobs:
 
       - uses: actions/checkout@v4
         with:
-          ref: zh
+          ref: ${{ needs.translate.outputs.generated_sha }}
           fetch-depth: 1
 
       - uses: actions/setup-java@v4
@@ -252,13 +274,68 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - uses: actions/setup-go@v5
+      - uses: subosito/flutter-action@v2
         with:
-          go-version: "${{ env.GO_VERSION }}"
+          channel: stable
+          flutter-version: "${{ env.FLUTTER_VERSION }}"
+          cache: true
+
+      - name: Bootstrap the workspace
+        id: bootstrap
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          {
+            dart pub global activate melos "${MELOS_VERSION}"
+            melos bootstrap
+          } 2>&1 | tee "${RUNNER_TEMP}/bootstrap.log"
+
+      - name: Analyze translated Flutter sources before native builds
+        id: analyze
+        if: steps.bootstrap.outcome == 'success'
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          flutter analyze --no-pub --no-fatal-infos --no-fatal-warnings apps/weblibre/lib \
+            2>&1 | tee "${RUNNER_TEMP}/analyze.log"
+
+      - name: Test translated UI consumers before native builds
+        id: i18n_smoke
+        if: steps.bootstrap.outcome == 'success' && steps.analyze.outcome == 'success'
+        continue-on-error: true
+        working-directory: apps/weblibre
+        run: |
+          set -euo pipefail
+          # These smoke widgets do not load application assets.
+          flutter test --no-pub --no-test-assets test/i18n_smoke_test.dart \
+            2>&1 | tee "${RUNNER_TEMP}/i18n-smoke.log"
+
+      - name: Surface preflight errors
+        if: steps.bootstrap.outcome == 'failure' || steps.analyze.outcome == 'failure' || steps.i18n_smoke.outcome == 'failure'
+        run: |
+          python3 tools/i18n/ci_checks.py annotate --title 'Flutter 预检失败' \
+            "${RUNNER_TEMP}/bootstrap.log" "${RUNNER_TEMP}/analyze.log" "${RUNNER_TEMP}/i18n-smoke.log"
+
+      - name: Stop before native builds if preflight failed
+        if: steps.bootstrap.outcome == 'failure' || steps.analyze.outcome == 'failure' || steps.i18n_smoke.outcome == 'failure'
+        run: |
+          echo "Flutter 预检失败；请查看 annotation，不再执行 NDK/Go 构建。" >&2
+          exit 1
 
       - uses: actions/setup-node@v4
         with:
           node-version: "${{ env.NODE_VERSION }}"
+
+      - name: Fetch external assets
+        run: melos run update-assets --no-select
+
+      - name: Build JS components and databases
+        run: melos run build-components --no-select
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "${{ env.GO_VERSION }}"
+          cache: false
 
       - name: Install Android NDK
         run: |
@@ -292,11 +369,25 @@ jobs:
             echo "NDK_HOME=$ANDROID_HOME/ndk/$ANDROID_NDK_VERSION"
           } >> "$GITHUB_ENV"
 
-      - uses: subosito/flutter-action@v2
+      - name: Select signing mode
+        id: signing_mode
+        env:
+          KEY_JKS: ${{ secrets.KEY_JKS }}
+        run: |
+          if [[ -n "${KEY_JKS:-}" ]]; then
+            echo "test_key=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "test_key=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Restore the test signing key
+        id: test_signing_cache
+        if: steps.signing_mode.outputs.test_key == 'true'
+        continue-on-error: true
+        uses: actions/cache/restore@v4
         with:
-          channel: stable
-          flutter-version: "${{ env.FLUTTER_VERSION }}"
-          cache: true
+          path: ~/.android/debug.keystore
+          key: weblibre-zh-test-signing-v1
 
       - name: Prepare signing key
         env:
@@ -305,9 +396,6 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
           set -euo pipefail
-          # Optional. Export KEY_PATH only when the keystore was actually
-          # written: exporting it unconditionally used to point gradle at a
-          # missing file and fail the build. See tools/i18n/patch_app.py.
           if [[ -n "${KEY_JKS:-}" ]]; then
             echo "$KEY_JKS" | base64 -di > apps/weblibre/key.jks
             chmod 600 apps/weblibre/key.jks
@@ -316,47 +404,43 @@ jobs:
               echo "KEY_PASSWORD=${KEY_PASSWORD}"
               echo "KEY_ALIAS=${KEY_ALIAS}"
             } >> "$GITHUB_ENV"
-            echo "Using the configured release keystore."
+            echo "使用 secrets 配置的签名密钥。"
           else
-            echo "KEY_JKS not set - falling back to debug signing."
+            mkdir -p "$HOME/.android"
+            if [[ ! -f "$HOME/.android/debug.keystore" ]]; then
+              keytool -genkeypair -keystore "$HOME/.android/debug.keystore" \
+                -storetype JKS -storepass android -keypass android -alias AndroidDebugKey \
+                -keyalg RSA -keysize 2048 -validity 10000 \
+                -dname "CN=Android Debug,O=Android,C=US"
+            fi
+            chmod 600 "$HOME/.android/debug.keystore"
+            {
+              echo "KEY_PATH=$HOME/.android/debug.keystore"
+              echo "KEY_PASSWORD=android"
+              echo "KEY_ALIAS=AndroidDebugKey"
+            } >> "$GITHUB_ENV"
+            echo "::warning title=测试签名::缓存失效后密钥可能改变，需要卸载重装；正式使用请配置 KEY_JKS、KEY_PASSWORD、KEY_ALIAS secrets。"
           fi
 
+      - name: Save the test signing key cache
+        if: steps.signing_mode.outputs.test_key == 'true' && steps.test_signing_cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: weblibre-zh-test-signing-v1
+
       - name: Cache Go build dependencies
+        continue-on-error: true
         uses: actions/cache@v4
         with:
           path: |
             ~/.cache/go-build
             ~/go/pkg/mod
-            ~/go/bin/gomobile
-            ~/go/bin/gobind
-          key: ${{ runner.os }}-go-runtime-${{ hashFiles('native/go_mobile_runtime/pins.env') }}
+          # 新命名空间不恢复旧缓存中的跨版本 gomobile/gobind 可执行文件。
+          key: ${{ runner.os }}-go-mod-build-${{ env.GO_VERSION }}-${{ hashFiles('native/go_mobile_runtime/pins.env') }}
           restore-keys: |
-            ${{ runner.os }}-go-runtime-
-
-      - name: Bootstrap the workspace
-        run: |
-          set -euo pipefail
-          dart pub global activate melos "${MELOS_VERSION}"
-
-          # The Chinese build adds flutter_localizations, which pins `intl` to
-          # whatever the Flutter SDK ships. That can be unsatisfiable together
-          # with the app's own constraint, and it cannot be checked without a
-          # Flutter SDK - so treat the framework-level part as optional: if
-          # bootstrap fails, drop just that wiring and keep the tr() translation,
-          # which is the part that actually localises the app.
-          if melos bootstrap; then
-            echo "Bootstrap succeeded with framework-level localisation."
-          else
-            echo "::warning title=Framework localisation dropped::melos bootstrap failed with flutter_localizations; retrying without it. The tr() translation is unaffected."
-            python3 tools/i18n/patch_app.py . --revert-l10n
-            melos bootstrap
-          fi
-
-      - name: Fetch external assets
-        run: melos run update-assets --no-select
-
-      - name: Build JS components and databases
-        run: melos run build-components --no-select
+            ${{ runner.os }}-go-mod-build-${{ env.GO_VERSION }}-
 
       - name: Check out native runtime sources
         run: |
@@ -380,47 +464,18 @@ jobs:
 
       - name: Build APKs
         id: build_apk
-        # Keep going so the log can be turned into annotations below. Signing
-        # env vars come from GITHUB_ENV, set only when a keystore really exists.
         continue-on-error: true
+        working-directory: apps/weblibre
         run: |
-          set -o pipefail
-          melos run build-browser-alpha --no-select 2>&1 | tee "${RUNNER_TEMP}/build.log"
+          set -euo pipefail
+          echo "version_code=$((1000000 + GITHUB_RUN_NUMBER))" >> "$GITHUB_OUTPUT"
+          flutter build apk --release --flavor alpha \
+            --target-platform android-arm,android-arm64,android-x64 --split-per-abi --no-tree-shake-icons \
+            --build-number="$((1000000 + GITHUB_RUN_NUMBER))" 2>&1 | tee "${RUNNER_TEMP}/build.log"
 
       - name: Surface build errors
-        # The job log needs repository admin rights to download, but annotations
-        # are readable through the check-runs API without any credentials. So
-        # pack the useful lines of the log into a single multi-line annotation,
-        # which is what makes a failure diagnosable from outside the repo.
         if: steps.build_apk.outcome == 'failure'
-        run: |
-          python3 - <<'PY'
-          import os, re
-          log = os.path.join(os.environ["RUNNER_TEMP"], "build.log")
-          try:
-              text = open(log, errors="replace").read()
-          except OSError as e:
-              print(f"::error title=Build failed::no log at {log}: {e}")
-              raise SystemExit(0)
-
-          lines = text.splitlines()
-
-          def grab(pattern, limit):
-              return [l for l in lines if re.search(pattern, l)][:limit]
-
-          parts = ["DART COMPILE ERRORS"]
-          parts += grab(r"\.dart:\d+:\d+: (Error|Warning):", 25) or ["(none found)"]
-          parts += ["", "GRADLE / FLUTTER"]
-          parts += grab(r"FAILURE:|What went wrong|Execution failed|> Task .* FAILED|error:", 15) \
-                   or ["(none found)"]
-          parts += ["", "TAIL"]
-          parts += lines[-40:]
-
-          msg = "\n".join(parts)[:7500]
-          # GitHub annotations carry a single line; %0A is an encoded newline.
-          msg = msg.replace("%", "%25").replace("\r", "").replace("\n", "%0A")
-          print(f"::error title=Build failed::{msg}")
-          PY
+        run: python3 tools/i18n/ci_checks.py annotate --title 'APK 构建失败' "${RUNNER_TEMP}/build.log"
 
       - name: Fail the job if the build failed
         if: steps.build_apk.outcome == 'failure'
@@ -428,31 +483,98 @@ jobs:
           echo "The APK build failed; see the annotation above." >&2
           exit 1
 
-      - name: Upload APKs
+      - name: Verify APK signatures and prepare release checksums
+        working-directory: apps/weblibre/build/app/outputs/apk/alpha/release
+        env:
+          UPSTREAM_SHA: ${{ needs.translate.outputs.upstream_sha }}
+          GENERATED_SHA: ${{ needs.translate.outputs.generated_sha }}
+          BASE_VERSION_CODE: ${{ steps.build_apk.outputs.version_code }}
+          COVERAGE: ${{ needs.translate.outputs.coverage }}
+          TEST_SIGNING: ${{ steps.signing_mode.outputs.test_key }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          apks=(*.apk)
+          if [[ ${#apks[@]} -ne 3 ]]; then
+            echo "::error title=APK 产物缺失::预期 3 个 ABI 的 APK，实际 ${#apks[@]} 个。"
+            exit 1
+          fi
+          signers=("$ANDROID_HOME"/build-tools/*/apksigner)
+          if [[ ${#signers[@]} -eq 0 ]]; then
+            echo "::error title=签名校验失败::Android SDK 中没有 apksigner。"
+            exit 1
+          fi
+          apksigner="$(printf '%s\n' "${signers[@]}" | sort -V | tail -n 1)"
+          aapt="${apksigner%/apksigner}/aapt"
+          test -x "$apksigner"
+          test -x "$aapt"
+          for apk in "${apks[@]}"; do
+            "$apksigner" verify --verbose "$apk"
+          done
+          sha256sum "${apks[@]}" > SHA256SUMS.txt
+          {
+            echo "自动生成的中文测试版（prerelease）。"
+            echo ""
+            echo "* upstreamSHA: \`${UPSTREAM_REPO}@${UPSTREAM_SHA}\`"
+            echo "* generatedSHA: \`${GENERATED_SHA}\`"
+            echo "* 基础 versionCode / Flutter build-number: \`${BASE_VERSION_CODE}\`"
+            echo "* 词条翻译率：${COVERAGE}%，不是全界面覆盖率，不代表所有页面均已汉化。"
+            echo "* 语言跟随系统；APK 按 ABI 拆分，请选择设备对应架构。"
+            if [[ "$TEST_SIGNING" == 'true' ]]; then
+              echo "* 签名：缓存的 AndroidDebugKey，仅用于测试。缓存失效可能改变签名并需要卸载重装；正式使用请配置 KEY_JKS、KEY_PASSWORD、KEY_ALIAS secrets。"
+            else
+              echo "* 签名：使用仓库 secrets 配置的密钥。"
+            fi
+            echo ""
+            echo "### APK 实际 versionCode（含上游 ABI 编码）"
+            for apk in "${apks[@]}"; do
+              badging="$("$aapt" dump badging "$apk")"
+              version_code="$(sed -n "s/^package:.* versionCode='\([0-9][0-9]*\)'.*/\1/p" <<< "$badging")"
+              if [[ ! "$version_code" =~ ^[0-9]+$ ]]; then
+                echo "::error title=产物校验失败::无法读取 ${apk} 的 versionCode。" >&2
+                exit 1
+              fi
+              printf '* `%s`: `%s`\n' "$apk" "$version_code"
+            done
+            echo ""
+            echo "### SHA-256"
+            echo '```text'
+            cat SHA256SUMS.txt
+            echo '```'
+          } > "${RUNNER_TEMP}/release-notes.md"
+          cat "${RUNNER_TEMP}/release-notes.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload APKs and checksums
         uses: actions/upload-artifact@v4
         with:
           name: weblibre-zh-apk
-          path: apps/weblibre/build/app/outputs/apk/alpha/release/*.apk
+          path: |
+            apps/weblibre/build/app/outputs/apk/alpha/release/*.apk
+            apps/weblibre/build/app/outputs/apk/alpha/release/SHA256SUMS.txt
           if-no-files-found: error
+
+      - name: Point the rolling tag at the exact generated commit
+        env:
+          GENERATED_SHA: ${{ needs.translate.outputs.generated_sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GENERATED_SHA"
+          git tag -f zh-latest "$GENERATED_SHA"
+          # 仅滚动标签允许强推，不强推 main 或其他分支。
+          git push --force origin refs/tags/zh-latest:refs/tags/zh-latest
 
       - name: Publish a rolling release
         uses: ncipollo/release-action@v1.17.0
         with:
           tag: zh-latest
+          commit: ${{ needs.translate.outputs.generated_sha }}
           name: "WebLibre 中文版 (rolling)"
-          body: |
-            Automatically generated Chinese build.
-
-            * Upstream: `${{ env.UPSTREAM_REPO }}@${{ needs.translate.outputs.upstream_sha }}`
-            * Translation coverage: ${{ needs.translate.outputs.coverage }}%
-            * Language follows the phone; no configuration needed.
-
-            APKs are split per CPU architecture - install the `arm64-v8a` one on
-            any modern phone.
-          artifacts: "apps/weblibre/build/app/outputs/apk/alpha/release/*.apk"
+          bodyFile: ${{ runner.temp }}/release-notes.md
+          artifacts: "apps/weblibre/build/app/outputs/apk/alpha/release/*.apk,apps/weblibre/build/app/outputs/apk/alpha/release/SHA256SUMS.txt"
+          artifactErrorsFailBuild: true
           allowUpdates: true
           replacesArtifacts: true
-          prerelease: false
+          prerelease: true
           makeLatest: false
 
       - name: Cleanup

@@ -19,6 +19,17 @@
 
   "exclude_strings": [
     "Internet Archive: Digital Library of Free & Borrowable Texts, Movies, Music & Wayback Machine",
+    "maintenanceBackup",
+    "maintenanceDelete",
+    "maintenanceRestore",
+    "profileSwitch",
+    "en-US",
+    "WebLibre",
+    "GitHub",
+    "Github",
+    "Android",
+    "obfs4",
+    "Snowflake",
     "about:blank",
     "about:blank#",
     "e.g.",

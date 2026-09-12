@@ -294,6 +294,11 @@ def test_patch_app_roundtrip() -> None:
         check("delegates declared", "localizationsDelegates:" in main_app, True)
         check("locale resolution callback", "localeResolutionCallback:" in main_app, True)
         check("signing falls back to debug", "signingConfigs.debug" in gradle, True)
+        # Testing the env var alone is not enough: KEY_PATH can be exported
+        # while the keystore was never written, and a storeFile pointing at a
+        # missing file fails the build.
+        check("signing checks the keystore file exists",
+              "file(zhKeyPath).exists()" in gradle, True)
 
         # Running again must change nothing.
         before = {rel: (repo / rel).read_text(encoding="utf-8") for rel in FIXTURES}

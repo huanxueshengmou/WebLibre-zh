@@ -245,11 +245,16 @@ def patch_gradle(path: Path) -> bool:
         raise PatchError(
             f"{path}: could not find `signingConfig = signingConfigs.release`")
     replacement = (
-        f"            {MARK} use the real keystore when the secrets are present,\n"
-        f"            // otherwise fall back to debug signing so a fork still\n"
-        f"            // produces an installable APK.\n"
-        f"            signingConfig = System.getenv(\"KEY_PATH\") "
-        f"? signingConfigs.release : signingConfigs.debug"
+        f"            {MARK} Use the real keystore only when the secrets are present\n"
+        f"            // AND the file is actually on disk. Testing the env var alone is\n"
+        f"            // not enough: KEY_PATH can be exported while the keystore was\n"
+        f"            // never written (no KEY_JKS secret), and a storeFile pointing at\n"
+        f"            // a missing file fails the build.\n"
+        f"            def zhKeyPath = System.getenv(\"KEY_PATH\")\n"
+        f"            signingConfig = (zhKeyPath != null && !zhKeyPath.isEmpty() "
+        f"&& file(zhKeyPath).exists())\n"
+        f"                ? signingConfigs.release\n"
+        f"                : signingConfigs.debug"
     )
     path.write_text(src.replace(anchor, replacement, 1), encoding="utf-8")
     return True

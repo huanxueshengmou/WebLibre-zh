@@ -301,14 +301,21 @@ jobs:
       - name: Prepare signing key
         env:
           KEY_JKS: ${{ secrets.KEY_JKS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
           set -euo pipefail
-          # Optional. Without these secrets the build falls back to debug
-          # signing (see tools/i18n/patch_app.py), which installs fine - it just
-          # cannot update over a build signed with a different key.
+          # Optional. Export KEY_PATH only when the keystore was actually
+          # written: exporting it unconditionally used to point gradle at a
+          # missing file and fail the build. See tools/i18n/patch_app.py.
           if [[ -n "${KEY_JKS:-}" ]]; then
             echo "$KEY_JKS" | base64 -di > apps/weblibre/key.jks
             chmod 600 apps/weblibre/key.jks
+            {
+              echo "KEY_PATH=${GITHUB_WORKSPACE}/apps/weblibre/key.jks"
+              echo "KEY_PASSWORD=${KEY_PASSWORD}"
+              echo "KEY_ALIAS=${KEY_ALIAS}"
+            } >> "$GITHUB_ENV"
             echo "Using the configured release keystore."
           else
             echo "KEY_JKS not set - falling back to debug signing."
@@ -372,11 +379,54 @@ jobs:
         run: melos run build-go-runtime --no-select
 
       - name: Build APKs
-        env:
-          KEY_PATH: ${{ github.workspace }}/apps/weblibre/key.jks
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-        run: melos run build-browser-alpha --no-select
+        id: build_apk
+        # Keep going so the log can be turned into annotations below. Signing
+        # env vars come from GITHUB_ENV, set only when a keystore really exists.
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          melos run build-browser-alpha --no-select 2>&1 | tee "${RUNNER_TEMP}/build.log"
+
+      - name: Surface build errors
+        # The job log needs repository admin rights to download, but annotations
+        # are readable through the check-runs API without any credentials. So
+        # pack the useful lines of the log into a single multi-line annotation,
+        # which is what makes a failure diagnosable from outside the repo.
+        if: steps.build_apk.outcome == 'failure'
+        run: |
+          python3 - <<'PY'
+          import os, re
+          log = os.path.join(os.environ["RUNNER_TEMP"], "build.log")
+          try:
+              text = open(log, errors="replace").read()
+          except OSError as e:
+              print(f"::error title=Build failed::no log at {log}: {e}")
+              raise SystemExit(0)
+
+          lines = text.splitlines()
+
+          def grab(pattern, limit):
+              return [l for l in lines if re.search(pattern, l)][:limit]
+
+          parts = ["DART COMPILE ERRORS"]
+          parts += grab(r"\.dart:\d+:\d+: (Error|Warning):", 25) or ["(none found)"]
+          parts += ["", "GRADLE / FLUTTER"]
+          parts += grab(r"FAILURE:|What went wrong|Execution failed|> Task .* FAILED|error:", 15) \
+                   or ["(none found)"]
+          parts += ["", "TAIL"]
+          parts += lines[-40:]
+
+          msg = "\n".join(parts)[:7500]
+          # GitHub annotations carry a single line; %0A is an encoded newline.
+          msg = msg.replace("%", "%25").replace("\r", "").replace("\n", "%0A")
+          print(f"::error title=Build failed::{msg}")
+          PY
+
+      - name: Fail the job if the build failed
+        if: steps.build_apk.outcome == 'failure'
+        run: |
+          echo "The APK build failed; see the annotation above." >&2
+          exit 1
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4

@@ -61,6 +61,19 @@ upstream/main  ──►  ① 改写：把英文字符串包成 tr("...")
    没有这一步，软件自己的文字是中文，但 Flutter 自带的日期选择器、
    文本选择菜单还是英文，看起来很割裂。
 
+   这一步同时踩到上游的两个约束，都做了处理：
+
+   | 约束 | 问题 | 处理 |
+   |---|---|---|
+   | `melos` 用 `enforceLockfile: true` 引导 | 新增依赖必然使 lockfile 与 pubspec 不一致，引导直接失败 | 改为 `false` 并注明原因 |
+   | `flutter_localizations` 把 `intl` 钉在 SDK 版本上 | app 声明的是 `intl: ^0.20.3`，两者无法同时满足 | app 的约束放宽为 `intl: any`，原始值记在注释里 |
+
+   **框架级汉化是可选项。** 因为没有 Flutter SDK 就无法验证依赖解析，
+   所以如果 `melos bootstrap` 仍然失败，工作流会自动执行
+   `patch_app.py --revert-l10n`，只摘掉 `flutter_localizations` 和它的委托
+   （并把 `intl` 约束还原），`tr()` 翻译完全不受影响，构建继续。
+   代价只是 Flutter 自带的那几十条文字保持英文——好过整个构建失败。
+
 3. **翻译**（`tools/i18n/translate.py`）
    三个来源，优先级从高到低：
    - `tools/i18n/glossary.json` —— **手工词典**，永远优先。界面用词高度重复，

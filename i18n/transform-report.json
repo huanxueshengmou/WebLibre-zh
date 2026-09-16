@@ -1,8 +1,8 @@
 {
- "files_changed": 302,
- "replacements": 2539,
- "const_removed": 1231,
- "imports_added": 297,
+ "files_changed": 303,
+ "replacements": 2544,
+ "const_removed": 1233,
+ "imports_added": 298,
  "skipped": [
   {
    "file": "core/maintenance/backup_manifest.dart",
@@ -1418,7 +1418,7 @@
    "template": "Tabs",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 36
+   "line": 42
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1426,7 +1426,7 @@
    "template": "New Tab Default",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 39
+   "line": 45
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1434,7 +1434,7 @@
    "template": "Choose the default type for manually created tabs",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 40
+   "line": 46
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1442,7 +1442,7 @@
    "template": "Small Web Tab Default",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 45
+   "line": 51
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1450,7 +1450,7 @@
    "template": "Choose the tab type used when entering Small Web",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 46
+   "line": 52
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1458,7 +1458,7 @@
    "template": "Tab List Direction",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 51
+   "line": 57
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1466,7 +1466,7 @@
    "template": "Choose how tabs are ordered in the list view",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 52
+   "line": 58
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1474,7 +1474,7 @@
    "template": "Tab Bar Direction",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 57
+   "line": 63
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1482,7 +1482,7 @@
    "template": "Choose how tabs are ordered in the tab bar",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 58
+   "line": 64
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1490,7 +1490,7 @@
    "template": "Show Container UI",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 63
+   "line": 69
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1498,7 +1498,7 @@
    "template": "Show container selectors, menus, and management",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 64
+   "line": 70
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1506,7 +1506,7 @@
    "template": "Show Isolated Tab UI",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 69
+   "line": 75
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1514,7 +1514,7 @@
    "template": "Show isolated-tab creation options in the UI",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 70
+   "line": 76
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1522,7 +1522,7 @@
    "template": "Create Child Tabs",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 75
+   "line": 81
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1530,7 +1530,7 @@
    "template": "Open links from tabs in the same container context",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 76
+   "line": 82
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1538,7 +1538,7 @@
    "template": "Background Tab Behavior",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 81
+   "line": 87
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1546,7 +1546,7 @@
    "template": "Choose what happens after a tab opens in the background",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 82
+   "line": 88
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1554,7 +1554,7 @@
    "template": "Navigation",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 89
+   "line": 95
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1562,7 +1562,7 @@
    "template": "Pull to Refresh",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 92
+   "line": 98
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1570,7 +1570,7 @@
    "template": "Swipe down on pages to reload them",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 93
+   "line": 99
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1578,7 +1578,7 @@
    "template": "Double Back to Close Tab",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 98
+   "line": 104
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1586,7 +1586,7 @@
    "template": "Require double back press before closing the current tab",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 99
+   "line": 105
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1594,7 +1594,7 @@
    "template": "Tab Bar Swipe Behavior",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 104
+   "line": 110
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1602,7 +1602,7 @@
    "template": "Choose what horizontal swipes on the tab bar do",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 105
+   "line": 111
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1610,7 +1610,7 @@
    "template": "Sequential Tab Navigation",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 110
+   "line": 116
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1618,7 +1618,7 @@
    "template": "Choose where stepping through tabs in order ends",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 111
+   "line": 117
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1626,7 +1626,7 @@
    "template": "Open Links in Apps",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 124
+   "line": 130
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1634,7 +1634,7 @@
    "template": "Choose how external app links open",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 125
+   "line": 131
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1642,7 +1642,7 @@
    "template": "Desktop Mode",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 132
+   "line": 138
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1650,7 +1650,7 @@
    "template": "Always Request Desktop Site",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 135
+   "line": 141
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1658,7 +1658,7 @@
    "template": "Open new tabs in desktop mode by default",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 136
+   "line": 142
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1666,7 +1666,7 @@
    "template": "Desktop Mode Sites",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 141
+   "line": 147
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1674,7 +1674,7 @@
    "template": "Sites that always load in desktop mode",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 142
+   "line": 148
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1682,7 +1682,7 @@
    "template": "Home Screen",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 149
+   "line": 155
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1690,7 +1690,7 @@
    "template": "Install Sites as Apps",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 152
+   "line": 158
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1698,7 +1698,7 @@
    "template": "Allow websites without a manifest to be installed as apps",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 153
+   "line": 159
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1706,7 +1706,7 @@
    "template": "External Links",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 160
+   "line": 166
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1714,7 +1714,7 @@
    "template": "External Link Handling",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 163
+   "line": 169
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1722,7 +1722,7 @@
    "template": "Choose how external links open in WebLibre",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 164
+   "line": 170
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1730,7 +1730,7 @@
    "template": "Custom Tabs",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 169
+   "line": 175
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1738,7 +1738,7 @@
    "template": "Let other apps open links in a lightweight in-app tab, instead of the main browser",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 171
+   "line": 177
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1746,7 +1746,7 @@
    "template": "URL Cleaner",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 183
+   "line": 189
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1754,7 +1754,7 @@
    "template": "Tracking removal rules and catalog updates",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 184
+   "line": 190
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1762,7 +1762,7 @@
    "template": "Unshortener",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 189
+   "line": 195
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1770,7 +1770,7 @@
    "template": "Short link resolver and API token",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 190
+   "line": 196
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1778,7 +1778,7 @@
    "template": "Bookmarks",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 197
+   "line": 203
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1786,7 +1786,7 @@
    "template": "Bookmark Open Behavior",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 200
+   "line": 206
   },
   {
    "file": "features/settings/presentation/screens/browsing_settings.dart",
@@ -1794,7 +1794,7 @@
    "template": "Choose how tapping a bookmark opens it",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 201
+   "line": 207
   },
   {
    "file": "features/settings/presentation/screens/custom_tracking_protection.dart",
@@ -3931,6 +3931,7 @@
   "features/addons/presentation/widgets/addon_ui.dart",
   "features/addons/utils/permissions.dart",
   "features/app_links/presentation/widgets/app_link_open_banner.dart",
+  "features/app_links/presentation/widgets/app_link_prompt_details.dart",
   "features/app_links/presentation/widgets/app_link_prompt_dialog.dart",
   "features/app_links/presentation/widgets/container_app_link_settings_dialog.dart",
   "features/bangs/domain/repositories/sync.dart",

@@ -1087,6 +1087,22 @@
   ],
   "interpolated": false
  },
+ "Always keeps links in the browser": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Always open in apps": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Always open in the app": {
   "count": 2,
   "deferred_count": 0,
@@ -1580,6 +1596,14 @@
   "deferred_count": 0,
   "files": [
    "features/user/domain/presentation/screens/profile_list.dart"
+  ],
+  "interpolated": false
+ },
+ "Asks before opening": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
   ],
   "interpolated": false
  },
@@ -3875,6 +3899,14 @@
    "features/geckoview/features/search/domain/providers/search_modules_view.dart",
    "features/geckoview/features/search/presentation/widgets/empty_state/containers_section.dart",
    "features/geckoview/features/tabs/presentation/screens/container_list.dart"
+  ],
+  "interpolated": false
+ },
+ "Containers with their own app-link settings": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
   ],
   "interpolated": false
  },
@@ -11651,27 +11683,11 @@
   ],
   "interpolated": true
  },
- "Remember for this site": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/app_links/presentation/widgets/app_link_open_banner.dart"
-  ],
-  "interpolated": false
- },
  "Remember my choice for remaining files": {
   "count": 1,
   "deferred_count": 0,
   "files": [
    "features/geckoview/features/history/presentation/dialogs/delete_file.dart"
-  ],
-  "interpolated": false
- },
- "Remember my choice for this site": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/app_links/presentation/widgets/app_link_prompt_dialog.dart"
   ],
   "interpolated": false
  },
@@ -15382,11 +15398,27 @@
   ],
   "interpolated": false
  },
+ "This is a private tab. The app keeps its own history and sign-in state.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/app_links/presentation/widgets/app_link_prompt_details.dart"
+  ],
+  "interpolated": false
+ },
  "This isolated tab": {
   "count": 2,
   "deferred_count": 0,
   "files": [
    "features/geckoview/features/browser/features/menu/presentation/widgets/sections/connection_section.dart"
+  ],
+  "interpolated": false
+ },
+ "This link asks a wallet app for credentials. Open it only if you started this.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/app_links/presentation/widgets/app_link_prompt_details.dart"
   ],
   "interpolated": false
  },
@@ -15403,6 +15435,14 @@
   "deferred_count": 0,
   "files": [
    "features/app_links/presentation/widgets/app_link_prompt_dialog.dart"
+  ],
+  "interpolated": false
+ },
+ "This link is protected here. The app opens its own connection, outside the rules this tab follows.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/app_links/presentation/widgets/app_link_prompt_details.dart"
   ],
   "interpolated": false
  },

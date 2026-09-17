@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
 /// Shows a dialog asking the user whether to keep a temporary tab.
@@ -26,6 +27,7 @@ import 'package:weblibre/i18n/i18n.dart';
 Future<bool?> showKeepTabDialog(BuildContext context) {
   return showDialog<bool>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (context) => AlertDialog(
       title: Text(tr("Keep tab?")),
       content: Text(tr("Do you want to keep this tab or discard it?")),

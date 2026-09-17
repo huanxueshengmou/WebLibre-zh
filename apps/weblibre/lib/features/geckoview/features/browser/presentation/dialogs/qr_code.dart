@@ -19,6 +19,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
 Future<void> showQrCode(BuildContext context, String data) {
@@ -26,6 +27,7 @@ Future<void> showQrCode(BuildContext context, String data) {
 
   return showDialog(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (context) {
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

@@ -23,6 +23,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path/path.dart' as p;
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/services/browser_addon.dart';
 import 'package:weblibre/utils/ui_helper.dart';
 import 'package:weblibre/i18n/i18n.dart';
@@ -30,6 +31,7 @@ import 'package:weblibre/i18n/i18n.dart';
 Future<bool?> showInstallLocalAddonDialog(BuildContext context) {
   return showModalBottomSheet<bool?>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     isScrollControlled: true,
     builder: (context) => const _InstallLocalAddonSheet(),
   );

@@ -32,6 +32,7 @@ import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_mode
 import 'package:weblibre/features/geckoview/features/tabs/utils/container_colors.dart';
 import 'package:weblibre/presentation/widgets/selectable_chips.dart';
 import 'package:weblibre/presentation/widgets/url_icon.dart';
+import 'package:weblibre/i18n/i18n.dart';
 
 class QuickTabSwitcherItem with FastEquatable {
   final Color? color;
@@ -437,6 +438,146 @@ class QuickTabSwitcherChip extends StatelessWidget {
             : null,
         label: label,
         side: side,
+      ),
+    );
+  }
+}
+
+/// An open tab or history suggestion as a full-width row, for a side panel wide
+/// enough to list tabs instead of squeezing them into chips.
+///
+/// Carries what the chip carries — favicon, title, tab mode, pin, sandbox and
+/// history marks, container colour — but hands the title all the remaining
+/// width, so widening the panel actually shows more of it. Nesting is shown as
+/// indentation rather than depth glyphs, which a list has the room for.
+class QuickTabSwitcherRow extends StatelessWidget {
+  static const height = 44.0;
+
+  /// Indentation per nesting level.
+  static const indentPerLevel = 12.0;
+
+  final QuickTabSwitcherItem item;
+  final bool isSelected;
+  final bool showIsolatedTabUi;
+
+  /// Whether the title is shown. History suggestions keep theirs, as they do
+  /// on the chip.
+  final bool showTitles;
+
+  /// Deepest nesting level shown. A value of 0 hides nesting entirely,
+  /// matching the chip's depth indicator setting.
+  final int hierarchyGlyphs;
+
+  final VoidCallback onTap;
+
+  /// Shows a close button when set.
+  final VoidCallback? onDelete;
+
+  const QuickTabSwitcherRow({
+    super.key,
+    required this.item,
+    required this.isSelected,
+    required this.showIsolatedTabUi,
+    required this.showTitles,
+    required this.hierarchyGlyphs,
+    required this.onTap,
+    this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final appColors = AppColors.of(context);
+    final palette = item.color.mapNotNull(
+      (color) => ContainerColors.palette(
+        context,
+        color,
+        useCustomColor: item.useCustomColor,
+      ),
+    );
+
+    final background = isSelected
+        ? (palette?.selectedBackgroundColor ?? scheme.secondaryContainer)
+        : (palette?.backgroundColor ?? Colors.transparent);
+    final foreground = isSelected
+        ? (palette?.selectedForegroundColor ?? scheme.onSecondaryContainer)
+        : (palette?.foregroundColor ?? scheme.onSurfaceVariant);
+
+    final depth = hierarchyGlyphs > 0
+        ? item.depth.clamp(0, hierarchyGlyphs)
+        : 0;
+
+    final marks = <Widget>[
+      if (showIsolatedTabUi && item.tabMode is IsolatedTabMode)
+        Icon(MdiIcons.snowflake, color: appColors.isolatedTabTeal)
+      else if (item.tabMode is PrivateTabMode)
+        Icon(MdiIcons.dominoMask, color: appColors.privateTabPurple),
+      if (item.isSandbox)
+        Icon(MdiIcons.archiveLockOutline, color: scheme.tertiary),
+      if (item.isPinned) Icon(MdiIcons.pin, color: scheme.primary),
+      if (item.isHistory) const Icon(MdiIcons.history),
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+      child: Material(
+        color: background,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(height / 2),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: SizedBox(
+            height: height,
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(
+                start: 12.0 + depth * indentPerLevel,
+                end: onDelete == null ? 12.0 : 0.0,
+              ),
+              child: IconTheme.merge(
+                data: IconThemeData(color: foreground, size: 18),
+                child: Row(
+                  children: [
+                    SizedBox.square(dimension: 20, child: item.avatar),
+                    const SizedBox(width: 12),
+                    // Kept without a title, so the marks and the close button
+                    // stay at the panel's far edge.
+                    Expanded(
+                      child: showTitles || item.isHistory
+                          ? Text(
+                              item.title,
+                              maxLines: 1,
+                              softWrap: false,
+                              overflow: TextOverflow.ellipsis,
+                              style: theme.textTheme.labelLarge?.copyWith(
+                                color: foreground,
+                                fontWeight: isSelected
+                                    ? FontWeight.w700
+                                    : FontWeight.w500,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                    for (final mark in marks)
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 6.0),
+                        child: mark,
+                      ),
+                    if (onDelete != null)
+                      IconButton(
+                        tooltip: tr("Close tab"),
+                        visualDensity: VisualDensity.compact,
+                        onPressed: onDelete,
+                        icon: const Icon(Icons.close),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

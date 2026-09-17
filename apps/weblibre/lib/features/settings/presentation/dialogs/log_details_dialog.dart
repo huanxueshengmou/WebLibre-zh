@@ -26,6 +26,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/utils/ui_helper.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
@@ -208,6 +209,7 @@ Future<void> showLogDetailsDialog(
 }) {
   return showDialog(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (context) => LogDetailsDialog(
       level: level,
       message: message,

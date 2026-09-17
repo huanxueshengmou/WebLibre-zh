@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
 /// Confirms deleting a folder and everything inside it.
@@ -31,6 +32,7 @@ Future<bool?> showDeleteFolderDialog(
 }) {
   return showDialog<bool?>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (BuildContext context) {
       return AlertDialog(
         icon: const Icon(Icons.warning),

@@ -231,6 +231,14 @@
   ],
   "interpolated": false
  },
+ "A side rail on large screens, a bottom bar on phones": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/user/data/models/general_settings.dart"
+  ],
+  "interpolated": false
+ },
  "A stroke is dropped if no new direction is drawn within this time.": {
   "count": 1,
   "deferred_count": 0,
@@ -606,10 +614,12 @@
   "interpolated": false
  },
  "Add shortcut": {
-  "count": 2,
+  "count": 4,
   "deferred_count": 0,
   "files": [
-   "features/geckoview/features/search/presentation/widgets/empty_state/top_sites_section.dart"
+   "features/geckoview/features/search/presentation/widgets/empty_state/top_sites_section.dart",
+   "features/keyboard_shortcuts/presentation/dialogs/key_chord_recorder_dialog.dart",
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
   ],
   "interpolated": false
  },
@@ -1731,6 +1741,14 @@
   ],
   "interpolated": false
  },
+ "Auto Hide Side Panel": {
+  "count": 1,
+  "deferred_count": 1,
+  "files": [
+   "features/settings/presentation/widgets/toolbar_layout_content.dart"
+  ],
+  "interpolated": false
+ },
  "Auto Hide Tab Bar": {
   "count": 1,
   "deferred_count": 1,
@@ -2433,14 +2451,6 @@
   ],
   "interpolated": false
  },
- "Bottom": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/widgets/toolbar_layout_content.dart"
-  ],
-  "interpolated": false
- },
  "Bottom Sheet Tab View": {
   "count": 1,
   "deferred_count": 1,
@@ -2496,6 +2506,14 @@
    "features/onboarding/presentation/pages/privacy_hardening.dart",
    "features/settings/presentation/screens/locale_settings.dart",
    "features/settings/presentation/screens/privacy_security_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Browser actions on a hardware keyboard, even while a page has focus": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
   ],
   "interpolated": false
  },
@@ -2614,7 +2632,7 @@
   "interpolated": false
  },
  "Cancel": {
-  "count": 57,
+  "count": 60,
   "deferred_count": 0,
   "files": [
    "features/account/presentation/widgets/account_auth_status_card.dart",
@@ -2675,9 +2693,10 @@
   "interpolated": false
  },
  "Change": {
-  "count": 1,
+  "count": 2,
   "deferred_count": 0,
   "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart",
    "features/proxy/presentation/screens/singbox_proxy_logs.dart"
   ],
   "interpolated": false
@@ -2719,6 +2738,14 @@
   "deferred_count": 0,
   "files": [
    "features/geckoview/features/browser/presentation/widgets/tab_menu.dart"
+  ],
+  "interpolated": false
+ },
+ "Change shortcut": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/key_chord_recorder_dialog.dart"
   ],
   "interpolated": false
  },
@@ -3432,7 +3459,7 @@
   "interpolated": false
  },
  "Close": {
-  "count": 9,
+  "count": 10,
   "deferred_count": 0,
   "files": [
    "features/geckoview/features/browser/presentation/dialogs/qr_code.dart",
@@ -3484,7 +3511,7 @@
    "features/geckoview/features/browser/features/contextual_toolbar/presentation/toolbar_button_registry.dart",
    "features/geckoview/features/browser/features/menu/presentation/widgets/navigation_row.dart",
    "features/geckoview/features/browser/presentation/widgets/tab_menu.dart",
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -3532,6 +3559,14 @@
   ],
   "interpolated": false
  },
+ "Close tab": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/geckoview/features/browser/presentation/widgets/browser_modules/quick_tab_switcher_chip.dart"
+  ],
+  "interpolated": false
+ },
  "Close tab after clearing": {
   "count": 1,
   "deferred_count": 0,
@@ -3544,7 +3579,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -4449,6 +4484,14 @@
   ],
   "interpolated": false
  },
+ "Currently used by \"{0}\". Saving moves it here.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/key_chord_recorder_dialog.dart"
+  ],
+  "interpolated": true
+ },
  "Custom": {
   "count": 1,
   "deferred_count": 0,
@@ -4566,6 +4609,14 @@
   "deferred_count": 0,
   "files": [
    "features/settings/presentation/screens/custom_tracking_protection.dart"
+  ],
+  "interpolated": false
+ },
+ "Customize": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/keyboard_shortcuts_overview_dialog.dart"
   ],
   "interpolated": false
  },
@@ -5577,7 +5628,7 @@
   "deferred_count": 1,
   "files": [
    "features/geckoview/features/browser/features/contextual_toolbar/presentation/toolbar_button_registry.dart",
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -5763,6 +5814,14 @@
   "deferred_count": 1,
   "files": [
    "features/settings/presentation/screens/advanced_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Enable Keyboard Shortcuts": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
   ],
   "interpolated": false
  },
@@ -6059,6 +6118,14 @@
   ],
   "interpolated": true
  },
+ "Every action goes back to its Firefox default keys. Your changes are lost.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
+  ],
+  "interpolated": false
+ },
  "Every chip on the bar": {
   "count": 1,
   "deferred_count": 0,
@@ -6072,6 +6139,14 @@
   "deferred_count": 0,
   "files": [
    "features/user/data/models/proxy_diagnostics_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Every gesture goes back to its default action. Your changes are lost.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_bindings_screen.dart"
   ],
   "interpolated": false
  },
@@ -7306,6 +7381,14 @@
   ],
   "interpolated": false
  },
+ "Hardware keyboard keys for browser actions": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/settings.dart"
+  ],
+  "interpolated": false
+ },
  "Hex": {
   "count": 1,
   "deferred_count": 0,
@@ -8075,6 +8158,14 @@
   ],
   "interpolated": false
  },
+ "Keep the left or right tab bar out of the way and slide it in when the mouse reaches that edge. Only while a mouse or trackpad is in use: touching the screen puts the panel back beside the page.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/widgets/toolbar_layout_content.dart"
+  ],
+  "interpolated": false
+ },
  "Keep this container at the top of the list": {
   "count": 1,
   "deferred_count": 0,
@@ -8088,6 +8179,24 @@
   "deferred_count": 0,
   "files": [
    "features/user/domain/presentation/screens/profile_restore.dart"
+  ],
+  "interpolated": false
+ },
+ "Keyboard Shortcuts": {
+  "count": 3,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/keyboard_shortcuts_overview_dialog.dart",
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart",
+   "features/settings/presentation/screens/settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Keyboard shortcuts are switched off.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/keyboard_shortcuts_overview_dialog.dart"
   ],
   "interpolated": false
  },
@@ -8143,7 +8252,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -8225,14 +8334,6 @@
   "deferred_count": 0,
   "files": [
    "features/account/presentation/widgets/supporter_home_banner.dart"
-  ],
-  "interpolated": false
- },
- "Left": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/widgets/toolbar_layout_content.dart"
   ],
   "interpolated": false
  },
@@ -9085,7 +9186,7 @@
   "files": [
    "features/geckoview/features/browser/features/contextual_toolbar/presentation/toolbar_button_registry.dart",
    "features/geckoview/features/browser/presentation/widgets/container_menu.dart",
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -9189,7 +9290,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -9393,6 +9494,14 @@
   ],
   "interpolated": false
  },
+ "No keys are assigned to browser actions.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/keyboard_shortcuts_overview_dialog.dart"
+  ],
+  "interpolated": false
+ },
  "No linked consoles found.": {
   "count": 1,
   "deferred_count": 0,
@@ -9422,6 +9531,14 @@
   "deferred_count": 0,
   "files": [
    "features/settings/presentation/screens/error_logs_screen.dart"
+  ],
+  "interpolated": false
+ },
+ "No matching actions.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
   ],
   "interpolated": false
  },
@@ -9488,6 +9605,14 @@
    "features/settings/presentation/widgets/settings_detail.dart"
   ],
   "interpolated": true
+ },
+ "No shortcut": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
+  ],
+  "interpolated": false
  },
  "No site subscriptions": {
   "count": 1,
@@ -9889,7 +10014,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -9897,7 +10022,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -10618,7 +10743,7 @@
   "count": 1,
   "deferred_count": 0,
   "files": [
-   "features/settings/presentation/widgets/toolbar_layout_content.dart"
+   "features/user/data/models/general_settings.dart"
   ],
   "interpolated": false
  },
@@ -10659,7 +10784,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -10802,6 +10927,14 @@
   ],
   "interpolated": false
  },
+ "Press the key combination for \"{0}\".": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/key_chord_recorder_dialog.dart"
+  ],
+  "interpolated": true
+ },
  "Prevent app content from appearing in screenshots": {
   "count": 0,
   "deferred_count": 1,
@@ -10830,7 +10963,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -11420,6 +11553,14 @@
   "deferred_count": 0,
   "files": [
    "features/geckoview/features/bookmarks/presentation/dialogs/import_progress_dialog.dart"
+  ],
+  "interpolated": false
+ },
+ "Reassign": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/key_chord_recorder_dialog.dart"
   ],
   "interpolated": false
  },
@@ -12136,6 +12277,14 @@
   ],
   "interpolated": false
  },
+ "Reset to default": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
+  ],
+  "interpolated": false
+ },
  "Reset to defaults": {
   "count": 2,
   "deferred_count": 0,
@@ -12166,6 +12315,14 @@
   "deferred_count": 1,
   "files": [
    "features/settings/presentation/screens/privacy_security_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Resize side panel": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/geckoview/features/browser/presentation/widgets/browser_modules/side_rail_resize_handle.dart"
   ],
   "interpolated": false
  },
@@ -12250,14 +12407,15 @@
   "interpolated": false
  },
  "Restore": {
-  "count": 5,
+  "count": 7,
   "deferred_count": 0,
   "files": [
    "features/account/presentation/widgets/sync_document_dialogs.dart",
    "features/account/presentation/widgets/sync_document_list_section.dart",
    "features/geckoview/features/open_link_tools/presentation/dialogs/url_cleaner_restore_defaults_dialog.dart",
-   "features/onboarding/presentation/onboarding.dart",
-   "features/user/domain/presentation/screens/profile_restore.dart"
+   "features/gestures/presentation/screens/gesture_bindings_screen.dart",
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart",
+   "features/onboarding/presentation/onboarding.dart"
   ],
   "interpolated": false
  },
@@ -12282,6 +12440,38 @@
   "deferred_count": 0,
   "files": [
    "features/account/presentation/widgets/sync_document_dialogs.dart"
+  ],
+  "interpolated": false
+ },
+ "Restore default gestures": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_bindings_screen.dart"
+  ],
+  "interpolated": false
+ },
+ "Restore default gestures?": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_bindings_screen.dart"
+  ],
+  "interpolated": false
+ },
+ "Restore default shortcuts": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
+  ],
+  "interpolated": false
+ },
+ "Restore default shortcuts?": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
   ],
   "interpolated": false
  },
@@ -12360,6 +12550,14 @@
   ],
   "interpolated": false
  },
+ "Reveal the side panel when the mouse reaches its edge": {
+  "count": 0,
+  "deferred_count": 1,
+  "files": [
+   "features/settings/presentation/widgets/toolbar_layout_content.dart"
+  ],
+  "interpolated": false
+ },
  "Review Languages": {
   "count": 1,
   "deferred_count": 0,
@@ -12381,14 +12579,6 @@
   "deferred_count": 0,
   "files": [
    "features/addons/presentation/screens/addon_listing_details.dart"
-  ],
-  "interpolated": false
- },
- "Right": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/widgets/toolbar_layout_content.dart"
   ],
   "interpolated": false
  },
@@ -12545,11 +12735,12 @@
   "interpolated": false
  },
  "Save": {
-  "count": 6,
+  "count": 7,
   "deferred_count": 0,
   "files": [
    "features/account/presentation/widgets/sync_document_dialogs.dart",
    "features/geckoview/features/tabs/presentation/dialogs/discard_changes_dialog.dart",
+   "features/keyboard_shortcuts/presentation/dialogs/key_chord_recorder_dialog.dart",
    "features/settings/presentation/screens/ublock_filter_lists.dart",
    "features/settings/presentation/widgets/doh_settings_content.dart",
    "features/sync/presentation/screens/sync_settings.dart"
@@ -12768,6 +12959,14 @@
   "deferred_count": 0,
   "files": [
    "features/account/presentation/screens/account_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Search actions or keys": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart"
   ],
   "interpolated": false
  },
@@ -14457,7 +14656,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -14465,7 +14664,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -14473,7 +14672,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -14714,7 +14913,7 @@
   "count": 1,
   "deferred_count": 0,
   "files": [
-   "features/settings/presentation/widgets/toolbar_layout_content.dart"
+   "features/user/data/models/general_settings.dart"
   ],
   "interpolated": false
  },
@@ -15406,6 +15605,14 @@
   ],
   "interpolated": false
  },
+ "This is already a shortcut for this action.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/key_chord_recorder_dialog.dart"
+  ],
+  "interpolated": false
+ },
  "This isolated tab": {
   "count": 2,
   "deferred_count": 0,
@@ -15789,7 +15996,7 @@
   "count": 0,
   "deferred_count": 1,
   "files": [
-   "features/gestures/data/models/gesture_action.dart"
+   "features/browser_actions/data/models/browser_action.dart"
   ],
   "interpolated": false
  },
@@ -15800,14 +16007,6 @@
    "features/onboarding/presentation/pages/toolbar_layout.dart",
    "features/settings/presentation/screens/settings.dart",
    "features/settings/presentation/screens/toolbar_layout_settings.dart"
-  ],
-  "interpolated": false
- },
- "Top": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/widgets/toolbar_layout_content.dart"
   ],
   "interpolated": false
  },
@@ -16199,9 +16398,10 @@
   "interpolated": false
  },
  "Unassigned": {
-  "count": 3,
+  "count": 4,
   "deferred_count": 0,
   "files": [
+   "features/geckoview/features/browser/presentation/widgets/browser_modules/quick_tab_switcher_accordion.dart",
    "features/geckoview/features/browser/presentation/widgets/tab_view/tab_tray_gestures.dart",
    "features/geckoview/features/tabs/presentation/screens/container_selection.dart",
    "features/geckoview/features/tabs/presentation/widgets/compact_container_selector.dart"
@@ -16780,7 +16980,7 @@
   "count": 2,
   "deferred_count": 0,
   "files": [
-   "features/settings/presentation/widgets/toolbar_layout_content.dart"
+   "features/user/data/models/general_settings.dart"
   ],
   "interpolated": false
  },
@@ -16869,6 +17069,14 @@
   "deferred_count": 0,
   "files": [
    "features/web_push/presentation/screens/web_push_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Waiting for keys…": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/keyboard_shortcuts/presentation/dialogs/key_chord_recorder_dialog.dart"
   ],
   "interpolated": false
  },
@@ -17539,6 +17747,14 @@
   "deferred_count": 0,
   "files": [
    "features/user/domain/presentation/dialogs/select_profile.dart"
+  ],
+  "interpolated": true
+ },
+ "{0} (currently: {1})": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/widgets/toolbar_layout_content.dart"
   ],
   "interpolated": true
  },

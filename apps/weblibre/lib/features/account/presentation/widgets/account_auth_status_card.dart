@@ -19,6 +19,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/features/account/data/account_adoption.dart';
 import 'package:weblibre/features/account/data/account_adoption_provider.dart';
 import 'package:weblibre/features/account/data/models/account_auth_state.dart';
@@ -199,6 +200,7 @@ Future<bool?> _confirmDiscard(
   UnclaimedAccountRecord record,
 ) => showDialog<bool>(
   context: context,
+  anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
   builder: (context) => AlertDialog(
     title: Text(tr("Forget this sign-in?")),
     content: Text(
@@ -330,6 +332,7 @@ class _SignedInTile extends ConsumerWidget {
   static Future<bool?> _showSignOutConfirmation(BuildContext context) {
     return showDialog<bool>(
       context: context,
+      anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
       builder: (context) {
         return AlertDialog(
           title: Text(tr("Sign out?")),
@@ -423,6 +426,7 @@ class _ResetSyncKeyTile extends ConsumerWidget {
       onTap: () async {
         final confirmed = await showDialog<bool>(
           context: context,
+          anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
           builder: (context) => AlertDialog(
             title: Text(tr("Reset Sync Key")),
             content: Text(

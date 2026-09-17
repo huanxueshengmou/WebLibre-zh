@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:weblibre/core/providers/window_size_class.dart';
 import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/settings/presentation/controllers/save_settings.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
@@ -49,6 +50,12 @@ const List<SettingsSectionDefinition> toolbarLayoutSettingsSections = [
         subtitle: 'Hide the tab bar when scrolling',
         keywords: ['scroll'],
         child: _AutoHideTabBarTile(),
+      ),
+      SettingsEntryDefinition(
+        title: 'Auto Hide Side Panel',
+        subtitle: 'Reveal the side panel when the mouse reaches its edge',
+        keywords: ['mouse', 'cursor', 'hover', 'rail', 'sidebar'],
+        child: _SideRailAutoHideTile(),
       ),
       SettingsEntryDefinition(
         title: 'Long Press URL to Copy',
@@ -221,9 +228,13 @@ class _TabBarPositionSection extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // The raw setting drives the radio group -- this is the one screen that
+    // must show what was *chosen*, including "decide for me". Everywhere else
+    // reads effectiveTabBarPositionProvider.
     final tabBarPosition = ref.watch(
       generalSettingsWithDefaultsProvider.select((s) => s.tabBarPosition),
     );
+    final resolved = ref.watch(effectiveTabBarPositionProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -238,7 +249,7 @@ class _TabBarPositionSection extends HookConsumerWidget {
           ),
           RadioGroup(
             groupValue: tabBarPosition,
-            onChanged: (value) async {
+            onChanged: (TabBarPositionSetting? value) async {
               if (value != null) {
                 await ref
                     .read(saveGeneralSettingsControllerProvider.notifier)
@@ -250,26 +261,18 @@ class _TabBarPositionSection extends HookConsumerWidget {
             },
             child: Column(
               children: [
-                RadioListTile.adaptive(
-                  value: TabBarPosition.top,
-                  title: Text(tr("Top")),
-                  subtitle: Text(tr("Persistent tab bar without auto-hide")),
-                ),
-                RadioListTile.adaptive(
-                  value: TabBarPosition.bottom,
-                  title: Text(tr("Bottom")),
-                  subtitle: Text(tr("Tab bar with auto-hide support")),
-                ),
-                RadioListTile.adaptive(
-                  value: TabBarPosition.left,
-                  title: Text(tr("Left")),
-                  subtitle: Text(tr("Vertical side rail, swipe to hide")),
-                ),
-                RadioListTile.adaptive(
-                  value: TabBarPosition.right,
-                  title: Text(tr("Right")),
-                  subtitle: Text(tr("Vertical side rail, swipe to hide")),
-                ),
+                for (final position in TabBarPositionSetting.values)
+                  RadioListTile.adaptive(
+                    value: position,
+                    title: Text(position.label),
+                    // Automatic says what it currently resolves to on this
+                    // screen; the fixed choices already describe themselves.
+                    subtitle: Text(
+                      position == TabBarPositionSetting.auto
+                          ? tr("{0} (currently: {1})", [position.description, resolved.name])
+                          : position.description,
+                    ),
+                  ),
               ],
             ),
           ),
@@ -391,8 +394,8 @@ class _CustomizeQuickSwitcherButtonsTile extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final switcherEnabled = ref.watch(
-      generalSettingsWithDefaultsProvider.select(
-        (s) => s.effectiveTabBarStackingMode() != TabBarStackingMode.disabled,
+      effectiveTabBarStackingModeProvider.select(
+        (mode) => mode != TabBarStackingMode.disabled,
       ),
     );
 
@@ -417,7 +420,11 @@ class _TabBarStackingModeSection extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(generalSettingsWithDefaultsProvider);
-    final stackingMode = settings.effectiveTabBarStackingMode();
+    final stackingMode = ref.watch(effectiveTabBarStackingModeProvider);
+    final window = ref.watch(windowSizeClassControllerProvider);
+    final railIsNarrow =
+        ref.watch(effectiveTabBarPositionProvider).isVertical &&
+        !window.allowsWideRail;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -463,10 +470,12 @@ class _TabBarStackingModeSection extends HookConsumerWidget {
                       tr("All containers as chips, with the selected container's tabs expanded inline"),
                     ),
                   ),
-                  // Two stacked rows don't fit the narrow vertical side rail,
-                  // where the mode degrades to Container Tabs; hide the option
-                  // for left/right positions to avoid a no-op choice.
-                  if (!settings.tabBarPosition.isVertical)
+                  // Two stacked rows don't fit the *narrow* vertical side
+                  // rail, where the mode degrades to Container Tabs; hide the
+                  // option there to avoid a no-op choice. A rail wide enough
+                  // to be a tab panel has room for both rows, so the option
+                  // stays offered on a large screen.
+                  if (!railIsNarrow)
                     RadioListTile.adaptive(
                       value: TabBarStackingMode.twoLevel,
                       title: Text(tr("Two Rows")),
@@ -500,8 +509,8 @@ class _QuickTabSwitcherCloseButtonsSection extends HookConsumerWidget {
       ),
     );
     final switcherEnabled = ref.watch(
-      generalSettingsWithDefaultsProvider.select(
-        (s) => s.effectiveTabBarStackingMode() != TabBarStackingMode.disabled,
+      effectiveTabBarStackingModeProvider.select(
+        (mode) => mode != TabBarStackingMode.disabled,
       ),
     );
 
@@ -586,8 +595,8 @@ class _QuickTabSwitcherTitleWidthTile extends HookConsumerWidget {
       ),
     );
     final switcherEnabled = ref.watch(
-      generalSettingsWithDefaultsProvider.select(
-        (s) => s.effectiveTabBarStackingMode() != TabBarStackingMode.disabled,
+      effectiveTabBarStackingModeProvider.select(
+        (mode) => mode != TabBarStackingMode.disabled,
       ),
     );
 
@@ -668,8 +677,8 @@ class _QuickTabSwitcherHistorySuggestionsTile extends HookConsumerWidget {
       ),
     );
     final switcherEnabled = ref.watch(
-      generalSettingsWithDefaultsProvider.select(
-        (s) => s.effectiveTabBarStackingMode() != TabBarStackingMode.disabled,
+      effectiveTabBarStackingModeProvider.select(
+        (mode) => mode != TabBarStackingMode.disabled,
       ),
     );
 
@@ -705,8 +714,8 @@ class _QuickTabSwitcherShowTitlesTile extends HookConsumerWidget {
       ),
     );
     final switcherEnabled = ref.watch(
-      generalSettingsWithDefaultsProvider.select(
-        (s) => s.effectiveTabBarStackingMode() != TabBarStackingMode.disabled,
+      effectiveTabBarStackingModeProvider.select(
+        (mode) => mode != TabBarStackingMode.disabled,
       ),
     );
 
@@ -748,8 +757,8 @@ class _QuickTabSwitcherHierarchyGlyphsTile extends HookConsumerWidget {
       ),
     );
     final switcherEnabled = ref.watch(
-      generalSettingsWithDefaultsProvider.select(
-        (s) => s.effectiveTabBarStackingMode() != TabBarStackingMode.disabled,
+      effectiveTabBarStackingModeProvider.select(
+        (mode) => mode != TabBarStackingMode.disabled,
       ),
     );
 
@@ -844,6 +853,34 @@ class _AutoHideTabBarTile extends HookConsumerWidget {
             .save(
               (currentSettings) =>
                   currentSettings.copyWith.autoHideTabBar(value),
+            );
+      },
+    );
+  }
+}
+
+class _SideRailAutoHideTile extends HookConsumerWidget {
+  const _SideRailAutoHideTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sideRailAutoHide = ref.watch(
+      generalSettingsWithDefaultsProvider.select((s) => s.sideRailAutoHide),
+    );
+
+    return SwitchListTile.adaptive(
+      title: Text(tr("Auto Hide Side Panel")),
+      subtitle: Text(
+        tr("Keep the left or right tab bar out of the way and slide it in when the mouse reaches that edge. Only while a mouse or trackpad is in use: touching the screen puts the panel back beside the page."),
+      ),
+      secondary: const Icon(MdiIcons.dockLeft),
+      value: sideRailAutoHide,
+      onChanged: (value) async {
+        await ref
+            .read(saveGeneralSettingsControllerProvider.notifier)
+            .save(
+              (currentSettings) =>
+                  currentSettings.copyWith.sideRailAutoHide(value),
             );
       },
     );

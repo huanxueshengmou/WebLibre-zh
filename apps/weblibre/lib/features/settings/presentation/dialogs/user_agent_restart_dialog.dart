@@ -19,11 +19,13 @@
  */
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
 Future<bool?> showUserAgentRestartDialog(BuildContext context) {
   return showDialog<bool>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (context) => AlertDialog(
       icon: const Icon(Icons.warning),
       title: Text(tr("User Agent Changed")),

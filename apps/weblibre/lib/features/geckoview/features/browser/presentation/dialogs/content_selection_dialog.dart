@@ -19,6 +19,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/database/definitions.drift.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
@@ -33,6 +34,7 @@ Future<void> showContentSelectionDialog(
 }) async {
   await showDialog(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (context) => SimpleDialog(
       title: title,
       children: [

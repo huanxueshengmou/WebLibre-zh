@@ -1,8 +1,8 @@
 {
- "files_changed": 303,
- "replacements": 2544,
- "const_removed": 1233,
- "imports_added": 298,
+ "files_changed": 309,
+ "replacements": 2582,
+ "const_removed": 1247,
+ "imports_added": 304,
  "skipped": [
   {
    "file": "core/maintenance/backup_manifest.dart",
@@ -51,6 +51,118 @@
    "interpolated": false,
    "reason": "const-var-decl",
    "line": 216
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "New Tab",
+   "template": "New Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 94
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Open a new tab",
+   "template": "Open a new tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 95
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Close Tab",
+   "template": "Close Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 106
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Close the current tab",
+   "template": "Close the current tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 107
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Duplicate Tab",
+   "template": "Duplicate Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 118
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Open a copy of the current tab",
+   "template": "Open a copy of the current tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 119
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Next Tab",
+   "template": "Next Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 124
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Switch to the next tab",
+   "template": "Switch to the next tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 125
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Previous Tab",
+   "template": "Previous Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 130
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Switch to the previous tab",
+   "template": "Switch to the previous tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 131
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Last Used Tab",
+   "template": "Last Used Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 136
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Switch to the previously used tab",
+   "template": "Switch to the previously used tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 137
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Pin / Unpin Tab",
+   "template": "Pin / Unpin Tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 196
+  },
+  {
+   "file": "features/browser_actions/data/models/browser_action.dart",
+   "value": "Toggle the pinned state of the current tab",
+   "template": "Toggle the pinned state of the current tab",
+   "interpolated": false,
+   "reason": "enum-const-arg",
+   "line": 197
   },
   {
    "file": "features/geckoview/features/open_link_tools/presentation/screens/unshortener_settings.dart",
@@ -293,124 +405,12 @@
    "line": 95
   },
   {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "New Tab",
-   "template": "New Tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 78
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Open a new tab",
-   "template": "Open a new tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 79
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Close Tab",
-   "template": "Close Tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 84
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Close the current tab",
-   "template": "Close the current tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 85
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Duplicate Tab",
-   "template": "Duplicate Tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 90
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Open a copy of the current tab",
-   "template": "Open a copy of the current tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 91
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Next Tab",
-   "template": "Next Tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 96
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Switch to the next tab",
-   "template": "Switch to the next tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 97
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Previous Tab",
-   "template": "Previous Tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 102
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Switch to the previous tab",
-   "template": "Switch to the previous tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 103
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Last Used Tab",
-   "template": "Last Used Tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 108
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Switch to the previously used tab",
-   "template": "Switch to the previously used tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 109
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Pin / Unpin Tab",
-   "template": "Pin / Unpin Tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 114
-  },
-  {
-   "file": "features/gestures/data/models/gesture_action.dart",
-   "value": "Toggle the pinned state of the current tab",
-   "template": "Toggle the pinned state of the current tab",
-   "interpolated": false,
-   "reason": "enum-const-arg",
-   "line": 115
-  },
-  {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
    "value": "Strokes",
    "template": "Strokes",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 30
+   "line": 31
   },
   {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
@@ -418,7 +418,7 @@
    "template": "Minimum stroke length",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 33
+   "line": 34
   },
   {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
@@ -426,7 +426,7 @@
    "template": "Minimum swipe length recognised as a direction",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 34
+   "line": 35
   },
   {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
@@ -434,7 +434,7 @@
    "template": "Timing",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 41
+   "line": 42
   },
   {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
@@ -442,7 +442,7 @@
    "template": "Timeout",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 44
+   "line": 45
   },
   {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
@@ -450,7 +450,7 @@
    "template": "Drop a stroke if no new direction is drawn",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 45
+   "line": 46
   },
   {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
@@ -458,7 +458,7 @@
    "template": "Cooldown",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 50
+   "line": 51
   },
   {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
@@ -466,7 +466,7 @@
    "template": "Minimum delay between two gestures firing",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 51
+   "line": 52
   },
   {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
@@ -474,7 +474,7 @@
    "template": "Stroke interval",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 56
+   "line": 57
   },
   {
    "file": "features/gestures/presentation/screens/gesture_behavior_screen.dart",
@@ -482,7 +482,7 @@
    "template": "Reject a gesture when direction changes come too fast",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 57
+   "line": 58
   },
   {
    "file": "features/gestures/presentation/screens/gesture_feedback_screen.dart",
@@ -1138,7 +1138,7 @@
    "template": "Content & Identity",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 48
+   "line": 49
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1146,7 +1146,7 @@
    "template": "Enable JavaScript",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 52
+   "line": 53
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1154,7 +1154,7 @@
    "template": "Turn website scripting on or off",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 53
+   "line": 54
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1162,7 +1162,7 @@
    "template": "Custom User Agent",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 58
+   "line": 59
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1170,7 +1170,7 @@
    "template": "Override the browser user agent string",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 59
+   "line": 60
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1178,7 +1178,7 @@
    "template": "Use third party CA certificates",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 64
+   "line": 65
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1186,7 +1186,7 @@
    "template": "Allow Android CA store certificates",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 65
+   "line": 66
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1194,7 +1194,7 @@
    "template": "Experimental",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 72
+   "line": 73
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1202,7 +1202,7 @@
    "template": "Experimental Features",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 75
+   "line": 76
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1210,7 +1210,7 @@
    "template": "Low-level runtime features and startup behavior",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 76
+   "line": 77
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1218,7 +1218,7 @@
    "template": "Developer Tools",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 83
+   "line": 84
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1226,7 +1226,7 @@
    "template": "Unmount Engine Off-Screen",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 87
+   "line": 88
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1234,7 +1234,7 @@
    "template": "Rebuild the web engine after an overlay, instead of keeping it warm",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 89
+   "line": 90
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1242,7 +1242,7 @@
    "template": "Icon Cache",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 95
+   "line": 96
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1250,7 +1250,7 @@
    "template": "Stored favicons",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 96
+   "line": 97
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1258,7 +1258,7 @@
    "template": "ML Downloads",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 101
+   "line": 102
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1266,7 +1266,7 @@
    "template": "Downloaded AI models and runtime files",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 102
+   "line": 103
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1274,7 +1274,7 @@
    "template": "Error Logs",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 107
+   "line": 108
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1282,7 +1282,7 @@
    "template": "View and copy logs for issue reporting",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 108
+   "line": 109
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1290,7 +1290,7 @@
    "template": "Dart VM",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 113
+   "line": 114
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1298,7 +1298,7 @@
    "template": "Copy Dart VM service URL",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 114
+   "line": 115
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1306,7 +1306,7 @@
    "template": "Reset UI",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 119
+   "line": 120
   },
   {
    "file": "features/settings/presentation/screens/advanced_settings.dart",
@@ -1314,7 +1314,7 @@
    "template": "Rebuild the entire browser UI",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 120
+   "line": 121
   },
   {
    "file": "features/settings/presentation/screens/bang_settings.dart",
@@ -1986,7 +1986,7 @@
    "template": "Extensions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 33
+   "line": 34
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -1994,7 +1994,7 @@
    "template": "Manage Extensions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 36
+   "line": 37
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -2002,7 +2002,7 @@
    "template": "Browse installed, disabled, available, and unsupported extensions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 38
+   "line": 39
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -2010,7 +2010,7 @@
    "template": "Custom Collection",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 43
+   "line": 44
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -2018,7 +2018,7 @@
    "template": "Use a custom Mozilla addon collection",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 44
+   "line": 45
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -2026,7 +2026,7 @@
    "template": "Updates",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 51
+   "line": 52
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -2034,7 +2034,7 @@
    "template": "Automatic updates",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 54
+   "line": 55
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -2042,7 +2042,7 @@
    "template": "Automatically check for and install extension updates every 12 hours",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 56
+   "line": 57
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -2050,7 +2050,7 @@
    "template": "Security",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 63
+   "line": 64
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -2058,7 +2058,7 @@
    "template": "Allow unsigned extensions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 66
+   "line": 67
   },
   {
    "file": "features/settings/presentation/screens/extensions_settings.dart",
@@ -2066,7 +2066,7 @@
    "template": "Unsigned extensions have not been verified by Mozilla",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 67
+   "line": 68
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2954,7 +2954,7 @@
    "template": "Providers",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 38
+   "line": 39
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -2962,7 +2962,7 @@
    "template": "Default Search Provider",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 42
+   "line": 43
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -2970,7 +2970,7 @@
    "template": "Choose the default engine for searches",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 43
+   "line": 44
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -2978,7 +2978,7 @@
    "template": "Default Autocomplete Provider",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 48
+   "line": 49
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -2986,7 +2986,7 @@
    "template": "Choose the provider for search suggestions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 49
+   "line": 50
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -2994,7 +2994,7 @@
    "template": "Custom Search Engines",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 54
+   "line": 55
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3002,7 +3002,7 @@
    "template": "Add and manage your own search providers",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 55
+   "line": 56
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3010,7 +3010,7 @@
    "template": "Bang Shortcuts",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 62
+   "line": 63
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3018,7 +3018,7 @@
    "template": "Bang Settings",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 66
+   "line": 67
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3026,7 +3026,7 @@
    "template": "Manage bang repositories and usage data",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 67
+   "line": 68
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3034,7 +3034,7 @@
    "template": "History & Suggestions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 74
+   "line": 75
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3042,7 +3042,7 @@
    "template": "Search History Limit",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 77
+   "line": 78
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3050,7 +3050,7 @@
    "template": "Maximum number of recent searches to remember",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 78
+   "line": 79
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3058,7 +3058,7 @@
    "template": "Allow clipboard access for suggestions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 83
+   "line": 84
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3066,7 +3066,7 @@
    "template": "Browser can read clipboard to suggest URLs",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 84
+   "line": 85
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3074,7 +3074,7 @@
    "template": "Autocomplete on enter",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 89
+   "line": 90
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3082,7 +3082,7 @@
    "template": "Accept the inline suggestion when pressing enter",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 90
+   "line": 91
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3090,7 +3090,7 @@
    "template": "Popular site suggestions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 95
+   "line": 96
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3098,7 +3098,7 @@
    "template": "Complete typed text with well-known domains",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 96
+   "line": 97
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3106,7 +3106,7 @@
    "template": "Local Search Index",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 103
+   "line": 104
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3114,7 +3114,7 @@
    "template": "Enable local search index",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 107
+   "line": 108
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3122,7 +3122,7 @@
    "template": "Index visited pages locally for content search",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 108
+   "line": 109
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3130,7 +3130,7 @@
    "template": "Index private tabs",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 113
+   "line": 114
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3138,7 +3138,7 @@
    "template": "Include private tabs in the local index",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 114
+   "line": 115
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3146,7 +3146,7 @@
    "template": "Indexed pages",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 119
+   "line": 120
   },
   {
    "file": "features/settings/presentation/screens/search_settings.dart",
@@ -3154,7 +3154,7 @@
    "template": "View and clear the local index",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 120
+   "line": 121
   },
   {
    "file": "features/settings/presentation/screens/web_content_settings.dart",
@@ -3338,7 +3338,7 @@
    "template": "Tab Bar",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 33
+   "line": 34
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3346,7 +3346,7 @@
    "template": "Tab Bar Position",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 36
+   "line": 37
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3354,7 +3354,7 @@
    "template": "Choose whether the tab bar stays at the top or bottom",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 37
+   "line": 38
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3362,7 +3362,7 @@
    "template": "Tab Bar Style",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 42
+   "line": 43
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3370,7 +3370,7 @@
    "template": "Choose between title and compact layouts",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 43
+   "line": 44
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3378,7 +3378,7 @@
    "template": "Auto Hide Tab Bar",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 48
+   "line": 49
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3386,7 +3386,23 @@
    "template": "Hide the tab bar when scrolling",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 49
+   "line": 50
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Auto Hide Side Panel",
+   "template": "Auto Hide Side Panel",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 55
+  },
+  {
+   "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
+   "value": "Reveal the side panel when the mouse reaches its edge",
+   "template": "Reveal the side panel when the mouse reaches its edge",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 56
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3394,7 +3410,7 @@
    "template": "Long Press URL to Copy",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 54
+   "line": 61
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3402,7 +3418,7 @@
    "template": "Copy the current URL from the tab bar",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 55
+   "line": 62
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3410,7 +3426,7 @@
    "template": "Contextual Toolbar",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 62
+   "line": 69
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3418,7 +3434,7 @@
    "template": "Show Contextual Toolbar",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 65
+   "line": 72
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3426,7 +3442,7 @@
    "template": "Show an additional toolbar for navigation and actions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 66
+   "line": 73
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3434,7 +3450,7 @@
    "template": "Customize Toolbar Buttons",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 71
+   "line": 78
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3442,7 +3458,7 @@
    "template": "Choose which actions appear in the contextual toolbar",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 72
+   "line": 79
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3450,7 +3466,7 @@
    "template": "Quick Tab Switcher",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 79
+   "line": 86
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3458,7 +3474,7 @@
    "template": "Tab Stacking",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 82
+   "line": 89
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3466,7 +3482,7 @@
    "template": "Choose how the quick tab switcher bar arranges tabs",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 83
+   "line": 90
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3474,7 +3490,7 @@
    "template": "Customize Switcher Buttons",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 97
+   "line": 104
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3482,7 +3498,7 @@
    "template": "Choose which action buttons appear at the end of the bar",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 98
+   "line": 105
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3490,7 +3506,7 @@
    "template": "Close Buttons on Tab Chips",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 103
+   "line": 110
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3498,7 +3514,7 @@
    "template": "Which switcher chips show a close button",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 104
+   "line": 111
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3506,7 +3522,7 @@
    "template": "History Fallback in Quick Tab Switcher",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 109
+   "line": 116
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3514,7 +3530,7 @@
    "template": "Use history suggestions when there are no matching tabs",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 110
+   "line": 117
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3522,7 +3538,7 @@
    "template": "Show Titles in Quick Tab Switcher",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 115
+   "line": 122
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3530,7 +3546,7 @@
    "template": "Display page titles in the switcher list",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 116
+   "line": 123
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3538,7 +3554,7 @@
    "template": "Title Width in Quick Tab Switcher",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 121
+   "line": 128
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3546,7 +3562,7 @@
    "template": "Maximum width of tab titles on switcher chips",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 122
+   "line": 129
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3554,7 +3570,7 @@
    "template": "Hierarchy Depth in Quick Tab Switcher",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 127
+   "line": 134
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3562,7 +3578,7 @@
    "template": "How many nesting chevrons to show on switcher chips",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 128
+   "line": 135
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3570,7 +3586,7 @@
    "template": "Tab View",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 135
+   "line": 142
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3578,7 +3594,7 @@
    "template": "Bottom Sheet Tab View",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 138
+   "line": 145
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3586,7 +3602,7 @@
    "template": "Open the tab switcher as a bottom sheet",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 139
+   "line": 146
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3594,7 +3610,7 @@
    "template": "Show Favicons in List View",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 144
+   "line": 151
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3602,7 +3618,7 @@
    "template": "Display site icons in the tab list",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 145
+   "line": 152
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3610,7 +3626,7 @@
    "template": "Menu",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 163
+   "line": 170
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3618,7 +3634,7 @@
    "template": "Customize Menu",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 167
+   "line": 174
   },
   {
    "file": "features/settings/presentation/widgets/toolbar_layout_content.dart",
@@ -3626,7 +3642,7 @@
    "template": "Choose and order the sections and rows of the three-dot menu",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 169
+   "line": 176
   },
   {
    "file": "features/tor/presentation/screens/tor_proxy.dart",
@@ -3834,7 +3850,7 @@
    "template": "Delivery",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 33
+   "line": 34
   },
   {
    "file": "features/web_push/presentation/screens/web_push_settings.dart",
@@ -3842,7 +3858,7 @@
    "template": "UnifiedPush Distributor",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 36
+   "line": 37
   },
   {
    "file": "features/web_push/presentation/screens/web_push_settings.dart",
@@ -3850,7 +3866,7 @@
    "template": "The app that delivers website push notifications",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 37
+   "line": 38
   },
   {
    "file": "features/web_push/presentation/screens/web_push_settings.dart",
@@ -3858,7 +3874,7 @@
    "template": "Notification Permission",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 42
+   "line": 43
   },
   {
    "file": "features/web_push/presentation/screens/web_push_settings.dart",
@@ -3866,7 +3882,7 @@
    "template": "Required to display website notifications",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 43
+   "line": 44
   },
   {
    "file": "features/web_push/presentation/screens/web_push_settings.dart",
@@ -3874,7 +3890,7 @@
    "template": "Subscriptions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 50
+   "line": 51
   },
   {
    "file": "features/web_push/presentation/screens/web_push_settings.dart",
@@ -3882,7 +3898,7 @@
    "template": "Site Subscriptions",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 53
+   "line": 54
   },
   {
    "file": "features/web_push/presentation/screens/web_push_settings.dart",
@@ -3890,11 +3906,11 @@
    "template": "Websites subscribed to push notifications",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 54
+   "line": 55
   }
  ],
  "skip_reasons": {
-  "const-var-decl": 468,
+  "const-var-decl": 470,
   "enum-const-arg": 16,
   "const-ctor-decl": 2
  },
@@ -3974,6 +3990,9 @@
   "features/geckoview/features/browser/presentation/dialogs/select_folder_dialog.dart",
   "features/geckoview/features/browser/presentation/widgets/browser_home.dart",
   "features/geckoview/features/browser/presentation/widgets/browser_modules/app_bar_title.dart",
+  "features/geckoview/features/browser/presentation/widgets/browser_modules/quick_tab_switcher_accordion.dart",
+  "features/geckoview/features/browser/presentation/widgets/browser_modules/quick_tab_switcher_chip.dart",
+  "features/geckoview/features/browser/presentation/widgets/browser_modules/side_rail_resize_handle.dart",
   "features/geckoview/features/browser/presentation/widgets/certificate_tile.dart",
   "features/geckoview/features/browser/presentation/widgets/container_menu.dart",
   "features/geckoview/features/browser/presentation/widgets/extension_shortcut_menu.dart",
@@ -4076,6 +4095,9 @@
   "features/gestures/presentation/widgets/gesture_action_picker.dart",
   "features/gestures/presentation/widgets/gesture_binding_editor.dart",
   "features/intent_gatekeeper/presentation/widgets/intent_gatekeeper_dialog.dart",
+  "features/keyboard_shortcuts/presentation/dialogs/key_chord_recorder_dialog.dart",
+  "features/keyboard_shortcuts/presentation/dialogs/keyboard_shortcuts_overview_dialog.dart",
+  "features/keyboard_shortcuts/presentation/screens/keyboard_shortcuts_screen.dart",
   "features/onboarding/presentation/onboarding.dart",
   "features/onboarding/presentation/pages/ai_configuration.dart",
   "features/onboarding/presentation/pages/default_search.dart",
@@ -4208,6 +4230,6 @@
   "presentation/widgets/website_feed_menu_button.dart",
   "utils/ui_helper.dart"
  ],
- "deferred_occurrences": 486,
- "deferred_unique_keys": 459
+ "deferred_occurrences": 488,
+ "deferred_unique_keys": 461
 }

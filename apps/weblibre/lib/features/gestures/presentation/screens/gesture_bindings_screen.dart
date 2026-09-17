@@ -19,8 +19,8 @@
  */
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:weblibre/features/gestures/data/models/gesture_action.dart';
-import 'package:weblibre/features/gestures/data/models/gesture_settings.dart';
+import 'package:weblibre/core/design/display_features.dart';
+import 'package:weblibre/features/browser_actions/data/models/browser_action.dart';
 import 'package:weblibre/features/gestures/data/models/gesture_stroke.dart';
 import 'package:weblibre/features/gestures/domain/repositories/gesture_settings.dart';
 import 'package:weblibre/features/gestures/presentation/widgets/gesture_binding_editor.dart';
@@ -38,34 +38,57 @@ class GestureBindingsScreen extends HookConsumerWidget {
     final settings = ref.watch(gestureSettingsWithDefaultsProvider);
 
     Future<void> upsertBinding(
-      ({GestureStroke stroke, GestureAction action}) result, {
+      ({GestureStroke stroke, BrowserAction action}) result, {
       String? replacedKey,
     }) async {
-      await ref.read(gestureSettingsRepositoryProvider.notifier).updateSettings(
-        (current) {
-          final bindings = Map<String, GestureAction>.from(current.bindings);
-          if (replacedKey != null) {
-            bindings.remove(replacedKey);
-          }
-          bindings[result.stroke.key] = result.action;
-          return current.copyWith.bindings(bindings);
-        },
-      );
+      await ref
+          .read(gestureSettingsRepositoryProvider.notifier)
+          .updateSettings(
+            (current) => current.withBinding(
+              result.stroke.key,
+              result.action,
+              replacedKey: replacedKey,
+            ),
+          );
     }
 
     Future<void> removeBinding(String key) async {
-      await ref.read(gestureSettingsRepositoryProvider.notifier).updateSettings(
-        (current) {
-          final bindings = Map<String, GestureAction>.from(current.bindings)
-            ..remove(key);
-          return current.copyWith.bindings(bindings);
-        },
+      await ref
+          .read(gestureSettingsRepositoryProvider.notifier)
+          .updateSettings((current) => current.withBindingRemoved(key));
+    }
+
+    Future<void> restoreDefaults() async {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
+        builder: (context) => AlertDialog(
+          title: Text(tr("Restore default gestures?")),
+          content: Text(
+            tr("Every gesture goes back to its default action. Your changes are lost."),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(tr("Cancel")),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(tr("Restore")),
+            ),
+          ],
+        ),
       );
+      if (confirmed == true) {
+        await ref
+            .read(gestureSettingsRepositoryProvider.notifier)
+            .updateSettings((current) => current.withBindingsReset());
+      }
     }
 
     // Group bindings by their action's category, preserving category order.
     final byCategory =
-        <GestureActionCategory, List<MapEntry<String, GestureAction>>>{};
+        <BrowserActionCategory, List<MapEntry<String, BrowserAction>>>{};
     for (final entry in settings.bindings.entries) {
       byCategory.putIfAbsent(entry.value.category, () => []).add(entry);
     }
@@ -75,6 +98,14 @@ class GestureBindingsScreen extends HookConsumerWidget {
 
     return SettingsCustomScrollScaffold(
       title: tr("Gesture bindings"),
+      actions: [
+        if (settings.hasCustomBindings)
+          IconButton(
+            icon: const Icon(Icons.restart_alt),
+            tooltip: tr("Restore default gestures"),
+            onPressed: restoreDefaults,
+          ),
+      ],
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.add),
         label: Text(tr("Add gesture")),
@@ -100,7 +131,7 @@ class GestureBindingsScreen extends HookConsumerWidget {
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 88),
             sliver: SliverList.list(
               children: [
-                for (final category in GestureActionCategory.values)
+                for (final category in BrowserActionCategory.values)
                   if (byCategory[category] case final entries?
                       when entries.isNotEmpty)
                     _GestureBindingGroup(
@@ -185,7 +216,7 @@ class _GestureBindingGroup extends StatelessWidget {
 
 class _GestureBindingTile extends StatelessWidget {
   final String gestureKey;
-  final GestureAction action;
+  final BrowserAction action;
   final Future<void> Function() onEdit;
   final Future<void> Function() onRemove;
 

@@ -21,6 +21,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:weblibre/core/copy/profile_copy.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/features/user/domain/entities/restart_cost.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
@@ -42,6 +43,7 @@ Future<bool?> showDeleteProfileDialog(
 }) {
   return showDialog<bool?>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (BuildContext context) {
       final theme = Theme.of(context);
 
@@ -116,6 +118,7 @@ Future<bool?> showReplaceProfileDialog(
 }) {
   return showDialog<bool?>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (BuildContext context) {
       final theme = Theme.of(context);
 
@@ -198,6 +201,7 @@ Future<bool?> showBackupProfileDialog(
 }) {
   return showDialog<bool?>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (BuildContext context) {
       // Not error-coloured, unlike the two below it. Nothing in the named
       // profile is lost, and dressing a backup as a destructive action is how

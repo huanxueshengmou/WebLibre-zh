@@ -23,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/utils/ui_helper.dart' as ui_helper;
 import 'package:weblibre/i18n/i18n.dart';
 
@@ -38,6 +39,7 @@ Future<Barcode?> showQrScannerDialog(BuildContext context) async {
 
   return showDialog<Barcode>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (_) => const QrScannerDialog(),
   );
 }

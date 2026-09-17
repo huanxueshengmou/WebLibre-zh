@@ -20,6 +20,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
 enum BookmarkAllChoice { fast, detailed }
@@ -28,6 +29,7 @@ enum BookmarkAllChoice { fast, detailed }
 Future<BookmarkAllChoice?> showBookmarkAllDialog(BuildContext context) {
   return showDialog<BookmarkAllChoice>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (context) => SimpleDialog(
       title: Text(tr("Bookmark All Tabs")),
       children: [

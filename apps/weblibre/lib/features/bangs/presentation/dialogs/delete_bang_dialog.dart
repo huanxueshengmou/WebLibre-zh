@@ -19,6 +19,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
 /// Dialog to confirm bang deletion.
@@ -26,6 +27,7 @@ import 'package:weblibre/i18n/i18n.dart';
 Future<bool?> showDeleteBangDialog(BuildContext context) {
   return showDialog<bool?>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (BuildContext context) {
       return AlertDialog(
         icon: const Icon(Icons.warning),

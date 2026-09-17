@@ -19,6 +19,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/i18n/i18n.dart';
 
 /// Dialog to confirm password during backup creation.
@@ -26,6 +27,7 @@ import 'package:weblibre/i18n/i18n.dart';
 Future<String?> showPasswordConfirmationDialog(BuildContext context) {
   return showDialog<String>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (context) {
       final controller = TextEditingController();
 

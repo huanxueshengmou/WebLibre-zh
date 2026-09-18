@@ -1,7 +1,7 @@
 {
  "files_changed": 309,
- "replacements": 2582,
- "const_removed": 1247,
+ "replacements": 2589,
+ "const_removed": 1248,
  "imports_added": 304,
  "skipped": [
   {
@@ -2074,7 +2074,7 @@
    "template": "Default Browser",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 41
+   "line": 43
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2082,7 +2082,7 @@
    "template": "Default Browser",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 45
+   "line": 47
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2090,7 +2090,7 @@
    "template": "Set WebLibre as your default browser",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 46
+   "line": 48
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2098,7 +2098,7 @@
    "template": "Appearance",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 53
+   "line": 55
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2106,7 +2106,7 @@
    "template": "Theme",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 56
+   "line": 58
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2114,7 +2114,7 @@
    "template": "Choose system, light, or dark mode",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 57
+   "line": 59
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2122,7 +2122,7 @@
    "template": "Pure Black (OLED)",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 62
+   "line": 64
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2130,7 +2130,7 @@
    "template": "Use true-black surfaces in dark mode to save power on OLED screens",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 64
+   "line": 66
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2138,7 +2138,7 @@
    "template": "User Interface Zoom",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 70
+   "line": 72
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2146,7 +2146,7 @@
    "template": "Make the user interface smaller or larger",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 71
+   "line": 73
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2154,7 +2154,7 @@
    "template": "Refresh Rate",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 76
+   "line": 78
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2162,7 +2162,7 @@
    "template": "Request a high or low display refresh rate (Android)",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 77
+   "line": 79
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2170,7 +2170,7 @@
    "template": "Disable Animations",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 94
+   "line": 96
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2178,7 +2178,7 @@
    "template": "Reduce motion and turn off app animations",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 95
+   "line": 97
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2186,7 +2186,7 @@
    "template": "Show Modal Barrier",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 100
+   "line": 102
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2194,7 +2194,7 @@
    "template": "Dim the background behind dialogs and bottom sheets",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 101
+   "line": 103
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2202,7 +2202,7 @@
    "template": "Show Close Button",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 106
+   "line": 108
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2210,7 +2210,7 @@
    "template": "Add a button to dismiss the search / new-tab page without a back gesture",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 108
+   "line": 110
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2218,7 +2218,7 @@
    "template": "Back up this profile",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 128
+   "line": 130
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2226,7 +2226,7 @@
    "template": "Write an encrypted backup file of the profile you are using",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 129
+   "line": 131
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2234,7 +2234,7 @@
    "template": "Export & Import Settings",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 141
+   "line": 143
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2242,7 +2242,7 @@
    "template": "Move settings to another profile, device, or a bug report",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 142
+   "line": 144
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2250,7 +2250,7 @@
    "template": "Downloads",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 159
+   "line": 161
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2258,7 +2258,7 @@
    "template": "Use external download manager",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 162
+   "line": 164
   },
   {
    "file": "features/settings/presentation/screens/general_settings.dart",
@@ -2266,7 +2266,23 @@
    "template": "Manage downloads with another app",
    "interpolated": false,
    "reason": "const-var-decl",
-   "line": 163
+   "line": 165
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Download folder",
+   "template": "Download folder",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 170
+  },
+  {
+   "file": "features/settings/presentation/screens/general_settings.dart",
+   "value": "Choose where downloaded files are saved",
+   "template": "Choose where downloaded files are saved",
+   "interpolated": false,
+   "reason": "const-var-decl",
+   "line": 171
   },
   {
    "file": "features/settings/presentation/screens/home_settings.dart",
@@ -3910,7 +3926,7 @@
   }
  ],
  "skip_reasons": {
-  "const-var-decl": 470,
+  "const-var-decl": 472,
   "enum-const-arg": 16,
   "const-ctor-decl": 2
  },
@@ -4230,6 +4246,6 @@
   "presentation/widgets/website_feed_menu_button.dart",
   "utils/ui_helper.dart"
  ],
- "deferred_occurrences": 488,
- "deferred_unique_keys": 461
+ "deferred_occurrences": 490,
+ "deferred_unique_keys": 463
 }

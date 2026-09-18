@@ -1,11 +1,11 @@
 {
- "keys": 2203,
- "translated_total": 2203,
+ "keys": 2211,
+ "translated_total": 2211,
  "coverage": 100.0,
  "by_source": {
   "glossary": 539,
-  "cache": 1634,
-  "translated": 30,
+  "cache": 1664,
+  "translated": 8,
   "dropped": 0
  },
  "failed": []

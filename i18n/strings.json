@@ -3125,6 +3125,14 @@
   ],
   "interpolated": false
  },
+ "Choose where downloaded files are saved": {
+  "count": 0,
+  "deferred_count": 1,
+  "files": [
+   "features/settings/presentation/screens/general_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Choose where stepping through tabs in order ends": {
   "count": 0,
   "deferred_count": 1,
@@ -5530,6 +5538,14 @@
   ],
   "interpolated": false
  },
+ "Download folder": {
+  "count": 1,
+  "deferred_count": 1,
+  "files": [
+   "features/settings/presentation/screens/general_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Downloaded AI models and runtime files": {
   "count": 1,
   "deferred_count": 1,
@@ -6457,6 +6473,22 @@
    "features/geckoview/features/search/presentation/widgets/search_modules/feed_search.dart"
   ],
   "interpolated": false
+ },
+ "Failed to add {0} to home screen": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/geckoview/features/pwa/presentation/widgets/pwa_install_button.dart"
+  ],
+  "interpolated": true
+ },
+ "Failed to add {0}. The site may not support installation.": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/geckoview/features/pwa/presentation/widgets/pwa_install_button.dart"
+  ],
+  "interpolated": true
  },
  "Failed to create suggestions": {
   "count": 1,
@@ -9533,6 +9565,14 @@
    "features/settings/presentation/screens/error_logs_screen.dart"
   ],
   "interpolated": false
+ },
+ "No longer available — saving to the system Downloads folder ({0})": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/general_settings.dart"
+  ],
+  "interpolated": true
  },
  "No matching actions.": {
   "count": 1,
@@ -12820,6 +12860,14 @@
   ],
   "interpolated": false
  },
+ "Saving to the system Downloads folder": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/general_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Scale web page text size": {
   "count": 1,
   "deferred_count": 1,
@@ -15235,6 +15283,14 @@
   ],
   "interpolated": false
  },
+ "The download manager app chooses where files are saved": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/general_settings.dart"
+  ],
+  "interpolated": false
+ },
  "The free API is rate limited to 10 requests per hour for new checks.": {
   "count": 2,
   "deferred_count": 0,
@@ -16859,6 +16915,14 @@
   "deferred_count": 0,
   "files": [
    "features/geckoview/features/tabs/presentation/screens/container_edit.dart"
+  ],
+  "interpolated": false
+ },
+ "Use the system Downloads folder": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/general_settings.dart"
   ],
   "interpolated": false
  },

@@ -24,8 +24,11 @@ import 'package:drift/drift.dart';
 import 'package:nullability/nullability.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:weblibre/features/browser_actions/data/models/browser_action.dart';
+import 'package:weblibre/features/gestures/data/models/built_in_gesture.dart';
 import 'package:weblibre/features/gestures/data/models/gesture_settings.dart';
 import 'package:weblibre/features/user/data/providers.dart';
+import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 
 part 'gesture_settings.g.dart';
 
@@ -84,6 +87,9 @@ class GestureSettingsRepository extends _$GestureSettingsRepository {
       'bindingOverrides': settings['bindingOverrides']
           ?.readAs(DriftSqlType.string, db.typeMapping)
           .mapNotNull(jsonDecode),
+      'builtInOverrides': settings['builtInOverrides']
+          ?.readAs(DriftSqlType.string, db.typeMapping)
+          .mapNotNull(jsonDecode),
     });
   }
 
@@ -107,7 +113,7 @@ class GestureSettingsRepository extends _$GestureSettingsRepository {
     final oldJson = current.toJson();
     final newJson = updateWithCurrent(current).toJson();
 
-    return db.transaction(() async {
+    return await db.transaction(() async {
       for (final MapEntry(:key, :value) in newJson.entries) {
         if (oldJson[key] != value) {
           await db.settingDao.updateSetting(key, _partitionKey, value);
@@ -134,6 +140,19 @@ GestureSettings gestureSettingsWithDefaults(Ref ref) {
   return ref.watch(
     gestureSettingsRepositoryProvider.select(
       (value) => value.value ?? GestureSettings.withDefaults(),
+    ),
+  );
+}
+
+/// What [gesture] currently does, or null when the user switched it off.
+@Riverpod(keepAlive: true)
+BrowserAction? builtInGestureBinding(Ref ref, BuiltInGesture gesture) {
+  final legacyTabBarSwipe = ref.watch(
+    generalSettingsWithDefaultsProvider.select((s) => s.tabBarSwipeAction),
+  );
+  return ref.watch(
+    gestureSettingsWithDefaultsProvider.select(
+      (s) => s.builtInBinding(gesture, legacyTabBarSwipe: legacyTabBarSwipe),
     ),
   );
 }

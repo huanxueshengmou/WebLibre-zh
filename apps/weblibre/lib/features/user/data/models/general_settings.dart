@@ -30,6 +30,7 @@ import 'package:weblibre/features/app_links/domain/entities/context_app_link_pol
 import 'package:weblibre/features/bangs/data/models/bang_group.dart';
 import 'package:weblibre/features/bangs/data/models/bang_key.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/entities/home_target.dart';
+import 'package:weblibre/features/geckoview/features/tabs/data/entities/child_tab_placement.dart';
 import 'package:weblibre/features/intent_gatekeeper/domain/entities/intent_source_policy.dart';
 import 'package:weblibre/features/search/domain/entities/abstract/i_search_suggestion_provider.dart';
 import 'package:weblibre/features/wallpaper/domain/entities/home_wallpaper.dart';
@@ -342,6 +343,10 @@ class GeneralSettings with FastEquatable {
   final TabType storedDefaultCreateTabType;
   final TabDirection tabListDirection;
   final TabDirection tabBarDirection;
+
+  /// Where a tab opened from another tab is inserted. See
+  /// [ChildTabPlacement]; the opener is recorded as the parent either way.
+  final ChildTabPlacement childTabPlacement;
   final TabIntentOpenSetting tabIntentOpenSetting;
 
   /// Determines what happens when a bookmark is tapped. See
@@ -557,6 +562,7 @@ class GeneralSettings with FastEquatable {
     required this.storedDefaultCreateTabType,
     required this.tabListDirection,
     required this.tabBarDirection,
+    required this.childTabPlacement,
     required this.tabIntentOpenSetting,
     required this.bookmarkOpenSetting,
     required this.backgroundTabOpenAction,
@@ -648,6 +654,7 @@ class GeneralSettings with FastEquatable {
     TabType? storedDefaultCreateTabType,
     TabDirection? tabListDirection,
     TabDirection? tabBarDirection,
+    ChildTabPlacement? childTabPlacement,
     TabIntentOpenSetting? tabIntentOpenSetting,
     BookmarkOpenSetting? bookmarkOpenSetting,
     BackgroundTabOpenAction? backgroundTabOpenAction,
@@ -749,6 +756,7 @@ class GeneralSettings with FastEquatable {
            storedDefaultCreateTabType ?? TabType.regular,
        tabListDirection = tabListDirection ?? TabDirection.newestFirst,
        tabBarDirection = tabBarDirection ?? TabDirection.newestFirst,
+       childTabPlacement = childTabPlacement ?? ChildTabPlacement.afterParent,
        tabIntentOpenSetting = tabIntentOpenSetting ?? TabIntentOpenSetting.ask,
        bookmarkOpenSetting = bookmarkOpenSetting ?? BookmarkOpenSetting.ask,
        backgroundTabOpenAction =
@@ -1011,6 +1019,7 @@ class GeneralSettings with FastEquatable {
     storedDefaultCreateTabType,
     tabListDirection,
     tabBarDirection,
+    childTabPlacement,
     tabIntentOpenSetting,
     bookmarkOpenSetting,
     backgroundTabOpenAction,

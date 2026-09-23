@@ -105,7 +105,7 @@ class SyncSettingsScreen extends HookConsumerWidget {
 
     useEffect(() {
       if (isSyncing && !disableAnimations) {
-        unawaited(syncController.repeat());
+        syncController.repeat();
       } else {
         syncController.stop();
         syncController.reset();

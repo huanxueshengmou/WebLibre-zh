@@ -143,12 +143,12 @@ void showOpenedTabsFromAnotherDeviceMessage(
 
 void showTabBackButtonMessage(
   BuildContext context,
-  int tabCount,
+  bool closesTab,
   Duration duration, {
   bool persist = false,
 }) {
   final snackbar = _createFloatingSnackBar(
-    content: (tabCount > 1)
+    content: closesTab
         ? Text(tr("Navigate BACK again to close current tab"))
         : Text(tr("Navigate BACK again to exit app")),
     duration: duration,

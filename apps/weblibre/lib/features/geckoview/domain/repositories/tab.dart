@@ -282,6 +282,9 @@ class TabRepository extends _$TabRepository {
       containerId: Value(assignedContainer?.id),
       url: Value(url),
       tabMode: Value(tabMode),
+      childPlacement: ref
+          .read(generalSettingsWithDefaultsProvider)
+          .childTabPlacement,
     );
 
     if (launchedFromIntent) {
@@ -349,6 +352,11 @@ class TabRepository extends _$TabRepository {
       UnassignedContainerTabSelection() => null,
       SpecificContainerTabSelection(:final container) => container,
     };
+    // Read once for the whole batch rather than per tab: the setting cannot
+    // change while these rows are being written.
+    final childPlacement = ref
+        .read(generalSettingsWithDefaultsProvider)
+        .childTabPlacement;
 
     final createdTabIds = await db.transaction(() async {
       final createdTabIds = await _tabsService.addMultipleTabs(
@@ -394,6 +402,7 @@ class TabRepository extends _$TabRepository {
           source: TabSource.manual,
           containerId: Value(assignedContainer?.id),
           url: Value(Uri.tryParse(tab.url)),
+          childPlacement: childPlacement,
           tabMode: Value(
             isIsolatedContextId(tab.contextId)
                 ? TabMode.isolated(tab.contextId!)
@@ -500,7 +509,7 @@ class TabRepository extends _$TabRepository {
         .getSingleOrNull();
 
     if (ref.mounted && previousTabId != null) {
-      return selectTab(previousTabId);
+      return await selectTab(previousTabId);
     }
 
     return false;
@@ -517,7 +526,7 @@ class TabRepository extends _$TabRepository {
       return false;
     }
 
-    return selectTab(latestTab.id);
+    return await selectTab(latestTab.id);
   }
 
   Future<bool> resumeLatestContainerTab(
@@ -538,7 +547,7 @@ class TabRepository extends _$TabRepository {
       return false;
     }
 
-    return selectTab(latestTab.id);
+    return await selectTab(latestTab.id);
   }
 
   Future<bool> selectPreviousTab(
@@ -629,7 +638,7 @@ class TabRepository extends _$TabRepository {
     );
 
     if (ref.mounted && adjacentTabId != null) {
-      return selectTab(adjacentTabId);
+      return await selectTab(adjacentTabId);
     }
 
     return false;
@@ -823,6 +832,13 @@ class TabRepository extends _$TabRepository {
     return null;
   }
 
+  /// Whether closing [tabId] hands the user back to its opener, which may live
+  /// in another container (see [_nearestAvailableAncestor]).
+  Future<bool> hasOpenAncestor(String tabId) async {
+    return await _nearestAvailableAncestor(tabId, excludedTabIds: const {}) !=
+        null;
+  }
+
   Future<void> _selectNextTab(
     String tabId, {
     Set<String> excludedTabIds = const {},
@@ -856,7 +872,7 @@ class TabRepository extends _$TabRepository {
     if (!ref.mounted) return;
 
     if (ancestorTabId != null) {
-      return _selectTabAfterClose(ancestorTabId);
+      return await _selectTabAfterClose(ancestorTabId);
     }
 
     // Priority 2: Check for previous tab by timestamp
@@ -868,7 +884,7 @@ class TabRepository extends _$TabRepository {
 
     if (previousTabId != null) {
       if (sameContainerTabs.any((tab) => tab == previousTabId)) {
-        return _selectTabAfterClose(previousTabId);
+        return await _selectTabAfterClose(previousTabId);
       }
     }
 
@@ -881,7 +897,7 @@ class TabRepository extends _$TabRepository {
     );
 
     if (orderedNeighborTabId != null) {
-      return _selectTabAfterClose(orderedNeighborTabId);
+      return await _selectTabAfterClose(orderedNeighborTabId);
     }
 
     if (!ref.mounted) return;
@@ -918,7 +934,7 @@ class TabRepository extends _$TabRepository {
         );
 
     if (unassignedTabs.isNotEmpty) {
-      return _selectTabAfterClose(unassignedTabs.first);
+      return await _selectTabAfterClose(unassignedTabs.first);
     }
 
     if (!ref.mounted) return;
@@ -943,7 +959,7 @@ class TabRepository extends _$TabRepository {
     );
 
     if (nextContainerTabs.isNotEmpty) {
-      return _selectTabAfterClose(nextContainerTabs!.first);
+      return await _selectTabAfterClose(nextContainerTabs!.first);
     }
   }
 
@@ -1362,11 +1378,19 @@ class TabRepository extends _$TabRepository {
     final db = ref.watch(tabDatabaseProvider);
 
     final tabAddedSub = eventSerivce.tabAddedStream.listen(
-      (tabId) async {
+      (event) async {
         final containerId = ref.read(selectedContainerProvider);
         await db.tabDao.insertTab(
-          tabId,
+          event.tabId,
           parentId: const Value.absent(),
+          // Link an engine-opened tab to its opener and place it per the child
+          // tab placement setting right away, so it never has to move once the
+          // parent is seeded from engine state. An app-created tab already has
+          // its row (manual source wins the upsert), so this is a no-op for it.
+          openerId: Value(event.parentId),
+          childPlacement: ref
+              .read(generalSettingsWithDefaultsProvider)
+              .childTabPlacement,
           source: TabSource.addedEvent,
           containerId: Value(containerId),
         );
@@ -1457,6 +1481,9 @@ class TabRepository extends _$TabRepository {
         if (shouldSyncTabs) {
           final syncTabsResult = await db.tabDao.syncTabs(
             retainTabIds: next.value,
+            childPlacement: ref
+                .read(generalSettingsWithDefaultsProvider)
+                .childTabPlacement,
           );
           // Capture isolation contexts from rows deleted by syncTabs
           // (orphaned tabs from crashes, or tabs the engine dropped).
@@ -1501,6 +1528,9 @@ class TabRepository extends _$TabRepository {
         if (currentTabs.isNotEmpty) {
           final syncTabsResult = await db.tabDao.syncTabs(
             retainTabIds: currentTabs,
+            childPlacement: ref
+                .read(generalSettingsWithDefaultsProvider)
+                .childTabPlacement,
           );
           _pendingIsolationCleanup.addAll(
             syncTabsResult.deletedIsolationContextIds,
@@ -1524,7 +1554,13 @@ class TabRepository extends _$TabRepository {
         }
 
         tabStateDebouncer.eventOccured(() async {
-          await db.tabDao.updateTabs(debounceStartValue, next);
+          await db.tabDao.updateTabs(
+            debounceStartValue,
+            next,
+            childPlacement: ref
+                .read(generalSettingsWithDefaultsProvider)
+                .childTabPlacement,
+          );
         });
       },
       onError: (Object error, StackTrace stackTrace) {

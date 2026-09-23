@@ -193,10 +193,14 @@ class _UserAgentTile extends HookConsumerWidget {
           hintText: tr("Mozilla/5.0 …"),
         ),
         onSubmitted: (value) async {
+          final trimmed = value.trim();
+
           await ref
               .read(saveEngineSettingsControllerProvider.notifier)
               .save(
-                (currentSettings) => currentSettings.copyWith.userAgent(value),
+                (currentSettings) => currentSettings.copyWith.userAgent(
+                  trimmed.isEmpty ? null : trimmed,
+                ),
               );
 
           if (context.mounted) {

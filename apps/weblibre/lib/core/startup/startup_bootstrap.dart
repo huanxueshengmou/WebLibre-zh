@@ -349,10 +349,10 @@ Future<StartupPhase> _resolveUnderAccess(
       return StartupActivated(profileId);
 
     case ProfileStartupDirectiveKind.select:
-      return _runSelection(service, directive);
+      return await _runSelection(service, directive);
 
     case ProfileStartupDirectiveKind.maintenance:
-      return _describeMaintenance(directive);
+      return await _describeMaintenance(directive);
 
     case ProfileStartupDirectiveKind.unavailable:
       return StartupHalted(
@@ -436,7 +436,7 @@ Future<StartupPhase> _runSelection(
     );
   }
 
-  return _commitAndActivate(service, leaseId, chosen);
+  return await _commitAndActivate(service, leaseId, chosen);
 }
 
 /// Finishes a selection the user made in the picker.

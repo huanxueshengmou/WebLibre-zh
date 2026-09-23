@@ -37,7 +37,7 @@ Future<Barcode?> showQrScannerDialog(BuildContext context) async {
     return null;
   }
 
-  return showDialog<Barcode>(
+  return await showDialog<Barcode>(
     context: context,
     anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (_) => const QrScannerDialog(),

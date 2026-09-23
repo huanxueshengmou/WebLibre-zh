@@ -42,6 +42,18 @@ class EngineSettingsRepository extends _$EngineSettingsRepository {
     final db = ref.read(userDatabaseProvider);
     final settings = Map.fromEntries(entries);
 
+    // A blank string is normalized to null: GeckoView treats any non-null
+    // userAgentOverride (even "") as authoritative, permanently overriding
+    // desktop mode's UA. Older installs may still have "" persisted from
+    // before the save path normalized it (see issue #619).
+    final storedUserAgent = settings['userAgent']?.readAs(
+      DriftSqlType.string,
+      db.typeMapping,
+    );
+    final userAgent = (storedUserAgent?.isEmpty ?? false)
+        ? null
+        : storedUserAgent;
+
     return EngineSettings.fromJson({
       'incognitoMode': settings['incognitoMode']?.readAs(
         DriftSqlType.bool,
@@ -61,10 +73,7 @@ class EngineSettingsRepository extends _$EngineSettingsRepository {
       ),
       'globalPrivacyControlEnabled': settings['globalPrivacyControlEnabled']
           ?.readAs(DriftSqlType.bool, db.typeMapping),
-      'userAgent': settings['userAgent']?.readAs(
-        DriftSqlType.string,
-        db.typeMapping,
-      ),
+      'userAgent': userAgent,
       'queryParameterStripping': settings['queryParameterStripping']?.readAs(
         DriftSqlType.string,
         db.typeMapping,
@@ -243,7 +252,7 @@ class EngineSettingsRepository extends _$EngineSettingsRepository {
     final oldJson = current.toJson();
     final newJson = updateWithCurrent(current).toJson();
 
-    return db.transaction(() async {
+    return await db.transaction(() async {
       for (final MapEntry(:key, :value) in newJson.entries) {
         if (oldJson[key] != value) {
           await db.settingDao.updateSetting(key, _partitionKey, value);

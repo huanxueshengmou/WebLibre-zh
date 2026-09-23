@@ -30,6 +30,7 @@ import 'package:weblibre/features/geckoview/features/tabs/data/models/container_
 import 'package:weblibre/features/geckoview/features/tabs/data/models/tab_summary.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/providers.dart';
 import 'package:weblibre/features/geckoview/features/tabs/domain/entities/tab_parent_change.dart';
+import 'package:weblibre/features/user/domain/repositories/general_settings.dart';
 
 part 'tab.g.dart';
 
@@ -140,7 +141,7 @@ class TabDataRepository extends _$TabDataRepository {
     final currentContainerData = await getTabContainerData(tabId);
 
     if (currentContainerData?.metadata.contextualIdentity == null) {
-      return ref
+      return await ref
           .read(tabDatabaseProvider)
           .tabDao
           .assignContainer(tabId, containerId: null);
@@ -211,6 +212,9 @@ class TabDataRepository extends _$TabDataRepository {
           childId: childId,
           parentId: parentId,
           contextId: contextId,
+          childPlacement: ref
+              .read(generalSettingsWithDefaultsProvider)
+              .childTabPlacement,
         );
   }
 

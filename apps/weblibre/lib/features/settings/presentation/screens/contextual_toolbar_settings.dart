@@ -22,7 +22,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:weblibre/core/design/display_features.dart';
+import 'package:weblibre/features/browser_actions/data/models/browser_action.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/contextual_toolbar/data/providers/toolbar_button_configs.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/contextual_toolbar/data/repositories/toolbar_button_config_repository.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/contextual_toolbar/domain/entities/toolbar_config_location.dart';
@@ -31,6 +31,8 @@ import 'package:weblibre/features/geckoview/features/browser/features/contextual
 import 'package:weblibre/features/geckoview/features/browser/features/contextual_toolbar/presentation/toolbar_button_registry.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/contextual_toolbar/presentation/widgets/contextual_toolbar.dart';
 import 'package:weblibre/features/geckoview/features/browser/presentation/widgets/browser_modules/bottom_app_bar.dart';
+import 'package:weblibre/features/gestures/presentation/widgets/gesture_action_picker.dart';
+import 'package:weblibre/features/settings/presentation/widgets/setting_value_tile.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
 import 'package:weblibre/features/user/data/database/definitions.drift.dart';
 import 'package:weblibre/i18n/i18n.dart';
@@ -116,7 +118,7 @@ class ContextualToolbarSettingsScreen extends HookConsumerWidget {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+          padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
           sliver: SliverToBoxAdapter(child: _SectionLabel(label: tr("Enabled"))),
         ),
         if (visibleConfigs.isEmpty)
@@ -154,7 +156,7 @@ class ContextualToolbarSettingsScreen extends HookConsumerWidget {
             },
           ),
         SliverPadding(
-          padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+          padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
           sliver: SliverToBoxAdapter(child: _SectionLabel(label: tr("Disabled"))),
         ),
         if (hiddenConfigs.isEmpty)
@@ -323,170 +325,153 @@ class _ToolbarButtonConfigTile extends HookConsumerWidget {
 
     final longPressActions = def.longPressActions;
 
-    return Material(
-      color: Colors.transparent,
-      child: ListTile(
-        leading: Icon(def.icon),
-        title: Text(def.label),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (hasStatefulFallback)
-              _FallbackPicker(
-                current: ToolbarFallbackChoice.fromStored(config.fallbackId),
-                options: fallbackOptions,
-                onChanged: (newFallback) => repository.assignFallback(
-                  config.buttonId,
-                  (newFallback ?? ToolbarFallbackNone()).toStoredFallbackId(),
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    // Same card treatment as the container list, the other reorderable card
+    // list in the app.
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainer,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: colorScheme.outlineVariant.withValues(alpha: 0.4),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(def.icon, color: colorScheme.onSurface),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Text(
+                      def.label,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: colorScheme.onSurface,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Switch.adaptive(
+                    value: isVisible,
+                    onChanged: (v) => repository.assignVisibility(
+                      config.buttonId,
+                      visible: v,
+                    ),
+                  ),
+                  ReorderableDragStartListener(
+                    index: index,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Icon(
+                        Icons.drag_handle,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // The settings take the card's full width; the right inset
+              // matches the left one past the drag handle's own padding.
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (hasStatefulFallback) ...[
+                      _FallbackPicker(
+                        current: ToolbarFallbackChoice.fromStored(
+                          config.fallbackId,
+                        ),
+                        options: fallbackOptions,
+                        onChanged: (newFallback) => repository.assignFallback(
+                          config.buttonId,
+                          (newFallback ?? ToolbarFallbackNone())
+                              .toStoredFallbackId(),
+                        ),
+                      ),
+                    ],
+                    _LongPressPicker(
+                      builtInActions: longPressActions,
+                      current: config.longPressAction,
+                      onChanged: (action) => repository.assignLongPressAction(
+                        config.buttonId,
+                        action,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            if (longPressActions.isNotEmpty)
-              _LongPressHint(
-                buttonLabel: def.label,
-                icon: def.icon,
-                actions: longPressActions,
-              ),
-          ],
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Switch.adaptive(
-              value: isVisible,
-              onChanged: (v) =>
-                  repository.assignVisibility(config.buttonId, visible: v),
-            ),
-            ReorderableDragStartListener(
-              index: index,
-              child: const Padding(
-                padding: EdgeInsets.all(8),
-                child: Icon(Icons.drag_handle),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _LongPressHint extends StatelessWidget {
-  const _LongPressHint({
-    required this.buttonLabel,
-    required this.icon,
-    required this.actions,
+/// Chooses what holding the button does: its own built-in long press
+/// ([builtInActions], possibly nothing) or any [BrowserAction].
+class _LongPressPicker extends StatelessWidget {
+  const _LongPressPicker({
+    required this.builtInActions,
+    required this.current,
+    required this.onChanged,
   });
 
-  final String buttonLabel;
-  final IconData icon;
-  final List<String> actions;
+  final List<String> builtInActions;
+  final BrowserAction? current;
+  final ValueChanged<BrowserAction?> onChanged;
+
+  /// The button's own long press, named by what it does rather than as a
+  /// generic "default".
+  UnsetActionOption get _builtInOption => builtInActions.isEmpty
+      ? (
+          title: tr("None"),
+          description: tr("Default for this button: holding it does nothing extra"),
+          icon: Icons.block,
+        )
+      : (
+          title: builtInActions.join(', '),
+          description: tr("Default for this button"),
+          icon: Icons.touch_app_outlined,
+        );
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(4),
-      onTap: () => _showLongPressDetails(context),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.touch_app,
-              size: 14,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                tr("Long press available"),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 12,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SizedBox(width: 4),
-            Icon(
-              Icons.info_outline,
-              size: 14,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+    final builtIn = _builtInOption;
 
-  Future<void> _showLongPressDetails(BuildContext context) async {
-    await showModalBottomSheet(
-      context: context,
-      anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (context) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(icon, color: Theme.of(context).colorScheme.primary),
-                    const SizedBox(width: 12),
-                    Text(
-                      tr("{0} Long Press", [buttonLabel]),
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  tr("Press and hold this button to access:"),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                ...actions.map(
-                  (action) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.touch_app,
-                          size: 18,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            action,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-          ),
+    return SettingValueTile(
+      padding: _settingPadding,
+      icon: Icons.touch_app_outlined,
+      title: tr("Long press"),
+      description: tr("What holding the button does"),
+      value: current?.title ?? builtIn.title,
+      valueIcon: current?.icon ?? builtIn.icon,
+      onTap: () async {
+        final picked = await showOptionalBrowserActionPicker(
+          context,
+          selected: current,
+          unsetOption: builtIn,
         );
+        if (picked != null && picked.action != current) {
+          onChanged(picked.action);
+        }
       },
     );
   }
 }
 
+/// Chooses the button that takes this one's place while its own action is
+/// unavailable, or none to show it greyed out.
 class _FallbackPicker extends StatelessWidget {
   const _FallbackPicker({
     required this.current,
@@ -500,35 +485,51 @@ class _FallbackPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<ToolbarFallbackChoice>(
-      value: current,
-      hint: Text(tr("No fallback")),
-      isExpanded: true,
-      isDense: true,
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
-      underline: const SizedBox.shrink(),
-      items: [
-        DropdownMenuItem(
-          value: ToolbarFallbackNone(),
-          child: Text(tr("No fallback")),
+    final currentId = current.resolveRuntimeFallbackId();
+    final currentDef = currentId == null
+        ? null
+        : toolbarButtonRegistryById[currentId];
+    final currentLabel = currentId == null
+        ? 'Grey out'
+        : (currentDef?.label ?? currentId);
+    final checkColor = Theme.of(context).colorScheme.primary;
+
+    Widget? check(bool selected) =>
+        selected ? Icon(Icons.check, size: 18, color: checkColor) : null;
+
+    return MenuAnchor(
+      menuChildren: [
+        MenuItemButton(
+          leadingIcon: const Icon(Icons.block, size: 18),
+          trailingIcon: check(currentId == null),
+          onPressed: () => onChanged(ToolbarFallbackNone()),
+          child: Text(tr("Grey out")),
         ),
         for (final opt in options)
-          DropdownMenuItem(
-            value: ToolbarFallbackButton(buttonId: opt.spec.id.name),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(opt.icon, size: 16),
-                const SizedBox(width: 8),
-                Text(opt.label),
-              ],
-            ),
+          MenuItemButton(
+            leadingIcon: Icon(opt.icon, size: 18),
+            trailingIcon: check(currentId == opt.spec.id.name),
+            onPressed: () =>
+                onChanged(ToolbarFallbackButton(buttonId: opt.spec.id.name)),
+            child: Text(opt.label),
           ),
       ],
-      onChanged: onChanged,
+      builder: (context, controller, _) => SettingValueTile(
+        padding: _settingPadding,
+        icon: Icons.swap_horiz,
+        title: tr("If unavailable"),
+        description: tr("Shown instead while this button can't be used"),
+        value: currentLabel,
+        valueIcon: currentDef?.icon ?? Icons.block,
+        onTap: () => controller.isOpen ? controller.close() : controller.open(),
+      ),
     );
   }
 }
+
+/// The card already pads its sides, so a setting only needs room above and
+/// below; its icon then lines up under the button's own.
+const _settingPadding = EdgeInsets.symmetric(vertical: 8);
 
 class _ToolbarPreviewDelegate extends SliverPersistentHeaderDelegate {
   const _ToolbarPreviewDelegate({

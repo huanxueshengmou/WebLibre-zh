@@ -290,6 +290,12 @@ enum BrowserAction {
     Icons.bookmark_border,
     BrowserActionCategory.page,
   ),
+  sharePage(
+    'Share',
+    'Share the current page',
+    Icons.share,
+    BrowserActionCategory.page,
+  ),
   translatePage(
     'Translate',
     'Open the page translation sheet',
@@ -369,7 +375,7 @@ enum BrowserAction {
   clearBrowsingData(
     'Clear Browsing Data',
     'Choose browsing data to delete',
-    Icons.delete_sweep_outlined,
+    MdiIcons.fire,
     BrowserActionCategory.app,
   ),
   moveToBackground(

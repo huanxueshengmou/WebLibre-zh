@@ -231,7 +231,7 @@ class StartupPhaseHost extends HookWidget {
       _pumpFrame();
       return phase;
     }
-    return _settle(phase);
+    return await _settle(phase);
   }
 }
 

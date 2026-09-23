@@ -31,8 +31,42 @@ import 'package:weblibre/i18n/i18n.dart';
 Future<BrowserAction?> showGestureActionPicker(
   BuildContext context, {
   required BrowserAction selected,
+}) async {
+  final picked = await _showPicker(context, selected: selected);
+  return picked?.action;
+}
+
+/// An entry listed above every action that stands for choosing none of them,
+/// such as "keep the button's own behaviour".
+typedef UnsetActionOption = ({String title, String description, IconData icon});
+
+/// Like [showGestureActionPicker], but the list starts with [unsetOption] and
+/// [selected] may be null to mark that entry as the current one. [actions]
+/// narrows the list to what the trigger can run.
+///
+/// Returns null if dismissed; otherwise a record whose `action` is null when
+/// [unsetOption] was chosen.
+Future<({BrowserAction? action})?> showOptionalBrowserActionPicker(
+  BuildContext context, {
+  required BrowserAction? selected,
+  required UnsetActionOption unsetOption,
+  List<BrowserAction> actions = BrowserAction.values,
 }) {
-  return showModalBottomSheet<BrowserAction>(
+  return _showPicker(
+    context,
+    selected: selected,
+    unsetOption: unsetOption,
+    actions: actions,
+  );
+}
+
+Future<({BrowserAction? action})?> _showPicker(
+  BuildContext context, {
+  required BrowserAction? selected,
+  UnsetActionOption? unsetOption,
+  List<BrowserAction> actions = BrowserAction.values,
+}) {
+  return showModalBottomSheet<({BrowserAction? action})>(
     context: context,
     anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     isScrollControlled: true,
@@ -40,14 +74,24 @@ Future<BrowserAction?> showGestureActionPicker(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
-    builder: (context) => _GestureActionPicker(selected: selected),
+    builder: (context) => _GestureActionPicker(
+      selected: selected,
+      unsetOption: unsetOption,
+      actions: actions,
+    ),
   );
 }
 
 class _GestureActionPicker extends StatelessWidget {
-  final BrowserAction selected;
+  final BrowserAction? selected;
+  final UnsetActionOption? unsetOption;
+  final List<BrowserAction> actions;
 
-  const _GestureActionPicker({required this.selected});
+  const _GestureActionPicker({
+    required this.selected,
+    required this.actions,
+    this.unsetOption,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +99,7 @@ class _GestureActionPicker extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     final byCategory = <BrowserActionCategory, List<BrowserAction>>{};
-    for (final action in BrowserAction.values) {
+    for (final action in actions) {
       byCategory.putIfAbsent(action.category, () => []).add(action);
     }
 
@@ -83,6 +127,17 @@ class _GestureActionPicker extends StatelessWidget {
                 controller: scrollController,
                 padding: const EdgeInsets.only(bottom: 8),
                 children: [
+                  if (unsetOption case final unset?)
+                    ListTile(
+                      leading: Icon(unset.icon),
+                      title: Text(unset.title),
+                      subtitle: Text(unset.description),
+                      selected: selected == null,
+                      trailing: selected == null
+                          ? Icon(Icons.check, color: colorScheme.primary)
+                          : null,
+                      onTap: () => Navigator.of(context).pop((action: null)),
+                    ),
                   for (final category in BrowserActionCategory.values)
                     if (byCategory[category] case final actions?
                         when actions.isNotEmpty) ...[
@@ -105,7 +160,8 @@ class _GestureActionPicker extends StatelessWidget {
                           trailing: action == selected
                               ? Icon(Icons.check, color: colorScheme.primary)
                               : null,
-                          onTap: () => Navigator.of(context).pop(action),
+                          onTap: () =>
+                              Navigator.of(context).pop((action: action)),
                         ),
                     ],
                 ],

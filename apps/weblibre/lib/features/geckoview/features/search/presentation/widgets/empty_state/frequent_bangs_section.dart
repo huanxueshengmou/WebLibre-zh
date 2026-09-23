@@ -46,7 +46,7 @@ List<BangData> buildFrequentBangDisplayList({
   final ranked = mergePinnedBangs(pinned: pinnedBangs, rest: frequentBangs);
 
   return [
-    if (selectedBang != null) selectedBang,
+    ?selectedBang,
     ...ranked.where(
       (bang) => bang.toKey() != selectedKey && bang.toKey() != defaultKey,
     ),

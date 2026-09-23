@@ -763,6 +763,14 @@
   ],
   "interpolated": false
  },
+ "After opener": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
+  ],
+  "interpolated": false
+ },
  "All": {
   "count": 2,
   "deferred_count": 0,
@@ -1676,6 +1684,14 @@
   ],
   "interpolated": false
  },
+ "At the end": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Attribution": {
   "count": 0,
   "deferred_count": 3,
@@ -2542,6 +2558,14 @@
   ],
   "interpolated": false
  },
+ "Built in, cannot be changed": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
+  ],
+  "interpolated": false
+ },
  "Built-in PDF Viewer": {
   "count": 1,
   "deferred_count": 1,
@@ -3109,6 +3133,14 @@
   ],
   "interpolated": false
  },
+ "Choose what each swipe does in Gestures": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Choose what happens after a tab opens in the background": {
   "count": 0,
   "deferred_count": 1,
@@ -3117,7 +3149,7 @@
   ],
   "interpolated": false
  },
- "Choose what horizontal swipes on the tab bar do": {
+ "Choose what swipes on the tab bar do": {
   "count": 0,
   "deferred_count": 1,
   "files": [
@@ -3141,11 +3173,27 @@
   ],
   "interpolated": false
  },
+ "Choose where tabs opened from another tab are inserted": {
+  "count": 0,
+  "deferred_count": 1,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Choose where to store your backups.": {
   "count": 1,
   "deferred_count": 0,
   "files": [
    "features/user/domain/presentation/screens/profile_backup_list.dart"
+  ],
+  "interpolated": false
+ },
+ "Choose whether a tab opened from another tab follows its opener or goes to the end. The opener is still remembered either way, so the tree view is unaffected": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
   ],
   "interpolated": false
  },
@@ -3237,6 +3285,14 @@
   ],
   "interpolated": false
  },
+ "Chosen per button when customizing the toolbar": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
+  ],
+  "interpolated": false
+ },
  "Circumvention": {
   "count": 0,
   "deferred_count": 1,
@@ -3300,9 +3356,11 @@
   "interpolated": false
  },
  "Clear Data": {
-  "count": 1,
+  "count": 3,
   "deferred_count": 0,
   "files": [
+   "features/geckoview/features/browser/features/contextual_toolbar/presentation/toolbar_button_registry.dart",
+   "features/geckoview/features/browser/features/menu/domain/entities/menu_layout.dart",
    "features/geckoview/features/browser/presentation/widgets/tab_view/dialogs/clear_container_data_dialog.dart"
   ],
   "interpolated": false
@@ -3353,6 +3411,14 @@
   "deferred_count": 0,
   "files": [
    "features/small_web/presentation/widgets/small_web_history_list.dart"
+  ],
+  "interpolated": false
+ },
+ "Clear browsing data": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/geckoview/features/browser/features/contextual_toolbar/presentation/toolbar_button_registry.dart"
   ],
   "interpolated": false
  },
@@ -3748,14 +3814,6 @@
   "deferred_count": 0,
   "files": [
    "features/settings/presentation/screens/search_settings.dart"
-  ],
-  "interpolated": false
- },
- "Configuration": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/gestures/presentation/screens/gesture_settings_screen.dart"
   ],
   "interpolated": false
  },
@@ -4844,6 +4902,22 @@
   ],
   "interpolated": false
  },
+ "Default for this button": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Default for this button: holding it does nothing extra": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Default on": {
   "count": 1,
   "deferred_count": 0,
@@ -5408,6 +5482,14 @@
   ],
   "interpolated": false
  },
+ "Do nothing": {
+  "count": 0,
+  "deferred_count": 1,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
+  ],
+  "interpolated": false
+ },
  "Do you want to erase all existing bookmarks before importing?\n\nChoose \"Replace\" to delete existing bookmarks, or \"Merge\" to keep them.": {
   "count": 1,
   "deferred_count": 0,
@@ -5615,8 +5697,16 @@
   ],
   "interpolated": false
  },
- "Draw stroke gestures on web pages to trigger actions": {
+ "Draw strokes on a page to run actions": {
   "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
+  ],
+  "interpolated": false
+ },
+ "Drawn gestures": {
+  "count": 2,
   "deferred_count": 0,
   "files": [
    "features/gestures/presentation/screens/gesture_settings_screen.dart"
@@ -5814,14 +5904,6 @@
   "deferred_count": 0,
   "files": [
    "features/geckoview/features/browser/presentation/widgets/tab_view/dialogs/enable_ai_tab_suggestions_dialog.dart"
-  ],
-  "interpolated": false
- },
- "Enable Gestures": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/gestures/presentation/screens/gesture_settings_screen.dart"
   ],
   "interpolated": false
  },
@@ -7348,6 +7430,14 @@
   ],
   "interpolated": false
  },
+ "Grey out": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Group Controls": {
   "count": 1,
   "deferred_count": 0,
@@ -7698,6 +7788,14 @@
   "deferred_count": 0,
   "files": [
    "features/web_feed/presentation/screens/feed_edit.dart"
+  ],
+  "interpolated": false
+ },
+ "If unavailable": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
   ],
   "interpolated": false
  },
@@ -8661,11 +8759,19 @@
   ],
   "interpolated": false
  },
- "Long press available": {
+ "Long press": {
   "count": 1,
   "deferred_count": 0,
   "files": [
    "features/settings/presentation/screens/contextual_toolbar_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Long press on buttons": {
+  "count": 2,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
   ],
   "interpolated": false
  },
@@ -9144,14 +9250,6 @@
   ],
   "interpolated": false
  },
- "Navigate Sequential Tabs": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/screens/browsing_settings.dart"
-  ],
-  "interpolated": false
- },
  "Navigation": {
   "count": 0,
   "deferred_count": 1,
@@ -9184,6 +9282,14 @@
   "deferred_count": 0,
   "files": [
    "features/bangs/presentation/screens/edit.dart"
+  ],
+  "interpolated": false
+ },
+ "New Child Tab Position": {
+  "count": 1,
+  "deferred_count": 1,
+  "files": [
+   "features/settings/presentation/screens/browsing_settings.dart"
   ],
   "interpolated": false
  },
@@ -9494,14 +9600,6 @@
   ],
   "interpolated": true
  },
- "No fallback": {
-  "count": 2,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
-  ],
-  "interpolated": false
- },
  "No forward pages": {
   "count": 1,
   "deferred_count": 0,
@@ -9729,11 +9827,12 @@
   "interpolated": false
  },
  "None": {
-  "count": 2,
+  "count": 3,
   "deferred_count": 0,
   "files": [
    "features/geckoview/features/tabs/presentation/screens/container_edit.dart",
-   "features/proxy/presentation/screens/proxy_routing_settings.dart"
+   "features/proxy/presentation/screens/proxy_routing_settings.dart",
+   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
   ],
   "interpolated": false
  },
@@ -10862,6 +10961,14 @@
   ],
   "interpolated": false
  },
+ "Pinch": {
+  "count": 2,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
+  ],
+  "interpolated": false
+ },
  "Pinned": {
   "count": 1,
   "deferred_count": 0,
@@ -10956,14 +11063,6 @@
   "deferred_count": 1,
   "files": [
    "features/settings/presentation/screens/experimental_settings.dart"
-  ],
-  "interpolated": false
- },
- "Press and hold this button to access:": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
   ],
   "interpolated": false
  },
@@ -11396,6 +11495,14 @@
   "deferred_count": 1,
   "files": [
    "features/settings/presentation/screens/browsing_settings.dart"
+  ],
+  "interpolated": false
+ },
+ "Pull to refresh": {
+  "count": 2,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
   ],
   "interpolated": false
  },
@@ -12238,6 +12345,14 @@
   "files": [
    "features/geckoview/features/browser/presentation/widgets/tab_view/tab_view_header.dart",
    "features/geckoview/features/history/presentation/screens/history.dart"
+  ],
+  "interpolated": false
+ },
+ "Reset Swipes to Defaults": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
   ],
   "interpolated": false
  },
@@ -13882,6 +13997,14 @@
   ],
   "interpolated": false
  },
+ "Shown instead while this button can't be used": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
+  ],
+  "interpolated": false
+ },
  "Shown on home while this container is selected": {
   "count": 1,
   "deferred_count": 0,
@@ -14411,14 +14534,6 @@
   ],
   "interpolated": false
  },
- "Stroke gestures for browser actions": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/screens/settings.dart"
-  ],
-  "interpolated": false
- },
  "Stroke interval": {
   "count": 1,
   "deferred_count": 1,
@@ -14628,6 +14743,14 @@
   ],
   "interpolated": false
  },
+ "Swipe down at the top of a page to reload it": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
+  ],
+  "interpolated": false
+ },
  "Swipe down on pages to reload them": {
   "count": 1,
   "deferred_count": 1,
@@ -14636,19 +14759,11 @@
   ],
   "interpolated": false
  },
- "Swipe left/right to move through tabs in order": {
+ "Swipes on the tab bar and tabs, drawn gestures": {
   "count": 1,
   "deferred_count": 0,
   "files": [
-   "features/settings/presentation/screens/browsing_settings.dart"
-  ],
-  "interpolated": false
- },
- "Swipe to toggle between current and previously opened tab": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/screens/browsing_settings.dart"
+   "features/settings/presentation/screens/settings.dart"
   ],
   "interpolated": false
  },
@@ -14683,14 +14798,6 @@
    "features/user/domain/presentation/dialogs/switch_profile_dialog.dart"
   ],
   "interpolated": true
- },
- "Switch to Last Used Tab": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/screens/browsing_settings.dart"
-  ],
-  "interpolated": false
  },
  "Switch to global routing above to pick the proxy that carries every regular tab.": {
   "count": 1,
@@ -14909,7 +15016,7 @@
   ],
   "interpolated": false
  },
- "Tab Bar Swipe Behavior": {
+ "Tab Bar Swipes": {
   "count": 1,
   "deferred_count": 1,
   "files": [
@@ -15433,6 +15540,14 @@
   "deferred_count": 0,
   "files": [
    "features/bangs/presentation/screens/edit.dart"
+  ],
+  "interpolated": false
+ },
+ "The swipe is ignored": {
+  "count": 0,
+  "deferred_count": 1,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
   ],
   "interpolated": false
  },
@@ -16056,6 +16171,14 @@
   ],
   "interpolated": false
  },
+ "Toolbar": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
+  ],
+  "interpolated": false
+ },
  "Toolbar & Layout": {
   "count": 3,
   "deferred_count": 0,
@@ -16334,6 +16457,14 @@
   "deferred_count": 0,
   "files": [
    "features/settings/presentation/widgets/toolbar_layout_content.dart"
+  ],
+  "interpolated": false
+ },
+ "Two-finger swipe": {
+  "count": 2,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
   ],
   "interpolated": false
  },
@@ -17260,6 +17391,14 @@
   ],
   "interpolated": false
  },
+ "Web Pages": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/gestures/presentation/screens/gesture_settings_screen.dart"
+  ],
+  "interpolated": false
+ },
  "Web push delivery, distributor, and site subscriptions.": {
   "count": 1,
   "deferred_count": 0,
@@ -17434,6 +17573,14 @@
   "deferred_count": 0,
   "files": [
    "features/onboarding/presentation/pages/welcome.dart"
+  ],
+  "interpolated": false
+ },
+ "What holding the button does": {
+  "count": 1,
+  "deferred_count": 0,
+  "files": [
+   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
   ],
   "interpolated": false
  },
@@ -17843,14 +17990,6 @@
   "deferred_count": 0,
   "files": [
    "features/user/domain/presentation/dialogs/profile_maintenance_dialogs.dart"
-  ],
-  "interpolated": true
- },
- "{0} Long Press": {
-  "count": 1,
-  "deferred_count": 0,
-  "files": [
-   "features/settings/presentation/screens/contextual_toolbar_settings.dart"
   ],
   "interpolated": true
  },

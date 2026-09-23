@@ -22,6 +22,13 @@ def main():
     ], capture_output=True, text=True, encoding="utf-8", check=True)
     data = json.loads(result.stdout)
     assert data["on"]["push"]["branches"] == ["main"]
+    translate = data["jobs"]["translate"]
+    push = next(step for step in translate["steps"] if step.get("id") == "push_zh")["run"]
+    assert push.index("git add -A") < push.index("preserve_workflows.py") < push.index("git write-tree")
+    assert 'workflow_source="${previous_sha:-$GITHUB_SHA}"' in push
+    assert '-p "$workflow_source"' in push
+    assert "git add" not in push[push.index("preserve_workflows.py"):]
+    assert any("test_preserve_workflows.py" in step.get("run", "") for step in translate["steps"])
     count = 0
     for name, job in data["jobs"].items():
         ids = [step["id"] for step in job["steps"] if "id" in step]

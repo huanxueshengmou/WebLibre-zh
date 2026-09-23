@@ -1,6 +1,6 @@
 name: Chinese build
 
-# main 保存工具和翻译缓存；zh 的内容每轮从干净上游重新生成。
+# main 保存工具和翻译缓存；zh 应用源码每轮从干净上游重新生成，工作流沿用 fork。
 # 比较远端 zh 的 tree，构建和滚动发布始终使用同一个不可变 generated_sha。
 on:
   schedule:
@@ -33,7 +33,7 @@ env:
   UPSTREAM_REPO: FaFre/WebLibre
   UPSTREAM_BRANCH: main
   OUTPUT_BRANCH: zh
-  FLUTTER_VERSION: "3.47.0"
+  FLUTTER_VERSION: "3.47.5"
   MELOS_VERSION: "7.8.1"
   GO_VERSION: "1.25.x"
   NODE_VERSION: "20"
@@ -101,7 +101,9 @@ jobs:
         run: dart tools/i18n/test_locale_policy.dart
 
       - name: Validate workflow syntax and preflight order
-        run: python tools/i18n/test_ci.py
+        run: |
+          python tools/i18n/test_ci.py
+          python tools/i18n/test_preserve_workflows.py
 
       - name: Patch UI consumers of constant data
         run: python tools/i18n/patch_ui.py ../zh
@@ -164,7 +166,6 @@ jobs:
           git config user.name "weblibre-zh bot"
           git config user.email "weblibre-zh@users.noreply.github.com"
           git add -A
-          generated_tree="$(git write-tree)"
           remote_ref="$(git ls-remote --heads origin "refs/heads/${OUTPUT_BRANCH}")"
           previous_sha="${remote_ref%%[[:space:]]*}"
           previous_tree=""
@@ -172,14 +173,20 @@ jobs:
             git fetch --no-tags origin "$previous_sha"
             previous_tree="$(git rev-parse "${previous_sha}^{tree}")"
           fi
+          # GITHUB_TOKEN 可推送源码，但不能新增或修改工作流。精确保留远端 zh
+          # 的工作流（包括它没有的文件）；首次生成时使用触发任务的 fork 提交。
+          workflow_source="${previous_sha:-$GITHUB_SHA}"
+          python "$GITHUB_WORKSPACE/tools/i18n/preserve_workflows.py" \
+            --repo . --source "$workflow_source"
+          generated_tree="$(git write-tree)"
           if [[ "$generated_tree" == "$previous_tree" ]]; then
             generated_sha="$previous_sha"
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "生成树与远端 ${OUTPUT_BRANCH} 完全一致，复用 $generated_sha。"
           else
-            # 内容来自干净上游，父提交沿用远端 zh；无需强推任何分支。
+            # 源码来自干净上游，工作流与父提交一致；无需强推任何分支。
             generated_sha="$(git commit-tree "$generated_tree" \
-              -p "${previous_sha:-$UPSTREAM_SHA}" \
+              -p "$workflow_source" \
               -m "zh: localise ${UPSTREAM_REPO}@${UPSTREAM_SHA:0:12}")"
             git push origin "${generated_sha}:refs/heads/${OUTPUT_BRANCH}"
             echo "changed=true" >> "$GITHUB_OUTPUT"

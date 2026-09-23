@@ -42,6 +42,8 @@
 
 每次生成与远端 `zh` 的实际文件树比较。有变化则追加生成提交，没有变化则复用原提交；构建使用不可变的 `generated_sha`，不会误用运行过程中移动的分支。只有滚动标签 `zh-latest` 会在发布时移动。
 
+应用源码继续同步最新上游，但 `.github/workflows/` 保留远端 `zh` 已有内容，避免默认 `GITHUB_TOKEN` 因修改工作流而拒绝整次推送。首次生成时使用触发任务的 `main` 提交中的工作流。中文版构建由 `main` 的 `i18n.yml` 控制；工作流与构建工具版本由维护者单独更新。
+
 ## 为什么这次使用官方 Dart 解析
 
 Dart 常量初始化器不能调用运行时翻译函数。单靠逗号、括号和关键字猜测作用范围，容易把泛型参数中的逗号、三元表达式、构造函数初始化列表判断错。
@@ -78,7 +80,7 @@ Dart 常量初始化器不能调用运行时翻译函数。单靠逗号、括号
 
 ## 本地验证
 
-需要 Python、Dart 3.13.3；整项目检查另需 Flutter 3.47.0。Dart AST 依赖固定在 `tools/i18n/dart_ast/pubspec.lock`。Windows 可设置 `DART` 为 `dart.exe` 的绝对路径。不要把 `.dart_tool`、SDK、虚拟环境或签名私钥提交进仓库。
+需要 Python、Dart 3.13.3；整项目检查另需 Flutter 3.47.5。Dart AST 依赖固定在 `tools/i18n/dart_ast/pubspec.lock`。Windows 可设置 `DART` 为 `dart.exe` 的绝对路径。不要把 `.dart_tool`、SDK、虚拟环境或签名私钥提交进仓库。
 
 ```bash
 # 在 tools/i18n/dart_ast 目录运行一次
@@ -87,6 +89,7 @@ Dart 常量初始化器不能调用运行时翻译函数。单靠逗号、括号
 python tools/i18n/test_i18n.py
 dart tools/i18n/test_locale_policy.dart
 python tools/i18n/test_ci.py
+python tools/i18n/test_preserve_workflows.py
 
 # TARGET 必须是一份独立的、干净的上游 checkout
 python tools/i18n/patch_ui.py "$TARGET"

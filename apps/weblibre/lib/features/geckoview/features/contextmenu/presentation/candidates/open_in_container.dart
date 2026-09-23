@@ -27,6 +27,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:uuid/enums.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/geckoview/domain/entities/tab_container_selection.dart';
 import 'package:weblibre/features/geckoview/domain/providers/tab_state.dart';
@@ -72,6 +73,7 @@ class OpenInContainer extends HookConsumerWidget {
       onTap: () async {
         final result = await showModalBottomSheet<_PickerResult?>(
           context: context,
+          anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
           builder: (context) => _ContainerPickerSheet(),
         );
 
@@ -86,7 +88,7 @@ class OpenInContainer extends HookConsumerWidget {
 
             if (!context.mounted) return null;
 
-            return ContainerCreateRoute(
+            return await ContainerCreateRoute(
               containerData: jsonEncode(draft.toJson()),
             ).push<ContainerData?>(context);
           }(),

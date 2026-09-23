@@ -30,6 +30,7 @@ import 'package:weblibre/features/geckoview/features/browser/features/contextual
 import 'package:weblibre/features/geckoview/features/browser/features/contextual_toolbar/domain/services/toolbar_button_resolution.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/contextual_toolbar/presentation/models/contextual_toolbar_scope.dart';
 import 'package:weblibre/features/geckoview/features/browser/features/contextual_toolbar/presentation/toolbar_button_registry.dart';
+import 'package:weblibre/features/geckoview/features/browser/features/contextual_toolbar/presentation/widgets/resolved_toolbar_button.dart';
 
 class ContextualToolbar extends HookConsumerWidget {
   const ContextualToolbar({
@@ -37,6 +38,9 @@ class ContextualToolbar extends HookConsumerWidget {
     required this.selectedTabId,
     required this.displayedSheet,
     this.axis = Axis.horizontal,
+    this.wrap = false,
+    this.showConfiguredButtons = true,
+    this.trailing = const [],
   });
 
   final String? selectedTabId;
@@ -45,6 +49,17 @@ class ContextualToolbar extends HookConsumerWidget {
   /// Layout direction, forwarded to [ContextualToolbarView]. Vertical for the
   /// side rail.
   final Axis axis;
+
+  /// Forwarded to [ContextualToolbarView.wrap].
+  final bool wrap;
+
+  /// Whether the user's configured contextual buttons are included. Off when
+  /// only [trailing] should show, for a wide side panel whose contextual bar
+  /// is disabled but which still lays the main toolbar actions out here.
+  final bool showConfiguredButtons;
+
+  /// Forwarded to [ContextualToolbarView.trailing].
+  final List<Widget> trailing;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,30 +88,31 @@ class ContextualToolbar extends HookConsumerWidget {
       ),
       [configs, scope],
     );
+    final configById = useMemoized(
+      () => {for (final config in configs.value) config.buttonId: config},
+      [configs],
+    );
 
-    final buttons = resolvedButtons
-        .map((button) => _buildButton(scope, context, ref, button))
-        .toList();
+    final buttons = showConfiguredButtons
+        ? resolvedButtons
+              .map(
+                (button) => buildResolvedToolbarButton(
+                  scope,
+                  context,
+                  ref,
+                  button,
+                  configById,
+                ),
+              )
+              .toList()
+        : <Widget>[];
 
-    return ContextualToolbarView(buttons: buttons, axis: axis);
-  }
-
-  Widget _buildButton(
-    ContextualToolbarScope scope,
-    BuildContext context,
-    WidgetRef ref,
-    ContextualToolbarButtonResolution button,
-  ) {
-    final def = toolbarButtonRegistryById[button.buttonId];
-    if (def == null) return const SizedBox.shrink();
-
-    final child = def.builder(scope, context, ref);
-
-    if (button.isEnabled) {
-      return child;
-    }
-
-    return Opacity(opacity: 0.38, child: IgnorePointer(child: child));
+    return ContextualToolbarView(
+      buttons: buttons,
+      axis: axis,
+      wrap: wrap,
+      trailing: trailing,
+    );
   }
 }
 
@@ -105,6 +121,8 @@ class ContextualToolbarView extends StatelessWidget {
     super.key,
     required this.buttons,
     this.axis = Axis.horizontal,
+    this.wrap = false,
+    this.trailing = const [],
   });
 
   final List<Widget> buttons;
@@ -113,10 +131,42 @@ class ContextualToolbarView extends StatelessWidget {
   /// top/bottom tab bar, vertical for the side rail.
   final Axis axis;
 
+  /// Lays every button out in rows that wrap, ignoring [axis].
+  ///
+  /// For a side panel wide enough for several buttons per row: a single column
+  /// would spend a row of height on each, and a scrolling row would hide some
+  /// of the buttons the user configured.
+  final bool wrap;
+
+  /// Buttons placed after [buttons] in the same wrap. Only used with [wrap].
+  final List<Widget> trailing;
+
   static const _minButtonWidth = 48.0;
 
   @override
   Widget build(BuildContext context) {
+    if (wrap) {
+      final children = [...buttons, ...trailing];
+      if (children.isEmpty) return const SizedBox.shrink();
+
+      return Wrap(
+        // Spread across the panel rather than packed to one side. Each row is
+        // spaced on its own, so a short last row spreads out too; a zero-width
+        // child would still take a share of the gaps, so callers leave out
+        // buttons that render nothing.
+        alignment: WrapAlignment.spaceEvenly,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          // A Wrap offers each child the whole row, and some buttons (the
+          // tab-count box) centre themselves in whatever width they get,
+          // claiming a row of their own. Free the width so each shrink-wraps,
+          // as the narrow rail's column does.
+          for (final child in children)
+            UnconstrainedBox(constrainedAxis: Axis.vertical, child: child),
+        ],
+      );
+    }
+
     if (buttons.isEmpty) return const SizedBox.shrink();
 
     if (axis == Axis.vertical) {

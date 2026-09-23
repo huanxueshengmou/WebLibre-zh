@@ -20,7 +20,9 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:fast_equatable/fast_equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:weblibre/features/gestures/data/models/gesture_action.dart';
+import 'package:weblibre/features/browser_actions/data/models/browser_action.dart';
+import 'package:weblibre/features/gestures/data/models/built_in_gesture.dart';
+import 'package:weblibre/features/user/data/models/general_settings.dart';
 
 part 'gesture_settings.g.dart';
 
@@ -51,13 +53,13 @@ const maxGestureMinSuggestionStroke = 5;
 
 /// Default gesture-to-action bindings, aligned with the reference add-on's
 /// defaults for the actions WebLibre currently supports.
-const defaultGestureBindings = <String, GestureAction>{
-  'D-L': GestureAction.forward,
-  'D-R': GestureAction.back,
-  'R-D': GestureAction.scrollTop,
-  'R-U': GestureAction.scrollBottom,
-  'D-R-U': GestureAction.reload,
-  'L-D-R': GestureAction.closeTab,
+const defaultGestureBindings = <String, BrowserAction>{
+  'D-L': BrowserAction.forward,
+  'D-R': BrowserAction.back,
+  'R-D': BrowserAction.scrollTop,
+  'R-U': BrowserAction.scrollBottom,
+  'D-R-U': BrowserAction.reload,
+  'L-D-R': BrowserAction.closeTab,
 };
 
 @CopyWith()
@@ -105,9 +107,21 @@ class GestureSettings with FastEquatable {
   /// equals or is a subdomain of any entry (see `hostMatchesRule`).
   final List<String> excludedSites;
 
-  /// Canonical gesture key → action. Keys follow the grammar documented on
-  /// [GestureStroke].
-  final Map<String, GestureAction> bindings;
+  /// The user's changes to [defaultGestureBindings], by canonical gesture key:
+  /// a key mapped to an action adds or replaces that binding, a key mapped to
+  /// null removes a default one.
+  ///
+  /// Stored as changes rather than as the full table so a gesture added to the
+  /// defaults later still reaches someone who has edited their bindings.
+  final Map<String, BrowserAction?> bindingOverrides;
+
+  /// The user's changes to what each [BuiltInGesture] does: a gesture mapped
+  /// to an action runs that instead of its default, one mapped to null does
+  /// nothing. Absent gestures keep [BuiltInGesture.defaultAction].
+  ///
+  /// Independent of [enabled]: these swipes are not drawn on web content and
+  /// were always on.
+  final Map<BuiltInGesture, BrowserAction?> builtInOverrides;
 
   GestureSettings({
     required this.enabled,
@@ -121,7 +135,8 @@ class GestureSettings with FastEquatable {
     required this.suggestNext,
     required this.minSuggestionStroke,
     required this.excludedSites,
-    required this.bindings,
+    required this.bindingOverrides,
+    required this.builtInOverrides,
   });
 
   GestureSettings.withDefaults({
@@ -136,7 +151,8 @@ class GestureSettings with FastEquatable {
     bool? suggestNext,
     int? minSuggestionStroke,
     List<String>? excludedSites,
-    Map<String, GestureAction>? bindings,
+    Map<String, BrowserAction?>? bindingOverrides,
+    Map<BuiltInGesture, BrowserAction?>? builtInOverrides,
   }) : enabled = enabled ?? false,
        active = active ?? true,
        strokeSize = strokeSize ?? defaultGestureStrokeSize,
@@ -150,10 +166,80 @@ class GestureSettings with FastEquatable {
        minSuggestionStroke =
            minSuggestionStroke ?? defaultGestureMinSuggestionStroke,
        excludedSites = excludedSites ?? const [],
-       bindings = bindings ?? defaultGestureBindings;
+       bindingOverrides = bindingOverrides ?? const {},
+       builtInOverrides = builtInOverrides ?? const {};
 
   /// Whether the recognizer should actually run.
   bool get effectiveEnabled => enabled && active;
+
+  /// Canonical gesture key → action: [defaultGestureBindings] with
+  /// [bindingOverrides] applied. Keys follow the grammar documented on
+  /// [GestureStroke].
+  Map<String, BrowserAction> get bindings => {
+    for (final MapEntry(:key, :value) in defaultGestureBindings.entries)
+      if (!bindingOverrides.containsKey(key)) key: value,
+    for (final MapEntry(:key, :value) in bindingOverrides.entries) key: ?value,
+  };
+
+  /// Whether any binding differs from the defaults.
+  bool get hasCustomBindings => bindingOverrides.isNotEmpty;
+
+  /// Binds [gestureKey] to [action]. When an existing binding is being edited,
+  /// [replacedKey] is its previous gesture, which is unbound first.
+  GestureSettings withBinding(
+    String gestureKey,
+    BrowserAction action, {
+    String? replacedKey,
+  }) {
+    final settings = replacedKey != null && replacedKey != gestureKey
+        ? withBindingRemoved(replacedKey)
+        : this;
+    return settings._withOverride(gestureKey, action);
+  }
+
+  GestureSettings withBindingRemoved(String gestureKey) =>
+      _withOverride(gestureKey, null);
+
+  /// Discards every binding change.
+  GestureSettings withBindingsReset() => copyWith.bindingOverrides(const {});
+
+  /// Records [action] for [gestureKey], storing nothing when that is what the
+  /// defaults say anyway.
+  GestureSettings _withOverride(String gestureKey, BrowserAction? action) {
+    final overrides = {...bindingOverrides};
+    if (defaultGestureBindings[gestureKey] == action) {
+      overrides.remove(gestureKey);
+    } else {
+      overrides[gestureKey] = action;
+    }
+    return copyWith.bindingOverrides(overrides);
+  }
+
+  /// What [gesture] does, or null when the user switched it off.
+  /// [legacyTabBarSwipe] is the general setting that still decides the default
+  /// of the swipes along the tab bar (see [BuiltInGesture.defaultAction]).
+  BrowserAction? builtInBinding(
+    BuiltInGesture gesture, {
+    required TabBarSwipeAction legacyTabBarSwipe,
+  }) => builtInOverrides.containsKey(gesture)
+      ? builtInOverrides[gesture]
+      : gesture.defaultAction(legacyTabBarSwipe);
+
+  /// Binds [gesture] to [action] (null switches it off), storing nothing when
+  /// that is its default anyway.
+  GestureSettings withBuiltInBinding(
+    BuiltInGesture gesture,
+    BrowserAction? action, {
+    required TabBarSwipeAction legacyTabBarSwipe,
+  }) {
+    final overrides = {...builtInOverrides};
+    if (gesture.defaultAction(legacyTabBarSwipe) == action) {
+      overrides.remove(gesture);
+    } else {
+      overrides[gesture] = action;
+    }
+    return copyWith.builtInOverrides(overrides);
+  }
 
   factory GestureSettings.fromJson(Map<String, dynamic> json) =>
       _$GestureSettingsFromJson(json);
@@ -173,6 +259,7 @@ class GestureSettings with FastEquatable {
     suggestNext,
     minSuggestionStroke,
     excludedSites,
-    bindings,
+    bindingOverrides,
+    builtInOverrides,
   ];
 }

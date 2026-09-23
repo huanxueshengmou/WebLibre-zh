@@ -17,6 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:flutter_mozilla_components/flutter_mozilla_components.dart';
@@ -24,6 +26,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:weblibre/core/design/app_colors.dart';
 import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/app_links/domain/entities/app_link_rule.dart';
+import 'package:weblibre/features/app_links/domain/entities/context_app_link_policy.dart';
+import 'package:weblibre/features/app_links/presentation/widgets/container_app_link_settings_dialog.dart';
+import 'package:weblibre/features/geckoview/features/tabs/data/entities/child_tab_placement.dart';
+import 'package:weblibre/features/geckoview/features/tabs/data/models/container_data.dart';
+import 'package:weblibre/features/geckoview/features/tabs/domain/providers.dart';
 import 'package:weblibre/features/geckoview/features/tabs/domain/providers/selected_container.dart';
 import 'package:weblibre/features/settings/presentation/controllers/save_settings.dart';
 import 'package:weblibre/features/settings/presentation/widgets/settings_detail.dart';
@@ -57,6 +64,19 @@ const List<SettingsSectionDefinition> browsingSettingsSections = [
         subtitle: 'Choose how tabs are ordered in the tab bar',
         keywords: ['sorting', 'order'],
         child: _TabBarDirectionSection(),
+      ),
+      SettingsEntryDefinition(
+        title: 'New Child Tab Position',
+        subtitle: 'Choose where tabs opened from another tab are inserted',
+        keywords: [
+          'child tabs',
+          'new tab',
+          'position',
+          'order',
+          'end of list',
+          'after parent',
+        ],
+        child: _ChildTabPlacementSection(),
       ),
       SettingsEntryDefinition(
         title: 'Show Container UI',
@@ -100,10 +120,10 @@ const List<SettingsSectionDefinition> browsingSettingsSections = [
         child: _DoubleBackCloseTabTile(),
       ),
       SettingsEntryDefinition(
-        title: 'Tab Bar Swipe Behavior',
-        subtitle: 'Choose what horizontal swipes on the tab bar do',
-        keywords: ['gestures', 'swipe'],
-        child: _TabBarSwipeBehaviorSection(),
+        title: 'Tab Bar Swipes',
+        subtitle: 'Choose what swipes on the tab bar do',
+        keywords: ['gestures', 'swipe', 'tab bar swipe behavior'],
+        child: _TabBarSwipesLinkTile(),
       ),
       SettingsEntryDefinition(
         title: 'Sequential Tab Navigation',
@@ -647,6 +667,63 @@ class _TabBarDirectionSection extends HookConsumerWidget {
   }
 }
 
+class _ChildTabPlacementSection extends HookConsumerWidget {
+  const _ChildTabPlacementSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final placement = ref.watch(
+      generalSettingsWithDefaultsProvider.select((s) => s.childTabPlacement),
+    );
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const ListTile(
+            title: Text('New Child Tab Position'),
+            subtitle: Text(
+              'Choose whether a tab opened from another tab follows its opener '
+              'or goes to the end. The opener is still remembered either way, '
+              'so the tree view is unaffected',
+            ),
+            leading: Icon(MdiIcons.fileTreeOutline),
+            contentPadding: EdgeInsets.zero,
+          ),
+          Center(
+            child: SegmentedButton(
+              showSelectedIcon: false,
+              segments: const [
+                ButtonSegment(
+                  value: ChildTabPlacement.afterParent,
+                  label: Text('After opener'),
+                  icon: Icon(MdiIcons.arrowRightBottom),
+                ),
+                ButtonSegment(
+                  value: ChildTabPlacement.endOfList,
+                  label: Text('At the end'),
+                  icon: Icon(MdiIcons.arrowCollapseDown),
+                ),
+              ],
+              selected: {placement},
+              onSelectionChanged: (value) async {
+                await ref
+                    .read(saveGeneralSettingsControllerProvider.notifier)
+                    .save(
+                      (currentSettings) => currentSettings.copyWith
+                          .childTabPlacement(value.first),
+                    );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _CreateChildTabsTile extends HookConsumerWidget {
   const _CreateChildTabsTile();
 
@@ -829,59 +906,19 @@ class _BackgroundTabOpenSection extends HookConsumerWidget {
   }
 }
 
-class _TabBarSwipeBehaviorSection extends HookConsumerWidget {
-  const _TabBarSwipeBehaviorSection();
+/// Tab bar swipes are configured with every other gesture, one binding per
+/// direction; this entry only points there so the old place still finds them.
+class _TabBarSwipesLinkTile extends StatelessWidget {
+  const _TabBarSwipesLinkTile();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final tabBarSwipeAction = ref.watch(
-      generalSettingsWithDefaultsProvider.select((s) => s.tabBarSwipeAction),
-    );
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const ListTile(
-            title: Text('Tab Bar Swipe Behavior'),
-            leading: Icon(MdiIcons.gestureSwipeHorizontal),
-            contentPadding: EdgeInsets.zero,
-          ),
-          RadioGroup(
-            groupValue: tabBarSwipeAction,
-            onChanged: (value) async {
-              if (value != null) {
-                await ref
-                    .read(saveGeneralSettingsControllerProvider.notifier)
-                    .save(
-                      (currentSettings) =>
-                          currentSettings.copyWith.tabBarSwipeAction(value),
-                    );
-              }
-            },
-            child: const Column(
-              children: [
-                RadioListTile.adaptive(
-                  value: TabBarSwipeAction.switchLastOpened,
-                  title: Text('Switch to Last Used Tab'),
-                  subtitle: Text(
-                    'Swipe to toggle between current and previously opened tab',
-                  ),
-                ),
-                RadioListTile.adaptive(
-                  value: TabBarSwipeAction.navigateOrderedTabs,
-                  title: Text('Navigate Sequential Tabs'),
-                  subtitle: Text(
-                    'Swipe left/right to move through tabs in order',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: const Icon(MdiIcons.gestureSwipeHorizontal),
+      title: const Text('Tab Bar Swipes'),
+      subtitle: const Text('Choose what each swipe does in Gestures'),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () => GestureSettingsRoute().push(context),
     );
   }
 }
@@ -1098,8 +1135,96 @@ class _AppLinksModeSection extends HookConsumerWidget {
             },
           ),
           _AppLinkRulesSubsection(rules: rules),
+          const _ContainerAppLinkOverridesSubsection(),
         ],
       ),
+    );
+  }
+}
+
+/// Containers running their own app-link policy (§ container isolation).
+///
+/// Their settings fully replace everything above for their tabs, and until now
+/// the only way to reach one was through that container's own edit dialog — so a
+/// container quietly set to "always" was invisible from the screen that claims to
+/// govern app links. Listing them here says which containers are not covered by
+/// the settings above, and opens the same editor.
+class _ContainerAppLinkOverridesSubsection extends ConsumerWidget {
+  const _ContainerAppLinkOverridesSubsection();
+
+  static String _containerLabel(ContainerDataWithCount container) =>
+      container.name ?? 'Container';
+
+  String _modeLabel(AppLinksMode mode) => switch (mode) {
+    AppLinksMode.always => 'Always open in apps',
+    AppLinksMode.ask => 'Asks before opening',
+    AppLinksMode.never => 'Always keeps links in the browser',
+  };
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final containers =
+        ref.watch(watchContainersWithCountProvider).value ?? const [];
+    final overrides = ref.watch(
+      generalSettingsWithDefaultsProvider.select(
+        (s) => s.appLinkContextOverrides,
+      ),
+    );
+
+    final isolated =
+        containers
+            .where(
+              (container) =>
+                  container.metadata.isolatedAppLinkSettings &&
+                  container.metadata.contextualIdentity != null,
+            )
+            .toList()
+          ..sort((a, b) => _containerLabel(a).compareTo(_containerLabel(b)));
+
+    if (isolated.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(top: 16, bottom: 4),
+          child: Text('Containers with their own app-link settings'),
+        ),
+        for (final container in isolated)
+          Builder(
+            builder: (context) {
+              final contextId = container.metadata.contextualIdentity!;
+              final policy =
+                  overrides[contextId] ?? ContextAppLinkPolicy.blank();
+              final ruleCount = policy.rules.length;
+              return ListTile(
+                contentPadding: EdgeInsets.zero,
+                dense: true,
+                leading: const Icon(MdiIcons.circleOutline),
+                title: Text(_containerLabel(container)),
+                subtitle: Text(
+                  ruleCount == 0
+                      ? _modeLabel(policy.mode)
+                      : '${_modeLabel(policy.mode)} · $ruleCount remembered '
+                            '${ruleCount == 1 ? 'rule' : 'rules'}',
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => unawaited(
+                  showDialog<void>(
+                    context: context,
+                    builder: (_) => ContainerAppLinkSettingsDialog(
+                      contextId: contextId,
+                      containerName: container.name,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+      ],
     );
   }
 }
@@ -1110,12 +1235,6 @@ class _AppLinkRulesSubsection extends ConsumerWidget {
   final Map<String, PersistedAppLinkRule> rules;
 
   const _AppLinkRulesSubsection({required this.rules});
-
-  String _displayScope(String scope) {
-    if (scope.startsWith('host:')) return scope.substring('host:'.length);
-    if (scope.startsWith('pkg:')) return scope.substring('pkg:'.length);
-    return scope;
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -1143,7 +1262,7 @@ class _AppLinkRulesSubsection extends ConsumerWidget {
                   ? MdiIcons.openInApp
                   : Icons.public,
             ),
-            title: Text(_displayScope(key)),
+            title: Text(displayAppLinkScope(key)),
             subtitle: Text(
               value.decision == AppLinkRuleDecision.alwaysOpen
                   ? 'Always open in the app'

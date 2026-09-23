@@ -71,6 +71,8 @@ abstract class _$GeneralSettingsCWProxy {
 
   GeneralSettings tabBarDirection(TabDirection tabBarDirection);
 
+  GeneralSettings childTabPlacement(ChildTabPlacement childTabPlacement);
+
   GeneralSettings tabIntentOpenSetting(
     TabIntentOpenSetting tabIntentOpenSetting,
   );
@@ -82,6 +84,10 @@ abstract class _$GeneralSettingsCWProxy {
   );
 
   GeneralSettings autoHideTabBar(bool autoHideTabBar);
+
+  GeneralSettings sideRailWidth(double sideRailWidth);
+
+  GeneralSettings sideRailAutoHide(bool sideRailAutoHide);
 
   GeneralSettings tabBarSwipeAction(TabBarSwipeAction tabBarSwipeAction);
 
@@ -97,7 +103,7 @@ abstract class _$GeneralSettingsCWProxy {
 
   GeneralSettings tabBarShowContextualBar(bool tabBarShowContextualBar);
 
-  GeneralSettings tabBarPosition(TabBarPosition tabBarPosition);
+  GeneralSettings tabBarPosition(TabBarPositionSetting tabBarPosition);
 
   GeneralSettings tabBarLayout(TabBarLayout tabBarLayout);
 
@@ -106,6 +112,8 @@ abstract class _$GeneralSettingsCWProxy {
   GeneralSettings pullToRefreshEnabled(bool pullToRefreshEnabled);
 
   GeneralSettings useExternalDownloadManager(bool useExternalDownloadManager);
+
+  GeneralSettings downloadDirectoryUri(String? downloadDirectoryUri);
 
   GeneralSettings doubleBackCloseTab(bool doubleBackCloseTab);
 
@@ -245,21 +253,25 @@ abstract class _$GeneralSettingsCWProxy {
     TabType storedDefaultCreateTabType,
     TabDirection tabListDirection,
     TabDirection tabBarDirection,
+    ChildTabPlacement childTabPlacement,
     TabIntentOpenSetting tabIntentOpenSetting,
     BookmarkOpenSetting bookmarkOpenSetting,
     BackgroundTabOpenAction backgroundTabOpenAction,
     bool autoHideTabBar,
+    double sideRailWidth,
+    bool sideRailAutoHide,
     TabBarSwipeAction tabBarSwipeAction,
     bool sequentialTabNavigationCrossContainers,
     bool sequentialTabNavigationLoop,
     Duration historyAutoCleanInterval,
     bool tabViewBottomSheet,
     bool tabBarShowContextualBar,
-    TabBarPosition tabBarPosition,
+    TabBarPositionSetting tabBarPosition,
     TabBarLayout tabBarLayout,
     TabBarStackingMode tabBarStackingMode,
     bool pullToRefreshEnabled,
     bool useExternalDownloadManager,
+    String? downloadDirectoryUri,
     bool doubleBackCloseTab,
     Duration unassignedTabsAutoCleanInterval,
     int maxSearchHistoryEntries,
@@ -429,6 +441,10 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
       call(tabBarDirection: tabBarDirection);
 
   @override
+  GeneralSettings childTabPlacement(ChildTabPlacement childTabPlacement) =>
+      call(childTabPlacement: childTabPlacement);
+
+  @override
   GeneralSettings tabIntentOpenSetting(
     TabIntentOpenSetting tabIntentOpenSetting,
   ) => call(tabIntentOpenSetting: tabIntentOpenSetting);
@@ -446,6 +462,14 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
   @override
   GeneralSettings autoHideTabBar(bool autoHideTabBar) =>
       call(autoHideTabBar: autoHideTabBar);
+
+  @override
+  GeneralSettings sideRailWidth(double sideRailWidth) =>
+      call(sideRailWidth: sideRailWidth);
+
+  @override
+  GeneralSettings sideRailAutoHide(bool sideRailAutoHide) =>
+      call(sideRailAutoHide: sideRailAutoHide);
 
   @override
   GeneralSettings tabBarSwipeAction(TabBarSwipeAction tabBarSwipeAction) =>
@@ -477,7 +501,7 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
       call(tabBarShowContextualBar: tabBarShowContextualBar);
 
   @override
-  GeneralSettings tabBarPosition(TabBarPosition tabBarPosition) =>
+  GeneralSettings tabBarPosition(TabBarPositionSetting tabBarPosition) =>
       call(tabBarPosition: tabBarPosition);
 
   @override
@@ -495,6 +519,10 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
   @override
   GeneralSettings useExternalDownloadManager(bool useExternalDownloadManager) =>
       call(useExternalDownloadManager: useExternalDownloadManager);
+
+  @override
+  GeneralSettings downloadDirectoryUri(String? downloadDirectoryUri) =>
+      call(downloadDirectoryUri: downloadDirectoryUri);
 
   @override
   GeneralSettings doubleBackCloseTab(bool doubleBackCloseTab) =>
@@ -715,10 +743,13 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
     Object? storedDefaultCreateTabType = const $CopyWithPlaceholder(),
     Object? tabListDirection = const $CopyWithPlaceholder(),
     Object? tabBarDirection = const $CopyWithPlaceholder(),
+    Object? childTabPlacement = const $CopyWithPlaceholder(),
     Object? tabIntentOpenSetting = const $CopyWithPlaceholder(),
     Object? bookmarkOpenSetting = const $CopyWithPlaceholder(),
     Object? backgroundTabOpenAction = const $CopyWithPlaceholder(),
     Object? autoHideTabBar = const $CopyWithPlaceholder(),
+    Object? sideRailWidth = const $CopyWithPlaceholder(),
+    Object? sideRailAutoHide = const $CopyWithPlaceholder(),
     Object? tabBarSwipeAction = const $CopyWithPlaceholder(),
     Object? sequentialTabNavigationCrossContainers =
         const $CopyWithPlaceholder(),
@@ -731,6 +762,7 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
     Object? tabBarStackingMode = const $CopyWithPlaceholder(),
     Object? pullToRefreshEnabled = const $CopyWithPlaceholder(),
     Object? useExternalDownloadManager = const $CopyWithPlaceholder(),
+    Object? downloadDirectoryUri = const $CopyWithPlaceholder(),
     Object? doubleBackCloseTab = const $CopyWithPlaceholder(),
     Object? unassignedTabsAutoCleanInterval = const $CopyWithPlaceholder(),
     Object? maxSearchHistoryEntries = const $CopyWithPlaceholder(),
@@ -933,6 +965,12 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
           ? _value.tabBarDirection
           // ignore: cast_nullable_to_non_nullable
           : tabBarDirection as TabDirection,
+      childTabPlacement:
+          childTabPlacement == const $CopyWithPlaceholder() ||
+              childTabPlacement == null
+          ? _value.childTabPlacement
+          // ignore: cast_nullable_to_non_nullable
+          : childTabPlacement as ChildTabPlacement,
       tabIntentOpenSetting:
           tabIntentOpenSetting == const $CopyWithPlaceholder() ||
               tabIntentOpenSetting == null
@@ -957,6 +995,17 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
           ? _value.autoHideTabBar
           // ignore: cast_nullable_to_non_nullable
           : autoHideTabBar as bool,
+      sideRailWidth:
+          sideRailWidth == const $CopyWithPlaceholder() || sideRailWidth == null
+          ? _value.sideRailWidth
+          // ignore: cast_nullable_to_non_nullable
+          : sideRailWidth as double,
+      sideRailAutoHide:
+          sideRailAutoHide == const $CopyWithPlaceholder() ||
+              sideRailAutoHide == null
+          ? _value.sideRailAutoHide
+          // ignore: cast_nullable_to_non_nullable
+          : sideRailAutoHide as bool,
       tabBarSwipeAction:
           tabBarSwipeAction == const $CopyWithPlaceholder() ||
               tabBarSwipeAction == null
@@ -999,7 +1048,7 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
               tabBarPosition == null
           ? _value.tabBarPosition
           // ignore: cast_nullable_to_non_nullable
-          : tabBarPosition as TabBarPosition,
+          : tabBarPosition as TabBarPositionSetting,
       tabBarLayout:
           tabBarLayout == const $CopyWithPlaceholder() || tabBarLayout == null
           ? _value.tabBarLayout
@@ -1023,6 +1072,10 @@ class _$GeneralSettingsCWProxyImpl implements _$GeneralSettingsCWProxy {
           ? _value.useExternalDownloadManager
           // ignore: cast_nullable_to_non_nullable
           : useExternalDownloadManager as bool,
+      downloadDirectoryUri: downloadDirectoryUri == const $CopyWithPlaceholder()
+          ? _value.downloadDirectoryUri
+          // ignore: cast_nullable_to_non_nullable
+          : downloadDirectoryUri as String?,
       doubleBackCloseTab:
           doubleBackCloseTab == const $CopyWithPlaceholder() ||
               doubleBackCloseTab == null
@@ -1325,6 +1378,7 @@ GeneralSettings _$GeneralSettingsFromJson(
   homeSearchBarPlacement: $enumDecodeNullable(
     _$HomeSearchBarPlacementEnumMap,
     json['homeSearchBarPlacement'],
+    unknownValue: HomeSearchBarPlacement.auto,
   ),
   homeWallpaperFile: json['homeWallpaperFile'] as String?,
   homeWallpaperBlur: (json['homeWallpaperBlur'] as num?)?.toDouble(),
@@ -1341,6 +1395,10 @@ GeneralSettings _$GeneralSettingsFromJson(
     _$TabDirectionEnumMap,
     json['tabBarDirection'],
   ),
+  childTabPlacement: $enumDecodeNullable(
+    _$ChildTabPlacementEnumMap,
+    json['childTabPlacement'],
+  ),
   tabIntentOpenSetting: $enumDecodeNullable(
     _$TabIntentOpenSettingEnumMap,
     json['tabIntentOpenSetting'],
@@ -1354,6 +1412,8 @@ GeneralSettings _$GeneralSettingsFromJson(
     json['backgroundTabOpenAction'],
   ),
   autoHideTabBar: json['autoHideTabBar'] as bool?,
+  sideRailWidth: (json['sideRailWidth'] as num?)?.toDouble(),
+  sideRailAutoHide: json['sideRailAutoHide'] as bool?,
   tabBarSwipeAction: $enumDecodeNullable(
     _$TabBarSwipeActionEnumMap,
     json['tabBarSwipeAction'],
@@ -1369,8 +1429,9 @@ GeneralSettings _$GeneralSettingsFromJson(
   tabViewBottomSheet: json['tabViewBottomSheet'] as bool?,
   tabBarShowContextualBar: json['tabBarShowContextualBar'] as bool?,
   tabBarPosition: $enumDecodeNullable(
-    _$TabBarPositionEnumMap,
+    _$TabBarPositionSettingEnumMap,
     json['tabBarPosition'],
+    unknownValue: TabBarPositionSetting.auto,
   ),
   tabBarLayout: $enumDecodeNullable(
     _$TabBarLayoutEnumMap,
@@ -1382,6 +1443,7 @@ GeneralSettings _$GeneralSettingsFromJson(
   ),
   pullToRefreshEnabled: json['pullToRefreshEnabled'] as bool?,
   useExternalDownloadManager: json['useExternalDownloadManager'] as bool?,
+  downloadDirectoryUri: json['downloadDirectoryUri'] as String?,
   doubleBackCloseTab: json['doubleBackCloseTab'] as bool?,
   unassignedTabsAutoCleanInterval:
       json['unassignedTabsAutoCleanInterval'] == null
@@ -1495,6 +1557,7 @@ Map<String, dynamic> _$GeneralSettingsToJson(
       _$TabTypeEnumMap[instance.storedDefaultCreateTabType]!,
   'tabListDirection': _$TabDirectionEnumMap[instance.tabListDirection]!,
   'tabBarDirection': _$TabDirectionEnumMap[instance.tabBarDirection]!,
+  'childTabPlacement': _$ChildTabPlacementEnumMap[instance.childTabPlacement]!,
   'tabIntentOpenSetting':
       _$TabIntentOpenSettingEnumMap[instance.tabIntentOpenSetting]!,
   'bookmarkOpenSetting':
@@ -1502,6 +1565,8 @@ Map<String, dynamic> _$GeneralSettingsToJson(
   'backgroundTabOpenAction':
       _$BackgroundTabOpenActionEnumMap[instance.backgroundTabOpenAction]!,
   'autoHideTabBar': instance.autoHideTabBar,
+  'sideRailWidth': instance.sideRailWidth,
+  'sideRailAutoHide': instance.sideRailAutoHide,
   'tabBarSwipeAction': _$TabBarSwipeActionEnumMap[instance.tabBarSwipeAction]!,
   'sequentialTabNavigationCrossContainers':
       instance.sequentialTabNavigationCrossContainers,
@@ -1509,12 +1574,13 @@ Map<String, dynamic> _$GeneralSettingsToJson(
   'historyAutoCleanInterval': instance.historyAutoCleanInterval.inMicroseconds,
   'tabViewBottomSheet': instance.tabViewBottomSheet,
   'tabBarShowContextualBar': instance.tabBarShowContextualBar,
-  'tabBarPosition': _$TabBarPositionEnumMap[instance.tabBarPosition]!,
+  'tabBarPosition': _$TabBarPositionSettingEnumMap[instance.tabBarPosition]!,
   'tabBarLayout': _$TabBarLayoutEnumMap[instance.tabBarLayout]!,
   'tabBarStackingMode':
       _$TabBarStackingModeEnumMap[instance.tabBarStackingMode]!,
   'pullToRefreshEnabled': instance.pullToRefreshEnabled,
   'useExternalDownloadManager': instance.useExternalDownloadManager,
+  'downloadDirectoryUri': instance.downloadDirectoryUri,
   'doubleBackCloseTab': instance.doubleBackCloseTab,
   'unassignedTabsAutoCleanInterval':
       instance.unassignedTabsAutoCleanInterval.inMicroseconds,
@@ -1621,6 +1687,11 @@ const _$TabDirectionEnumMap = {
   TabDirection.oldestFirst: 'oldestFirst',
 };
 
+const _$ChildTabPlacementEnumMap = {
+  ChildTabPlacement.afterParent: 'afterParent',
+  ChildTabPlacement.endOfList: 'endOfList',
+};
+
 const _$TabIntentOpenSettingEnumMap = {
   TabIntentOpenSetting.regular: 'regular',
   TabIntentOpenSetting.private: 'private',
@@ -1646,11 +1717,12 @@ const _$TabBarSwipeActionEnumMap = {
   TabBarSwipeAction.navigateOrderedTabs: 'navigateOrderedTabs',
 };
 
-const _$TabBarPositionEnumMap = {
-  TabBarPosition.top: 'top',
-  TabBarPosition.bottom: 'bottom',
-  TabBarPosition.left: 'left',
-  TabBarPosition.right: 'right',
+const _$TabBarPositionSettingEnumMap = {
+  TabBarPositionSetting.auto: 'auto',
+  TabBarPositionSetting.top: 'top',
+  TabBarPositionSetting.bottom: 'bottom',
+  TabBarPositionSetting.left: 'left',
+  TabBarPositionSetting.right: 'right',
 };
 
 const _$TabBarLayoutEnumMap = {

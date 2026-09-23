@@ -262,11 +262,21 @@ EquatableValue<List<TabStateWithContainer>> fifoTabStates(Ref ref) {
 @Riverpod()
 EquatableValue<List<TabStateWithContainer>>
 selectedContainerTabStatesWithContainer(Ref ref) {
-  final filter = ref.watch(
-    selectedContainerProvider.select(
-      (value) => ContainerFilterById(containerId: value),
-    ),
-  );
+  final containerId = ref.watch(selectedContainerProvider);
+  return ref.watch(containerTabStatesWithContainerProvider(containerId));
+}
+
+/// The tabs of [containerId] (null for unassigned tabs) with their container
+/// data, in the order every non-tray surface shares.
+///
+/// A family rather than a read of the selected container, so the accordion can
+/// list the tabs of several expanded groups at once without selecting them.
+@Riverpod()
+EquatableValue<List<TabStateWithContainer>> containerTabStatesWithContainer(
+  Ref ref,
+  String? containerId,
+) {
+  final filter = ContainerFilterById(containerId: containerId);
 
   final containerData = ref
       .watch(watchContainersWithCountProvider.select((value) => value.value))
@@ -447,17 +457,24 @@ Future<List<VisitInfo>> quickTabSwitcherHistorySuggestions(
     return [];
   }
 
-  return ref
+  return await ref
       .read(historyRepositoryProvider.notifier)
       .getVisitsPaginated(count: 25);
 }
 
 /// Whether a single switcher row of [mode] has anything to render
 /// (open tabs, or history suggestions as fallback).
-AsyncValue<bool> _quickTabSwitcherRowHasResults(
+///
+/// [enableHistoryFallback] mirrors the flag of the same name on the rendered
+/// switcher row: a row that draws no history chips must not be counted as
+/// occupied because history exists, or it reserves a slot it then leaves
+/// blank (#628).
+@Riverpod()
+AsyncValue<bool> quickTabSwitcherRowHasResults(
   Ref ref,
-  QuickTabSwitcherMode mode,
-) {
+  QuickTabSwitcherMode mode, {
+  bool enableHistoryFallback = true,
+}) {
   final hasResults = ref.watch(
     quickTabSwitcherTabStatesProvider(
       mode,
@@ -468,34 +485,70 @@ AsyncValue<bool> _quickTabSwitcherRowHasResults(
     return const AsyncValue.data(true);
   }
 
+  if (!enableHistoryFallback) {
+    return const AsyncValue.data(false);
+  }
+
   return ref
       .watch(quickTabSwitcherHistorySuggestionsProvider(mode))
       .whenData((visits) => visits.isNotEmpty);
+}
+
+/// Which of the two rows the two-level switcher bar actually renders.
+///
+/// Each row is decided on its own, so a row with nothing in it is not drawn
+/// and costs no height, instead of reserving a blank 48px slot (#628). The
+/// bar reads this to build its rows and [quickTabSwitcherRowCount] to reserve
+/// their height, so the two cannot disagree about how tall the bar is.
+///
+/// The container row is rendered with `enableHistoryFallback: false`, so its
+/// occupancy ignores history suggestions; the recently-used row below it
+/// carries them.
+@Riverpod()
+AsyncValue<({bool containerRow, bool mruRow})> twoLevelQuickTabSwitcherRows(
+  Ref ref,
+) {
+  final containerRow = ref.watch(
+    quickTabSwitcherRowHasResultsProvider(
+      QuickTabSwitcherMode.containerTabs,
+      enableHistoryFallback: false,
+    ),
+  );
+  final mruRow = ref.watch(
+    quickTabSwitcherRowHasResultsProvider(QuickTabSwitcherMode.lastUsedTabs),
+  );
+
+  return containerRow.whenData(
+    (hasContainerTabs) =>
+        (containerRow: hasContainerTabs, mruRow: mruRow.value ?? false),
+  );
 }
 
 /// Number of 48px rows the quick tab switcher bar currently occupies.
 /// 0 hides the bar; feeds the toolbar height / GeckoView viewport math.
 @Riverpod()
 AsyncValue<int> quickTabSwitcherRowCount(Ref ref) {
-  final stackingMode = ref.watch(
-    generalSettingsWithDefaultsProvider.select(
-      (settings) => settings.effectiveTabBarStackingMode(),
-    ),
-  );
+  final stackingMode = ref.watch(effectiveTabBarStackingModeProvider);
 
   switch (stackingMode) {
     case TabBarStackingMode.disabled:
       return const AsyncValue.data(0);
     case TabBarStackingMode.lastUsedTabs:
-      return _quickTabSwitcherRowHasResults(
-        ref,
-        QuickTabSwitcherMode.lastUsedTabs,
-      ).whenData((hasResults) => hasResults ? 1 : 0);
+      return ref
+          .watch(
+            quickTabSwitcherRowHasResultsProvider(
+              QuickTabSwitcherMode.lastUsedTabs,
+            ),
+          )
+          .whenData((hasResults) => hasResults ? 1 : 0);
     case TabBarStackingMode.containerTabs:
-      return _quickTabSwitcherRowHasResults(
-        ref,
-        QuickTabSwitcherMode.containerTabs,
-      ).whenData((hasResults) => hasResults ? 1 : 0);
+      return ref
+          .watch(
+            quickTabSwitcherRowHasResultsProvider(
+              QuickTabSwitcherMode.containerTabs,
+            ),
+          )
+          .whenData((hasResults) => hasResults ? 1 : 0);
     case TabBarStackingMode.accordion:
       final hasContainers = ref.watch(
         watchContainersWithCountProvider.select(
@@ -505,25 +558,19 @@ AsyncValue<int> quickTabSwitcherRowCount(Ref ref) {
       if (hasContainers) {
         return const AsyncValue.data(1);
       }
-      return _quickTabSwitcherRowHasResults(
-        ref,
-        QuickTabSwitcherMode.containerTabs,
-      ).whenData((hasResults) => hasResults ? 1 : 0);
+      return ref
+          .watch(
+            quickTabSwitcherRowHasResultsProvider(
+              QuickTabSwitcherMode.containerTabs,
+            ),
+          )
+          .whenData((hasResults) => hasResults ? 1 : 0);
     case TabBarStackingMode.twoLevel:
-      final containerRow = _quickTabSwitcherRowHasResults(
-        ref,
-        QuickTabSwitcherMode.containerTabs,
-      );
-      final mruRow = _quickTabSwitcherRowHasResults(
-        ref,
-        QuickTabSwitcherMode.lastUsedTabs,
-      );
-      // The bar shows both rows whenever either has content; an empty row
-      // renders blank within its slot.
-      return containerRow.whenData(
-        (hasContainerTabs) =>
-            (hasContainerTabs || (mruRow.value ?? false)) ? 2 : 0,
-      );
+      return ref
+          .watch(twoLevelQuickTabSwitcherRowsProvider)
+          .whenData(
+            (rows) => (rows.containerRow ? 1 : 0) + (rows.mruRow ? 1 : 0),
+          );
   }
 }
 

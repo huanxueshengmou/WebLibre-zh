@@ -213,7 +213,11 @@ class GeckoEngineSettingsApiImpl(
             }
         }
         if(settings.userAgent != null) {
-            components.core.engineSettings.userAgentString = settings.userAgent;
+            // A blank string must be treated the same as "unset": GeckoView's
+            // userAgentOverride treats any non-null value (including "") as
+            // authoritative and permanently overrides desktop-mode's UA, so an
+            // empty override can never reach the engine.
+            components.core.engineSettings.userAgentString = settings.userAgent.takeIf { it.isNotBlank() };
         }
         if(settings.contentBlocking != null) {
             components.core.engineSettings.queryParameterStripping = when(settings.contentBlocking.queryParameterStripping) {
@@ -293,6 +297,7 @@ class GeckoEngineSettingsApiImpl(
         setDefaultSettings(settings);
 
         var reloadSession = false
+        var reloadAllTabs = false
 
         //Then copy default settings into runtime
         if(settings.javascriptEnabled != null) {
@@ -320,7 +325,11 @@ class GeckoEngineSettingsApiImpl(
             components.core.engineSettings.preferredColorScheme?.let { scheme ->
                 ColorSchemePreference.write(components.core.prefs, scheme)
             }
-            reloadSession = true
+            // Reload every loaded tab, not just the selected one: preferredColorScheme
+            // is applied to the shared GeckoRuntime, but a background tab's content
+            // process won't repaint with the new prefers-color-scheme until it's
+            // reloaded or renavigated. See issue #454.
+            reloadAllTabs = true
         }
         if(settings.userAgent != null) {
             components.core.engine.settings.userAgentString = components.core.engineSettings.userAgentString
@@ -380,13 +389,22 @@ class GeckoEngineSettingsApiImpl(
             reloadSession = true
         }
 
-        if(reloadSession) {
+        if (reloadAllTabs) {
+            components.core.store.state.tabs.forEach { tab ->
+                if (tab.engineState.engineSession != null) {
+                    components.useCases.sessionUseCases.reload(tab.id)
+                }
+            }
+        } else if (reloadSession) {
             components.useCases.sessionUseCases.reload()
         }
     }
 
     override fun setPullToRefreshEnabled(enabled: Boolean) {
-        GlobalComponents.pullToRefreshEnabled = enabled
+        // Through GlobalComponents, which also mirrors the value to the current
+        // profile's native-readable store, for the window a cold start puts on
+        // screen before this call arrives (see BrowserSettingsPreferences).
+        GlobalComponents.setPullToRefreshEnabled(enabled)
     }
 
     override fun setScreenshotProtectionEnabled(enabled: Boolean) {

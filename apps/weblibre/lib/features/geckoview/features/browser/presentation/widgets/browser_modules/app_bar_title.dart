@@ -67,16 +67,29 @@ class CompactAppBarTitle extends ConsumerWidget {
       ),
     );
 
-    if (tabState == null) {
+    final showBrowserHome = ref.watch(shouldShowBrowserHomeProvider);
+
+    // No tab to address, or one the home surface is covering. Home is a layer
+    // over the selected tab rather than a tab of its own, so the selection
+    // outlives it: addressing that tab anyway left the page's URL and icon in
+    // the pill of a screen that is not showing that page, and handed the same
+    // URL to the search screen as the text to edit (#623).
+    if (tabState == null || showBrowserHome) {
       return _EmptyAppBarAddressField(
-        tabType: selectedTabType ?? settings.effectiveDefaultCreateTabType,
+        // On home this field is a second way into the same place as
+        // [HomeSearchPill], which offers the configured default. Following the
+        // covered tab's type instead would have the two disagree about what
+        // they open on the one screen that can show both.
+        tabType: showBrowserHome
+            ? settings.effectiveDefaultCreateTabType
+            : (selectedTabType ?? settings.effectiveDefaultCreateTabType),
         // The tools turn this field from "no page loaded" into the home
         // surface's search entry, which is only what it is when the pill has
         // stood down for it. Everywhere else the row has a page's worth of
         // buttons beside it and no width to spare.
         showSearchTools:
-            ref.watch(shouldShowBrowserHomeProvider) &&
-            settings.effectiveHomeSearchBarPlacement() ==
+            showBrowserHome &&
+            ref.watch(effectiveHomeSearchBarPlacementProvider) ==
                 HomeSearchBarPlacement.tabBar,
       );
     }
@@ -284,16 +297,29 @@ class AppBarTitle extends ConsumerWidget {
       ),
     );
 
-    if (tabState == null) {
+    final showBrowserHome = ref.watch(shouldShowBrowserHomeProvider);
+
+    // No tab to address, or one the home surface is covering. Home is a layer
+    // over the selected tab rather than a tab of its own, so the selection
+    // outlives it: addressing that tab anyway left the page's URL and icon in
+    // the pill of a screen that is not showing that page, and handed the same
+    // URL to the search screen as the text to edit (#623).
+    if (tabState == null || showBrowserHome) {
       return _EmptyAppBarAddressField(
-        tabType: selectedTabType ?? settings.effectiveDefaultCreateTabType,
+        // On home this field is a second way into the same place as
+        // [HomeSearchPill], which offers the configured default. Following the
+        // covered tab's type instead would have the two disagree about what
+        // they open on the one screen that can show both.
+        tabType: showBrowserHome
+            ? settings.effectiveDefaultCreateTabType
+            : (selectedTabType ?? settings.effectiveDefaultCreateTabType),
         // The tools turn this field from "no page loaded" into the home
         // surface's search entry, which is only what it is when the pill has
         // stood down for it. Everywhere else the row has a page's worth of
         // buttons beside it and no width to spare.
         showSearchTools:
-            ref.watch(shouldShowBrowserHomeProvider) &&
-            settings.effectiveHomeSearchBarPlacement() ==
+            showBrowserHome &&
+            ref.watch(effectiveHomeSearchBarPlacementProvider) ==
                 HomeSearchBarPlacement.tabBar,
       );
     }
@@ -538,12 +564,18 @@ class RailAppBarTitle extends ConsumerWidget {
       ),
     );
 
-    if (tabState == null) {
+    // Same rule as the horizontal title above: the home surface covers the
+    // selected tab without replacing it, so its address is not this screen's.
+    final showBrowserHome = ref.watch(shouldShowBrowserHomeProvider);
+
+    if (tabState == null || showBrowserHome) {
       return _EmptyRailAddressField(
         quarterTurns: quarterTurns,
         onTap: () async {
           await SearchRoute(
-            tabType: selectedTabType ?? settings.effectiveDefaultCreateTabType,
+            tabType: showBrowserHome
+                ? settings.effectiveDefaultCreateTabType
+                : (selectedTabType ?? settings.effectiveDefaultCreateTabType),
           ).push(context);
         },
       );
@@ -620,118 +652,128 @@ class RailAppBarTitleView extends StatelessWidget {
           )
         : null;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ToolbarButton(
-          onTap: onSiteSettingsTap,
-          // Match the pinned extension icons' vertical spacing so the favicon
-          // sits equally close to the address field on both sides.
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              tabIcon ?? TabIcon(tabState: tabState, iconSize: 24),
-              if (siteSettingsBadgeState != SiteSettingsBadgeState.hidden)
-                Positioned(
-                  top: -4,
-                  right: -4,
-                  child: Icon(
-                    siteSettingsBadgeState == SiteSettingsBadgeState.improved
-                        ? MdiIcons.shield
-                        : MdiIcons.shieldAlert,
-                    size: 10,
-                    color:
-                        siteSettingsBadgeState ==
-                            SiteSettingsBadgeState.improved
-                        ? Colors.green
-                        : appColors.warningAmber,
-                  ),
-                ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: GestureDetector(
-            onTap: onTitleTap,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeInOut,
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
-              decoration: BoxDecoration(
-                color: containerColor != null
-                    ? containerPalette!.surfaceColor
-                    : theme.colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(24),
-                border: containerPalette != null
-                    ? Border.all(color: containerPalette.outlineColor)
-                    : null,
-              ),
-              child: RotatedBox(
-                quarterTurns: quarterTurns,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (tabState.tabMode is PrivateTabMode) ...[
-                      Icon(
-                        MdiIcons.dominoMask,
-                        color: appColors.privateTabPurple,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 4),
-                    ] else if (tabState.tabMode is IsolatedTabMode) ...[
-                      Icon(
-                        MdiIcons.snowflake,
-                        color: appColors.isolatedTabTeal,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 4),
-                    ],
-                    if (isTabTunneled) ...[
-                      const Icon(MdiIcons.tunnelOutline, size: 16),
-                      const SizedBox(width: 4),
-                    ],
-                    if (sandboxSourceUri != null) ...[
-                      Icon(
-                        MdiIcons.archiveLockOutline,
-                        color: theme.colorScheme.tertiary,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 4),
-                    ] else
-                      _SecurityStatusIcon(
-                        tabState: tabState,
-                        size: 16,
-                        containerColor: containerPalette?.accentColor,
-                      ),
-                    const SizedBox(width: 6),
-                    Flexible(
-                      child: UriBreadcrumb(
-                        uri: sandboxSourceUri ?? tabState.url,
-                        showHttpScheme: false,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurface,
-                        ),
-                        onTooltipTriggered: longPressUrlCopy
-                            ? () async {
-                                await Clipboard.setData(
-                                  ClipboardData(
-                                    text: (sandboxSourceUri ?? tabState.url)
-                                        .toString(),
-                                  ),
-                                );
-                              }
-                            : null,
-                      ),
+    // One pill for the favicon and the address, the way the horizontal bar
+    // reads "icon + URL" as a single control. A favicon of its own above the
+    // pill floated in the gap between the tab list and the address field.
+    //
+    // The favicon keeps its upright slot at the pill's top end and its own tap
+    // target for site settings; the rest of the pill opens the address bar.
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: containerColor != null
+            ? containerPalette!.surfaceColor
+            : theme.colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(24),
+        border: containerPalette != null
+            ? Border.all(color: containerPalette.outlineColor)
+            : null,
+      ),
+      child: Column(
+        children: [
+          ToolbarButton(
+            onTap: onSiteSettingsTap,
+            // Clear of the pill's rounded end at the top, close to the
+            // address below so the two read as one.
+            padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 4.0),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                tabIcon ?? TabIcon(tabState: tabState, iconSize: 24),
+                if (siteSettingsBadgeState != SiteSettingsBadgeState.hidden)
+                  Positioned(
+                    top: -4,
+                    right: -4,
+                    child: Icon(
+                      siteSettingsBadgeState == SiteSettingsBadgeState.improved
+                          ? MdiIcons.shield
+                          : MdiIcons.shieldAlert,
+                      size: 10,
+                      color:
+                          siteSettingsBadgeState ==
+                              SiteSettingsBadgeState.improved
+                          ? Colors.green
+                          : appColors.warningAmber,
                     ),
-                  ],
+                  ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: onTitleTap,
+              // The whole remaining pill opens the address bar, not only the
+              // painted text.
+              behavior: HitTestBehavior.opaque,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 12.0),
+                child: RotatedBox(
+                  quarterTurns: quarterTurns,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (tabState.tabMode is PrivateTabMode) ...[
+                        Icon(
+                          MdiIcons.dominoMask,
+                          color: appColors.privateTabPurple,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                      ] else if (tabState.tabMode is IsolatedTabMode) ...[
+                        Icon(
+                          MdiIcons.snowflake,
+                          color: appColors.isolatedTabTeal,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                      ],
+                      if (isTabTunneled) ...[
+                        const Icon(MdiIcons.tunnelOutline, size: 16),
+                        const SizedBox(width: 4),
+                      ],
+                      if (sandboxSourceUri != null) ...[
+                        Icon(
+                          MdiIcons.archiveLockOutline,
+                          color: theme.colorScheme.tertiary,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                      ] else
+                        _SecurityStatusIcon(
+                          tabState: tabState,
+                          size: 16,
+                          containerColor: containerPalette?.accentColor,
+                        ),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: UriBreadcrumb(
+                          uri: sandboxSourceUri ?? tabState.url,
+                          showHttpScheme: false,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurface,
+                          ),
+                          onTooltipTriggered: longPressUrlCopy
+                              ? () async {
+                                  await Clipboard.setData(
+                                    ClipboardData(
+                                      text: (sandboxSourceUri ?? tabState.url)
+                                          .toString(),
+                                    ),
+                                  );
+                                }
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

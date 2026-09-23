@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:nullability/nullability.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/core/logger.dart';
 import 'package:weblibre/utils/clipboard.dart';
 
@@ -141,12 +142,12 @@ void showOpenedTabsFromAnotherDeviceMessage(
 
 void showTabBackButtonMessage(
   BuildContext context,
-  int tabCount,
+  bool closesTab,
   Duration duration, {
   bool persist = false,
 }) {
   final snackbar = _createFloatingSnackBar(
-    content: (tabCount > 1)
+    content: closesTab
         ? const Text('Navigate BACK again to close current tab')
         : const Text('Navigate BACK again to exit app'),
     duration: duration,
@@ -293,6 +294,7 @@ Future<bool> confirmIsolatedTabClose(
 
   final result = await showDialog<bool>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     builder: (context) => AlertDialog(
       title: const Text('Close isolated tabs?'),
       content: Text(message),

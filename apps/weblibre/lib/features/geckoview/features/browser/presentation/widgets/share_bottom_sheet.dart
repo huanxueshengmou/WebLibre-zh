@@ -28,6 +28,8 @@ import 'package:flutter_mozilla_components/flutter_mozilla_components.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:weblibre/core/design/display_features.dart';
+import 'package:weblibre/features/geckoview/domain/providers/selected_tab.dart';
 import 'package:weblibre/features/geckoview/domain/providers/tab_session.dart';
 import 'package:weblibre/features/geckoview/domain/providers/tab_state.dart';
 import 'package:weblibre/features/geckoview/features/browser/presentation/dialogs/qr_code.dart';
@@ -52,6 +54,7 @@ Future<void> showShareBottomSheet(
 }) {
   return showModalBottomSheet(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
@@ -117,6 +120,10 @@ class ShareBottomSheet extends HookConsumerWidget {
           )
         : null;
     final showCleanerTile = tabUrl != null && cleaner.showTile;
+    // A screenshot is taken of the engine view, which only ever renders the
+    // selected tab, so it would show a different page for any other tab (the
+    // sheet can be opened for one from its card in the tab view).
+    final canShareScreenshot = ref.watch(selectedTabProvider) == selectedTabId;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -149,31 +156,35 @@ class ShareBottomSheet extends HookConsumerWidget {
             _OpenInAppTile(selectedTabId: selectedTabId),
 
             // Share Screenshot
-            ListTile(
-              leading: const Icon(Icons.mobile_screen_share),
-              title: const Text('Share Screenshot'),
-              onTap: () async {
-                final screenshot = await ref
-                    .read(selectedTabSessionProvider)
-                    .requestScreenshot();
+            if (canShareScreenshot)
+              ListTile(
+                leading: const Icon(Icons.mobile_screen_share),
+                title: const Text('Share Screenshot'),
+                onTap: () async {
+                  final screenshot = await ref
+                      .read(selectedTabSessionProvider)
+                      .requestScreenshot();
 
-                final ts = ref.read(tabStateProvider(selectedTabId))!;
+                  final ts = ref.read(tabStateProvider(selectedTabId))!;
 
-                if (screenshot != null) {
-                  final png = await encodeScreenshotAsPng(screenshot);
+                  if (screenshot != null) {
+                    final png = await encodeScreenshotAsPng(screenshot);
 
-                  if (png != null) {
-                    final file = XFile.fromData(png, mimeType: 'image/png');
+                    if (png != null) {
+                      final file = XFile.fromData(png, mimeType: 'image/png');
 
-                    await SharePlus.instance.share(
-                      ShareParams(files: [file], subject: ts.titleOrAuthority),
-                    );
+                      await SharePlus.instance.share(
+                        ShareParams(
+                          files: [file],
+                          subject: ts.titleOrAuthority,
+                        ),
+                      );
+                    }
                   }
-                }
 
-                if (context.mounted) Navigator.pop(context);
-              },
-            ),
+                  if (context.mounted) Navigator.pop(context);
+                },
+              ),
 
             // Share Link
             ListTile(
@@ -243,6 +254,7 @@ class _ShareHeader extends StatelessWidget {
               unawaited(
                 showDialog(
                   context: context,
+                  anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
                   builder: (context) => TrackingDetailsDialog(
                     currentUrl: url.toString(),
                     result: cleanerResult!,

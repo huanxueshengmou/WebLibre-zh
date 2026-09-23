@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -191,9 +190,12 @@ class ViewTabTreesWidget extends HookConsumerWidget {
           children: [
             TabViewHeader(onClose: onClose, tabsViewMode: TabsViewMode.tree),
             Expanded(
-              child: _TabTreesGrid(
-                scrollController: scrollController,
-                onClose: onClose,
+              child: LayoutBuilder(
+                builder: (context, constraints) => _TabTreesGrid(
+                  availableWidth: constraints.maxWidth,
+                  scrollController: scrollController,
+                  onClose: onClose,
+                ),
               ),
             ),
           ],
@@ -235,11 +237,20 @@ class _TabTreesGrid extends HookConsumerWidget {
   final ScrollController scrollController;
   final VoidCallback onClose;
 
-  const _TabTreesGrid({required this.scrollController, required this.onClose});
+  /// Width actually available to the grid; see [_TabGridView.availableWidth]
+  /// in `tab_grid_view.dart` for why this is a field rather than a
+  /// `LayoutBuilder` in this build.
+  final double availableWidth;
+
+  const _TabTreesGrid({
+    required this.availableWidth,
+    required this.scrollController,
+    required this.onClose,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = availableWidth;
     final disableAnimations = MediaQuery.disableAnimationsOf(context);
 
     final containerId = ref.watch(selectedContainerProvider);
@@ -293,7 +304,10 @@ class _TabTreesGrid extends HookConsumerWidget {
 
         if (index < 0) return;
 
-        final row = index ~/ 2;
+        // Was hardcoded to 2, which only matched the column count on a narrow
+        // phone; anywhere else this scrolled to the wrong row. Its sibling in
+        // tab_grid_view.dart always divided by the real count.
+        final row = index ~/ crossAxisCount;
         final tabStart = row * itemSize.height;
         final viewportDimension = scrollController.position.viewportDimension;
 
@@ -308,18 +322,19 @@ class _TabTreesGrid extends HookConsumerWidget {
         if (disableAnimations) {
           scrollController.jumpTo(targetOffset);
         } else {
-          unawaited(
-            scrollController.animateTo(
-              targetOffset,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeInOut,
-            ),
+          scrollController.animateTo(
+            targetOffset,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
           );
         }
       });
 
       return null;
-    }, [filteredTabEntities, activeTab]);
+      // crossAxisCount and itemSize both change with the available width, and
+      // the target offset is computed from them -- without them here a resize
+      // would leave the active tab centred on the row it used to be in.
+    }, [filteredTabEntities, activeTab, crossAxisCount, itemSize]);
 
     final tabs = useMemoized(() {
       return filteredTabEntities.value.whereType<TabTreeEntity>().map((entity) {

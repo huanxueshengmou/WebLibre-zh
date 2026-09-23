@@ -23,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:weblibre/core/copy/profile_copy.dart';
+import 'package:weblibre/core/design/window_size_class.dart';
 import 'package:weblibre/core/logger.dart';
 import 'package:weblibre/core/startup/startup_bootstrap.dart';
 import 'package:weblibre/presentation/startup_maintenance_screen.dart';
@@ -229,7 +230,7 @@ class StartupPhaseHost extends HookWidget {
       _pumpFrame();
       return phase;
     }
-    return _settle(phase);
+    return await _settle(phase);
   }
 }
 
@@ -355,7 +356,7 @@ class StartupHaltScreen extends StatelessWidget {
 
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 520),
+        constraints: const BoxConstraints(maxWidth: ContentWidth.form),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(

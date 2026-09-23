@@ -20,6 +20,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:weblibre/core/design/display_features.dart';
 import 'package:weblibre/features/geckoview/domain/providers/selected_tab.dart';
 import 'package:weblibre/features/geckoview/domain/providers/tab_state.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/entities/isolation_context.dart';
@@ -29,14 +30,6 @@ import 'package:weblibre/presentation/widgets/url_icon.dart';
 
 /// The type of home screen shortcut the user chose.
 enum ShortcutInstallType { shortcut, app }
-
-/// Result of the install configuration sheets.
-class PwaInstallConfig {
-  final String name;
-  final String? contextId;
-
-  const PwaInstallConfig({required this.name, required this.contextId});
-}
 
 /// Result of the shortcut choice sheet (basic vs app + config).
 class ShortcutInstallConfig {
@@ -51,15 +44,20 @@ class ShortcutInstallConfig {
   });
 }
 
-/// Shows a bottom sheet to confirm installing a PWA with an editable name
-/// and a storage (contextId) selection.
-Future<PwaInstallConfig?> showPwaInstallBottomSheet(
+/// Shows a bottom sheet to confirm adding a site with a valid manifest, with
+/// an editable name and a storage (contextId) selection.
+///
+/// A manifest makes "Install as App" the expected choice, but it does not rule
+/// out a plain shortcut: a site being installable is no reason to withhold the
+/// option of just pinning it as a normal tab, so both rows are offered.
+Future<ShortcutInstallConfig?> showPwaInstallBottomSheet(
   BuildContext context, {
   required String defaultName,
   required Uri url,
 }) {
   return showModalBottomSheet<ShortcutInstallConfig>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
@@ -72,13 +70,10 @@ Future<PwaInstallConfig?> showPwaInstallBottomSheet(
         defaultName: defaultName,
         url: url,
         showAppOption: true,
-        showShortcutOption: false,
+        showShortcutOption: true,
       ),
     ),
-  ).then((result) {
-    if (result == null) return null;
-    return PwaInstallConfig(name: result.name, contextId: result.contextId);
-  });
+  );
 }
 
 /// Shows a bottom sheet for non-manifest sites offering a choice between
@@ -94,6 +89,7 @@ Future<ShortcutInstallConfig?> showShortcutChoiceBottomSheet(
 }) {
   return showModalBottomSheet<ShortcutInstallConfig>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

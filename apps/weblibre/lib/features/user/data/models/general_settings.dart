@@ -23,12 +23,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mozilla_components/flutter_mozilla_components.dart'
     show AppLinksMode;
 import 'package:json_annotation/json_annotation.dart';
+import 'package:weblibre/core/design/window_size_class.dart';
 import 'package:weblibre/core/routing/routes.dart';
 import 'package:weblibre/features/app_links/domain/entities/app_link_rule.dart';
 import 'package:weblibre/features/app_links/domain/entities/context_app_link_policy.dart';
 import 'package:weblibre/features/bangs/data/models/bang_group.dart';
 import 'package:weblibre/features/bangs/data/models/bang_key.dart';
 import 'package:weblibre/features/geckoview/features/browser/domain/entities/home_target.dart';
+import 'package:weblibre/features/geckoview/features/tabs/data/entities/child_tab_placement.dart';
 import 'package:weblibre/features/intent_gatekeeper/domain/entities/intent_source_policy.dart';
 import 'package:weblibre/features/search/domain/entities/abstract/i_search_suggestion_provider.dart';
 import 'package:weblibre/features/wallpaper/domain/entities/home_wallpaper.dart';
@@ -59,6 +61,10 @@ const defaultQuickTabSwitcherTitleWidth = 64.0;
 const minQuickTabSwitcherTitleWidth = 32.0;
 const maxQuickTabSwitcherTitleWidth = 128.0;
 const quickTabSwitcherTitleWidthStep = 8.0;
+
+/// Width (logical px) of the side panel before the user resizes it. Matches
+/// Material's extended navigation rail.
+const defaultSideRailWidth = 256.0;
 
 /// Controls the Android display refresh rate the app requests at startup.
 ///
@@ -109,6 +115,10 @@ enum BackgroundTabOpenAction { prompt, switchImmediately }
 
 enum TabDirection { newestFirst, oldestFirst }
 
+/// The edge the tab bar is actually rendered on, after resolution.
+///
+/// Closed by design — there is no `auto` here. See [TabBarPositionSetting],
+/// which is what gets persisted.
 enum TabBarPosition {
   top,
   bottom,
@@ -127,6 +137,58 @@ enum TabBarPosition {
   Axis get axis => isVertical ? Axis.vertical : Axis.horizontal;
 }
 
+/// What the user chose for the tab bar's edge — which may be "decide for me".
+///
+/// Deliberately a separate type from [TabBarPosition] rather than an extra
+/// value on it. [TabBarPosition] carries geometry accessors (`isVertical`,
+/// `isHorizontal`, `axis`) that are answered by comparing against concrete
+/// edges, so an `auto` member there would silently report itself as
+/// *horizontal* everywhere the resolution was forgotten — a wrong layout
+/// rather than an error. Keeping the stored and resolved types apart makes
+/// that unrepresentable: nothing can ask an unresolved choice which way it
+/// points.
+///
+/// [HomeSearchBarPlacement] folds its own `auto` into one enum because it has
+/// no such accessors; the difference is the accessors, not a change of style.
+enum TabBarPositionSetting {
+  /// Follow the window: a bottom bar where there is no room for anything else,
+  /// a side rail once the window is wide enough to spare the width.
+  auto,
+  top,
+  bottom,
+  left,
+  right;
+
+  String get label => switch (this) {
+    auto => 'Automatic',
+    top => 'Top',
+    bottom => 'Bottom',
+    left => 'Left',
+    right => 'Right',
+  };
+
+  String get description => switch (this) {
+    auto => 'A side rail on large screens, a bottom bar on phones',
+    top => 'Persistent tab bar without auto-hide',
+    bottom => 'Tab bar with auto-hide support',
+    left => 'Vertical side rail, swipe to hide',
+    right => 'Vertical side rail, swipe to hide',
+  };
+
+  /// The concrete edge this resolves to in [window].
+  ///
+  /// Only [auto] consults the window; every explicit choice is returned
+  /// untouched, on any screen. A user who put the bar somewhere meant it.
+  TabBarPosition resolve(WindowSizeClass window) => switch (this) {
+    auto =>
+      window.prefersSideRail ? TabBarPosition.left : TabBarPosition.bottom,
+    top => TabBarPosition.top,
+    bottom => TabBarPosition.bottom,
+    left => TabBarPosition.left,
+    right => TabBarPosition.right,
+  };
+}
+
 enum TabBarLayout { withTitle, compact }
 
 /// Which tab chips in the quick tab switcher and the tab bar carry a close
@@ -139,9 +201,10 @@ enum TabBarLayout { withTitle, compact }
 /// the button sits right beside the chip the user taps to go back to it.
 ///
 /// No mode removes a way to close a tab: the chip long-press menu and the tab
-/// bar swipe action are untouched throughout. The narrow vertical rail has no
-/// room for a close button beside an icon-only chip and behaves as [never]
-/// whatever this says.
+/// bar swipe action are untouched throughout. The *narrow* vertical rail has
+/// no room for a close button beside an icon-only chip and behaves as [never]
+/// whatever this says; a rail wide enough to be a tab panel honours it like
+/// any horizontal bar.
 enum TabChipCloseButtonMode {
   activeTabOnly,
   all,
@@ -251,6 +314,7 @@ class GeneralSettings with FastEquatable {
 
   /// Where the home surface's search entry is rendered. See
   /// [HomeSearchBarPlacement] and [effectiveHomeSearchBarPlacement].
+  @JsonKey(unknownEnumValue: HomeSearchBarPlacement.auto)
   final HomeSearchBarPlacement homeSearchBarPlacement;
 
   /// The wallpaper shown behind the home surface, as a file name within the
@@ -278,6 +342,10 @@ class GeneralSettings with FastEquatable {
   final TabType storedDefaultCreateTabType;
   final TabDirection tabListDirection;
   final TabDirection tabBarDirection;
+
+  /// Where a tab opened from another tab is inserted. See
+  /// [ChildTabPlacement]; the opener is recorded as the parent either way.
+  final ChildTabPlacement childTabPlacement;
   final TabIntentOpenSetting tabIntentOpenSetting;
 
   /// Determines what happens when a bookmark is tapped. See
@@ -288,6 +356,21 @@ class GeneralSettings with FastEquatable {
   /// [BackgroundTabOpenAction].
   final BackgroundTabOpenAction backgroundTabOpenAction;
   final bool autoHideTabBar;
+
+  /// Width the side panel was last resized to.
+  ///
+  /// A value below the panel's minimum means it was collapsed to the icon
+  /// rail. Clamped against the window where it is applied rather than here, so
+  /// a narrower window never overwrites the width a wider one was given.
+  final double sideRailWidth;
+
+  /// Whether the side panel hides until the mouse cursor reaches its edge.
+  ///
+  /// Only takes effect once a mouse or trackpad has been used: without a
+  /// cursor there is nothing to reveal it with, and touch already has the
+  /// swipe to dismiss the bar.
+  final bool sideRailAutoHide;
+
   final TabBarSwipeAction tabBarSwipeAction;
 
   /// Whether sequential tab navigation (the tab bar swipe and the
@@ -302,11 +385,29 @@ class GeneralSettings with FastEquatable {
   final Duration historyAutoCleanInterval;
   final bool tabViewBottomSheet;
   final bool tabBarShowContextualBar;
-  final TabBarPosition tabBarPosition;
+
+  /// Where the user asked for the tab bar. Resolve with
+  /// [effectiveTabBarPosition] before using it for layout.
+  ///
+  /// `unknownEnumValue` matters for settings sync: a document written by a newer
+  /// build can name a position this one has never heard of, and the generated
+  /// decoder throws on an unrecognised enum string rather than degrading.
+  @JsonKey(unknownEnumValue: TabBarPositionSetting.auto)
+  final TabBarPositionSetting tabBarPosition;
   final TabBarLayout tabBarLayout;
   final TabBarStackingMode tabBarStackingMode;
   final bool pullToRefreshEnabled;
   final bool useExternalDownloadManager;
+
+  /// Where downloads are saved: a Storage Access Framework tree URI
+  /// (`content://…`) the app holds a persisted write grant for, or null for the
+  /// system's public Downloads folder.
+  ///
+  /// Stored as the URI the picker returned rather than a path, because that is
+  /// what a SAF grant is addressed by and what Mozilla's download writer
+  /// expects. Replicated to native, which resolves it without Flutter — see
+  /// `DownloadLocationPreference`.
+  final String? downloadDirectoryUri;
   final bool doubleBackCloseTab;
   final Duration unassignedTabsAutoCleanInterval;
   final int maxSearchHistoryEntries;
@@ -460,10 +561,13 @@ class GeneralSettings with FastEquatable {
     required this.storedDefaultCreateTabType,
     required this.tabListDirection,
     required this.tabBarDirection,
+    required this.childTabPlacement,
     required this.tabIntentOpenSetting,
     required this.bookmarkOpenSetting,
     required this.backgroundTabOpenAction,
     required this.autoHideTabBar,
+    required this.sideRailWidth,
+    required this.sideRailAutoHide,
     required this.tabBarSwipeAction,
     required this.sequentialTabNavigationCrossContainers,
     required this.sequentialTabNavigationLoop,
@@ -475,6 +579,7 @@ class GeneralSettings with FastEquatable {
     required this.tabBarStackingMode,
     required this.pullToRefreshEnabled,
     required this.useExternalDownloadManager,
+    required this.downloadDirectoryUri,
     required this.doubleBackCloseTab,
     required this.unassignedTabsAutoCleanInterval,
     required this.maxSearchHistoryEntries,
@@ -548,21 +653,25 @@ class GeneralSettings with FastEquatable {
     TabType? storedDefaultCreateTabType,
     TabDirection? tabListDirection,
     TabDirection? tabBarDirection,
+    ChildTabPlacement? childTabPlacement,
     TabIntentOpenSetting? tabIntentOpenSetting,
     BookmarkOpenSetting? bookmarkOpenSetting,
     BackgroundTabOpenAction? backgroundTabOpenAction,
     bool? autoHideTabBar,
+    double? sideRailWidth,
+    bool? sideRailAutoHide,
     TabBarSwipeAction? tabBarSwipeAction,
     bool? sequentialTabNavigationCrossContainers,
     bool? sequentialTabNavigationLoop,
     Duration? historyAutoCleanInterval,
     bool? tabViewBottomSheet,
     bool? tabBarShowContextualBar,
-    TabBarPosition? tabBarPosition,
+    TabBarPositionSetting? tabBarPosition,
     TabBarLayout? tabBarLayout,
     TabBarStackingMode? tabBarStackingMode,
     bool? pullToRefreshEnabled,
     bool? useExternalDownloadManager,
+    this.downloadDirectoryUri,
     bool? doubleBackCloseTab,
     Duration? unassignedTabsAutoCleanInterval,
     int? maxSearchHistoryEntries,
@@ -646,11 +755,14 @@ class GeneralSettings with FastEquatable {
            storedDefaultCreateTabType ?? TabType.regular,
        tabListDirection = tabListDirection ?? TabDirection.newestFirst,
        tabBarDirection = tabBarDirection ?? TabDirection.newestFirst,
+       childTabPlacement = childTabPlacement ?? ChildTabPlacement.afterParent,
        tabIntentOpenSetting = tabIntentOpenSetting ?? TabIntentOpenSetting.ask,
        bookmarkOpenSetting = bookmarkOpenSetting ?? BookmarkOpenSetting.ask,
        backgroundTabOpenAction =
            backgroundTabOpenAction ?? BackgroundTabOpenAction.prompt,
        autoHideTabBar = autoHideTabBar ?? true,
+       sideRailWidth = sideRailWidth ?? defaultSideRailWidth,
+       sideRailAutoHide = sideRailAutoHide ?? false,
        tabBarSwipeAction =
            tabBarSwipeAction ?? TabBarSwipeAction.switchLastOpened,
        // Defaults to the behavior sequential navigation shipped with: stepping
@@ -662,7 +774,7 @@ class GeneralSettings with FastEquatable {
            historyAutoCleanInterval ?? const Duration(days: 90),
        tabViewBottomSheet = tabViewBottomSheet ?? false,
        tabBarShowContextualBar = tabBarShowContextualBar ?? true,
-       tabBarPosition = tabBarPosition ?? TabBarPosition.bottom,
+       tabBarPosition = tabBarPosition ?? TabBarPositionSetting.auto,
        tabBarLayout = tabBarLayout ?? TabBarLayout.compact,
        tabBarStackingMode = tabBarStackingMode ?? TabBarStackingMode.accordion,
        pullToRefreshEnabled = pullToRefreshEnabled ?? true,
@@ -808,31 +920,59 @@ class GeneralSettings with FastEquatable {
   bool get effectiveSequentialTabNavigationCrossContainers =>
       sequentialTabNavigationCrossContainers || !showContainerUi;
 
+  /// [tabBarPosition] with [TabBarPositionSetting.auto] resolved against
+  /// [window], so callers never have to. Never returns an unresolved choice —
+  /// that is the point of the return type.
+  ///
+  /// [window] is required rather than defaulted on purpose. A default would
+  /// let every existing call site keep compiling while quietly resolving
+  /// against a phone, which is exactly the class of bug this split exists to
+  /// prevent. Prefer `effectiveTabBarPositionProvider` over calling this
+  /// directly.
+  TabBarPosition effectiveTabBarPosition({required WindowSizeClass window}) =>
+      tabBarPosition.resolve(window);
+
   /// [homeSearchBarPlacement] with [HomeSearchBarPlacement.auto] resolved
-  /// against the tab bar's position, so callers never have to. Never returns
-  /// [HomeSearchBarPlacement.auto].
+  /// against the tab bar's *resolved* position, so callers never have to.
+  /// Never returns [HomeSearchBarPlacement.auto].
   ///
   /// Only a bottom tab bar resolves to [HomeSearchBarPlacement.tabBar]: a top
   /// bar puts its address field next to the pill's own position anyway, and on
   /// the vertical side rail the address field is rotated 90 degrees, which is
   /// a poor search entry to hand someone as their only one.
-  HomeSearchBarPlacement effectiveHomeSearchBarPlacement() =>
-      switch (homeSearchBarPlacement) {
-        HomeSearchBarPlacement.auto =>
-          tabBarPosition == TabBarPosition.bottom
-              ? HomeSearchBarPlacement.tabBar
-              : HomeSearchBarPlacement.top,
-        final placement => placement,
-      };
+  HomeSearchBarPlacement effectiveHomeSearchBarPlacement({
+    required WindowSizeClass window,
+  }) => switch (homeSearchBarPlacement) {
+    HomeSearchBarPlacement.auto =>
+      effectiveTabBarPosition(window: window) == TabBarPosition.bottom
+          ? HomeSearchBarPlacement.tabBar
+          : HomeSearchBarPlacement.top,
+    final placement => placement,
+  };
 
   /// Container-dependent stacking modes degrade to a single recently-used
-  /// row when the container UI is disabled. Two-level stacking additionally
-  /// degrades to accordion (the default mode, which has a vertical form) on the
-  /// narrow vertical rail, where two stacked chip lists have no room.
-  TabBarStackingMode effectiveTabBarStackingMode() {
+  /// row when the container UI is disabled.
+  ///
+  /// Two-level stacking additionally degrades to accordion (the default mode,
+  /// which has a vertical form) on a *narrow* vertical rail, where two stacked
+  /// chip lists have no room. A rail wide enough to be a tab panel has room
+  /// for both, so the degradation is keyed on the rail being narrow rather
+  /// than on it being vertical.
+  ///
+  /// It also degrades in a short window: the bar stacks up to 56 + 54 + 48x2 =
+  /// 206dp, which in a 480dp-tall window is over 40% of the viewport spent on
+  /// chrome before the page gets any.
+  TabBarStackingMode effectiveTabBarStackingMode({
+    required WindowSizeClass window,
+  }) {
     var mode = tabBarStackingMode;
 
-    if (tabBarPosition.isVertical && mode == TabBarStackingMode.twoLevel) {
+    final isNarrowRail =
+        effectiveTabBarPosition(window: window).isVertical &&
+        !window.allowsWideRail;
+
+    if ((isNarrowRail || window.isHeightConstrained) &&
+        mode == TabBarStackingMode.twoLevel) {
       mode = TabBarStackingMode.accordion;
     }
 
@@ -878,10 +1018,13 @@ class GeneralSettings with FastEquatable {
     storedDefaultCreateTabType,
     tabListDirection,
     tabBarDirection,
+    childTabPlacement,
     tabIntentOpenSetting,
     bookmarkOpenSetting,
     backgroundTabOpenAction,
     autoHideTabBar,
+    sideRailWidth,
+    sideRailAutoHide,
     tabBarSwipeAction,
     sequentialTabNavigationCrossContainers,
     sequentialTabNavigationLoop,
@@ -893,6 +1036,7 @@ class GeneralSettings with FastEquatable {
     tabBarStackingMode,
     pullToRefreshEnabled,
     useExternalDownloadManager,
+    downloadDirectoryUri,
     doubleBackCloseTab,
     unassignedTabsAutoCleanInterval,
     maxSearchHistoryEntries,

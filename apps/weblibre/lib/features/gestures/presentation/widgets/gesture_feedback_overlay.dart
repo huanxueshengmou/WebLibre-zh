@@ -19,7 +19,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:weblibre/features/gestures/data/models/gesture_action.dart';
+import 'package:weblibre/features/browser_actions/data/models/browser_action.dart';
 import 'package:weblibre/features/gestures/data/models/gesture_settings.dart';
 import 'package:weblibre/features/gestures/data/models/gesture_stroke.dart';
 import 'package:weblibre/features/gestures/domain/repositories/gesture_settings.dart';
@@ -29,7 +29,7 @@ import 'package:weblibre/features/gestures/presentation/widgets/gesture_stroke_v
 /// One candidate completion shown in the overlay.
 typedef _Suggestion = ({
   GestureStroke stroke,
-  GestureAction action,
+  BrowserAction action,
   bool exact,
 });
 
@@ -87,7 +87,7 @@ class GestureFeedbackOverlay extends HookConsumerWidget {
         current.arrows.length >= settings.minSuggestionStroke;
 
     final result = <_Suggestion>[];
-    for (final MapEntry(key: key, value: action) in settings.bindings.entries) {
+    for (final MapEntry(:key, value: action) in settings.bindings.entries) {
       final stroke = GestureStroke.fromKey(key);
       if (stroke.fingers != current.fingers) continue;
       if (stroke.startPosition != GestureStartPosition.anywhere &&

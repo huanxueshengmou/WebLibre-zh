@@ -588,7 +588,134 @@ final class SelectedContainerTabStatesWithContainerProvider
 }
 
 String _$selectedContainerTabStatesWithContainerHash() =>
-    r'fa0704da36c068fa4585175807d9da7cbee0b70e';
+    r'6446b8bddb92102c6a64027341d8a3f664fc3ba2';
+
+/// The tabs of [containerId] (null for unassigned tabs) with their container
+/// data, in the order every non-tray surface shares.
+///
+/// A family rather than a read of the selected container, so the accordion can
+/// list the tabs of several expanded groups at once without selecting them.
+
+@ProviderFor(containerTabStatesWithContainer)
+final containerTabStatesWithContainerProvider =
+    ContainerTabStatesWithContainerFamily._();
+
+/// The tabs of [containerId] (null for unassigned tabs) with their container
+/// data, in the order every non-tray surface shares.
+///
+/// A family rather than a read of the selected container, so the accordion can
+/// list the tabs of several expanded groups at once without selecting them.
+
+final class ContainerTabStatesWithContainerProvider
+    extends
+        $FunctionalProvider<
+          EquatableValue<List<TabStateWithContainer>>,
+          EquatableValue<List<TabStateWithContainer>>,
+          EquatableValue<List<TabStateWithContainer>>
+        >
+    with $Provider<EquatableValue<List<TabStateWithContainer>>> {
+  /// The tabs of [containerId] (null for unassigned tabs) with their container
+  /// data, in the order every non-tray surface shares.
+  ///
+  /// A family rather than a read of the selected container, so the accordion can
+  /// list the tabs of several expanded groups at once without selecting them.
+  ContainerTabStatesWithContainerProvider._({
+    required ContainerTabStatesWithContainerFamily super.from,
+    required String? super.argument,
+  }) : super(
+         retry: null,
+         name: r'containerTabStatesWithContainerProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$containerTabStatesWithContainerHash();
+
+  @override
+  String toString() {
+    return r'containerTabStatesWithContainerProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<EquatableValue<List<TabStateWithContainer>>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  EquatableValue<List<TabStateWithContainer>> create(Ref ref) {
+    final argument = this.argument as String?;
+    return containerTabStatesWithContainer(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(
+    EquatableValue<List<TabStateWithContainer>> value,
+  ) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride:
+          $SyncValueProvider<EquatableValue<List<TabStateWithContainer>>>(
+            value,
+          ),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ContainerTabStatesWithContainerProvider &&
+        other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$containerTabStatesWithContainerHash() =>
+    r'3597f8f35c75eb2ac62ef1cb737d97e112b890d6';
+
+/// The tabs of [containerId] (null for unassigned tabs) with their container
+/// data, in the order every non-tray surface shares.
+///
+/// A family rather than a read of the selected container, so the accordion can
+/// list the tabs of several expanded groups at once without selecting them.
+
+final class ContainerTabStatesWithContainerFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          EquatableValue<List<TabStateWithContainer>>,
+          String?
+        > {
+  ContainerTabStatesWithContainerFamily._()
+    : super(
+        retry: null,
+        name: r'containerTabStatesWithContainerProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The tabs of [containerId] (null for unassigned tabs) with their container
+  /// data, in the order every non-tray surface shares.
+  ///
+  /// A family rather than a read of the selected container, so the accordion can
+  /// list the tabs of several expanded groups at once without selecting them.
+
+  ContainerTabStatesWithContainerProvider call(String? containerId) =>
+      ContainerTabStatesWithContainerProvider._(
+        argument: containerId,
+        from: this,
+      );
+
+  @override
+  String toString() => r'containerTabStatesWithContainerProvider';
+}
 
 @ProviderFor(quickTabSwitcherTabStates)
 final quickTabSwitcherTabStatesProvider = QuickTabSwitcherTabStatesFamily._();
@@ -767,6 +894,230 @@ final class QuickTabSwitcherHistorySuggestionsFamily extends $Family
   String toString() => r'quickTabSwitcherHistorySuggestionsProvider';
 }
 
+/// Whether a single switcher row of [mode] has anything to render
+/// (open tabs, or history suggestions as fallback).
+///
+/// [enableHistoryFallback] mirrors the flag of the same name on the rendered
+/// switcher row: a row that draws no history chips must not be counted as
+/// occupied because history exists, or it reserves a slot it then leaves
+/// blank (#628).
+
+@ProviderFor(quickTabSwitcherRowHasResults)
+final quickTabSwitcherRowHasResultsProvider =
+    QuickTabSwitcherRowHasResultsFamily._();
+
+/// Whether a single switcher row of [mode] has anything to render
+/// (open tabs, or history suggestions as fallback).
+///
+/// [enableHistoryFallback] mirrors the flag of the same name on the rendered
+/// switcher row: a row that draws no history chips must not be counted as
+/// occupied because history exists, or it reserves a slot it then leaves
+/// blank (#628).
+
+final class QuickTabSwitcherRowHasResultsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<bool>,
+          AsyncValue<bool>,
+          AsyncValue<bool>
+        >
+    with $Provider<AsyncValue<bool>> {
+  /// Whether a single switcher row of [mode] has anything to render
+  /// (open tabs, or history suggestions as fallback).
+  ///
+  /// [enableHistoryFallback] mirrors the flag of the same name on the rendered
+  /// switcher row: a row that draws no history chips must not be counted as
+  /// occupied because history exists, or it reserves a slot it then leaves
+  /// blank (#628).
+  QuickTabSwitcherRowHasResultsProvider._({
+    required QuickTabSwitcherRowHasResultsFamily super.from,
+    required (QuickTabSwitcherMode, {bool enableHistoryFallback})
+    super.argument,
+  }) : super(
+         retry: null,
+         name: r'quickTabSwitcherRowHasResultsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$quickTabSwitcherRowHasResultsHash();
+
+  @override
+  String toString() {
+    return r'quickTabSwitcherRowHasResultsProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<AsyncValue<bool>> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  AsyncValue<bool> create(Ref ref) {
+    final argument =
+        this.argument as (QuickTabSwitcherMode, {bool enableHistoryFallback});
+    return quickTabSwitcherRowHasResults(
+      ref,
+      argument.$1,
+      enableHistoryFallback: argument.enableHistoryFallback,
+    );
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AsyncValue<bool> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AsyncValue<bool>>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is QuickTabSwitcherRowHasResultsProvider &&
+        other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$quickTabSwitcherRowHasResultsHash() =>
+    r'06ab2b803f9dc7f40a043c0681f14a147da79eea';
+
+/// Whether a single switcher row of [mode] has anything to render
+/// (open tabs, or history suggestions as fallback).
+///
+/// [enableHistoryFallback] mirrors the flag of the same name on the rendered
+/// switcher row: a row that draws no history chips must not be counted as
+/// occupied because history exists, or it reserves a slot it then leaves
+/// blank (#628).
+
+final class QuickTabSwitcherRowHasResultsFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          AsyncValue<bool>,
+          (QuickTabSwitcherMode, {bool enableHistoryFallback})
+        > {
+  QuickTabSwitcherRowHasResultsFamily._()
+    : super(
+        retry: null,
+        name: r'quickTabSwitcherRowHasResultsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Whether a single switcher row of [mode] has anything to render
+  /// (open tabs, or history suggestions as fallback).
+  ///
+  /// [enableHistoryFallback] mirrors the flag of the same name on the rendered
+  /// switcher row: a row that draws no history chips must not be counted as
+  /// occupied because history exists, or it reserves a slot it then leaves
+  /// blank (#628).
+
+  QuickTabSwitcherRowHasResultsProvider call(
+    QuickTabSwitcherMode mode, {
+    bool enableHistoryFallback = true,
+  }) => QuickTabSwitcherRowHasResultsProvider._(
+    argument: (mode, enableHistoryFallback: enableHistoryFallback),
+    from: this,
+  );
+
+  @override
+  String toString() => r'quickTabSwitcherRowHasResultsProvider';
+}
+
+/// Which of the two rows the two-level switcher bar actually renders.
+///
+/// Each row is decided on its own, so a row with nothing in it is not drawn
+/// and costs no height, instead of reserving a blank 48px slot (#628). The
+/// bar reads this to build its rows and [quickTabSwitcherRowCount] to reserve
+/// their height, so the two cannot disagree about how tall the bar is.
+///
+/// The container row is rendered with `enableHistoryFallback: false`, so its
+/// occupancy ignores history suggestions; the recently-used row below it
+/// carries them.
+
+@ProviderFor(twoLevelQuickTabSwitcherRows)
+final twoLevelQuickTabSwitcherRowsProvider =
+    TwoLevelQuickTabSwitcherRowsProvider._();
+
+/// Which of the two rows the two-level switcher bar actually renders.
+///
+/// Each row is decided on its own, so a row with nothing in it is not drawn
+/// and costs no height, instead of reserving a blank 48px slot (#628). The
+/// bar reads this to build its rows and [quickTabSwitcherRowCount] to reserve
+/// their height, so the two cannot disagree about how tall the bar is.
+///
+/// The container row is rendered with `enableHistoryFallback: false`, so its
+/// occupancy ignores history suggestions; the recently-used row below it
+/// carries them.
+
+final class TwoLevelQuickTabSwitcherRowsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<({bool containerRow, bool mruRow})>,
+          AsyncValue<({bool containerRow, bool mruRow})>,
+          AsyncValue<({bool containerRow, bool mruRow})>
+        >
+    with $Provider<AsyncValue<({bool containerRow, bool mruRow})>> {
+  /// Which of the two rows the two-level switcher bar actually renders.
+  ///
+  /// Each row is decided on its own, so a row with nothing in it is not drawn
+  /// and costs no height, instead of reserving a blank 48px slot (#628). The
+  /// bar reads this to build its rows and [quickTabSwitcherRowCount] to reserve
+  /// their height, so the two cannot disagree about how tall the bar is.
+  ///
+  /// The container row is rendered with `enableHistoryFallback: false`, so its
+  /// occupancy ignores history suggestions; the recently-used row below it
+  /// carries them.
+  TwoLevelQuickTabSwitcherRowsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'twoLevelQuickTabSwitcherRowsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$twoLevelQuickTabSwitcherRowsHash();
+
+  @$internal
+  @override
+  $ProviderElement<AsyncValue<({bool containerRow, bool mruRow})>>
+  $createElement($ProviderPointer pointer) => $ProviderElement(pointer);
+
+  @override
+  AsyncValue<({bool containerRow, bool mruRow})> create(Ref ref) {
+    return twoLevelQuickTabSwitcherRows(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(
+    AsyncValue<({bool containerRow, bool mruRow})> value,
+  ) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride:
+          $SyncValueProvider<AsyncValue<({bool containerRow, bool mruRow})>>(
+            value,
+          ),
+    );
+  }
+}
+
+String _$twoLevelQuickTabSwitcherRowsHash() =>
+    r'66ea398c2e868df46ee93a1c8d377e55584b05a5';
+
 /// Number of 48px rows the quick tab switcher bar currently occupies.
 /// 0 hides the bar; feeds the toolbar height / GeckoView viewport math.
 
@@ -816,7 +1167,7 @@ final class QuickTabSwitcherRowCountProvider
 }
 
 String _$quickTabSwitcherRowCountHash() =>
-    r'81a2bfbdc4dc88fdf2c66dd9f5bfd6d1ce73a073';
+    r'd59a8136e426647dd85ae78f48803601be786891';
 
 @ProviderFor(suggestedTabEntities)
 final suggestedTabEntitiesProvider = SuggestedTabEntitiesFamily._();

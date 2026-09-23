@@ -18,41 +18,87 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import 'package:flutter/material.dart';
-import 'package:weblibre/features/gestures/data/models/gesture_action.dart';
+import 'package:weblibre/core/design/display_features.dart';
+import 'package:weblibre/features/browser_actions/data/models/browser_action.dart';
 import 'package:weblibre/presentation/widgets/pointer_scrollable_sheet.dart';
 import 'package:weblibre/presentation/widgets/sheet_drag_handle.dart';
 
-/// Shows a modal bottom sheet listing every [GestureAction] grouped by category,
+/// Shows a modal bottom sheet listing every [BrowserAction] grouped by category,
 /// each with its icon, title and description, and returns the chosen action (or
 /// null if dismissed). Mirrors the icon + subtitle selection sheets used
 /// elsewhere in the app (e.g. the contextual toolbar pickers).
-Future<GestureAction?> showGestureActionPicker(
+Future<BrowserAction?> showGestureActionPicker(
   BuildContext context, {
-  required GestureAction selected,
+  required BrowserAction selected,
+}) async {
+  final picked = await _showPicker(context, selected: selected);
+  return picked?.action;
+}
+
+/// An entry listed above every action that stands for choosing none of them,
+/// such as "keep the button's own behaviour".
+typedef UnsetActionOption = ({String title, String description, IconData icon});
+
+/// Like [showGestureActionPicker], but the list starts with [unsetOption] and
+/// [selected] may be null to mark that entry as the current one. [actions]
+/// narrows the list to what the trigger can run.
+///
+/// Returns null if dismissed; otherwise a record whose `action` is null when
+/// [unsetOption] was chosen.
+Future<({BrowserAction? action})?> showOptionalBrowserActionPicker(
+  BuildContext context, {
+  required BrowserAction? selected,
+  required UnsetActionOption unsetOption,
+  List<BrowserAction> actions = BrowserAction.values,
 }) {
-  return showModalBottomSheet<GestureAction>(
+  return _showPicker(
+    context,
+    selected: selected,
+    unsetOption: unsetOption,
+    actions: actions,
+  );
+}
+
+Future<({BrowserAction? action})?> _showPicker(
+  BuildContext context, {
+  required BrowserAction? selected,
+  UnsetActionOption? unsetOption,
+  List<BrowserAction> actions = BrowserAction.values,
+}) {
+  return showModalBottomSheet<({BrowserAction? action})>(
     context: context,
+    anchorPoint: preferredAnchorPoint(MediaQuery.of(context)),
     isScrollControlled: true,
     useSafeArea: true,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
-    builder: (context) => _GestureActionPicker(selected: selected),
+    builder: (context) => _GestureActionPicker(
+      selected: selected,
+      unsetOption: unsetOption,
+      actions: actions,
+    ),
   );
 }
 
 class _GestureActionPicker extends StatelessWidget {
-  final GestureAction selected;
+  final BrowserAction? selected;
+  final UnsetActionOption? unsetOption;
+  final List<BrowserAction> actions;
 
-  const _GestureActionPicker({required this.selected});
+  const _GestureActionPicker({
+    required this.selected,
+    required this.actions,
+    this.unsetOption,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    final byCategory = <GestureActionCategory, List<GestureAction>>{};
-    for (final action in GestureAction.values) {
+    final byCategory = <BrowserActionCategory, List<BrowserAction>>{};
+    for (final action in actions) {
       byCategory.putIfAbsent(action.category, () => []).add(action);
     }
 
@@ -80,7 +126,18 @@ class _GestureActionPicker extends StatelessWidget {
                 controller: scrollController,
                 padding: const EdgeInsets.only(bottom: 8),
                 children: [
-                  for (final category in GestureActionCategory.values)
+                  if (unsetOption case final unset?)
+                    ListTile(
+                      leading: Icon(unset.icon),
+                      title: Text(unset.title),
+                      subtitle: Text(unset.description),
+                      selected: selected == null,
+                      trailing: selected == null
+                          ? Icon(Icons.check, color: colorScheme.primary)
+                          : null,
+                      onTap: () => Navigator.of(context).pop((action: null)),
+                    ),
+                  for (final category in BrowserActionCategory.values)
                     if (byCategory[category] case final actions?
                         when actions.isNotEmpty) ...[
                       Padding(
@@ -102,7 +159,8 @@ class _GestureActionPicker extends StatelessWidget {
                           trailing: action == selected
                               ? Icon(Icons.check, color: colorScheme.primary)
                               : null,
-                          onTap: () => Navigator.of(context).pop(action),
+                          onTap: () =>
+                              Navigator.of(context).pop((action: action)),
                         ),
                     ],
                 ],

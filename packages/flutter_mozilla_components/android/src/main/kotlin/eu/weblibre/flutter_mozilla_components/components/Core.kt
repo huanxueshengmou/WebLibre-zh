@@ -8,9 +8,9 @@ package eu.weblibre.flutter_mozilla_components.components
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Environment
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import eu.weblibre.flutter_mozilla_components.DownloadLocationPreference
 import eu.weblibre.flutter_mozilla_components.ColorSchemePreference
 import eu.weblibre.flutter_mozilla_components.Components
 import eu.weblibre.flutter_mozilla_components.interceptor.AppRequestInterceptor
@@ -141,9 +141,7 @@ class Core(
             downloadDelegate = EngineDownloadDelegate(
                 context = context,
                 downloadLocation = {
-                    Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DOWNLOADS,
-                    ).path
+                    DownloadLocationPreference.read(context)
                 },
             ),
             useContentBlockingDatabase =
@@ -228,6 +226,11 @@ class Core(
     // process loses foreground priority. Installed when [store] is created.
     val webNotificationDrainCoordinator = WebNotificationDrainCoordinator()
 
+    // Held rather than constructed inline in the middleware list below so
+    // `GlobalComponents.tearDown` can cancel its in-flight thumbnail/icon
+    // encodes; see [FlutterEventMiddleware.close].
+    val flutterEventMiddleware = FlutterEventMiddleware(flutterEvents)
+
     @OptIn(FlowPreview::class)
     val store by lazy {
         BrowserStore(
@@ -249,7 +252,7 @@ class Core(
                 // Android Components deliberately parks a crashed tab until the
                 // app asks for it back; nothing else here ever would.
                 CrashRecoveryMiddleware(),
-                FlutterEventMiddleware(flutterEvents),
+                flutterEventMiddleware,
                 DownloadMiddleware(
                     applicationContext = context,
                     downloadServiceClass = DownloadService::class.java,
@@ -257,7 +260,7 @@ class Core(
                     downloadFileUtils = DefaultDownloadFileUtils(
                         context = context,
                         downloadLocation = {
-                            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path
+                            DownloadLocationPreference.read(context)
                         },
                     ),
                 ),

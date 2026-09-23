@@ -113,18 +113,41 @@ String? adjacentTabIdInOrder({
   return order[targetIndex];
 }
 
-sealed class TabBackPromptBehavior {
-  const TabBackPromptBehavior();
+/// What back does once a tab has run out of page history.
+///
+/// Only for tabs that were opened from somewhere the user expects back to
+/// return them to. Without one, back falls through to the double-back-to-close
+/// handling, which is right for a tab opened from another tab — its opener is
+/// underneath it — and wrong for one opened from a surface that is no longer
+/// on screen.
+sealed class TabBackBehavior {
+  const TabBackBehavior();
 }
 
-final class BackgroundAppTabBackPromptBehavior extends TabBackPromptBehavior {
-  const BackgroundAppTabBackPromptBehavior();
+/// Asks whether to keep the tab, then leaves the app.
+///
+/// For a tab an external app launched: back belongs to whoever sent us here.
+final class BackgroundAppTabBackBehavior extends TabBackBehavior {
+  const BackgroundAppTabBackBehavior();
 }
 
-final class ReturnToSearchTabBackPromptBehavior extends TabBackPromptBehavior {
+/// Asks whether to keep the tab, then reopens the search screen.
+final class ReturnToSearchTabBackBehavior extends TabBackBehavior {
   final TabType tabType;
 
-  const ReturnToSearchTabBackPromptBehavior({required this.tabType});
+  const ReturnToSearchTabBackBehavior({required this.tabType});
+}
+
+/// Shows the browser home surface again, keeping the tab.
+///
+/// For a tab opened from home — a shortcut, a bookmark, a history entry. Unlike
+/// the two above this asks nothing and closes nothing: home is a surface over
+/// the selected tab rather than a place the tab has to be given up to reach, and
+/// the tab is one tap away again from the tab bar. Back on a shortcut used to
+/// land in the double-back-to-close prompt, which offered to throw the page away
+/// but never led home (#623).
+final class ReturnToBrowserHomeTabBackBehavior extends TabBackBehavior {
+  const ReturnToBrowserHomeTabBackBehavior();
 }
 
 @Riverpod(keepAlive: true)
@@ -135,7 +158,7 @@ class TabRepository extends _$TabRepository {
   bool _reclosing = false;
   bool _suppressNextReclose = false;
 
-  final _tabBackPromptBehavior = <String, TabBackPromptBehavior>{};
+  final _tabBackBehavior = <String, TabBackBehavior>{};
   final _closeLock = Lock();
   final _pendingIsolationCleanup = <String>{};
 
@@ -148,16 +171,16 @@ class TabRepository extends _$TabRepository {
   /// engine has already left.
   final _latestAssignmentRequests = <String, String>{};
 
-  TabBackPromptBehavior? backPromptBehaviorFor(String? tabId) {
+  TabBackBehavior? backBehaviorFor(String? tabId) {
     if (tabId == null) {
       return null;
     }
 
-    return _tabBackPromptBehavior[tabId];
+    return _tabBackBehavior[tabId];
   }
 
-  void clearBackPromptBehavior(String tabId) {
-    _tabBackPromptBehavior.remove(tabId);
+  void clearBackBehavior(String tabId) {
+    _tabBackBehavior.remove(tabId);
   }
 
   /// Validates the opener of a tab that is about to be created.
@@ -198,7 +221,7 @@ class TabRepository extends _$TabRepository {
     TabContainerSelection containerSelection =
         const TabContainerSelection.useSelected(),
     bool launchedFromIntent = false,
-    TabBackPromptBehavior? promptOnBackBehavior,
+    TabBackBehavior? onBackBehavior,
   }) async {
     final tabDao = ref.read(tabDatabaseProvider).tabDao;
 
@@ -259,13 +282,16 @@ class TabRepository extends _$TabRepository {
       containerId: Value(assignedContainer?.id),
       url: Value(url),
       tabMode: Value(tabMode),
+      childPlacement: ref
+          .read(generalSettingsWithDefaultsProvider)
+          .childTabPlacement,
     );
 
     if (launchedFromIntent) {
-      _tabBackPromptBehavior[newTabId] =
-          promptOnBackBehavior ?? const BackgroundAppTabBackPromptBehavior();
-    } else if (promptOnBackBehavior != null) {
-      _tabBackPromptBehavior[newTabId] = promptOnBackBehavior;
+      _tabBackBehavior[newTabId] =
+          onBackBehavior ?? const BackgroundAppTabBackBehavior();
+    } else if (onBackBehavior != null) {
+      _tabBackBehavior[newTabId] = onBackBehavior;
     }
 
     if (selectTab && ref.mounted) {
@@ -326,6 +352,11 @@ class TabRepository extends _$TabRepository {
       UnassignedContainerTabSelection() => null,
       SpecificContainerTabSelection(:final container) => container,
     };
+    // Read once for the whole batch rather than per tab: the setting cannot
+    // change while these rows are being written.
+    final childPlacement = ref
+        .read(generalSettingsWithDefaultsProvider)
+        .childTabPlacement;
 
     final createdTabIds = await db.transaction(() async {
       final createdTabIds = await _tabsService.addMultipleTabs(
@@ -371,6 +402,7 @@ class TabRepository extends _$TabRepository {
           source: TabSource.manual,
           containerId: Value(assignedContainer?.id),
           url: Value(Uri.tryParse(tab.url)),
+          childPlacement: childPlacement,
           tabMode: Value(
             isIsolatedContextId(tab.contextId)
                 ? TabMode.isolated(tab.contextId!)
@@ -477,7 +509,7 @@ class TabRepository extends _$TabRepository {
         .getSingleOrNull();
 
     if (ref.mounted && previousTabId != null) {
-      return selectTab(previousTabId);
+      return await selectTab(previousTabId);
     }
 
     return false;
@@ -494,7 +526,7 @@ class TabRepository extends _$TabRepository {
       return false;
     }
 
-    return selectTab(latestTab.id);
+    return await selectTab(latestTab.id);
   }
 
   Future<bool> resumeLatestContainerTab(
@@ -515,7 +547,7 @@ class TabRepository extends _$TabRepository {
       return false;
     }
 
-    return selectTab(latestTab.id);
+    return await selectTab(latestTab.id);
   }
 
   Future<bool> selectPreviousTab(
@@ -606,7 +638,7 @@ class TabRepository extends _$TabRepository {
     );
 
     if (ref.mounted && adjacentTabId != null) {
-      return selectTab(adjacentTabId);
+      return await selectTab(adjacentTabId);
     }
 
     return false;
@@ -800,6 +832,13 @@ class TabRepository extends _$TabRepository {
     return null;
   }
 
+  /// Whether closing [tabId] hands the user back to its opener, which may live
+  /// in another container (see [_nearestAvailableAncestor]).
+  Future<bool> hasOpenAncestor(String tabId) async {
+    return await _nearestAvailableAncestor(tabId, excludedTabIds: const {}) !=
+        null;
+  }
+
   Future<void> _selectNextTab(
     String tabId, {
     Set<String> excludedTabIds = const {},
@@ -833,7 +872,7 @@ class TabRepository extends _$TabRepository {
     if (!ref.mounted) return;
 
     if (ancestorTabId != null) {
-      return _selectTabAfterClose(ancestorTabId);
+      return await _selectTabAfterClose(ancestorTabId);
     }
 
     // Priority 2: Check for previous tab by timestamp
@@ -845,7 +884,7 @@ class TabRepository extends _$TabRepository {
 
     if (previousTabId != null) {
       if (sameContainerTabs.any((tab) => tab == previousTabId)) {
-        return _selectTabAfterClose(previousTabId);
+        return await _selectTabAfterClose(previousTabId);
       }
     }
 
@@ -858,7 +897,7 @@ class TabRepository extends _$TabRepository {
     );
 
     if (orderedNeighborTabId != null) {
-      return _selectTabAfterClose(orderedNeighborTabId);
+      return await _selectTabAfterClose(orderedNeighborTabId);
     }
 
     if (!ref.mounted) return;
@@ -895,7 +934,7 @@ class TabRepository extends _$TabRepository {
         );
 
     if (unassignedTabs.isNotEmpty) {
-      return _selectTabAfterClose(unassignedTabs.first);
+      return await _selectTabAfterClose(unassignedTabs.first);
     }
 
     if (!ref.mounted) return;
@@ -920,7 +959,7 @@ class TabRepository extends _$TabRepository {
     );
 
     if (nextContainerTabs.isNotEmpty) {
-      return _selectTabAfterClose(nextContainerTabs!.first);
+      return await _selectTabAfterClose(nextContainerTabs!.first);
     }
   }
 
@@ -941,7 +980,7 @@ class TabRepository extends _$TabRepository {
       }
 
       for (final tabId in tabIds) {
-        _tabBackPromptBehavior.remove(tabId);
+        _tabBackBehavior.remove(tabId);
         final isolationContextId = ref
             .read(tabStatesProvider)[tabId]
             ?.isolationContextId;
@@ -1062,12 +1101,24 @@ class TabRepository extends _$TabRepository {
     }
   }
 
-  Future<void> undoClose() {
+  Future<void> undoClose() async {
     // Suppress the next reclose pass: undo can resurrect a tab whose
     // tombstone is still on disk (from a previous session); without this
     // flag the listener would immediately re-close it.
+    //
+    // Armed before the call, so the restored list cannot arrive first, and
+    // disarmed when nothing is restored. The undo history is short-lived and
+    // often empty, and then no tab list change ever comes to consume the flag.
+    // Left armed, it would take the next unrelated change for an undo -- at
+    // startup, the session restore itself -- skip the reclose pass and delete
+    // the tombstones of tabs the user had closed, bringing them back for good.
     _suppressNextReclose = true;
-    return _tabsService.undo();
+    var restoresTabs = false;
+    try {
+      restoresTabs = await _tabsService.undo();
+    } finally {
+      if (!restoresTabs) _suppressNextReclose = false;
+    }
   }
 
   Future<bool> _recloseRestoredClosedTabs(List<String> tabIds) async {
@@ -1327,11 +1378,19 @@ class TabRepository extends _$TabRepository {
     final db = ref.watch(tabDatabaseProvider);
 
     final tabAddedSub = eventSerivce.tabAddedStream.listen(
-      (tabId) async {
+      (event) async {
         final containerId = ref.read(selectedContainerProvider);
         await db.tabDao.insertTab(
-          tabId,
+          event.tabId,
           parentId: const Value.absent(),
+          // Link an engine-opened tab to its opener and place it per the child
+          // tab placement setting right away, so it never has to move once the
+          // parent is seeded from engine state. An app-created tab already has
+          // its row (manual source wins the upsert), so this is a no-op for it.
+          openerId: Value(event.parentId),
+          childPlacement: ref
+              .read(generalSettingsWithDefaultsProvider)
+              .childTabPlacement,
           source: TabSource.addedEvent,
           containerId: Value(containerId),
         );
@@ -1422,6 +1481,9 @@ class TabRepository extends _$TabRepository {
         if (shouldSyncTabs) {
           final syncTabsResult = await db.tabDao.syncTabs(
             retainTabIds: next.value,
+            childPlacement: ref
+                .read(generalSettingsWithDefaultsProvider)
+                .childTabPlacement,
           );
           // Capture isolation contexts from rows deleted by syncTabs
           // (orphaned tabs from crashes, or tabs the engine dropped).
@@ -1466,6 +1528,9 @@ class TabRepository extends _$TabRepository {
         if (currentTabs.isNotEmpty) {
           final syncTabsResult = await db.tabDao.syncTabs(
             retainTabIds: currentTabs,
+            childPlacement: ref
+                .read(generalSettingsWithDefaultsProvider)
+                .childTabPlacement,
           );
           _pendingIsolationCleanup.addAll(
             syncTabsResult.deletedIsolationContextIds,
@@ -1489,7 +1554,13 @@ class TabRepository extends _$TabRepository {
         }
 
         tabStateDebouncer.eventOccured(() async {
-          await db.tabDao.updateTabs(debounceStartValue, next);
+          await db.tabDao.updateTabs(
+            debounceStartValue,
+            next,
+            childPlacement: ref
+                .read(generalSettingsWithDefaultsProvider)
+                .childTabPlacement,
+          );
         });
       },
       onError: (Object error, StackTrace stackTrace) {

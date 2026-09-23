@@ -28,6 +28,7 @@ import 'package:weblibre/features/geckoview/features/tabs/data/database/daos/tab
 import 'package:weblibre/features/geckoview/features/tabs/data/database/database.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/database/definitions.drift.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/database/projections/tab_summary.dart';
+import 'package:weblibre/features/geckoview/features/tabs/data/entities/child_tab_placement.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_mode.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/entities/tab_source.dart';
 import 'package:weblibre/features/geckoview/features/tabs/data/models/container_data.dart';
@@ -230,19 +231,26 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
     );
   }
 
-  Future<void> _resolvePendingParents() async {
+  Future<void> _resolvePendingParents({
+    required ChildTabPlacement childPlacement,
+  }) async {
     if (_pendingParentIds.isEmpty) return;
 
+    // Current order, so rows linked in this pass keep their relative order:
+    // each is placed behind the siblings linked before it.
     final pendingChildren = selectOnly(db.tab)
-      ..addColumns([db.tab.id])
+      ..addColumns([db.tab.id, db.tab.containerId])
       ..where(
         db.tab.id.isIn(_pendingParentIds.keys) &
             db.tab.parentId.isNull() &
             db.tab.source.isNotValue(TabSource.manual.index),
-      );
-    final pendingChildIds = {
-      for (final row in await pendingChildren.get()) row.read(db.tab.id)!,
+      )
+      ..orderBy([OrderingTerm.asc(db.tab.orderKey)]);
+    final pendingChildContainers = {
+      for (final row in await pendingChildren.get())
+        row.read(db.tab.id)!: row.read(db.tab.containerId),
     };
+    final pendingChildIds = pendingChildContainers.keys.toSet();
 
     if (pendingChildIds.isEmpty) {
       _pendingParentIds.clear();
@@ -261,23 +269,21 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
       parentIds,
     ).get().then((ids) => ids.toSet());
 
-    await batch((batch) {
-      for (final childId in pendingChildIds) {
-        final parentId = _pendingParentIds[childId];
-        if (parentId == null || !resolvableParentIds.contains(parentId)) {
-          continue;
-        }
-
-        batch.update(
-          db.tab,
-          TabCompanion(
-            parentId: Value(parentId),
-            source: const Value(TabSource.manual),
-          ),
-          where: (t) => t.id.equals(childId),
-        );
+    // One at a time rather than batched: see [_linkLateParent].
+    for (final MapEntry(key: childId, value: containerId)
+        in pendingChildContainers.entries) {
+      final parentId = _pendingParentIds[childId];
+      if (parentId == null || !resolvableParentIds.contains(parentId)) {
+        continue;
       }
-    });
+
+      await _linkLateParent(
+        childId,
+        parentId: parentId,
+        containerId: containerId,
+        reposition: childPlacement == ChildTabPlacement.afterParent,
+      );
+    }
 
     _pendingParentIds.removeWhere(
       (childId, parentId) =>
@@ -290,6 +296,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
     required String childId,
     required String? parentId,
     required String? contextId,
+    ChildTabPlacement childPlacement = ChildTabPlacement.afterParent,
   }) {
     return db.transaction(() async {
       if (parentId == null || parentId == childId) {
@@ -304,7 +311,12 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
         _pendingParentIds[childId] = parentId;
         return false;
       }
-      if (child.parentId != null || child.source == TabSource.manual) {
+      // A row that already carries *this* parent is still seedable while it
+      // is unclaimed: `insertTab` records an engine opener as the parent at
+      // insert time, and the container repair and the claim below still have
+      // to happen for it. A different local parent always wins.
+      if (child.source == TabSource.manual ||
+          (child.parentId != null && child.parentId != parentId)) {
         _pendingParentIds.remove(childId);
         return false;
       }
@@ -327,16 +339,179 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
       // Hierarchical views stay container-scoped regardless: a child whose
       // parent lives elsewhere renders as a local root (`tabsWithRootAndDepth`)
       // and appends at the end of its own container (`_generateOrderKey`).
-      await _updateByIdStatement(childId).write(
-        TabCompanion(
-          parentId: Value(parentId),
-          source: const Value(TabSource.manual),
-          containerId:
-              repairedContainerId.mapNotNull(Value.new) ?? const Value.absent(),
-        ),
+      //
+      // A row already carrying this parent was placed by it at insert and only
+      // needs claiming; a row without one was appended because its opener had
+      // no row yet, so it is moved as well.
+      await _linkLateParent(
+        childId,
+        parentId: parentId,
+        containerId: repairedContainerId ?? child.containerId,
+        reposition:
+            child.parentId == null &&
+            childPlacement == ChildTabPlacement.afterParent,
+        repairedContainerId:
+            repairedContainerId.mapNotNull(Value.new) ?? const Value.absent(),
       );
       _pendingParentIds.remove(childId);
       return true;
+    });
+  }
+
+  /// The row a new child of [parentId] goes behind in [containerId]: the end
+  /// of the last existing child's subtree, or the parent itself when it has
+  /// no children there yet.
+  Future<String> _lastRowOfParentSubtree(
+    String parentId, {
+    required String? containerId,
+  }) async {
+    final lastChildId = await db.containerDao
+        .getLastChildTabId(containerId, parentId)
+        .getSingleOrNull();
+
+    final lastChildSubtreeId = lastChildId == null
+        ? null
+        : await lastSubtreeTabIdByOrderKey(
+            lastChildId,
+            containerId: containerId,
+          ).getSingleOrNull();
+
+    return lastChildSubtreeId ?? lastChildId ?? parentId;
+  }
+
+  /// The key that places a child of [parentId] behind the parent and the
+  /// children it already has, or null when [parentId] is not a row of
+  /// [containerId] (missing, or living in another container).
+  Future<String?> _orderKeyAfterParentSubtree(
+    String parentId, {
+    required String? containerId,
+  }) async {
+    final anchorTabId = await _lastRowOfParentSubtree(
+      parentId,
+      containerId: containerId,
+    );
+
+    return await db.containerDao
+        .generateOrderKeyAfterTabId(containerId, anchorTabId)
+        .getSingleOrNull();
+  }
+
+  /// Re-ranks [blockIds] — a container-local subtree, root first — as one
+  /// compact block behind [parentId]'s existing children in [containerId],
+  /// keeping the block's current relative order. Returns `(id, orderKey)`
+  /// pairs in that order: empty when none of [blockIds] exist, null when the
+  /// anchor is not a row of [containerId]. Order keys only mean something
+  /// within one container, so a parent living elsewhere has no position to
+  /// follow here.
+  ///
+  /// Must run before the block root's parent_id points at [parentId], or the
+  /// root counts as one of the parent's children and anchors on itself.
+  Future<List<(String, String)>?> _rankBlockBehindParent(
+    Set<String> blockIds, {
+    required String parentId,
+    required String? containerId,
+  }) async {
+    final blockRows = await _tabSummaries(
+      (q) => q
+        ..where(db.tab.id.isIn(blockIds))
+        ..orderBy([OrderingTerm.asc(db.tab.orderKey)]),
+    ).get();
+    if (blockRows.isEmpty) {
+      return const [];
+    }
+
+    final anchorId = await _lastRowOfParentSubtree(
+      parentId,
+      containerId: containerId,
+    );
+    final anchorRow = await getTabSummaryById(anchorId).getSingleOrNull();
+    if (anchorRow == null || anchorRow.containerId != containerId) {
+      return null;
+    }
+    final previousRank = LexoRank.parse(anchorRow.orderKey);
+
+    // Next-rank = first non-block tab in the container with order_key strictly
+    // greater than the anchor. Skipping block members keeps the moved block
+    // compact even when its old keys sat near the anchor in storage.
+    final nextRow = await _tabSummaries((q) {
+      final containerEq = containerId != null
+          ? db.tab.containerId.equals(containerId)
+          : db.tab.containerId.isNull();
+
+      q
+        ..where(
+          containerEq &
+              db.tab.orderKey.isBiggerThanValue(anchorRow.orderKey) &
+              db.tab.id.isNotIn(blockIds),
+        )
+        ..orderBy([OrderingTerm.asc(db.tab.orderKey)])
+        ..limit(1);
+    }).getSingleOrNull();
+    final nextRank = nextRow == null ? null : LexoRank.parse(nextRow.orderKey);
+
+    final orderKeys = _generateOrderKeysBetween(
+      count: blockRows.length,
+      previousRank: previousRank,
+      nextRank: nextRank,
+    );
+
+    return [
+      for (var i = 0; i < blockRows.length; i++)
+        (blockRows[i].id, orderKeys[i]),
+    ];
+  }
+
+  /// Links an engine-opened row to its opener after the fact and claims it.
+  ///
+  /// Such a row was inserted before its opener's row existed, so it was
+  /// appended without a parent — and anything opened from it since has been
+  /// recorded as *its* child. With [reposition] (pass it for
+  /// [ChildTabPlacement.afterParent]) the row moves, together with that
+  /// container-local subtree as one block, to where it would have landed had
+  /// the opener been known at insert; a repaired container follows the block,
+  /// so it stays in one container. A parent outside the row's container
+  /// resolves no anchor and leaves the position alone, rather than sending the
+  /// row to the end a second time.
+  ///
+  /// Callers linking several rows must go one at a time, in current order, so
+  /// each sees the previous as a sibling.
+  Future<void> _linkLateParent(
+    String childId, {
+    required String parentId,
+    required String? containerId,
+    required bool reposition,
+    Value<String?> repairedContainerId = const Value.absent(),
+  }) async {
+    final ranked = reposition
+        ? await _rankBlockBehindParent(
+            await _collectContainerSubtreeIds(childId),
+            parentId: parentId,
+            containerId: repairedContainerId.present
+                ? repairedContainerId.value
+                : containerId,
+          )
+        : null;
+
+    await batch((batch) {
+      batch.update(
+        db.tab,
+        TabCompanion(
+          parentId: Value(parentId),
+          source: const Value(TabSource.manual),
+          containerId: repairedContainerId,
+        ),
+        where: (t) => t.id.equals(childId),
+      );
+      for (final (id, orderKey) in ranked ?? const <(String, String)>[]) {
+        batch.update(
+          db.tab,
+          TabCompanion(
+            orderKey: Value(orderKey),
+            containerId: repairedContainerId,
+          ),
+          where: (t) => t.id.equals(id),
+        );
+      }
     });
   }
 
@@ -344,6 +519,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
     required Value<String?> parentId,
     required Value<String?> containerId,
     Value<String?> afterTabId = const Value.absent(),
+    ChildTabPlacement childPlacement = ChildTabPlacement.afterParent,
   }) async {
     // Explicit "place after this tab" wins regardless of parent.
     if (afterTabId.present && afterTabId.value != null) {
@@ -355,25 +531,16 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
       }
     }
 
-    if (parentId.value.isNotEmpty) {
-      // Place new child after the last existing sibling, falling back to
-      // immediately after the parent if there are none yet.
-      final lastChildId = await db.containerDao
-          .getLastChildTabId(containerId.value, parentId.value!)
-          .getSingleOrNull();
-
-      final lastChildSubtreeId = lastChildId == null
-          ? null
-          : await lastSubtreeTabIdByOrderKey(
-              lastChildId,
-              containerId: containerId.value,
-            ).getSingleOrNull();
-
-      final anchorTabId = lastChildSubtreeId ?? lastChildId ?? parentId.value!;
-
-      final key = await db.containerDao
-          .generateOrderKeyAfterTabId(containerId.value, anchorTabId)
-          .getSingleOrNull();
+    // `ChildTabPlacement.endOfList` keeps the parent relation but drops the
+    // positional tie to it, so the tab lands at the end like any other new
+    // tab. An explicit `afterTabId` above still wins: a duplicate belongs
+    // beside its source no matter where new children go.
+    if (parentId.value.isNotEmpty &&
+        childPlacement == ChildTabPlacement.afterParent) {
+      final key = await _orderKeyAfterParentSubtree(
+        parentId.value!,
+        containerId: containerId.value,
+      );
       if (key != null) {
         return key;
       }
@@ -384,10 +551,11 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
       // the new container). In either case append to the end.
     }
 
-    // Root tabs (or unresolved parent) always append to the end of the list.
+    // Root tabs, an unresolved parent, and children placed by
+    // [ChildTabPlacement.endOfList] all append to the end of the list.
     // Display direction is applied at render time via TabListDirection /
     // TabBarDirection settings, so we never need to insert at the front.
-    return db.containerDao
+    return await db.containerDao
         .generateTrailingOrderKey(containerId.value)
         .getSingle();
   }
@@ -401,6 +569,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
     Value<Uri?> url = const Value.absent(),
     Value<String?> title = const Value.absent(),
     Value<TabMode> tabMode = const Value.absent(),
+    ChildTabPlacement childPlacement = ChildTabPlacement.afterParent,
   }) {
     return db.transaction(() async {
       final tabId = await createTab();
@@ -410,6 +579,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
             parentId: parentId,
             containerId: containerId,
             afterTabId: afterTabId,
+            childPlacement: childPlacement,
           );
       final Value<TabModeDbValue> persistedTabMode = tabMode.present
           ? Value(tabMode.value.toDbValue())
@@ -450,24 +620,47 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
   }
 
   //Upsert an tab only if there is no container assigned yet
+  //
+  // [openerId] is the engine's opener for an engine-opened tab
+  // (`window.open`, `target="_blank"`). It is recorded as the parent right
+  // away when its row exists — not just used for positioning — so the next tab
+  // from the same opener finds this one as a sibling and lands after it, rather
+  // than on the opener itself and therefore *before* it. The row keeps its
+  // unclaimed [source], so [seedParentFromEngineState] still does the container
+  // repair and claims it. A missing opener is left out (parent_id is a
+  // self-referential FK) and linked later by the seeding paths. Ignored when
+  // [parentId] is set.
   Future<String> insertTab(
     String tabId, {
     required TabSource source,
     required Value<String?> parentId,
+    Value<String?> openerId = const Value.absent(),
     Value<String?> containerId = const Value.absent(),
     Value<String?> orderKey = const Value.absent(),
     Value<String?> afterTabId = const Value.absent(),
     Value<Uri?> url = const Value.absent(),
     Value<String?> title = const Value.absent(),
     Value<TabMode> tabMode = const Value.absent(),
+    ChildTabPlacement childPlacement = ChildTabPlacement.afterParent,
   }) {
     return db.transaction(() async {
+      final openerRowExists =
+          parentId.value == null &&
+          openerId.value != null &&
+          await getExistingTabIds({
+            openerId.value!,
+          }).get().then((ids) => ids.isNotEmpty);
+      final effectiveParentId = openerRowExists
+          ? Value<String?>(openerId.value)
+          : parentId;
+
       final currentOrderKey =
           orderKey.value ??
           await _generateOrderKey(
-            parentId: parentId,
+            parentId: effectiveParentId,
             containerId: containerId,
             afterTabId: afterTabId,
+            childPlacement: childPlacement,
           );
       final Value<TabModeDbValue> persistedTabMode = tabMode.present
           ? Value(tabMode.value.toDbValue())
@@ -479,7 +672,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
       await db.tab.insertOne(
         TabCompanion.insert(
           id: tabId,
-          parentId: parentId,
+          parentId: effectiveParentId,
           source: source,
           timestamp: DateTime.now(),
           containerId: containerId,
@@ -492,7 +685,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
         onConflict: DoUpdate(
           (old) => TabCompanion(
             source: Value(source),
-            parentId: parentId,
+            parentId: effectiveParentId,
             containerId: containerId,
             url: url,
             title: title,
@@ -587,7 +780,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
             ),
       );
 
-    return query
+    return await query
         .map((row) => row.read(db.closedTabTombstone.tabId)!)
         .get()
         .then((rows) => rows.toSet());
@@ -621,10 +814,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
     }
 
     return db.transaction(() async {
-      final anchorIds = [
-        if (previousTabId != null) previousTabId,
-        if (nextTabId != null) nextTabId,
-      ];
+      final anchorIds = [?previousTabId, ?nextTabId];
 
       final anchors = anchorIds.isEmpty
           ? const <String, TabSummary>{}
@@ -790,64 +980,22 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
         return true;
       }
 
-      // Pull the (now container-adjusted) subtree rows so we can re-rank
-      // them as an atomic block. We must compute anchors BEFORE writing
-      // the new parent_id, otherwise `getLastChildTabId(newParentId)`
-      // would pick up the moving root itself as a sibling.
-      final subtreeRows = await _tabSummaries(
-        (q) => q
-          ..where(db.tab.id.isIn(movingSubtreeIds))
-          ..orderBy([OrderingTerm.asc(db.tab.orderKey)]),
-      ).get();
-      final orderedIds = subtreeRows.map((r) => r.id).toList();
-      if (orderedIds.isEmpty) {
-        return true;
-      }
-
-      final lastSiblingId = await db.containerDao
-          .getLastChildTabId(targetContainerId, newParentId)
-          .getSingleOrNull();
-      final lastSiblingSubtreeId = lastSiblingId == null
-          ? null
-          : await lastSubtreeTabIdByOrderKey(
-              lastSiblingId,
-              containerId: targetContainerId,
-            ).getSingleOrNull();
-      final anchorId = lastSiblingSubtreeId ?? lastSiblingId ?? newParentId;
-
-      final anchorRow = await getTabSummaryById(anchorId).getSingleOrNull();
-      if (anchorRow == null) {
+      // Re-rank the (now container-adjusted) subtree as an atomic block. This
+      // runs BEFORE writing the new parent_id, otherwise the moving root would
+      // count as one of newParentId's children.
+      final ranked = await _rankBlockBehindParent(
+        movingSubtreeIds,
+        parentId: newParentId,
+        containerId: targetContainerId,
+      );
+      if (ranked == null) {
         return false;
       }
-      final previousRank = LexoRank.parse(anchorRow.orderKey);
-
-      // Next-rank = first non-subtree tab in the destination container with
-      // order_key strictly greater than the anchor. Skipping subtree members
-      // keeps the moved block compact even when the subtree's old keys
-      // sat near the anchor in storage.
-      final nextRow = await _tabSummaries((q) {
-        final containerEq = targetContainerId != null
-            ? db.tab.containerId.equals(targetContainerId)
-            : db.tab.containerId.isNull();
-
-        q
-          ..where(
-            containerEq &
-                db.tab.orderKey.isBiggerThanValue(anchorRow.orderKey) &
-                db.tab.id.isNotIn(movingSubtreeIds),
-          )
-          ..orderBy([OrderingTerm.asc(db.tab.orderKey)])
-          ..limit(1);
-      }).getSingleOrNull();
-      final nextRank = nextRow == null
-          ? null
-          : LexoRank.parse(nextRow.orderKey);
-
-      final orderKeys = _generateOrderKeysBetween(
-        count: orderedIds.length,
-        previousRank: previousRank,
-        nextRank: nextRank,
-      );
+      if (ranked.isEmpty) {
+        return true;
+      }
+      final orderedIds = [for (final (id, _) in ranked) id];
+      final orderKeys = [for (final (_, orderKey) in ranked) orderKey];
 
       await batch((batch) {
         // parent_id change is applied on the moving root only; subtree
@@ -944,11 +1092,16 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
   }
 
   /// Moves [tabId] one sibling slot up (or down) within its parent scope,
-  /// carrying its whole subtree as an atomic block.
+  /// carrying its whole subtree as an atomic block. With [toEdge] it moves all
+  /// the way to the first (or last) slot instead.
   ///
   /// Returns `false` when the tab is unknown or already at the relevant
   /// end of its sibling list.
-  Future<bool> moveTabAmongSiblings(String tabId, {required bool down}) {
+  Future<bool> moveTabAmongSiblings(
+    String tabId, {
+    required bool down,
+    bool toEdge = false,
+  }) {
     // Transactional so the sibling-list read, subtree resolution, and the
     // anchor lookup all observe the same DB snapshot. `reorderTabs` opens
     // a nested savepoint internally, which is fine.
@@ -977,8 +1130,13 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
       if (idx < 0) {
         return false;
       }
-      final newIdx = down ? idx + 1 : idx - 1;
-      if (newIdx < 0 || newIdx >= siblingIds.length) {
+      final newIdx = switch ((down, toEdge)) {
+        (true, false) => idx + 1,
+        (false, false) => idx - 1,
+        (true, true) => siblingIds.length - 1,
+        (false, true) => 0,
+      };
+      if (newIdx == idx || newIdx < 0 || newIdx >= siblingIds.length) {
         return false;
       }
 
@@ -1157,10 +1315,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
       // container. Otherwise `tabsWithRootAndDepth` draws the child as a local
       // root, and that root scope — not a scope of its own under an
       // out-of-container parent — is the one it holds a slot in.
-      final closingParentIds = {
-        for (final tab in closingTabs)
-          if (tab.parentId case final parentId?) parentId,
-      };
+      final closingParentIds = {for (final tab in closingTabs) ?tab.parentId};
       final closingParentContainerIds = closingParentIds.isEmpty
           ? const <String, String?>{}
           : await getTabsContainerId(
@@ -1303,8 +1458,9 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
 
   Future<void> updateTabs(
     Map<String, TabState>? previous,
-    Map<String, TabState> next,
-  ) {
+    Map<String, TabState> next, {
+    ChildTabPlacement childPlacement = ChildTabPlacement.afterParent,
+  }) {
     return db.transaction(() async {
       // Gecko exposes a parentId in content-state events, but local DB tab
       // hierarchy becomes authoritative once a row has a DB parent or has
@@ -1365,8 +1521,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
       final repairedContainerIds = <String, String>{
         for (final entry in containerRepairCandidates.entries)
           if (currentContainerIds[entry.key] == null)
-            if (containerIdsByContext[entry.value] case final containerId?)
-              entry.key: containerId,
+            entry.key: ?containerIdsByContext[entry.value],
       };
 
       for (final state in next.values) {
@@ -1396,10 +1551,32 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
         }
       }
 
+      // Every parent written here is a late link — eligibility requires a row
+      // without one — so it goes through [_linkLateParent], one row at a time
+      // in current order, before the batch below.
+      if (validatedParentIds.isNotEmpty) {
+        final linkQuery = selectOnly(db.tab)
+          ..addColumns([db.tab.id, db.tab.containerId])
+          ..where(db.tab.id.isIn(validatedParentIds.keys))
+          ..orderBy([OrderingTerm.asc(db.tab.orderKey)]);
+        for (final row in await linkQuery.get()) {
+          final childId = row.read(db.tab.id)!;
+          final repairedContainerId = repairedContainerIds[childId];
+          await _linkLateParent(
+            childId,
+            parentId: validatedParentIds[childId]!,
+            containerId: repairedContainerId ?? row.read(db.tab.containerId),
+            reposition: childPlacement == ChildTabPlacement.afterParent,
+            repairedContainerId:
+                repairedContainerId.mapNotNull(Value.new) ??
+                const Value.absent(),
+          );
+        }
+      }
+
       await batch((batch) {
         for (final state in next.values) {
           final previousState = previous?[state.id];
-          final hasParentUpdate = validatedParentIds.containsKey(state.id);
           final hasContainerRepair = repairedContainerIds.containsKey(state.id);
           final hasUrlChange = previousState?.url != state.url;
           final hasTitleChange = previousState?.title != state.title;
@@ -1408,17 +1585,10 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
           if (hasUrlChange ||
               hasTitleChange ||
               hasTabModeChange ||
-              hasParentUpdate ||
               hasContainerRepair) {
             batch.update(
               db.tab,
               TabCompanion(
-                parentId: hasParentUpdate
-                    ? Value(validatedParentIds[state.id])
-                    : const Value.absent(),
-                source: hasParentUpdate
-                    ? const Value(TabSource.manual)
-                    : const Value.absent(),
                 containerId:
                     repairedContainerIds[state.id].mapNotNull(Value.new) ??
                     const Value.absent(),
@@ -1443,7 +1613,10 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
 
   /// Syncs DB tab rows with the engine's active tab list.
   /// Returns metadata about deleted rows for follow-up cleanup.
-  Future<SyncTabsResult> syncTabs({required List<String> retainTabIds}) {
+  Future<SyncTabsResult> syncTabs({
+    required List<String> retainTabIds,
+    ChildTabPlacement childPlacement = ChildTabPlacement.afterParent,
+  }) {
     return db.transaction(() async {
       final deleted =
           await (db.tab.delete()..where((t) => t.id.isNotIn(retainTabIds)))
@@ -1494,7 +1667,7 @@ class TabDao extends DatabaseAccessor<TabDatabase> with $TabDaoMixin {
         onConflict: DoNothing(),
       );
 
-      await _resolvePendingParents();
+      await _resolvePendingParents(childPlacement: childPlacement);
 
       return SyncTabsResult(
         deletedIsolationContextIds: deletedIsolationContextIds,

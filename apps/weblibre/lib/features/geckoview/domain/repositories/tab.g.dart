@@ -41,7 +41,7 @@ final class TabRepositoryProvider
   }
 }
 
-String _$tabRepositoryHash() => r'89922f21e715898ef8129dab9edd8915414ed6c6';
+String _$tabRepositoryHash() => r'8f1a82ca40d881e157bb8f6a0bca5ed51116f675';
 
 abstract class _$TabRepository extends $Notifier<void> {
   void build();
